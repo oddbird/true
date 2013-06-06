@@ -1,0 +1,52 @@
+// Test Modules
+// ============
+
+$test-results: null;
+$test-module-name: null;
+
+// Establish a new test module
+@mixin start-test-module(
+  $name
+) {
+  $test-results: compact();
+  $test-module-name: $name;
+}
+
+// Collate test results
+@function collate-results(
+  $results: $test-results
+) {
+  $total: length($results);
+  $pass: 0;
+  $fail: 0;
+
+  @each $test in $results {
+    @if $test == 'p' { $pass: $pass + 1; }
+    @if $test == 'f' { $fail: $fail + 1; }
+  }
+
+  @return $total $pass $fail;
+}
+
+// Report the results of the module
+@mixin report-test-results(
+  $name: $test-module-name,
+  $results: $test-results
+) {
+  $results: collate-results($results);
+  $total: nth($results, 1);
+  $pass: nth($results, 2);
+  $fail: nth($results, 3);
+
+  @if $name {
+    $result-message: '#{$name}: Passed #{$pass} of #{$total} (#{$fail} tests failed)';
+    /* #{$result-message} #{if($fail > 0, '************', null)}*/
+    @debug $result-message;
+  } @else {
+    @warn 'Remember to start your test module.';
+  }
+
+  // End module
+  $test-results: null;
+  $test-module-name: null;
+}

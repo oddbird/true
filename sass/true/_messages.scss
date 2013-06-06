@@ -1,0 +1,19 @@
+// Pass / Fail Messages
+// ====================
+
+$test-pass-message  : '.'   !default;
+$test-fail-message  : 'F'   !default;
+
+@mixin pass(
+  $pass: $test-pass-message
+) {
+  $test-results: append($test-results, 'p');
+  @debug $pass;
+}
+
+@mixin fail(
+  $fail: $test-fail-message
+) {
+  $test-results: append($test-results, 'f');
+  @warn $fail;
+}

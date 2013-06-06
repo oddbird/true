@@ -1,0 +1,32 @@
+// Assert
+// ======
+
+@mixin assert-true(
+  $test
+) {
+  @if $test { @include pass; }
+  @else { @include fail('#{$test} is not true.'); }
+}
+
+@mixin assert-false(
+  $test
+) {
+  @if not $test { @include pass; }
+  @else { @include fail('#{$test} is not false.'); }
+}
+
+@mixin assert-equal(
+  $test,
+  $expected
+) {
+  @if $test == $expected { @include pass; }
+  @else { @include fail('#{$test} != #{$expected}'); }
+}
+
+@mixin assert-unequal(
+  $test,
+  $expected
+) {
+  @if $test != $expected { @include pass; }
+  @else { @include fail('#{$test} == #{$expected}'); }
+}
