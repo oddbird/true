@@ -28,11 +28,14 @@ in your scss:
 // silent classes can help you organize tests and scope variables.
 // You can name them however you want.
 %test__feature-1 {
+  // Establish variables
   $test-1: 3 * 5;
   $expexted-1: 15;
 
   $test-2: if(something, true, false);
 
+  // Assert things! This is where the testing happens.
+  // you can assert-true, assert-false, assert-equal, or assert-unequal.
   @include assert-equal($test-1, $expected-1);
   @include assert-true($test-2);
 }
