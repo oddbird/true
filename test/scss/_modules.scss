@@ -4,8 +4,10 @@
 @include test-module('Modules') {
 
   %test__modules {
-    @include assert-equal($test-results, compact());
-    @include assert-equal($module-name, 'Modules');
+    @include pass;
+
+    @include assert-equal($test-results, compact('p'),
+      'Module results are not being properly collected.');
   }
 
 }

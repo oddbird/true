@@ -7,7 +7,8 @@
     @include pass;
     @include fail('This is a test of the failure message system.');
 
-    @include assert-equal($test-results, append(compact('p'), 'f'));
+    @include assert-equal($test-results, join('p', 'f', comma),
+      'Pass/fail results are not being properly tracked.');
 
     // Fix the results - #2 failing should be reported as a pass.
     $i: 1;

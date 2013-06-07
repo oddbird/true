@@ -1,6 +1,8 @@
 // Test Modules
 // ============
 
+$test-output: terminal css !default;
+
 $module-name: null;
 $test-results: null;
 
@@ -23,7 +25,7 @@ $test-results: null;
 // Establish a new test module
 @mixin test-module(
   $name,
-  $output: terminal css
+  $output: $test-output
 ) {
   $module-name: $name;
   $test-results: compact();

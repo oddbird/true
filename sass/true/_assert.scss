@@ -2,31 +2,35 @@
 // ======
 
 @mixin assert-true(
-  $test
+  $assert,
+  $fail-message: '#{$assert} is not true.'
 ) {
-  @if $test { @include pass; }
-  @else { @include fail('#{$test} is not true.'); }
+  @if $assert { @include pass; }
+  @else { @include fail($fail-message); }
 }
 
 @mixin assert-false(
-  $test
+  $assert,
+  $fail-message: '#{$assert} is not false.'
 ) {
-  @if not $test { @include pass; }
-  @else { @include fail('#{$test} is not false.'); }
+  @if not $assert { @include pass; }
+  @else { @include fail($fail-message); }
 }
 
 @mixin assert-equal(
-  $test,
-  $expected
+  $assert,
+  $expected,
+  $fail-message: '#{$assert} != #{$expected}'
 ) {
-  @if $test == $expected { @include pass; }
-  @else { @include fail('#{$test} != #{$expected}'); }
+  @if $assert == $expected { @include pass; }
+  @else { @include fail($fail-message); }
 }
 
 @mixin assert-unequal(
-  $test,
-  $expected
+  $assert,
+  $expected,
+  $fail-message: '#{$assert} == #{$expected}'
 ) {
-  @if $test != $expected { @include pass; }
-  @else { @include fail('#{$test} == #{$expected}'); }
+  @if $assert != $expected { @include pass; }
+  @else { @include fail($fail-message); }
 }
