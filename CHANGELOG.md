@@ -1,6 +1,11 @@
 True Changelog
 ==============
 
+0.1.2 (6/7/13)
+--------------
+- Use nesting for modules with `test-module()`
+- Added failure message argument to all assertions.
+
 0.1.1 (6/6/13)
 --------------
 - Fix bug in `lib/true.rb` compass plugin registration.

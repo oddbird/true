@@ -22,26 +22,24 @@ in your scss:
 ```scss
 @import "true";
 
-// initiate a test module
-@include start-test-module('My Tests');
+// Track and report results in a test module
+@include test-module('My Tests') {
 
-// silent classes can help you organize tests and scope variables.
-// You can name them however you want.
-%test__feature-1 {
-  // Establish variables
-  $test-1: 3 * 5;
-  $expexted-1: 15;
+  // silent classes can help you organize tests and scope variables.
+  %test__feature-1 {
+    $test-1: 3*5;
+    $test-2: if(something, true, false);
 
-  $test-2: if(something, true, false);
+    // Assert something, with a message to post if the assertion fails.
+    @include assert-equal($test-1, 15,
+      'Simple multiplication failed.');
 
-  // Assert things! This is where the testing happens.
-  // you can assert-true, assert-false, assert-equal, or assert-unequal.
-  @include assert-equal($test-1, $expected-1);
-  @include assert-true($test-2);
+    // You can assert-equal, assert-unequal, assert-true, or assert-false.
+    @include assert-true($test-2,
+      'Something returned false.');
+  }
+
 }
-
-// report the results of this module
-@include report-test-results;
 ```
 
 **true** will report test results
