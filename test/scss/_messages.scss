@@ -1,24 +1,24 @@
 // Message Tests
 // =============
 
-@include start-test-module('Messages');
+@include test-module('Messages') {
 
-%test__messages {
-  @include pass;
-  @include fail('This is a test of the failure message system.');
+  %test__messages {
+    @include pass;
+    @include fail('This is a test of the failure message system.');
 
-  @include assert-equal($test-results, append(compact('p'), 'f'));
+    @include assert-equal($test-results, append(compact('p'), 'f'));
 
-  // Fix the results - #2 failing should be reported as a pass.
-  $i: 1;
-  $new: compact();
-  @each $res in $test-results {
-    @if $i == 2 and $res == 'f' { $res: 'p'; }
-    @else if $i == 2 and $res == 'p' { $res: 'f'; }
-    $new: append($new, $res);
-    $i: $i + 1;
+    // Fix the results - #2 failing should be reported as a pass.
+    $i: 1;
+    $new: compact();
+    @each $res in $test-results {
+      @if $i == 2 and $res == 'f' { $res: 'p'; }
+      @else if $i == 2 and $res == 'p' { $res: 'f'; }
+      $new: append($new, $res);
+      $i: $i + 1;
+    }
+    $test-results: $new;
   }
-  $test-results: $new;
-}
 
-@include report-test-results;
+}

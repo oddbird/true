@@ -1,20 +1,12 @@
 // Test Modules
 // ============
 
+$module-name: null;
 $test-results: null;
-$test-module-name: null;
-
-// Establish a new test module
-@mixin start-test-module(
-  $name
-) {
-  $test-results: compact();
-  $test-module-name: $name;
-}
 
 // Collate test results
 @function collate-results(
-  $results: $test-results
+  $results
 ) {
   $total: length($results);
   $pass: 0;
@@ -28,25 +20,26 @@ $test-module-name: null;
   @return $total $pass $fail;
 }
 
-// Report the results of the module
-@mixin report-test-results(
-  $name: $test-module-name,
-  $results: $test-results
+// Establish a new test module
+@mixin test-module(
+  $name,
+  $output: terminal css
 ) {
-  $results: collate-results($results);
+  $module-name: $name;
+  $test-results: compact();
+
+  @content;
+
+  $results: collate-results($test-results);
   $total: nth($results, 1);
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
-  @if $name {
-    $result-message: '#{$name}: Passed #{$pass} of #{$total} (#{$fail} tests failed)';
-    /* #{$result-message} #{if($fail > 0, '************', null)}*/
-    @debug $result-message;
-  } @else {
-    @warn 'Remember to start your test module.';
-  }
+  $result-message: '#{$name}: Passed #{$pass} of #{$total} (#{$fail} tests failed)';
 
-  // End module
+  @if index($output, css) { /* #{$result-message} */ }
+  @if index($output, terminal) { @debug $result-message; }
+
+  $module-name: null;
   $test-results: null;
-  $test-module-name: null;
 }

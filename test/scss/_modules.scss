@@ -1,13 +1,11 @@
 // Module Tests
 // ============
 
-$mod: 'Modules';
+@include test-module('Modules') {
 
-@include start-test-module($mod);
+  %test__modules {
+    @include assert-equal($test-results, compact());
+    @include assert-equal($module-name, 'Modules');
+  }
 
-%test__modules {
-  @include assert-equal($test-results, compact());
-  @include assert-equal($test-module-name, $mod);
 }
-
-@include report-test-results;
