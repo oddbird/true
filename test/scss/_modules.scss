@@ -3,11 +3,19 @@
 
 @include test-module('Modules') {
 
-  %test__modules {
+  %test__result-tracking {
     @include pass;
 
     @include assert-equal($test-results, compact('p'),
       'Module results are not being properly collected.');
+  }
+
+  %test__collate-results {
+    $fake-results: 'p', 'f', 'p', 'f', 'f', 'p', 'p';
+    $fake-data: collate-results($fake-results);
+
+    @include assert-equal($fake-data, 7 4 3,
+      'Modules results are not being collated correctly.');
   }
 
 }
