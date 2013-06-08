@@ -35,13 +35,17 @@ $test-results: null;
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
+  $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
+
   @if $fail > 0 {
-    $message: 'FAIL: #{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
-    @include fail($message, module);
-    @include result-message('* ' + $message, css);
+    $fail-message: '- FAIL: ' + $message;
+    @include fail($fail-message, module);
+    @include result-message('FAIL: ' + $message, css);
   }
   @else {
+    $pass-message: '- ' + $message;
     @include pass($test-pass-message, module);
+    @include result-message($pass-message, css);
   }
 
 }

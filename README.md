@@ -30,8 +30,8 @@ in your scss:
 // Track and report results in a test module
 @include test-module('My Tests') {
 
-  // silent classes can help you organize tests and scope variables.
-  %test__feature-1 {
+  // Add tests
+  @include test('Feature A does The Things') {
     $test-1: 3*5;
     $test-2: if(something, true, false);
 
@@ -40,6 +40,7 @@ in your scss:
       'Simple multiplication failed.');
 
     // You can assert-equal, assert-unequal, assert-true, or assert-false.
+    // A test can include as many assertions as you need.
     @include assert-true($test-2,
       'Something returned false.');
   }
@@ -47,6 +48,5 @@ in your scss:
 }
 ```
 
-**true** will report test results
-both in the command line
-and in the output css file.
+**True** will report detailed results in the terminal,
+and a summary of results in the output css.

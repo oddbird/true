@@ -11,6 +11,10 @@ $test-module-results  : null;
   $test-result-context: module;
   $test-module-results: compact();
 
+  @include result-message('
+
+### #{$name} ------', css);
+
   // Content
   @content;
 
@@ -23,8 +27,11 @@ $test-module-results  : null;
   $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
   @include result-message($debug-message, debug);
 
-  $css-message: '#{$name}: #{$total} Tests
-  - #{$pass} passed / #{$fail} failed';
+  $css-message: '
+    Summary:
+    - #{$total} Tests
+    - #{$pass} Passed
+    - #{$fail} Failed';
   @include result-message($css-message, css);
 
   // Teardown

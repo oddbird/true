@@ -6,7 +6,7 @@
   $output
 ) {
   @if index($output, css) {
-    /* #{$message} */
+    /*  #{$message} */
   } @else if index($output, debug) or index($output, terminal) {
     @debug $message;
   } @else if index($output, warn) {
