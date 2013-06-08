@@ -4,6 +4,7 @@ True Changelog
 0.1.3 (6/7/13)
 --------------
 - Nest assertions within `test() {}` named tests.
+- Cleaner css output.
 
 0.1.2 (6/7/13)
 --------------
