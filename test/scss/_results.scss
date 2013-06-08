@@ -13,15 +13,18 @@
       'Pass/fail results are not being properly tracked.');
 
     // Fix the results - #2 failing should be reported as a pass.
-    $i: 1;
-    $new: compact();
-    @each $res in $test-results {
-      @if $i == 2 and $res == 'f' { $res: 'p'; }
-      @else if $i == 2 and $res == 'p' { $res: 'f'; }
-      $new: append($new, $res);
-      $i: $i + 1;
-    }
-    $test-results: $new;
+    @include fix-result(2);
+  }
+
+  @include test('Null result is considered a failure') {
+    @include report-test('This test is meant to fail', $test-results, test);
+
+    $expected-results: compact($fail-marker);
+    @include assert-equal($test-results, $expected-results,
+      'Null result returned as a passing test.');
+
+    // Fix the results - #1 failing should be reported as a pass.
+    @include fix-result(1);
   }
 
 }

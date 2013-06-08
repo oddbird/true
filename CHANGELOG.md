@@ -1,6 +1,10 @@
 True Changelog
 ==============
 
+0.1.4 (unreleased)
+------------------
+- Null result is considered a failure.
+
 0.1.3 (6/7/13)
 --------------
 - Nest assertions within `test() {}` named tests.

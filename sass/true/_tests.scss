@@ -28,7 +28,7 @@ $test-results: null;
 @mixin report-test(
   $name,
   $results,
-  $context
+  $context: module
 ) {
   $results: collate-results($test-results);
   $total: nth($results, 1);
@@ -37,14 +37,14 @@ $test-results: null;
 
   $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
 
-  @if $fail > 0 {
+  @if $fail > 0 or $total == 0 {
     $fail-message: '- FAIL: ' + $message;
-    @include fail($fail-message, module);
+    @include fail($fail-message, $context);
     @include result-message('FAIL: ' + $message, css);
   }
   @else {
     $pass-message: '- ' + $message;
-    @include pass($test-pass-message, module);
+    @include pass($test-pass-message, $context);
     @include result-message($pass-message, css);
   }
 
