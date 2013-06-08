@@ -1,0 +1,66 @@
+// Results
+// =======
+
+$test-result-context: null;
+
+$pass-marker  : p;
+$fail-marker  : f;
+
+// Collate test results
+@function collate-results(
+  $results
+) {
+  $total: length($results);
+  $pass: 0;
+  $fail: 0;
+
+  @each $test in $results {
+    @if $test == $pass-marker { $pass: $pass + 1; }
+    @if $test == $fail-marker { $fail: $fail + 1; }
+  }
+
+  @return $total $pass $fail;
+}
+
+// Record the results
+@mixin record-result(
+  $result,
+  $context: $test-result-context
+) {
+  $marker: null;
+
+  @if $result == 'pass' {
+    $marker: $pass-marker;
+  } @else if $result == 'fail' {
+    $marker: $fail-marker;
+  }
+
+  // record results
+  @if $context == 'test' {
+    $test-results: append($test-results, $marker);
+  } @else if $context == 'module' {
+    $test-module-results: append($test-module-results, $marker);
+  }
+}
+
+// Pass / Fail
+// -----------
+
+$test-pass-message  : '.'             !default;
+$test-fail-message  : 'F'             !default;
+
+@mixin pass(
+  $pass: $test-pass-message,
+  $context: $test-result-context
+) {
+  @include record-result(pass, $context);
+  @include result-message($pass, debug);
+}
+
+@mixin fail(
+  $fail: $test-fail-message,
+  $context: $test-result-context
+) {
+  @include record-result(fail, $context);
+  @include result-message($fail, warn);
+}

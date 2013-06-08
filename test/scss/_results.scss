@@ -1,13 +1,15 @@
 // Message Tests
 // =============
 
-@include test-module('Messages') {
+@include test-module('Results') {
 
-  %test__messages {
+  @include test('Pass and Fail correctly increment results') {
     @include pass;
     @include fail('This is a test of the failure message system.');
 
-    @include assert-equal($test-results, join('p', 'f', comma),
+    $expected-results: join($pass-marker, $fail-marker, comma);
+
+    @include assert-equal($test-results, $expected-results,
       'Pass/fail results are not being properly tracked.');
 
     // Fix the results - #2 failing should be reported as a pass.

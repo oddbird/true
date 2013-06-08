@@ -3,7 +3,7 @@
 
 @include test-module('Assert') {
 
-  %test__assert {
+  @include test('Assertions pass when given simple true/false/equality') {
     @include assert-true(true,
       'True is not asserting true.');
     @include assert-false(false,

@@ -1,0 +1,47 @@
+// Tests
+// =====
+
+$test-results: null;
+
+// Establish a new test
+@mixin test(
+  $name
+) {
+  // Setup
+  $test-results: compact();
+
+  // Content
+  $old-result-context: $test-result-context;
+  $test-result-context: test;
+
+  @content;
+
+  $test-result-context: $old-result-context;
+
+  // Results
+  @include report-test($name, $test-results, $test-result-context);
+
+  // Teardown
+  $test-results: null;
+}
+
+@mixin report-test(
+  $name,
+  $results,
+  $context
+) {
+  $results: collate-results($test-results);
+  $total: nth($results, 1);
+  $pass: nth($results, 2);
+  $fail: nth($results, 3);
+
+  @if $fail > 0 {
+    $message: 'FAIL: #{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
+    @include fail($message, module);
+    @include result-message('* ' + $message, css);
+  }
+  @else {
+    @include pass($test-pass-message, module);
+  }
+
+}

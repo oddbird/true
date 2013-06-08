@@ -1,47 +1,33 @@
 // Test Modules
 // ============
 
-$test-output: terminal css !default;
-
-$module-name: null;
-$test-results: null;
-
-// Collate test results
-@function collate-results(
-  $results
-) {
-  $total: length($results);
-  $pass: 0;
-  $fail: 0;
-
-  @each $test in $results {
-    @if $test == 'p' { $pass: $pass + 1; }
-    @if $test == 'f' { $fail: $fail + 1; }
-  }
-
-  @return $total $pass $fail;
-}
+$test-module-results  : null;
 
 // Establish a new test module
 @mixin test-module(
-  $name,
-  $output: $test-output
+  $name
 ) {
-  $module-name: $name;
-  $test-results: compact();
+  // Setup
+  $test-result-context: module;
+  $test-module-results: compact();
 
+  // Content
   @content;
 
-  $results: collate-results($test-results);
+  // Results
+  $results: collate-results($test-module-results);
   $total: nth($results, 1);
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
-  $result-message: '#{$name}: Passed #{$pass} of #{$total} (#{$fail} tests failed)';
+  $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
+  @include result-message($debug-message, debug);
 
-  @if index($output, css) { /* #{$result-message} */ }
-  @if index($output, terminal) { @debug $result-message; }
+  $css-message: '#{$name}: #{$total} Tests
+  - #{$pass} passed / #{$fail} failed';
+  @include result-message($css-message, css);
 
-  $module-name: null;
-  $test-results: null;
+  // Teardown
+  $test-result-context: null;
+  $test-module-results: null;
 }
