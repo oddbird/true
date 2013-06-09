@@ -68,7 +68,7 @@ $test-fail-message    : 'F'       !default;
 
   $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
 
-  @if $fail > 0 or $total == 0 {
+  @if $fail > 0 or $pass < 1 {
     $fail-message: '- FAIL: ' + $message;
     @include fail($fail-message, $context, $output: $output);
     @if $output { @include result-message('FAIL: ' + $message, css); }
