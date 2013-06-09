@@ -5,7 +5,8 @@
 
   @include test('Pass and Fail correctly increment results') {
     @include pass;
-    @include fail('This is a test of the failure message system.');
+    @include fail('This is a test of the failure message system.',
+      $output: false);
 
     $expected-results: join($pass-marker, $fail-marker, comma);
 
@@ -17,7 +18,8 @@
   }
 
   @include test('Null result is considered a failure') {
-    @include report-test('This test is meant to fail', $test-results, test);
+    @include report-test('This test is meant to fail',
+      $test-results, test, $output: false);
 
     $expected-results: compact($fail-marker);
     @include assert-equal($test-results, $expected-results,

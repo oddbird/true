@@ -5,34 +5,39 @@ $test-module-results  : null;
 
 // Establish a new test module
 @mixin test-module(
-  $name
+  $name,
+  $output: true
 ) {
   // Setup
   $test-result-context: module;
   $test-module-results: compact();
 
-  @include result-message('
+  @if $output {
+    @include result-message('
 
 ### #{$name} ------', css);
+  }
 
   // Content
   @content;
 
   // Results
-  $results: collate-results($test-module-results);
-  $total: nth($results, 1);
-  $pass: nth($results, 2);
-  $fail: nth($results, 3);
+  @if $output {
+    $results: collate-results($test-module-results);
+    $total: nth($results, 1);
+    $pass: nth($results, 2);
+    $fail: nth($results, 3);
 
-  $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
-  @include result-message($debug-message, debug);
+    $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
+    @include result-message($debug-message, debug);
 
-  $css-message: '
+    $css-message: '
     Summary:
     - #{$total} Tests
     - #{$pass} Passed
     - #{$fail} Failed';
-  @include result-message($css-message, css);
+    @include result-message($css-message, css);
+  }
 
   // Teardown
   $test-result-context: null;

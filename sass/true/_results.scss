@@ -1,12 +1,17 @@
 // Results
 // =======
 
-$test-result-context: null;
+$test-result-context  : null;
 
-$pass-marker  : p;
-$fail-marker  : f;
+$pass-marker          : p;
+$fail-marker          : f;
+
+$test-pass-message    : '.'       !default;
+$test-fail-message    : 'F'       !default;
 
 // Collate test results
+// --------------------
+
 @function collate-results(
   $results
 ) {
@@ -22,7 +27,10 @@ $fail-marker  : f;
   @return $total $pass $fail;
 }
 
-// Record the results
+
+// Record test results
+// -------------------
+
 @mixin record-result(
   $result,
   $context: $test-result-context
@@ -43,24 +51,54 @@ $fail-marker  : f;
   }
 }
 
+
+// Report test results
+// -------------------
+
+@mixin report-test(
+  $name,
+  $results,
+  $context: module,
+  $output: true
+) {
+  $results: collate-results($test-results);
+  $total: nth($results, 1);
+  $pass: nth($results, 2);
+  $fail: nth($results, 3);
+
+  $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
+
+  @if $fail > 0 or $total == 0 {
+    $fail-message: '- FAIL: ' + $message;
+    @include fail($fail-message, $context, $output: $output);
+    @if $output { @include result-message('FAIL: ' + $message, css); }
+  }
+  @else {
+    $pass-message: '- ' + $message;
+    @include pass($test-pass-message, $context, $output: $output);
+    @if $output { @include result-message($pass-message, css); }
+  }
+
+}
+
+
 // Pass / Fail
 // -----------
 
-$test-pass-message  : '.'             !default;
-$test-fail-message  : 'F'             !default;
-
 @mixin pass(
   $pass: $test-pass-message,
-  $context: $test-result-context
+  $context: $test-result-context,
+  $output: true
 ) {
   @include record-result(pass, $context);
-  @include result-message($pass, debug);
+  @if $output { @include result-message($pass, debug); }
 }
 
 @mixin fail(
   $fail: $test-fail-message,
-  $context: $test-result-context
+  $context: $test-result-context,
+  $output: true
 ) {
   @include record-result(fail, $context);
-  @include result-message($fail, warn);
+  @if $output { @include result-message($fail, warn); }
 }

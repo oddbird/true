@@ -5,7 +5,8 @@ $test-results: null;
 
 // Establish a new test
 @mixin test(
-  $name
+  $name,
+  $output: true
 ) {
   // Setup
   $test-results: compact();
@@ -19,33 +20,8 @@ $test-results: null;
   $test-result-context: $old-result-context;
 
   // Results
-  @include report-test($name, $test-results, $test-result-context);
+  @include report-test($name, $test-results, $test-result-context, $output);
 
   // Teardown
   $test-results: null;
-}
-
-@mixin report-test(
-  $name,
-  $results,
-  $context: module
-) {
-  $results: collate-results($test-results);
-  $total: nth($results, 1);
-  $pass: nth($results, 2);
-  $fail: nth($results, 3);
-
-  $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
-
-  @if $fail > 0 or $total == 0 {
-    $fail-message: '- FAIL: ' + $message;
-    @include fail($fail-message, $context);
-    @include result-message('FAIL: ' + $message, css);
-  }
-  @else {
-    $pass-message: '- ' + $message;
-    @include pass($test-pass-message, $context);
-    @include result-message($pass-message, css);
-  }
-
 }
