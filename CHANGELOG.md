@@ -1,8 +1,8 @@
 True Changelog
 ==============
 
-0.1.4 (unreleased)
-------------------
+0.1.4 (6/9/13)
+--------------
 - Null result is considered a failure.
 - Allow output to be turned off for certain modules/tests/assertions.
 

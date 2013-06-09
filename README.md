@@ -3,10 +3,9 @@ True
 
 A testing framework for compass/sass libraries.
 
-At this point,
-True is better at testing functions than mixins -
-because it is easier to test a value
-than the actual property-value css output.
+At this point
+True can only test values,
+not property/value output.
 
 Install
 -------
