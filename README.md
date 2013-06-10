@@ -13,9 +13,12 @@ True
 At this point
 True can only test values,
 not property/value output.
-Works great for tests of logical units —
-while integration/output tests can be handled
-with simple version control.
+I'd like that to change in the future,
+but it will require ruby code to achieve.
+In the meantime,
+you use True for logical unit tests,
+and use version-control for integration testing
+by comparing changes in output files.
 
 Install
 -------
@@ -46,12 +49,12 @@ in your scss:
 
     // Assert something, with a message to post if the assertion fails.
     @include assert-equal($test-1, 15,
-      'Simple multiplication failed.');
+      'Simple multiplication of `3*5` should return `15`.');
 
     // You can assert-equal, assert-unequal, assert-true, or assert-false.
     // A test can include as many assertions as you need.
     @include assert-true($test-2,
-      'Something returned false.');
+      '`something` should return `true` in the `if()` function.');
   }
 
 }

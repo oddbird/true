@@ -1,8 +1,8 @@
 True Changelog
 ==============
 
-0.1.5 (unreleased)
-------------------
+0.1.5 (6/10/13)
+---------------
 - Append actual results to custom failure messages.
 
 0.1.4 (6/9/13)

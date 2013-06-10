@@ -3,8 +3,8 @@
 Gem::Specification.new do |s|
   # General Project Information
   s.name = "true"
-  s.version = "0.1.4"
-  s.date = "2013-06-09"
+  s.version = "0.1.5"
+  s.date = "2013-06-10"
 
   # RubyForge Information
   s.rubyforge_project = "true"
