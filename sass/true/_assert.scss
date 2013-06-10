@@ -3,16 +3,20 @@
 
 @mixin assert-true(
   $assert,
-  $fail-message: '#{$assert} is not true.'
+  $fail-message: null
 ) {
+  $default-message: '(#{$assert} is not true)';
+  $fail-message: join($fail-message, $default-message, space);
   @if $assert { @include pass; }
   @else { @include fail($fail-message); }
 }
 
 @mixin assert-false(
   $assert,
-  $fail-message: '#{$assert} is not false.'
+  $fail-message: null
 ) {
+  $default-message: '(#{$assert} is not false)';
+  $fail-message: join($fail-message, $default-message, space);
   @if not $assert { @include pass; }
   @else { @include fail($fail-message); }
 }
@@ -20,8 +24,10 @@
 @mixin assert-equal(
   $assert,
   $expected,
-  $fail-message: '#{$assert} != #{$expected}'
+  $fail-message: null
 ) {
+  $default-message: '(#{$assert} != #{$expected})';
+  $fail-message: join($fail-message, $default-message, space);
   @if $assert == $expected { @include pass; }
   @else { @include fail($fail-message); }
 }
@@ -29,8 +35,10 @@
 @mixin assert-unequal(
   $assert,
   $expected,
-  $fail-message: '#{$assert} == #{$expected}'
+  $fail-message: null
 ) {
+  $default-message: '(#{$assert} == #{$expected})';
+  $fail-message: join($fail-message, $default-message, space);
   @if $assert != $expected { @include pass; }
   @else { @include fail($fail-message); }
 }

@@ -1,6 +1,10 @@
 True Changelog
 ==============
 
+0.1.5 (unreleased)
+------------------
+- Append actual results to custom failure messages.
+
 0.1.4 (6/9/13)
 --------------
 - Null result is considered a failure.
