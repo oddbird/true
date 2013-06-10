@@ -1,11 +1,21 @@
 True
 ====
 
-A testing framework for compass/sass libraries.
+*Verb*
+
+1. To make true; shape, adjust, place, etc., exactly or accurately:
+  *True the wheels of a bicycle after striking a pothole.*
+2. To make even, symmetrical, level, etc. (often followed by *up*):
+  *True up the sides of a door.*
+3. A testing framework for Sass/Compass libraries:
+  *True your Sass before you deploy.*
 
 At this point
 True can only test values,
 not property/value output.
+Works great for tests of logical units —
+while integration/output tests can be handled
+with simple version control.
 
 Install
 -------
