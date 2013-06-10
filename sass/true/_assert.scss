@@ -5,8 +5,8 @@
   $assert,
   $fail-message: null
 ) {
-  $default-message: '(#{$assert} is not true)';
-  $fail-message: join($fail-message, $default-message, space);
+  $default-message: ' (#{$assert} is not true)';
+  $fail-message: $fail-message + $default-message;
   @if $assert { @include pass; }
   @else { @include fail($fail-message); }
 }
@@ -15,8 +15,8 @@
   $assert,
   $fail-message: null
 ) {
-  $default-message: '(#{$assert} is not false)';
-  $fail-message: join($fail-message, $default-message, space);
+  $default-message: ' (#{$assert} is not false)';
+  $fail-message: $fail-message + $default-message;
   @if not $assert { @include pass; }
   @else { @include fail($fail-message); }
 }
@@ -26,8 +26,8 @@
   $expected,
   $fail-message: null
 ) {
-  $default-message: '(#{$assert} != #{$expected})';
-  $fail-message: join($fail-message, $default-message, space);
+  $default-message: ' (#{$assert} != #{$expected})';
+  $fail-message: $fail-message + $default-message;
   @if $assert == $expected { @include pass; }
   @else { @include fail($fail-message); }
 }
@@ -37,8 +37,8 @@
   $expected,
   $fail-message: null
 ) {
-  $default-message: '(#{$assert} == #{$expected})';
-  $fail-message: join($fail-message, $default-message, space);
+  $default-message: ' (#{$assert} == #{$expected})';
+  $fail-message: $fail-message + $default-message;
   @if $assert != $expected { @include pass; }
   @else { @include fail($fail-message); }
 }
