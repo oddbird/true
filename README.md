@@ -7,8 +7,8 @@ True
   *True the wheels of a bicycle after striking a pothole.*
 2. To make even, symmetrical, level, etc. (often followed by *up*):
   *True up the sides of a door.*
-3. A testing framework for Sass/Compass libraries:
-  *True your Sass before you deploy.*
+3. To test your Sass/Compass code; debug, perfect, etc. (often using *True*):
+  *True your sweet plugin before you deploy.*
 
 At this point
 True can only test values,
