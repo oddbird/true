@@ -6,7 +6,7 @@ $test-result-context  : null;
 $pass-marker          : p;
 $fail-marker          : f;
 
-$test-pass-message    : '.'       !default;
+$test-pass-message    : false     !default;
 $test-fail-message    : 'F'       !default;
 
 // Collate test results
@@ -91,7 +91,7 @@ $test-fail-message    : 'F'       !default;
   $output: true
 ) {
   @include record-result(pass, $context);
-  @if $output { @include result-message($pass, debug); }
+  @if $output and $test-pass-message { @include result-message($pass, debug); }
 }
 
 @mixin fail(
@@ -100,5 +100,5 @@ $test-fail-message    : 'F'       !default;
   $output: true
 ) {
   @include record-result(fail, $context);
-  @if $output { @include result-message($fail, warn); }
+  @if $output and $test-fail-message { @include result-message($fail, warn); }
 }
