@@ -113,7 +113,7 @@ $test-fail-message    : 'F'       !default;
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
-  $message: 'TOTAL: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
+  $message: '#{$total} Tests, #{$pass} Passed, #{$fail} failed';
 
   @return $message;
 }
@@ -121,5 +121,5 @@ $test-fail-message    : 'F'       !default;
 @mixin report(
 ) {
   $message: report($total-test-results);
-  @include result-message($message, debug);
+  @include result-message('FINAL: ' + $message, debug);
 }
