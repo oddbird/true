@@ -28,7 +28,7 @@ $test-module-results  : null;
 
   // Results
   @if $output {
-    $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
+    $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} Failed';
     @include result-message($debug-message, debug);
 
     $css-message: '

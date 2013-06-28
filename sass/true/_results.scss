@@ -113,7 +113,7 @@ $test-fail-message    : 'F'       !default;
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
-  $message: '#{$total} Tests, #{$pass} Passed, #{$fail} failed';
+  $message: '#{$total} Tests, #{$pass} Passed, #{$fail} Failed';
 
   @return $message;
 }
