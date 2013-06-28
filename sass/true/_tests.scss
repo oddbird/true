@@ -1,12 +1,14 @@
 // Tests
 // =====
 
+$default-test-output: terminal css    !default;
+
 $test-results: null;
 
 // Establish a new test
 @mixin test(
   $name,
-  $output: true
+  $output: $default-test-output
 ) {
   // Setup
   $test-results: compact();

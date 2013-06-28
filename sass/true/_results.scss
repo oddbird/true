@@ -60,7 +60,7 @@ $test-fail-message    : 'F'       !default;
   $name,
   $results,
   $context: module,
-  $output: true
+  $output: $default-test-output
 ) {
   $results: collate-results($test-results);
   $total: nth($results, 1);
@@ -72,12 +72,12 @@ $test-fail-message    : 'F'       !default;
   @if $fail > 0 or $pass < 1 {
     $fail-message: '- FAIL: ' + $message;
     @include fail($fail-message, $context, $output: $output);
-    @if $output { @include result-message('FAIL: ' + $message, css); }
+    @if index($output, css) { @include result-message('FAIL: ' + $message, css); }
   }
   @else {
     $pass-message: '- ' + $message;
     @include pass($test-pass-message, $context, $output: $output);
-    @if $output { @include result-message($pass-message, css); }
+    @if index($output, css) { @include result-message($pass-message, css); }
   }
 
 }
@@ -89,22 +89,28 @@ $test-fail-message    : 'F'       !default;
 @mixin pass(
   $pass: $test-pass-message,
   $context: $test-result-context,
-  $output: true
+  $output: $default-test-output
 ) {
   @include record-result(pass, $context);
-  @if $output and $test-pass-message { @include result-message($pass, debug); }
+  @if index($output, terminal) and $test-pass-message {
+    @include result-message($pass, debug);
+  }
 }
 
 @mixin fail(
   $fail: $test-fail-message,
   $context: $test-result-context,
-  $output: true
+  $output: $default-test-output
 ) {
   @include record-result(fail, $context);
-  @if $output and $test-fail-message { @include result-message($fail, warn); }
+  @if index($output, terminal) and $test-fail-message {
+    @include result-message($fail, warn);
+  }
 }
 
 // Final Results
+
+$default-final-output: terminal;
 
 @function report(
   $results: $total-test-results
@@ -119,7 +125,10 @@ $test-fail-message    : 'F'       !default;
 }
 
 @mixin report(
+  $output: $default-final-output
 ) {
   $message: report($total-test-results);
-  @include result-message('FINAL: ' + $message, debug);
+  @if index($output, terminal) {
+    @include result-message('FINAL: ' + $message, debug);
+  }
 }

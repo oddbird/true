@@ -1,18 +1,21 @@
 // Test Modules
 // ============
 
+$default-module-output: terminal css    !default;
+
 $test-module-results  : null;
 
 // Establish a new test module
 @mixin test-module(
   $name,
-  $output: true
+  $output: $default-module-output
 ) {
   // Setup
   $test-result-context: module;
   $test-module-results: compact();
 
-  @if $output {
+  // Initial CSS Output
+  @if index($output, css) {
     @include result-message('
 
 ### #{$name} ------', css);
@@ -21,16 +24,20 @@ $test-module-results  : null;
   // Content
   @content;
 
+  // Results
   $results: collate-results($test-module-results);
   $total: nth($results, 1);
   $pass: nth($results, 2);
   $fail: nth($results, 3);
 
-  // Results
-  @if $output {
+  // Terminal Results
+  @if index($output, terminal) {
     $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} Failed';
     @include result-message($debug-message, debug);
+  }
 
+  // CSS Results
+  @if index($output, css) {
     $css-message: '
     Summary:
     - #{$total} Tests
@@ -39,7 +46,7 @@ $test-module-results  : null;
     @include result-message($css-message, css);
   }
 
-  // record for final results
+  // Add to Total
   $total-tests: nth($total-test-results, 1) + $total;
   $total-passed: nth($total-test-results, 2) + $pass;
   $total-failed: nth($total-test-results, 3) + $fail;
