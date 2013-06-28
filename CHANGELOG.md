@@ -1,6 +1,10 @@
 True Changelog
 ==============
 
+0.1.6 (unreleased)
+------------------
+- Add `report` function and `report` mixin, for reporting final results.
+
 0.1.5 (6/10/13)
 ---------------
 - Append actual results to custom failure messages.

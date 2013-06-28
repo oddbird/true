@@ -1,6 +1,7 @@
 // Results
 // =======
 
+$total-test-results   : 0 0 0;
 $test-result-context  : null;
 
 $pass-marker          : p;
@@ -101,4 +102,24 @@ $test-fail-message    : 'F'       !default;
 ) {
   @include record-result(fail, $context);
   @if $output and $test-fail-message { @include result-message($fail, warn); }
+}
+
+// Final Results
+
+@function report(
+  $results: $total-test-results
+) {
+  $total: nth($results, 1);
+  $pass: nth($results, 2);
+  $fail: nth($results, 3);
+
+  $message: 'TOTAL: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
+
+  @return $message;
+}
+
+@mixin report(
+) {
+  $message: report($total-test-results);
+  @include result-message($message, debug);
 }

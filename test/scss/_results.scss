@@ -29,4 +29,17 @@
     @include fix-result(1);
   }
 
+  @include test('Total Test Results') {
+    $length: length($total-test-results);
+    $expect: 3;
+    @include assert-equal($length, $expect,
+      '$total-test-results should be a 3-item list');
+
+    $test: nth($total-test-results, 1);
+    $expect: if($test > 0, true, false);
+    @include assert-true($expect,
+      'First item in $total-test-results should be greater than 0');
+
+  }
+
 }

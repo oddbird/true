@@ -21,13 +21,13 @@ $test-module-results  : null;
   // Content
   @content;
 
+  $results: collate-results($test-module-results);
+  $total: nth($results, 1);
+  $pass: nth($results, 2);
+  $fail: nth($results, 3);
+
   // Results
   @if $output {
-    $results: collate-results($test-module-results);
-    $total: nth($results, 1);
-    $pass: nth($results, 2);
-    $fail: nth($results, 3);
-
     $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} failed';
     @include result-message($debug-message, debug);
 
@@ -38,6 +38,13 @@ $test-module-results  : null;
     - #{$fail} Failed';
     @include result-message($css-message, css);
   }
+
+  // record for final results
+  $total-tests: nth($total-test-results, 1) + $total;
+  $total-passed: nth($total-test-results, 2) + $pass;
+  $total-failed: nth($total-test-results, 3) + $fail;
+
+  $total-test-results: $total-tests $total-passed $total-failed;
 
   // Teardown
   $test-result-context: null;
