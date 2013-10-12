@@ -46,9 +46,9 @@ $test-fail-message    : 'F'       !default;
 
   // record results
   @if $context == 'test' {
-    $test-results: append($test-results, $marker);
+    $test-results: append($test-results, $marker, comma) !global;
   } @else if $context == 'module' {
-    $test-module-results: append($test-module-results, $marker);
+    $test-module-results: append($test-module-results, $marker) !global;
   }
 }
 

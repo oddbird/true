@@ -11,19 +11,19 @@ $test-results: null;
   $output: $default-test-output
 ) {
   // Setup
-  $test-results: compact();
+  $test-results: () !global;
 
   // Content
   $old-result-context: $test-result-context;
-  $test-result-context: test;
+  $test-result-context: test !global;
 
   @content;
 
-  $test-result-context: $old-result-context;
+  $test-result-context: $old-result-context !global;
 
   // Results
   @include report-test($name, $test-results, $test-result-context, $output);
 
   // Teardown
-  $test-results: null;
+  $test-results: null !global;
 }

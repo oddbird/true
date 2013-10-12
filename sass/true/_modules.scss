@@ -11,8 +11,8 @@ $test-module-results  : null;
   $output: $default-module-output
 ) {
   // Setup
-  $test-result-context: module;
-  $test-module-results: compact();
+  $test-result-context: module !global;
+  $test-module-results: () !global;
 
   // Initial CSS Output
   @if index($output, css) {
@@ -47,13 +47,13 @@ $test-module-results  : null;
   }
 
   // Add to Total
-  $total-tests: nth($total-test-results, 1) + $total;
-  $total-passed: nth($total-test-results, 2) + $pass;
-  $total-failed: nth($total-test-results, 3) + $fail;
+  $total-tests: nth($total-test-results, 1) + $total !global;
+  $total-passed: nth($total-test-results, 2) + $pass !global;
+  $total-failed: nth($total-test-results, 3) + $fail !global;
 
-  $total-test-results: $total-tests $total-passed $total-failed;
+  $total-test-results: $total-tests $total-passed $total-failed !global;
 
   // Teardown
-  $test-result-context: null;
-  $test-module-results: null;
+  $test-result-context: null !global;
+  $test-module-results: null !global;
 }
