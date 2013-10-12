@@ -11,17 +11,17 @@
   $index
 ) {
   $i: 1;
-  $new: compact();
+  $new: ();
 
   @each $res in $test-results {
     @if $i == $index {
       $res: if($res == $fail-marker, $pass-marker, $fail-marker);
     }
-    $new: append($new, $res);
+    $new: append($new, $res, comma);
     $i: $i + 1;
   }
 
-  $test-results: $new;
+  $test-results: $new !global;
 }
 
 // Modules
