@@ -1,133 +1,23 @@
 // Results
 // =======
 
-$total-test-results   : 0 0 0;
-$test-result-context  : null;
-
-$pass-marker          : p;
-$fail-marker          : f;
-
-$test-pass-message    : false     !default;
-$test-fail-message    : 'F'       !default;
-
-// Collate test results
-// --------------------
-
-@function collate-results(
-  $results
-) {
-  $total: length($results);
-  $pass: 0;
-  $fail: 0;
-
-  @each $test in $results {
-    @if $test == $pass-marker { $pass: $pass + 1; }
-    @if $test == $fail-marker { $fail: $fail + 1; }
-  }
-
-  @return $total $pass $fail;
-}
-
-
-// Record test results
-// -------------------
-
-@mixin record-result(
-  $result,
-  $context: $test-result-context
-) {
-  $marker: null;
-
-  @if $result == 'pass' {
-    $marker: $pass-marker;
-  } @else if $result == 'fail' {
-    $marker: $fail-marker;
-  }
-
-  // record results
-  @if $context == 'test' {
-    $test-results: append($test-results, $marker);
-  } @else if $context == 'module' {
-    $test-module-results: append($test-module-results, $marker);
-  }
-}
-
-
-// Report test results
-// -------------------
-
-@mixin report-test(
-  $name,
-  $results,
-  $context: module,
-  $output: $default-test-output
-) {
-  $results: collate-results($test-results);
-  $total: nth($results, 1);
-  $pass: nth($results, 2);
-  $fail: nth($results, 3);
-
-  $message: '#{$name} (#{$total} assertions, #{$pass} passed, #{$fail} failed)';
-
-  @if $fail > 0 or $pass < 1 {
-    $fail-message: '- FAIL: ' + $message;
-    @include fail($fail-message, $context, $output: $output);
-    @if index($output, css) { @include result-message('FAIL: ' + $message, css); }
-  }
-  @else {
-    $pass-message: '- ' + $message;
-    @include pass($test-pass-message, $context, $output: $output);
-    @if index($output, css) { @include result-message($pass-message, css); }
-  }
-
-}
-
-
-// Pass / Fail
-// -----------
-
-@mixin pass(
-  $pass: $test-pass-message,
-  $context: $test-result-context,
-  $output: $default-test-output
-) {
-  @include record-result(pass, $context);
-  @if index($output, terminal) and $test-pass-message {
-    @include result-message($pass, debug);
-  }
-}
-
-@mixin fail(
-  $fail: $test-fail-message,
-  $context: $test-result-context,
-  $output: $default-test-output
-) {
-  @include record-result(fail, $context);
-  @if index($output, terminal) and $test-fail-message {
-    @include result-message($fail, warn);
-  }
-}
-
-// Final Results
-
-$default-final-output: terminal;
-
 @function report(
-  $results: $total-test-results
+  $results: $true-results,
+  $items: 'Tests'
 ) {
-  $total: nth($results, 1);
-  $pass: nth($results, 2);
-  $fail: nth($results, 3);
+  $run: map-get($results, run);
+  $pass: map-get($results, pass);
+  $fail: map-get($results, fail);
 
-  $message: '#{$total} Tests, #{$pass} Passed, #{$fail} Failed';
+  $message: '#{$run} #{$items}, #{$pass} Passed, #{$fail} Failed';
 
   @return $message;
 }
 
 @mixin report(
-  $output: $default-final-output
+  $output: map-get($true, output)
 ) {
-  $message: report($total-test-results);
+  $message: report($true-results);
   @if index($output, terminal) {
     @include result-message('FINAL: ' + $message, debug);
   }

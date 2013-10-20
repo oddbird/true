@@ -1,0 +1,18 @@
+// Utilities
+// =========
+
+// Add map values together
+@function map-add(
+  $base,
+  $add
+) {
+  @each $key, $value in $add {
+    @if $value {
+      $base-value: map-get($base, $key);
+      $new-value: if($base-value, $base-value + $value, $value);
+      $base: map-merge($base, ($key: $new-value));
+    }
+  }
+
+  @return $base;
+}

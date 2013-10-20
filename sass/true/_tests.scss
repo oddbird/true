@@ -1,29 +1,65 @@
 // Tests
 // =====
 
-$default-test-output: terminal css    !default;
-
-$test-results: null;
-
 // Establish a new test
 @mixin test(
   $name,
-  $output: $default-test-output
+  $output: map-get($true, output)
 ) {
-  // Setup
-  $test-results: compact();
-
-  // Content
-  $old-result-context: $test-result-context;
-  $test-result-context: test;
-
+  $test-results: $blank-results;
   @content;
+  @include report-test($name, $test-results, $output);
+}
 
-  $test-result-context: $old-result-context;
+// Report test results
+// -------------------
 
-  // Results
-  @include report-test($name, $test-results, $test-result-context, $output);
+@mixin report-test(
+  $name,
+  $results,
+  $output: map-get($true, output)
+) {
+  $pass: map-get($results, pass);
+  $fail: map-get($results, fail);
 
-  // Teardown
-  $test-results: null;
+  $message: '#{$name} (#{report($results, Assertions)})';
+
+  @if $fail > 0 or $pass < 1 {
+    @include test-result(fail, $message, $output);
+  }
+  @else {
+    @include test-result(pass, $message, $output);
+  }
+}
+
+// Pass / Fail Tests
+// -----------------
+
+@mixin test-result(
+  $result,
+  $message: null,
+  $output: map-get($true, output)
+) {
+  $css: null;
+  $terminal: null;
+
+  @if $result == pass {
+    $message: if($message, $message, map-get($true, pass));
+    $css: '- FAIL: ' + $message;
+    $terminal: 'FAIL: ' + $message;
+  } @else if $result == fail {
+    $message: if($message, $message, map-get($true, fail));
+    $css: '- ' + $message;
+    $terminal: $message;
+  }
+
+  @if index($output, terminal) and $terminal {
+    @include result-message($terminal, debug);
+  }
+
+  @if index($output, css) and $css {
+    @include result-message($css, css);
+  }
+
+  $module-results: map-add($module-results, ($result: 1)) !global;
 }

@@ -1,59 +1,60 @@
-// Test Modules
-// ============
+// Test Module
+// ===========
 
-$default-module-output: terminal css    !default;
-
-$test-module-results  : null;
-
-// Establish a new test module
 @mixin test-module(
   $name,
-  $output: $default-module-output
+  $output: map-get($true, output)
 ) {
-  // Setup
-  $test-result-context: module;
-  $test-module-results: compact();
+  $module-results: blank-results;
+  @include setup-module($name, $output);
+  @content;
+  @include report-module($name, $module-results, $output);
+}
 
+
+// Module Setup (private)
+// ----------------------
+@mixin setup-module(
+  $name,
+  $output: map-get($true, output)
+) {
   // Initial CSS Output
   @if index($output, css) {
     @include result-message('
 
 ### #{$name} ------', css);
   }
+}
 
-  // Content
-  @content;
 
-  // Results
-  $results: collate-results($test-module-results);
-  $total: nth($results, 1);
-  $pass: nth($results, 2);
-  $fail: nth($results, 3);
+// Module Results (private)
+// ------------------------
+@mixin report-module(
+  $name,
+  $module-results,
+  $output: map-get($true, output)
+) {
 
   // Terminal Results
   @if index($output, terminal) {
-    $debug-message: '#{$name}: #{$total} Tests, #{$pass} Passed, #{$fail} Failed';
+    $debug-message: '#{$name}: #{report($module-results, Tests)})';
     @include result-message($debug-message, debug);
   }
 
   // CSS Results
   @if index($output, css) {
+    $run: map-get($module-results, run);
+    $pass: map-get($module-results, pass);
+    $fail: map-get($module-results, fail);
+
     $css-message: '
     Summary:
-    - #{$total} Tests
+    - #{$run} Tests
     - #{$pass} Passed
     - #{$fail} Failed';
     @include result-message($css-message, css);
   }
 
   // Add to Total
-  $total-tests: nth($total-test-results, 1) + $total;
-  $total-passed: nth($total-test-results, 2) + $pass;
-  $total-failed: nth($total-test-results, 3) + $fail;
-
-  $total-test-results: $total-tests $total-passed $total-failed;
-
-  // Teardown
-  $test-result-context: null;
-  $test-module-results: null;
+  $true-results: map-add($true-results, $module-results) !global;
 }
