@@ -1,8 +1,13 @@
 True Changelog
 ==============
 
-0.1.6 (unreleased)
+0.2.0 (unreleased)
 ------------------
+- Remove `default-module-output`, `$default-test-output` and `$default-final-output`.
+  Replace them with `$true` settings map: `(output: css, summary: terminal css)`.
+  `output` handles test/module output, `summary` handles final output.
+  Assertions are always output to the terminal if they fail.
+- Update to use Sass map variables.
 - Add `report` function and `report` mixin, for reporting final results.
 
 0.1.5 (6/10/13)
