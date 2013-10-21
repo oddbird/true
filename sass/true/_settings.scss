@@ -2,9 +2,8 @@
 // =============
 
 $true: (
-  output: terminal css,
-  pass: null,
-  fail: 'F',
+  output: css,
+  summary: terminal css
 ) !default;
 
 

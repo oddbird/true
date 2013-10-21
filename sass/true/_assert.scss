@@ -3,18 +3,20 @@
 
 @mixin assert-true(
   $assert,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $fail-message: $fail-message + ' (#{$assert} is not true)';
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not true)';
   $result: if($assert, pass, fail);
   @include report-assert($result, $fail-message);
 }
 
 @mixin assert-false(
   $assert,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $fail-message: $fail-message + ' (#{$assert} is not false)';
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not false)';
   $result: if(not $assert, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -22,9 +24,10 @@
 @mixin assert-equal(
   $assert,
   $expected,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $fail-message: $fail-message + ' (#{$assert} != #{$expected})';
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} != #{$expected})';
   $result: if($assert == $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -32,9 +35,10 @@
 @mixin assert-unequal(
   $assert,
   $expected,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $fail-message: $fail-message + ' (#{$assert} == #{$expected})';
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} == #{$expected})';
   $result: if($assert != $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -44,10 +48,10 @@
 
 @mixin report-assert(
   $result,
-  $fail-message: null
+  $fail-message: ''
 ) {
   @if $result == fail and $fail-message {
     @warn $fail-message;
   }
-  $test-results: map-add($test-results, ($result: 1)) !global;
+  $test-results: map-add($test-results, (run: 1, $result: 1)) !global;
 }

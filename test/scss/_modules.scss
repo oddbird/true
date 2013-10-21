@@ -4,19 +4,13 @@
 @include test-module('Modules') {
 
   @include test('Module results are properly tracked') {
-    @include pass;
+    $expected-results: map-add($module-results, (pass: 1));
 
-    $expected-results: append(compact(), $pass-marker, comma);
-    @include assert-equal($test-results, $expected-results,
+    @include test-result(pass);
+
+    @include assert-equal(map-get($module-results, pass), map-get($expected-results, pass),
       'Module results are not being properly collected.');
   }
 
-  @include test('Module results are properly collated') {
-    $fake-results: 'p', 'f', 'p', 'f', 'f', 'p', 'p';
-    $fake-data: collate-results($fake-results);
-
-    @include assert-equal($fake-data, 7 4 3,
-      'Modules results are not being collated correctly.');
-  }
-
+  $module-results: map-add($module-results, (run: -1, pass: -1)) !global;
 }

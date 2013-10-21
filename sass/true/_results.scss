@@ -15,10 +15,10 @@
 }
 
 @mixin report(
-  $output: map-get($true, output)
+  $output: map-get($true, summary)
 ) {
   $message: report($true-results);
   @if index($output, terminal) {
-    @include result-message('FINAL: ' + $message, debug);
+    @include result-message('SUMMARY: ' + $message, debug);
   }
 }

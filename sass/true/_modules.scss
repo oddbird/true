@@ -1,14 +1,17 @@
 // Test Module
 // ===========
 
+$module-results: null;
+
 @mixin test-module(
   $name,
   $output: map-get($true, output)
 ) {
-  $module-results: blank-results;
+  $module-results: $blank-results !global;
   @include setup-module($name, $output);
   @content;
   @include report-module($name, $module-results, $output);
+  $module-results: null !global;
 }
 
 
@@ -48,8 +51,7 @@
     $fail: map-get($module-results, fail);
 
     $css-message: '
-    Summary:
-    - #{$run} Tests
+    #{$run} Tests:
     - #{$pass} Passed
     - #{$fail} Failed';
     @include result-message($css-message, css);

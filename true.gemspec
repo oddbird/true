@@ -3,22 +3,22 @@
 Gem::Specification.new do |s|
   # General Project Information
   s.name = "true"
-  s.version = "0.1.5"
-  s.date = "2013-06-10"
+  s.version = "0.2.0"
+  s.date = "2013-10-20"
 
   # RubyForge Information
   s.rubyforge_project = "true"
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "2.0.3"
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
 
   # Author Information
   s.authors = ["Eric Meyer"]
   s.email = ["eric@oddbird.net"]
-  s.homepage = "http://oddbird.net/"
+  s.homepage = "http://eric.andmeyer.com/true"
 
   # Project Description
-  s.summary = "Testing framework for compass and sass libraries."
-  s.description = "A framework to help you develop and manage compass/sass libraries with a test-driven approach."
+  s.summary = "Testing framework for Sass libraries."
+  s.description = "Unit tests for maintaining test-driven Sass/Compass extensions."
 
   # Files to Include
   s.require_paths = ["lib"]
@@ -31,19 +31,26 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["CHANGELOG.md", "LICENSE.txt", "README.md", "lib/true.rb"]
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "true", "--main", "README.md"]
 
+  dependencies = {
+    "compass" => "~> 0.13.alpha.7",
+    "sass"    => "~> 3.3.0.rc.1"
+  }
   # Project Dependencies
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<compass>,       [">= 0.12.2"])
-      s.add_runtime_dependency(%q<sass>,          [">= 3.2.0"])
+      dependencies.each do |project, version|
+        s.add_runtime_dependency(project, version)
+      end
     else
-      s.add_dependency(%q<compass>,       [">= 0.12.2"])
-      s.add_dependency(%q<sass>,          [">= 3.2.0"])
+      dependencies.each do |project, version|
+        s.add_dependency(project, version)
+      end
     end
   else
-    s.add_dependency(%q<compass>,       [">= 0.12.2"])
-    s.add_dependency(%q<sass>,          [">= 3.2.0"])
+    dependencies.each do |project, version|
+      s.add_dependency(project, version)
+    end
   end
 end

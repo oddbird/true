@@ -1,14 +1,17 @@
 // Tests
 // =====
 
+$test-results: null;
+
 // Establish a new test
 @mixin test(
   $name,
   $output: map-get($true, output)
 ) {
-  $test-results: $blank-results;
+  $test-results: map-merge($blank-results, (name: $name)) !global;
   @content;
   @include report-test($name, $test-results, $output);
+  $test-results: null !global;
 }
 
 // Report test results
@@ -21,15 +24,11 @@
 ) {
   $pass: map-get($results, pass);
   $fail: map-get($results, fail);
+  $result: if($fail > 0 or $pass < 1, fail, pass);
 
   $message: '#{$name} (#{report($results, Assertions)})';
 
-  @if $fail > 0 or $pass < 1 {
-    @include test-result(fail, $message, $output);
-  }
-  @else {
-    @include test-result(pass, $message, $output);
-  }
+  @include test-result($result, $message, $output);
 }
 
 // Pass / Fail Tests
@@ -37,20 +36,20 @@
 
 @mixin test-result(
   $result,
-  $message: null,
+  $message: '',
   $output: map-get($true, output)
 ) {
   $css: null;
   $terminal: null;
 
-  @if $result == pass {
-    $message: if($message, $message, map-get($true, pass));
-    $css: '- FAIL: ' + $message;
-    $terminal: 'FAIL: ' + $message;
-  } @else if $result == fail {
+  @if $result == fail {
     $message: if($message, $message, map-get($true, fail));
-    $css: '- ' + $message;
-    $terminal: $message;
+    $css: '- FAIL: ' + if($message, $message, '');
+    $terminal: 'FAIL: ' + if($message, $message, '');
+  } @else if $result == pass {
+    $message: if($message, $message, map-get($true, pass));
+    $css: '- ' + if($message, $message, '');
+    $terminal: if($message, $message, '');
   }
 
   @if index($output, terminal) and $terminal {
@@ -61,5 +60,5 @@
     @include result-message($css, css);
   }
 
-  $module-results: map-add($module-results, ($result: 1)) !global;
+  $module-results: map-add($module-results, (run: 1, $result: 1)) !global;
 }

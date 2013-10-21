@@ -3,35 +3,7 @@
 
 @import "true";
 
-// Fix Results
-// -----------
-
-// Sometimes a test needs to fail in order to pass...
-@mixin fix-result(
-  $index
-) {
-  $i: 1;
-  $new: compact();
-
-  @each $res in $test-results {
-    @if $i == $index {
-      $res: if($res == $fail-marker, $pass-marker, $fail-marker);
-    }
-    $new: append($new, $res);
-    $i: $i + 1;
-  }
-
-  $test-results: $new;
-}
-
-// Modules
-// -------
-
 @import "assert";
-@import "results";
 @import "modules";
-
-// Report
-// ------
 
 @include report;

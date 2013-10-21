@@ -1,30 +1,17 @@
 /*  
 
 ### Assert ------ */
-/*  - Assertions pass when given simple true/false/equality (4 assertions, 4 passed, 0 failed) */
+/*  - Assertions pass when given simple true/false/equality (4 Assertions, 4 Passed, 0 Failed) */
 /*  
-    Summary:
-    - 1 Tests
+    1 Tests:
     - 1 Passed
     - 0 Failed */
 /*  
 
-### Results ------ */
-/*  - Pass and Fail correctly increment results (3 assertions, 3 passed, 0 failed) */
-/*  - Null result is considered a failure (2 assertions, 2 passed, 0 failed) */
-/*  - Total Test Results (2 assertions, 2 passed, 0 failed) */
-/*  
-    Summary:
-    - 3 Tests
-    - 3 Passed
-    - 0 Failed */
-/*  
-
 ### Modules ------ */
-/*  - Module results are properly tracked (2 assertions, 2 passed, 0 failed) */
-/*  - Module results are properly collated (1 assertions, 1 passed, 0 failed) */
+/*  -  */
+/*  - Module results are properly tracked (1 Assertions, 1 Passed, 0 Failed) */
 /*  
-    Summary:
-    - 2 Tests
-    - 2 Passed
+    1 Tests:
+    - 1 Passed
     - 0 Failed */
