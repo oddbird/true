@@ -1,0 +1,18 @@
+// True Settings
+// =============
+
+$true: (
+  output: css,
+  summary: terminal css
+) !default;
+
+
+// Results (private)
+// -----------------
+$blank-results: (
+  run: 0,
+  pass: 0,
+  fail: 0,
+);
+
+$true-results: $blank-results;

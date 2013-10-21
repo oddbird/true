@@ -3,42 +3,55 @@
 
 @mixin assert-true(
   $assert,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $default-message: ' (#{$assert} is not true)';
-  $fail-message: $fail-message + $default-message;
-  @if $assert { @include pass; }
-  @else { @include fail($fail-message); }
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not true)';
+  $result: if($assert, pass, fail);
+  @include report-assert($result, $fail-message);
 }
 
 @mixin assert-false(
   $assert,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $default-message: ' (#{$assert} is not false)';
-  $fail-message: $fail-message + $default-message;
-  @if not $assert { @include pass; }
-  @else { @include fail($fail-message); }
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not false)';
+  $result: if(not $assert, pass, fail);
+  @include report-assert($result, $fail-message);
 }
 
 @mixin assert-equal(
   $assert,
   $expected,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $default-message: ' (#{$assert} != #{$expected})';
-  $fail-message: $fail-message + $default-message;
-  @if $assert == $expected { @include pass; }
-  @else { @include fail($fail-message); }
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} != #{$expected})';
+  $result: if($assert == $expected, pass, fail);
+  @include report-assert($result, $fail-message);
 }
 
 @mixin assert-unequal(
   $assert,
   $expected,
-  $fail-message: null
+  $fail-message: ''
 ) {
-  $default-message: ' (#{$assert} == #{$expected})';
-  $fail-message: $fail-message + $default-message;
-  @if $assert != $expected { @include pass; }
-  @else { @include fail($fail-message); }
+  $test: map-get($test-results, name);
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} == #{$expected})';
+  $result: if($assert != $expected, pass, fail);
+  @include report-assert($result, $fail-message);
+}
+
+// Pass / Fail
+// -----------
+
+@mixin report-assert(
+  $result,
+  $fail-message: ''
+) {
+  @if $result == fail and $fail-message {
+    @warn $fail-message;
+  }
+  $test-results: map-add($test-results, (run: 1, $result: 1)) !global;
 }
