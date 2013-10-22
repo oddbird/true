@@ -13,9 +13,8 @@ True
 At this point
 True can only test values,
 not property/value output.
-I'd like that to change in the future,
-but it will require ruby code to achieve.
-In the meantime,
+I'm working on output tests as well.
+For now,
 use True for logical unit tests,
 and use version-control for integration testing
 by comparing changes in output files.
@@ -181,17 +180,16 @@ Here's the Susy "Column Math" CSS output:
 /*
 
 ### Column Math ------ */
-/*  - [function] is-symmetrical() (3 assertions, 3 passed, 0 failed) */
-/*  - [function] column-count() (2 assertions, 2 passed, 0 failed) */
-/*  - [function] symmetrical column-sum() (2 assertions, 2 passed, 0 failed) */
-/*  - [function] asymmetrical column-sum() (2 assertions, 2 passed, 0 failed) */
-/*  - [function] symmetrical get-columns() (1 assertions, 1 passed, 0 failed) */
-/*  - [function] asymmetrical get-columns() (1 assertions, 1 passed, 0 failed) */
-/*  - [function] symmetrical get-column-span-sum() (2 assertions, 2 passed, 0 failed) */
-/*  - [function] asymmetrical get-column-span-sum() (2 assertions, 2 passed, 0 failed) */
+/*  - [function] is-symmetrical() (3 Assertions, 3 Passed, 0 Failed) */
+/*  - [function] column-count() (2 Assertions, 2 Passed, 0 Failed) */
+/*  - [function] symmetrical column-sum() (2 Assertions, 2 Passed, 0 Failed) */
+/*  - [function] asymmetrical column-sum() (2 Assertions, 2 Passed, 0 Failed) */
+/*  - [function] symmetrical get-columns() (1 Assertions, 1 Passed, 0 Failed) */
+/*  - [function] asymmetrical get-columns() (1 Assertions, 1 Passed, 0 Failed) */
+/*  - [function] symmetrical get-column-span-sum() (2 Assertions, 2 Passed, 0 Failed) */
+/*  - [function] asymmetrical get-column-span-sum() (2 Assertions, 2 Passed, 0 Failed) */
 /*
-    Summary:
-    - 8 Tests
+    8 Tests:
     - 8 Passed
     - 0 Failed */
 ```

@@ -3,6 +3,7 @@ True Changelog
 
 0.2.0 (unreleased)
 ------------------
+- Simplified reporting in both terminal and CSS.
 - Remove `default-module-output`, `$default-test-output` and `$default-final-output`.
   Replace them with `$true` settings map: `(output: css, summary: terminal css)`.
   `output` handles test/module output, `summary` handles final output.
