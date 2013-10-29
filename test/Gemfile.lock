@@ -1,14 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    chunky_png (1.2.9)
-    compass (0.13.alpha.7)
-      chunky_png (~> 1.2)
-      json
-      listen (~> 1.1.0)
-      sass (~> 3.3.0.rc.1)
     ffi (1.9.0)
-    json (1.8.1)
     listen (1.1.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -25,5 +18,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  compass (~> 0.13.alpha.7)
   sass (~> 3.3.0.rc.1)

@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   # Project Description
   s.summary = "Testing framework for Sass libraries."
-  s.description = "Unit tests for maintaining test-driven Sass/Compass extensions."
+  s.description = "Unit tests for maintaining test-driven Sass libraries."
 
   # Files to Include
   s.require_paths = ["lib"]
@@ -32,7 +32,6 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "true", "--main", "README.md"]
 
   dependencies = {
-    "compass" => "~> 0.13.alpha.7",
     "sass"    => "~> 3.3.0.rc.1"
   }
   # Project Dependencies

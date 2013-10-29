@@ -10,6 +10,8 @@ True Changelog
   Assertions are always output to the terminal if they fail.
 - Update to use Sass map variables.
 - Add `report` function and `report` mixin, for reporting final results.
+- Only register as a compass extension if compass is present. Compass is
+  no longer an explicit dependency.
 
 0.1.5 (6/10/13)
 ---------------
