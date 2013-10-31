@@ -6,7 +6,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not true)';
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} is not true)';
   $result: if($assert, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -16,7 +16,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} is not false)';
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} is not false)';
   $result: if(not $assert, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -27,7 +27,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} != #{$expected})';
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} != #{map-to-string($expected)})';
   $result: if($assert == $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -38,7 +38,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{$assert} == #{$expected})';
+  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} == #{map-to-string($expected)})';
   $result: if($assert != $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }

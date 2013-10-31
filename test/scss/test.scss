@@ -1,8 +1,9 @@
 // True Tests
 // ==========
 
-@import "true";
+@import "../sass/true";
 
+@import "utilities";
 @import "assert";
 @import "modules";
 
