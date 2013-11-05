@@ -1,6 +1,5 @@
 # Compass CSS framework config file
-add_import_path '../sass'
-
+require 'true'
 project_type = :stand_alone
 http_path = "/"
 sass_dir = "scss"
