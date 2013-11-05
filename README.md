@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ericam/true.png?branch=master)](https://travis-ci.org/ericam/true)
+
 True
 ====
 
