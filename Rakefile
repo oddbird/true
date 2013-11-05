@@ -8,12 +8,15 @@ def spec.bump!
   self.version = Gem::Version.new(segments.join("."))
 end
 
+# Set SAME_VERSION when moving to a new major version and you want to specify the new version
+# explicitly instead of bumping the current version.
+# E.g. rake build SAME_VERSION=true
 spec.bump! unless ENV["SAME_VERSION"]
 
 desc "Run tests and build true-#{spec.version}.gem"
 task :build => [:test, :gem]
 
-desc "Make a prebuilt gem with versio #{spec.version} public."
+desc "Make make the prebuilt gem true-#{spec.version}.gem public."
 task :publish => [:record_version, :push_gem, :tag]
 
 desc "Build & Publish version #{spec.version}" 
@@ -48,7 +51,7 @@ task :record_version do
     open(FileList["VERSION"].first, "w") do |f|
       f.write(spec.version.to_s)
     end
-    sh "git add VERSION"
+    sh "git add VERSION test/Gemfile.lock"
     sh %Q{git commit -m "Bump version to #{spec.version}."}
   end
 end
@@ -61,5 +64,5 @@ end
 
 desc "Push true-#{spec.version}.gem to the rubygems server"
 task :push_gem do
-  sh "gem push true-#{spec.version}.gem"
+  sh "gem push pkg/true-#{spec.version}.gem"
 end
