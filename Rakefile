@@ -1,5 +1,7 @@
 require 'rubygems/package_task'
 
+task :default => :test
+
 spec = eval(File.read("true.gemspec"), binding, "true.gemspec")
 
 def spec.bump!
