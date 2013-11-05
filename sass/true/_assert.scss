@@ -27,7 +27,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} != #{map-to-string($expected)})';
+  $fail-message: '#{$test}: ' + $fail-message + ' (Expected: #{map-to-string($expected)} != Result: #{map-to-string($assert)})';
   $result: if($assert == $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }
@@ -38,7 +38,7 @@
   $fail-message: ''
 ) {
   $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{map-to-string($assert)} == #{map-to-string($expected)})';
+  $fail-message: '#{$test}: ' + $fail-message + ' (Expected: #{map-to-string($expected)} == Result: #{map-to-string($assert)})';
   $result: if($assert != $expected, pass, fail);
   @include report-assert($result, $fail-message);
 }
