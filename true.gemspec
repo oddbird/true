@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   # General Project Information
   s.name = "true"
-  s.version = "0.2.0.rc.2"
+  s.version = File.read(File.join(File.dirname(__FILE__), "VERSION"))
   s.date = "2013-10-22"
 
   # RubyForge Information
@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir.glob("lib/*.*")
   s.files += Dir.glob("sass/**/*.*")
-  s.files += ["CHANGELOG.md", "LICENSE.txt", "README.md"]
+  s.files += ["CHANGELOG.md", "LICENSE.txt", "README.md", "VERSION"]
 
   # Docs Information
   s.extra_rdoc_files = ["CHANGELOG.md", "LICENSE.txt", "README.md", "lib/true.rb"]
