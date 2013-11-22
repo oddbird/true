@@ -12,13 +12,4 @@
     @include assert-equal($test, $expect,
       'Returns the sum of two numeric maps');
   }
-
-  @include test('Map To String [function]') {
-    $map: (one: 1, two: 1, three: 1);
-
-    $test: map-to-string($map);
-    $expect: '(one: 1, two: 1, three: 1)';
-    @include assert-equal($test, $expect,
-      'Returns a map in string form');
-  }
 }
