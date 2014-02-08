@@ -1,0 +1,5 @@
+{
+  "name": "true",
+  "description": "Unit testing for Sass extensions.",
+  "tags": ["unit-test", "test", "sass"]
+}
