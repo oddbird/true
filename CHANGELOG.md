@@ -12,6 +12,7 @@ True Changelog
 - Add `report` function and `report` mixin, for reporting final results.
 - Only register as a compass extension if compass is present. Compass is
   no longer an explicit dependency.
+- Sass 3.3.0
 
 0.1.5 (6/10/13)
 ---------------
