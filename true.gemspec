@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "true", "--main", "README.md"]
 
   dependencies = {
-    "sass"    => "~> 3.3.0.rc.1"
+    "sass"    => [">= 3.3.0", "< 3.5"]
   }
   # Project Dependencies
   if s.respond_to? :specification_version then
@@ -40,16 +40,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       dependencies.each do |project, version|
-        s.add_runtime_dependency(project, version)
+        s.add_runtime_dependency(project, *version)
       end
     else
       dependencies.each do |project, version|
-        s.add_dependency(project, version)
+        s.add_dependency(project, *version)
       end
     end
   else
     dependencies.each do |project, version|
-      s.add_dependency(project, version)
+      s.add_dependency(project, *version)
     end
   end
 end
