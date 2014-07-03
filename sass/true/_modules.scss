@@ -23,9 +23,8 @@ $module-results: null;
 ) {
   // Initial CSS Output
   @if index($output, css) {
-    @include result-message('
-
-### #{$name} ------', css);
+    @include result-message('\00000a' +
+                            '\00000a### #{$name} ------', css);
   }
 }
 
@@ -50,10 +49,9 @@ $module-results: null;
     $pass: map-get($module-results, pass);
     $fail: map-get($module-results, fail);
 
-    $css-message: '
-    #{$run} Tests:
-    - #{$pass} Passed
-    - #{$fail} Failed';
+    $css-message: '\00000a    #{$run} Tests:' +
+                  '\00000a    - #{$pass} Passed' +
+                  '\00000a    - #{$fail} Failed';
     @include result-message($css-message, css);
   }
 
