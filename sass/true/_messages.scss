@@ -5,11 +5,23 @@
   $message,
   $output
 ) {
+  $lines: str-split($message, "\n");
   @if index($output, css) {
-    /*  #{$message} */
+    @each $line in $lines {
+      /* #{$line} */
+    }
   } @else if index($output, debug) or index($output, terminal) {
-    @debug $message;
+    @each $line in $lines  {
+      @debug $line;
+    }
   } @else if index($output, warn) {
     @warn $message;
+    @each $line in $lines  {
+      @if index($lines, $line) == length($lines) {
+        @warn $line;
+      } @else {
+        @debug $line;
+      }
+    }
   }
 }

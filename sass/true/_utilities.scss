@@ -36,3 +36,16 @@
     @return $return + ')';
   }
 }
+
+// Split a string
+@function str-split($string, $substring) {
+  $strings: ();
+  $found-at: str-index($string, $substring);
+  @while $found-at {
+    $strings: if($found-at > 1, append($strings, str-slice($string, 1, $found-at - 1)), $strings);
+    $string: str-slice($string, $found-at + str-length($substring));
+    $found-at: str-index($string, $substring);
+  }
+  $strings: append($strings, $string);
+  @return $strings;
+}
