@@ -1,11 +1,13 @@
 // Messages
 // ========
 
+$-tnl: "\\NEWLINE";
+
 @mixin result-message(
   $message,
   $output
 ) {
-  $lines: str-split($message, "\n");
+  $lines: str-split($message, $-tnl);
   @if index($output, css) {
     @each $line in $lines {
       /* #{$line} */
