@@ -1,3 +1,4 @@
 true-*.gem
 pkg/*
 .bundle
+Gemfile*.lock
