@@ -1,7 +1,7 @@
 // Messages
 // ========
 
-$-tnl: "\a";
+$-tnl: "\a ";
 
 @mixin spacer-comment() {
 /*
@@ -23,7 +23,7 @@ $-tnl: "\a";
     }
   } @else if index($output, warn) {
     @warn $message;
-    @each $line in $lines  {
+    @each $line in $lines {
       @if index($lines, $line) == length($lines) {
         @warn $line;
       } @else {
