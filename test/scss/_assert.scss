@@ -3,15 +3,15 @@
 
 @include test-module('Assert') {
 
-  @include test('Assertions pass when given simple true/false/equality') {
+  @include test('Simple assertions pass') {
     @include assert-true(true,
-      'True is not asserting true.');
+      'True should assert true.');
     @include assert-false(false,
-      'False is not asserting false.');
-    @include assert-equal(1,1,
-      '1 and 1 are to asserting equal.');
-    @include assert-unequal(1,3,
-      '1 and 3 are not asserting un-equal.');
+      'False should assert false.');
+    @include assert-equal(1, 1,
+      '1 and 1 should be equal.');
+    @include assert-unequal(1, 3,
+      '1 and 3 should be un-equal.');
   }
 
 }

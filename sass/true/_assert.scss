@@ -5,20 +5,20 @@
   $assert,
   $fail-message: ''
 ) {
-  $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{inspect($assert)} is not true)';
+  $name: map-get($test-results, name);
+  $debug-message: '#{inspect($assert)} is not true';
   $result: if($assert, pass, fail);
-  @include report-assert($result, $fail-message);
+  @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
 @mixin assert-false(
   $assert,
   $fail-message: ''
 ) {
-  $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (#{inspect($assert)} is not false)';
+  $name: map-get($test-results, name);
+  $debug-message: '#{inspect($assert)} is not false';
   $result: if(not $assert, pass, fail);
-  @include report-assert($result, $fail-message);
+  @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
 @mixin assert-equal(
@@ -26,10 +26,11 @@
   $expected,
   $fail-message: ''
 ) {
-  $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (Expected: #{inspect($expected)} != Result: #{inspect($assert)})';
+  $name: map-get($test-results, name);
+  $debug-message: 'Expected: #{inspect($expected)}',
+                  'Result: #{inspect($assert)}';
   $result: if($assert == $expected, pass, fail);
-  @include report-assert($result, $fail-message);
+  @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
 @mixin assert-unequal(
@@ -37,21 +38,34 @@
   $expected,
   $fail-message: ''
 ) {
-  $test: map-get($test-results, name);
-  $fail-message: '#{$test}: ' + $fail-message + ' (Expected: #{inspect($expected)} == Result: #{inspect($assert)})';
+  $name: map-get($test-results, name);
+  $debug-message: 'Expected: #{inspect($expected)}',
+                  'Result: #{inspect($assert)}';
   $result: if($assert != $expected, pass, fail);
-  @include report-assert($result, $fail-message);
+
+  @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
 // Pass / Fail
 // -----------
 
 @mixin report-assert(
+  $name,
   $result,
-  $fail-message: ''
+  $fail-message: false,
+  $debug...
 ) {
-  @if $result == fail and $fail-message {
-    @warn $fail-message;
+  @if $result == fail {
+    @debug 'FAIL: #{$name}';
+
+    @each $item in $debug {
+      @debug $item;
+    }
+
+    @if $fail-message {
+      @warn $fail-message;
+    }
   }
+
   $test-results: map-add($test-results, (run: 1, $result: 1)) !global;
 }
