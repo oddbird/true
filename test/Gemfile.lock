@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    true (0.2.0.rc.4)
+    true (0.2.0.rc.5)
       sass (>= 3.3.0, < 3.5)
 
 GEM
