@@ -1,7 +1,12 @@
 // Messages
 // ========
 
-$-tnl: "\\NEWLINE";
+$-tnl: "\a";
+
+@mixin spacer-comment() {
+/*
+*/
+}
 
 @mixin result-message(
   $message,
