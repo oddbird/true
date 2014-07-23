@@ -42,7 +42,7 @@
   $strings: ();
   $found-at: str-index($string, $substring);
   @while $found-at {
-    $strings: if($found-at > 1, append($strings, str-slice($string, 1, $found-at - 1)), $strings);
+    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ""));
     $string: str-slice($string, $found-at + str-length($substring));
     $found-at: str-index($string, $substring);
   }
