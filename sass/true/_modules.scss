@@ -23,7 +23,7 @@ $module-results: null;
 ) {
   // Initial CSS Output
   @if index($output, css) {
-    @include result-message('#{$-tnl}### #{$name} ----------', css);
+    @include result-message('### #{$name} ----------', css);
   }
 }
 
@@ -48,9 +48,9 @@ $module-results: null;
     $pass: map-get($module-results, pass);
     $fail: map-get($module-results, fail);
 
-    $css-message: '#{$-tnl}#{$run} Tests:' +
-                  '#{$-tnl}- #{$pass} Passed' +
-                  '#{$-tnl}- #{$fail} Failed';
+    $css-message: '#{$run} Tests:' + $-tnl +
+                  '- #{$pass} Passed' + $-tnl +
+                  '- #{$fail} Failed';
 
     @include spacer-comment;
     @include result-message($css-message, css);
