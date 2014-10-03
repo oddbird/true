@@ -12,4 +12,14 @@
     @include assert-equal($test, $expect,
       'Returns the sum of two numeric maps');
   }
+
+  @include test('Strict Equal [function]') {
+    $test: is-equal(1, 1rem);
+    @include assert-equal($test, false,
+      'Returns false for equal numbers with different units.');
+
+    $test: is-equal(1, 1);
+    @include assert-equal($test, true,
+      'Returns true for numbers that are truely equal.');
+  }
 }

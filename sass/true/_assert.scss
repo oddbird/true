@@ -29,7 +29,7 @@
   $name: map-get($test-results, name);
   $debug-message: 'Expected: #{inspect($expected)}',
                   'Result: #{inspect($assert)}';
-  $result: if($assert == $expected, pass, fail);
+  $result: if(is-equal($assert, $expected), pass, fail);
   @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
@@ -41,7 +41,7 @@
   $name: map-get($test-results, name);
   $debug-message: 'Expected: #{inspect($expected)}',
                   'Result: #{inspect($assert)}';
-  $result: if($assert != $expected, pass, fail);
+  $result: if(is-equal($assert, $expected), fail, pass);
 
   @include report-assert($name, $result, $fail-message, $debug-message...);
 }

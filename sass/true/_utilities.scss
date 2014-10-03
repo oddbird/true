@@ -29,3 +29,12 @@
   $strings: append($strings, $string);
   @return $strings;
 }
+
+// Check for strict equality
+@function is-equal($one, $two) {
+  @if type-of($one) == number and type-of($two) == number {
+    @return $one == $two and unit($one) == unit($two);
+  } @else {
+    @return $one == $two;
+  }
+}
