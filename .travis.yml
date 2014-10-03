@@ -6,7 +6,7 @@ gemfile:
   - test/Gemfile
   - test/Gemfile.sass_master_branch
 matrix:
-    allow_failures:
-        - rvm: 2.1.3
-        gemfile: test/Gemfile.sass_master_branch
+  allow_failures:
+    - rvm: 2.1.3
+    gemfile: test/Gemfile.sass_master_branch
 
