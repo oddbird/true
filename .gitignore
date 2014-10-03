@@ -2,3 +2,5 @@ true-*.gem
 pkg/*
 .bundle
 Gemfile*.lock
+.sass-cache/
+test/.sass-cache/

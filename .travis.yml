@@ -1,8 +1,12 @@
 language: ruby
 script: "rake"
 rvm:
-  - 2.0.0
+  - 2.1.3
 gemfile:
   - test/Gemfile
   - test/Gemfile.sass_master_branch
+matrix:
+  allow_failures:
+    - gemfile: test/Gemfile.sass_master_branch
+      rvm: 2.1.3
 
