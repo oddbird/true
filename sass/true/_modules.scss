@@ -48,7 +48,7 @@ $module-results: null;
     $pass: map-get($module-results, pass);
     $fail: map-get($module-results, fail);
 
-    $css-message: '#{$run} Tests:\a - #{$pass} Passed\a - #{$fail} Failed';
+    $css-message: '#{$run} Tests:#{$-tnl} - #{$pass} Passed#{$-tnl} - #{$fail} Failed';
 
     @include spacer-comment;
     @include result-message($css-message, css);

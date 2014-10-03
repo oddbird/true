@@ -42,7 +42,6 @@
   $debug-message: 'Expected: #{inspect($expected)}',
                   'Result: #{inspect($assert)}';
   $result: if(is-equal($assert, $expected), fail, pass);
-
   @include report-assert($name, $result, $fail-message, $debug-message...);
 }
 
@@ -65,6 +64,9 @@
     @if $fail-message {
       @warn $fail-message;
     }
+
+    $test-details: $test-details + $-tnl + '  - error: '
+                   + '(#{$debug}) ' + $fail-message !global;
   }
 
   $test-results: map-add($test-results, (run: 1, $result: 1)) !global;

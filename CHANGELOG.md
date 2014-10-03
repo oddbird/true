@@ -1,10 +1,13 @@
 True Changelog
 ==============
 
-0.2.4 (10/3/14)
+1.0.0 (10/3/14)
 ---------------
-- Add command-line interface: `true <path-to-file>`
+- Add command-line interface: `true-cli <path-to-file>`
 - Use `-s` flag for silent output
+- Check for unit differences between numbers.
+- Add assertion-failure details to css output.
+
 
 0.2.0 (7/15/14)
 ---------------
