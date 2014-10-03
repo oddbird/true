@@ -9,7 +9,7 @@ COLORS = {
 }
 options = {:debug => false, :slient => false}
 OptionParser.new do |opts|
-  opts.banner = "Usage: true [options] file"
+  opts.banner = "Usage: true-cli [options] file"
 
   opts.on('-s', '--slient') do
     options[:slient] = true

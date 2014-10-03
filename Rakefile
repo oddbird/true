@@ -31,7 +31,7 @@ end
 
 desc "run the tests"
 task :test do
-  sh "cd test && bundle install --quiet && bundle exec ../bin/true scss/test.scss", :verbose => false
+  sh "cd test && bundle install --quiet && bundle exec true-cli scss/test.scss", :verbose => false
 end
 
 desc "Record the new version in version control for posterity"

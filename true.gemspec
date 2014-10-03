@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.files += Dir.glob("sass/**/*.*")
   s.files += ["CHANGELOG.md", "LICENSE.txt", "README.md", "VERSION"]
 
-  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.executables   = ['true-cli']
 
   # Docs Information
   s.extra_rdoc_files = ["CHANGELOG.md", "LICENSE.txt", "README.md", "lib/true.rb"]
