@@ -41,15 +41,17 @@ output = with_captured_stdout do
   end
 end
 
-puts "Using config file: #{config_file}" unless options['slient']
-config_options = YAML.load(File.read(config_file))
-options.merge!(config_options['options']) if config_options.has_key?('options')
-if options['debug']
-  puts config_options.inspect
-end
-if config_options.has_key?('require')
-  config_options['require'].each do |path|
-    require path
+if File.exists?(config_file)
+  puts "Using config file: #{config_file}" unless options['slient']
+  config_options = YAML.load(File.read(config_file))
+  options.merge!(config_options['options']) if config_options.has_key?('options')
+  if options['debug']
+    puts config_options.inspect
+  end
+  if config_options.has_key?('require')
+    config_options['require'].each do |path|
+      require path
+    end
   end
 end
 
