@@ -1,18 +1,26 @@
 #!/usr/bin/env ruby
 require 'sass'
 require 'true'
+require 'yaml'
 require 'optparse'
 COLORS = {
   :ok => "\033[92m",
   :fail => "\033[91m",
   :end => "\033[0m"
 }
-options = {:debug => false, :slient => false}
+options = {'debug' => false, 'slient' => false, 'color' => false}
+config_file = File.join(Dir.pwd, 'test', 'true.yml')
 OptionParser.new do |opts|
   opts.banner = "Usage: true-cli [options] file"
 
+  opts.on('-c', '--config PATH', String, 'path to config file') do |config|
+    config_file  = config
+  end
+  opts.on('-d', '--debug') do
+    options['debug'] = true
+  end
   opts.on('-s', '--slient') do
-    options[:slient] = true
+    options['slient'] = true
   end
 end.parse!(ARGV)
 
@@ -33,18 +41,37 @@ output = with_captured_stdout do
   end
 end
 
+puts "Using config file: #{config_file}" unless options['slient']
+config_options = YAML.load(File.read(config_file))
+options.merge!(config_options['options']) if config_options.has_key?('options')
+if options['debug']
+  puts config_options.inspect
+end
+if config_options.has_key?('require')
+  config_options['require'].each do |path|
+    require path
+  end
+end
 
 if output.empty?
   puts "No test files supplied"
   exit(2)
 end
-#DEBUG: SUMMARY: 3 Tests, 3 Passed, 0 Failed
+
 matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
 
 if matches[:failed] == '0'
-  puts COLORS[:ok] + output + COLORS[:end] unless options[:slient]
+  if options['color']
+    puts COLORS[:ok] + output + COLORS[:end] unless options['slient']
+  else
+    puts output unless options['slient']
+  end
   exit(0)
 else
-  puts COLORS[:fail] + output + COLORS[:end] unless options[:slient]
+  if options['color']
+    puts COLORS[:fail] + output + COLORS[:end] unless options['slient']
+  else
+    puts output unless options['slient']
+  end
   exit(3)
 end
