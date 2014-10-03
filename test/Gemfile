@@ -1,4 +1,3 @@
 source "http://rubygems.org"
-
-gem "compass", "~> 1.0.0.alpha.18"
-gem "true", :path => ".."
+gem "compass", "~> 1.0.0"
+gem "true", :path => '../'

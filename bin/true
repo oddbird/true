@@ -29,8 +29,14 @@ def with_captured_stdout
 end
 output = with_captured_stdout do
   ARGV.each do |file|
-    engine = Sass::Engine.for_file(file, {}).render
+    Sass::Engine.for_file(file, {}).render
   end
+end
+
+
+if output.empty?
+  puts "No test files supplied"
+  exit(2)
 end
 #DEBUG: SUMMARY: 3 Tests, 3 Passed, 0 Failed
 matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
