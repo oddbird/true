@@ -35,6 +35,30 @@ in config.rb:
 Usage
 -----
 
+Command Line
+-----
+
+`true-cli [options] PATH`
+
+Options:
+* `-s` slient
+* `-c` config file
+* `-d` debug config file settings
+
+Config file:
+
+default location: `test/true.yml`
+
+``` yaml
+options:
+  color: true #enables colored output
+require: # require ruby sass extension libraries
+  - "compass"
+  - "serialy_sassy"
+  - "susy"
+```
+
+
 Production example from
 [Susy Next](https://github.com/ericam/susy/blob/susy-next/test/scss/math/_columns.scss):
 
