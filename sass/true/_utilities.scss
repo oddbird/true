@@ -17,26 +17,6 @@
   @return $base;
 }
 
-// Return a map as a string
-@function map-to-string(
-  $map
-) {
-  @if type-of($map) != map {
-    @return $map;
-  } @else {
-    $return: '(';
-    $i: 1;
-    @each $key, $value in $map {
-      $return: $return + '#{$key}: #{$value}';
-      @if $i < length(map-keys($map)) {
-        $return: $return + ', ';
-      }
-      $i: $i + 1;
-    }
-    @return $return + ')';
-  }
-}
-
 // Split a string
 @function str-split($string, $substring) {
   $strings: ();
