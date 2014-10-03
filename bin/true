@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+require 'sass'
+require 'true'
+require 'optparse'
+COLORS = {
+  :ok => "\033[92m",
+  :fail => "\033[91m",
+  :end => "\033[0m"
+}
+options = {:debug => false, :slient => false}
+OptionParser.new do |opts|
+  opts.banner = "Usage: true [options] file"
+
+  opts.on('-s', '--slient') do
+    options[:slient] = true
+  end
+end.parse!(ARGV)
+
+
+def with_captured_stdout
+  begin
+    old_stderr = $stderr
+    $stderr = StringIO.new('', 'r+')
+    yield
+    $stderr.string
+  ensure
+    $stderr = old_stderr
+  end
+end
+output = with_captured_stdout do
+  ARGV.each do |file|
+    engine = Sass::Engine.for_file(file, {}).render
+  end
+end
+#DEBUG: SUMMARY: 3 Tests, 3 Passed, 0 Failed
+matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
+
+if matches[:failed] == '0'
+  puts COLORS[:ok] + output + COLORS[:end] unless options[:slient]
+  exit(0)
+else
+  puts COLORS[:fail] + output + COLORS[:end] unless options[:slient]
+  exit(3)
+end
