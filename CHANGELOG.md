@@ -1,6 +1,11 @@
 True Changelog
 ==============
 
+0.2.4 (10/3/14)
+---------------
+- Add command-line interface: `true <path-to-file>`
+- Use `-s` flag for silent output
+
 0.2.0 (7/15/14)
 ---------------
 - Simplified reporting in both terminal and CSS.

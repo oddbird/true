@@ -11,6 +11,7 @@
   "license": "BSD-3-Clause",
   "ignore": [
     "**/.*",
+    "bin/",
     "*.json",
     "*.gemspec",
     "test",
