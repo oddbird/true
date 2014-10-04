@@ -14,7 +14,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: true-cli [options] file"
 
   opts.on('-c', '--config PATH', String, 'path to config file') do |config|
-    config_file  = config
+    config_file  = File.join(Dir.pwd, config)
   end
   opts.on('-d', '--debug') do
     options['debug'] = true
@@ -23,7 +23,6 @@ OptionParser.new do |opts|
     options['slient'] = true
   end
 end.parse!(ARGV)
-
 
 def with_captured_stdout
   begin
@@ -35,12 +34,6 @@ def with_captured_stdout
     $stderr = old_stderr
   end
 end
-output = with_captured_stdout do
-  ARGV.each do |file|
-    Sass::Engine.for_file(file, {}).render
-  end
-end
-
 if File.exists?(config_file)
   puts "Using config file: #{config_file}" unless options['slient']
   config_options = YAML.load(File.read(config_file))
@@ -54,17 +47,28 @@ if File.exists?(config_file)
     end
   end
 end
-
-if output.empty?
+if ARGV.empty?
   puts "No test files supplied"
   exit(2)
 end
 
+output = with_captured_stdout do
+  ARGV.each do |file|
+    Sass::Engine.for_file(file, {}).render
+  end
+end
+
+
 matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
+if matches.nil? # return sass errors
+  puts output
+  exit(2)
+end
 
 if matches[:failed] == '0'
   if options['color']
-    puts COLORS[:ok] + output + COLORS[:end] unless options['slient']
+    noun = matches[:tests].to_i == 1 ? 'Test' : 'Tests'
+    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['slient']
   else
     puts output unless options['slient']
   end
