@@ -47,6 +47,10 @@ if File.exists?(config_file)
     end
   end
 end
+if ARGV.empty?
+  puts "No test files supplied"
+  exit(2)
+end
 
 output = with_captured_stdout do
   ARGV.each do |file|
@@ -54,16 +58,17 @@ output = with_captured_stdout do
   end
 end
 
-if output.empty?
-  puts "No test files supplied"
+
+matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
+if matches.nil? # return sass errors
+  puts output
   exit(2)
 end
 
-matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
-
 if matches[:failed] == '0'
   if options['color']
-    puts COLORS[:ok] + output + COLORS[:end] unless options['slient']
+    noun = matches[:tests].to_i == 1 ? 'Test' : 'Tests'
+    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['slient']
   else
     puts output unless options['slient']
   end
