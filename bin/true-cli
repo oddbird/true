@@ -14,7 +14,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: true-cli [options] file"
 
   opts.on('-c', '--config PATH', String, 'path to config file') do |config|
-    config_file  = config
+    config_file  = File.join(Dir.pwd, config)
   end
   opts.on('-d', '--debug') do
     options['debug'] = true
@@ -23,7 +23,6 @@ OptionParser.new do |opts|
     options['slient'] = true
   end
 end.parse!(ARGV)
-
 
 def with_captured_stdout
   begin
@@ -35,12 +34,6 @@ def with_captured_stdout
     $stderr = old_stderr
   end
 end
-output = with_captured_stdout do
-  ARGV.each do |file|
-    Sass::Engine.for_file(file, {}).render
-  end
-end
-
 if File.exists?(config_file)
   puts "Using config file: #{config_file}" unless options['slient']
   config_options = YAML.load(File.read(config_file))
@@ -52,6 +45,12 @@ if File.exists?(config_file)
     config_options['require'].each do |path|
       require path
     end
+  end
+end
+
+output = with_captured_stdout do
+  ARGV.each do |file|
+    Sass::Engine.for_file(file, {}).render
   end
 end
 
