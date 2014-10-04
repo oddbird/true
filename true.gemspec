@@ -12,9 +12,9 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
 
   # Author Information
-  s.authors = ["Eric Meyer"]
-  s.email = ["eric@oddbird.net"]
-  s.homepage = "http://eric.andmeyer.com/true"
+  s.authors = ["Eric Suzanne", "Scott Davis", "Chris Eppstein"]
+  s.email = ["eric@oddbird.net", "me@sdavis.info", "chris@eppsteins.net"]
+  s.homepage = "http://ericsuzanne.com/true"
 
   # Project Description
   s.summary = "Testing framework for Sass libraries."

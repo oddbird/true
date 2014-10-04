@@ -1,10 +1,14 @@
 {
   "name": "true",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "main": "sass/_true.scss",
   "description": "Unit testing for Sass extensions.",
-  "authors": ["Eric Meyer <eric@oddbird.net>"],
-  "homepage": "http://eric.andmeyer.com/true",
+  "authors": [
+    "Eric Suzanne <eric@oddbird.net>",
+    "Scott Davis <me@sdavis.info>",
+    "Chris Eppstein <chris@eppsteins.net>"
+  ],
+  "homepage": "http://ericsuzanne.com/true",
   "keywords": [
     "unit-test", "test", "sass"
   ],
