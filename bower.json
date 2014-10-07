@@ -1,6 +1,6 @@
 {
   "name": "true",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "sass/_true.scss",
   "description": "Unit testing for Sass extensions.",
   "authors": [

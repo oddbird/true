@@ -1,8 +1,7 @@
-[![Build Status](https://travis-ci.org/ericam/true.png?branch=master)](https://travis-ci.org/ericam/true)
-
-
 True
 ====
+
+[![Build Status](https://travis-ci.org/ericam/true.png?branch=master)](https://travis-ci.org/ericam/true)
 
 *Verb*
 
@@ -10,17 +9,12 @@ True
   *True the wheels of a bicycle after striking a pothole.*
 2. To make even, symmetrical, level, etc. (often followed by *up*):
   *True up the sides of a door.*
-3. To test your Sass/Compass code; debug, perfect, etc. (often using *True*):
+3. To test your Sass code; debug, perfect, etc. (often using *True*):
   *True your sweet plugin before you deploy.*
 
 At this point
-True can only test values,
-not property/value output.
-I'm working on output tests as well.
-For now,
-use True for logical unit tests,
-and use version-control for integration testing
-by comparing changes in output files.
+True can only test values (e.g. function returns),
+not property/value output (e.g. mixin output).
 
 
 Install
@@ -28,15 +22,17 @@ Install
 
 in command line:
 
-`gem install true`
+```bash
+# ruby gem
+gem install true
 
-in config.rb:
-
-`require 'true'`
+# bower package
+bower install true
+```
 
 
 Command Line
------
+------------
 
 `true-cli [options] PATH`
 
@@ -90,7 +86,8 @@ Usage
 }
 ```
 
-**True** will report to both the terminal and an output css file by default.
+**True** will report to both the terminal
+and an output css file by default.
 
 Here's a sample of the CSS output:
 
