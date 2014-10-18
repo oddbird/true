@@ -1,0 +1,27 @@
+{
+  "name": "true",
+  "version": "1.0.1",
+  "description": "Unit testing for Sass.",
+  "homepage": "http://ericsuzanne.com/true",
+  "main": "sass/_true.scss",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ericam/true.git"
+  },
+  "keywords": [
+    "unit-test",
+    "test",
+    "sass",
+    "libsass",
+    "TDD"
+  ],
+  "author": "Eric M Suzanne <eric@oddbird.net>",
+  "contributors": [
+    "Scott Davis <me@sdavis.info>",
+    "Chris Eppstein <chris@eppsteins.net>"
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/ericam/true/issues"
+  }
+}
