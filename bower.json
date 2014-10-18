@@ -2,7 +2,7 @@
   "name": "true",
   "version": "1.0.1",
   "main": "sass/_true.scss",
-  "description": "Unit testing for Sass extensions.",
+  "description": "Unit testing for Sass.",
   "authors": [
     "Eric Suzanne <eric@oddbird.net>",
     "Scott Davis <me@sdavis.info>",
