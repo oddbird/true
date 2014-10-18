@@ -34,7 +34,9 @@ bower install true
 Command Line
 ------------
 
-`true-cli [options] PATH`
+```bash
+true-cli [options] PATH
+```
 
 Options:
 * `-s` slient
@@ -43,7 +45,7 @@ Options:
 
 Config file (optional):
 
-``` yaml
+```yaml
 options:
   color: true #enables colored output
 

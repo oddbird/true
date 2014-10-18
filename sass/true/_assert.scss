@@ -51,7 +51,7 @@
 @mixin report-assert(
   $name,
   $result,
-  $fail-message: false,
+  $fail-message,
   $debug...
 ) {
   @if $result == fail {

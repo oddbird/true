@@ -6,11 +6,13 @@
   $base,
   $add
 ) {
-  @each $key, $value in $add {
+  @each $key in map-keys($add) {
+    $value: map-get($add, $key);
+
     @if $value {
       $base-value: map-get($base, $key);
       $new-value: if($base-value, $base-value + $value, $value);
-      $base: map-merge($base, ($key: $new-value));
+      $base: _map-please-merge($base, ($key: $new-value));
     }
   }
 
@@ -37,4 +39,15 @@
   } @else {
     @return $one == $two;
   }
+}
+
+// Please merge a map. Please.
+@function _map-please-merge($map1, $map2) {
+  $return: $map1;
+
+  @each $key in map-keys($map2) {
+    $return: map-remove($return, $key);
+  }
+
+  @return map-merge($return, $map2);
 }
