@@ -10,7 +10,7 @@
   ],
   "homepage": "http://ericsuzanne.com/true",
   "keywords": [
-    "unit-test", "test", "sass"
+    "unit-test", "test", "sass", "libsass", "TDD"
   ],
   "license": "BSD-3-Clause",
   "ignore": [
