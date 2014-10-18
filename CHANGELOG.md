@@ -1,6 +1,12 @@
 True Changelog
 ==============
 
+
+1.0.1 (10/18/14)
+----------------
+- LibSass 3.0 compatability.
+
+
 1.0.0 (10/3/14)
 ---------------
 - Add command-line interface: `true-cli <path-to-file>`
