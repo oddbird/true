@@ -8,11 +8,11 @@ $-tnl: "\a ";
 @function _true-selector(
   $scope
 ) {
-  $selector: ();
+  $selector: null;
 
   @each $layer in $scope {
     $this: '[data-#{$layer}="#{_true-context($layer)}"]';
-    $selector: append($selector, $this, space);
+    $selector: if($selector, '#{$selector} #{$this}', $this);
   }
 
   @return $selector;

@@ -34,7 +34,7 @@
     $map1: (one: 1, two: 1, three: 1);
     $map2: (two: 2);
 
-    $test: _map-please-merge($map1, $map2);
+    $test: map-merge($map1, $map2);
     $expect: (one: 1, two: 2, three: 1);
     @include assert-equal($test, $expect,
       'Returns a merged map, even in libSass 3.0');

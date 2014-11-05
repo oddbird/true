@@ -96,10 +96,10 @@
 ) {
   @include _true-context(assert, $description);
 
-  @if not(index(_true-get(output), css)) {
+  @if not index(_true-get(output), css) {
     @include _true-message('- CSS: #{_true-context(assert)}');
 
-    @at-root #{_true-selector(module test assert)} {
+    #{_true-selector(module test assert)} {
       @content;
     }
   } @else {

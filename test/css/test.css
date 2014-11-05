@@ -82,6 +82,7 @@
 [data-module="Assert"] [data-test="CSS output assertions"] [data-assert="Input and output selector patterns match"] .expect {
   -property: value;
 }
+
 /* - CSS output assertions (1 Assertions, 0 Passed, 0 Failed, 1 Output to CSS) */
 /*
 */
