@@ -3,8 +3,12 @@
 
 @import "true";
 
+@import "settings";
 @import "utilities";
-@import "assert";
+@import "messages";
+@import "results";
 @import "modules";
+@import "tests";
+@import "assert";
 
 @include report;

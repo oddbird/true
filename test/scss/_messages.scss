@@ -1,0 +1,10 @@
+// Test Assertions
+// ===============
+
+@include test-module('Messages') {
+  @include test('True selector') {
+    @include assert-equal(_true-selector(module test),
+      '[data-module="Messages"]' '[data-test="True selector"]',
+      'Returns a list of selector strings based on the current context');
+  }
+}

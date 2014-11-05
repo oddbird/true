@@ -20,7 +20,10 @@
 }
 
 // Split a string
-@function str-split($string, $substring) {
+@function str-split(
+  $string,
+  $substring
+) {
   $strings: ();
   $found-at: str-index($string, $substring);
   @while $found-at {
@@ -32,6 +35,7 @@
   @return $strings;
 }
 
+
 // Check for strict equality
 @function is-equal($one, $two) {
   @if type-of($one) == number and type-of($two) == number {
@@ -41,12 +45,17 @@
   }
 }
 
+
 // Please merge a map. Please.
 @function _map-please-merge($map1, $map2) {
   $return: $map1;
 
-  @each $key in map-keys($map2) {
-    $return: map-remove($return, $key);
+  $test: map-merge((foo: bar), (foo: baz));
+  $expect: (foo: baz);
+  @if not($test == $expect) {
+    @each $key in map-keys($map2) {
+      $return: map-remove($return, $key);
+    }
   }
 
   @return map-merge($return, $map2);

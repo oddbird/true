@@ -13,6 +13,13 @@
       'Returns the sum of two numeric maps');
   }
 
+  @include test('String Split [function]') {
+    $test: str-split('one%stwo%sthree', '%s');
+    $expect: one two three;
+    @include assert-equal($test, $expect,
+      'Returns a list of substrings, based on any delimiter.');
+  }
+
   @include test('Strict Equal [function]') {
     $test: is-equal(1, 1rem);
     @include assert-equal($test, false,
@@ -21,5 +28,15 @@
     $test: is-equal(1, 1);
     @include assert-equal($test, true,
       'Returns true for numbers that are truely equal.');
+  }
+
+  @include test('Please Merge [function]') {
+    $map1: (one: 1, two: 1, three: 1);
+    $map2: (two: 2);
+
+    $test: _map-please-merge($map1, $map2);
+    $expect: (one: 1, two: 2, three: 1);
+    @include assert-equal($test, $expect,
+      'Returns a merged map, even in libSass 3.0');
   }
 }

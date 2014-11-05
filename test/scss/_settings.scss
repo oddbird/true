@@ -1,0 +1,60 @@
+// Settings Tests
+// ==============
+
+@include test-module('Settings') {
+
+  @include test('Default Settings') {
+    @include assert-equal(map-get($_true-defaults, output), comments,
+      'Default output is sent to comments');
+    @include assert-equal(map-get($_true-defaults, summary), terminal comments,
+      'Default summary is sent to terminal and comments');
+  }
+
+
+  @include test('true-get [function]') {
+    @include assert-equal(_true-get(output), comments,
+      'True-get returns the current value of a setting');
+  }
+
+
+  @include test('true-set [mixin]') {
+    @include assert-equal(_true-get(summary), terminal comments,
+      'Check that summary setting is still using default value');
+
+    @include _true-set(summary, css);
+
+    @include assert-unequal(_true-get(summary), terminal,
+      'Check that summary is no longer set to default value');
+    @include assert-equal(_true-get(summary), css,
+      'Summary setting should be changed to "css"');
+
+    @include _true-set(summary, terminal comments);
+
+    @include assert-equal(_true-get(summary), terminal comments,
+      'Check that summary setting is returned to default value');
+  }
+
+
+  @include test('true-context [mixin]') {
+    @include assert-equal(map-get($_true-context, fake), null,
+      'Confirm that there is currently no "fake" scope');
+
+    @include _true-context(fake, 'this scope is not real');
+
+    @include assert-equal(map-get($_true-context, fake), 'this scope is not real',
+      'Sets the value of scope "fake" to "this scope is not real"');
+
+    $_true-context: map-remove($_true-context, fake);
+
+    @include assert-equal(map-get($_true-context, fake), null,
+      'Confirm that our "fake" scope has been removed');
+  }
+
+  @include test('_true-context [function]') {
+    @include assert-equal(_true-context(module), 'Settings',
+      'Returns the current module name');
+
+    @include assert-equal(_true-context(test), '_true-context [function]',
+      'Returns the current test name');
+  }
+}

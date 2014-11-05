@@ -2,15 +2,10 @@
 // ============
 
 @include test-module('Modules') {
-
-  @include test('Module results are properly tracked') {
-    $expected-results: map-add($module-results, (pass: 1));
-
-    @include test-result(pass);
-
-    @include assert-equal(map-get($module-results, pass), map-get($expected-results, pass),
-      'Module results are not being properly collected.');
+  @include test('test-module') {
+    @include assert-equal(map-get($_true-results, module), $_true-results-reset,
+      'Resets module scope results');
+    @include assert-equal(_true-context(module), 'Modules',
+      'Changes the current module context');
   }
-
-  $module-results: map-add($module-results, (run: -1, pass: -1)) !global;
 }

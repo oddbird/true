@@ -1,73 +1,154 @@
 // Assert
 // ======
 
+
 @mixin assert-true(
   $assert,
-  $fail-message: ''
+  $description: ''
 ) {
-  $name: map-get($test-results, name);
-  $debug-message: '#{inspect($assert)} is not true';
+  $debug-message: 'Expected: true',
+                  'Result: false';
   $result: if($assert, pass, fail);
-  @include report-assert($name, $result, $fail-message, $debug-message...);
+
+  @if index(_true-get(output), css) {
+    .assert-true {
+      -result: to-upper-case($result);
+      -description: $description;
+      -expected: true;
+      -returned: $assert;
+    }
+  }
+
+  @include _true-report-assert($result, $description, $debug-message...);
 }
+
 
 @mixin assert-false(
   $assert,
-  $fail-message: ''
+  $description: ''
 ) {
-  $name: map-get($test-results, name);
-  $debug-message: '#{inspect($assert)} is not false';
+  $debug-message: 'Expected: false',
+                  'Result: true';
   $result: if(not $assert, pass, fail);
-  @include report-assert($name, $result, $fail-message, $debug-message...);
+
+  @if index(_true-get(output), css) {
+    .assert-false {
+      -result: to-upper-case($result);
+      -description: $description;
+      -expected: false;
+      -returned: $assert;
+    }
+  }
+
+  @include _true-report-assert($result, $description, $debug-message...);
 }
+
 
 @mixin assert-equal(
   $assert,
   $expected,
-  $fail-message: ''
+  $description: ''
 ) {
-  $name: map-get($test-results, name);
-  $debug-message: 'Expected: #{inspect($expected)}',
-                  'Result: #{inspect($assert)}';
+  $debug-message: 'Expected (#{type-of($expected)}): #{inspect($expected)}',
+                  'Result (#{type-of($assert)}): #{inspect($assert)}';
   $result: if(is-equal($assert, $expected), pass, fail);
-  @include report-assert($name, $result, $fail-message, $debug-message...);
+
+  @if index(_true-get(output), css) {
+    .assert-equal {
+      -result: to-upper-case($result);
+      -description: $description;
+      -expected: $expected;
+      -returned: $assert;
+    }
+  }
+
+  @include _true-report-assert($result, $description, $debug-message...);
 }
+
 
 @mixin assert-unequal(
   $assert,
   $expected,
-  $fail-message: ''
+  $description: ''
 ) {
-  $name: map-get($test-results, name);
-  $debug-message: 'Expected: #{inspect($expected)}',
-                  'Result: #{inspect($assert)}';
+  $debug-message: 'Expected (#{type-of($expected)}): #{inspect($expected)}',
+                  'Result (#{type-of($assert)}): #{inspect($assert)}';
   $result: if(is-equal($assert, $expected), fail, pass);
-  @include report-assert($name, $result, $fail-message, $debug-message...);
+
+  @if index(_true-get(output), css) {
+    .assert-unequal {
+      -result: to-upper-case($result);
+      -description: $description;
+      -expected: $expected;
+      -returned: $assert;
+    }
+  }
+
+  @include _true-report-assert($result, $description, $debug-message...);
 }
+
+
+// CSS Output Tests
+// ----------------
+
+@mixin assert(
+  $description
+) {
+  @include _true-context(assert, $description);
+
+  @if not(index(_true-get(output), css)) {
+    @include _true-message('- CSS: #{_true-context(assert)}');
+
+    @at-root #{_true-selector(module test assert)} {
+      @content;
+    }
+  } @else {
+    #{_true-selector(assert)} {
+      @content;
+    }
+  }
+
+  @include _true-report-assert(output-to-css, $description);
+  @include _true-context(assert, null);
+}
+
+@mixin input {
+  .input {
+    @content;
+  }
+}
+
+@mixin expect {
+  .expect {
+    @content;
+  }
+}
+
 
 // Pass / Fail
 // -----------
 
-@mixin report-assert(
-  $name,
+@mixin _true-report-assert(
   $result,
-  $fail-message,
+  $description,
   $debug...
 ) {
+  $name: _true-context(test);
+
   @if $result == fail {
-    @debug 'FAIL: #{$name}';
+    @debug '# FAIL: #{$name}';
 
     @each $item in $debug {
-      @debug $item;
+      @debug '- ' + $item;
     }
 
-    @if $fail-message {
-      @warn $fail-message;
+    @if $description {
+      @warn $description;
     }
 
-    $test-details: $test-details + $-tnl + '  - error: '
-                   + '(#{$debug}) ' + $fail-message !global;
+    $details: $-tnl + '  - error: ' + '(#{$debug}) ' + $description;
+    @include _true-details-update($details);
   }
 
-  $test-results: map-add($test-results, (run: 1, $result: 1)) !global;
+  @include _true-update(test, $result);
 }

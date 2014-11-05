@@ -1,0 +1,11 @@
+// Module Tests
+// ============
+
+@include test-module('Tests') {
+  @include test('test [mixin]') {
+    @include assert-equal(map-get($_true-results, test), $_true-results-reset,
+      'Resets module scope results');
+    @include assert-equal(_true-context(test), 'test [mixin]',
+      'Changes the current test context');
+  }
+}

@@ -1,29 +1,102 @@
-/* ### Utilities ---------- */
+/* # Settings ---------- */
+/* - Default Settings (2 Assertions, 2 Passed, 0 Failed) */
+/* - true-get [function] (1 Assertions, 1 Passed, 0 Failed) */
+/* - true-set [mixin] (4 Assertions, 4 Passed, 0 Failed) */
+/* - true-context [mixin] (3 Assertions, 3 Passed, 0 Failed) */
+/* - _true-context [function] (2 Assertions, 2 Passed, 0 Failed) */
+/*
+*/
+/* 5 Tests: */
+/*  - 5 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Utilities ---------- */
 /* - Map Add [function] (1 Assertions, 1 Passed, 0 Failed) */
+/* - String Split [function] (1 Assertions, 1 Passed, 0 Failed) */
 /* - Strict Equal [function] (2 Assertions, 2 Passed, 0 Failed) */
+/* - Please Merge [function] (1 Assertions, 1 Passed, 0 Failed) */
+/*
+*/
+/* 4 Tests: */
+/*  - 4 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Messages ---------- */
+/* - True selector (1 Assertions, 1 Passed, 0 Failed) */
+/*
+*/
+/* 1 Tests: */
+/*  - 1 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Results ---------- */
+/* - Reset (1 Assertions, 1 Passed, 0 Failed) */
+/* - Get results (1 Assertions, 1 Passed, 0 Failed) */
+/* - Get result (1 Assertions, 1 Passed, 0 Failed) */
+/*
+*/
+/* 3 Tests: */
+/*  - 3 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Modules ---------- */
+/* - test-module (2 Assertions, 2 Passed, 0 Failed) */
+/*
+*/
+/* 1 Tests: */
+/*  - 1 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Tests ---------- */
+/* - test [mixin] (2 Assertions, 2 Passed, 0 Failed) */
+/*
+*/
+/* 1 Tests: */
+/*  - 1 Passed */
+/*  - 0 Failed */
+/*
+*/
+/*
+*/
+/* # Assert ---------- */
+/* - Simple assertions (4 Assertions, 4 Passed, 0 Failed) */
+/* - CSS: Input and output selector patterns match */
+[data-module="Assert"] [data-test="CSS output assertions"] [data-assert="Input and output selector patterns match"] .input {
+  -property: value;
+}
+[data-module="Assert"] [data-test="CSS output assertions"] [data-assert="Input and output selector patterns match"] .expect {
+  -property: value;
+}
+/* - CSS output assertions (1 Assertions, 0 Passed, 0 Failed, 1 Output to CSS) */
 /*
 */
 /* 2 Tests: */
-/*  - 2 Passed */
-/*  - 0 Failed */
-/*
-*/
-/* ### Assert ---------- */
-/* - Simple assertions pass (4 Assertions, 4 Passed, 0 Failed) */
-/*
-*/
-/* 1 Tests: */
 /*  - 1 Passed */
 /*  - 0 Failed */
+/*  - 1 Output to CSS */
 /*
 */
-/* ### Modules ---------- */
-/* -  */
-/* - Module results are properly tracked (1 Assertions, 1 Passed, 0 Failed) */
 /*
 */
-/* 1 Tests: */
-/*  - 1 Passed */
+/* # SUMMARY ---------- */
+/*
+*/
+/* 17 Tests: */
+/*  - 16 Passed */
 /*  - 0 Failed */
-/*
-*/
+/*  - 1 Output to CSS */
