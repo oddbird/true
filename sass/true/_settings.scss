@@ -1,25 +1,7 @@
 // True Settings
 // =============
 
-$_true-defaults: (
-  output: comments,
-  summary: terminal comments
-);
-
-$true: () !default;
-
-@function _true-get(
-  $setting
-) {
-  @return map-get($true, $setting) or map-get($_true-defaults, $setting);
-}
-
-@mixin _true-set(
-  $setting,
-  $value
-) {
-  $true: map-merge($true, ($setting: $value)) !global;
-}
+$true-terminal-output: true !default;
 
 
 // Context (private)
@@ -42,24 +24,4 @@ $_true-context: (
   $scope
 ) {
   @return map-get($_true-context, $scope);
-}
-
-
-// Details (private)
-// -----------------
-
-$_true-test-details: '';
-
-@mixin _true-details-update(
-  $details
-) {
-  $_true-test-details: $_true-test-details + $details !global;
-}
-
-@mixin _true-details-reset() {
-  $_true-test-details: '' !global;
-}
-
-@function _true-details() {
-  @return $_true-test-details;
 }

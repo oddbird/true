@@ -25,4 +25,16 @@
     }
   }
 
+  @include test('_true-fail-details') {
+    @include assert('Fail details are output to CSS') {
+      @include input {
+        @include _true-fail-details('foo', 'bar', $terminal: false);
+      }
+      @include expect {
+        -expected--string: 'foo';
+        -returned--string: 'bar';
+      }
+    }
+  }
+
 }

@@ -93,7 +93,7 @@ $_true-results: (
     }
   }
 
-  $scope: ($scope: map-add($current, $update));
+  $scope: ($scope: _true-map-increment($current, $update));
   $_true-results: map-merge($_true-results, $scope) !global;
 }
 
@@ -136,29 +136,15 @@ $_true-results: (
 // ------
 
 @mixin report(
-  $output: _true-get(summary)
+  $terminal: $true-terminal-output
 ) {
-  @if index($output, terminal) {
+  $message: _true-report-message(global, multiple);
+  @include _true-message('# SUMMARY ----------', comments);
+  @include _true-message($message, comments);
+  @include _true-message('--------------------', comments);
+
+  @if $terminal == details {
     $message: _true-report-message(global, single);
-    @include _true-message('# SUMMARY ----------', debug);
     @include _true-message($message, debug);
-  }
-
-  @if index($output, css) or index($output, comments) {
-    $message: _true-report-message(global, multiple);
-    @include _true-message('# SUMMARY ----------', comments);
-
-    @if index($output, css) {
-      .true-report {
-        $results: _true-get-results(global);
-        @each $type, $count in $results {
-          $type: if($type == run, tests, $type);
-          -#{$type}: $count;
-        }
-      }
-    } @else if index($output, comments) {
-      @include _true-spacer;
-      @include _true-message($message, comments);
-    }
   }
 }

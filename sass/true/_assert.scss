@@ -6,20 +6,19 @@
   $assert,
   $description: ''
 ) {
-  $debug-message: 'Expected: true',
-                  'Result: false';
+  @include _true-assert-start($description);
   $result: if($assert, pass, fail);
 
-  @if index(_true-get(output), css) {
-    .assert-true {
-      -result: to-upper-case($result);
-      -description: $description;
-      -expected: true;
-      -returned: $assert;
+  .assert-true {
+    -result: to-upper-case($result);
+    -description: $description;
+
+    @if $result == fail {
+      @include _true-fail-details(true, $assert);
     }
   }
 
-  @include _true-report-assert($result, $description, $debug-message...);
+  @include _true-assert-stop($result);
 }
 
 
@@ -27,20 +26,19 @@
   $assert,
   $description: ''
 ) {
-  $debug-message: 'Expected: false',
-                  'Result: true';
-  $result: if(not $assert, pass, fail);
+  @include _true-assert-start($description);
+  $result: if($assert, fail, pass);
 
-  @if index(_true-get(output), css) {
-    .assert-false {
-      -result: to-upper-case($result);
-      -description: $description;
-      -expected: false;
-      -returned: $assert;
+  .assert-false {
+    -result: to-upper-case($result);
+    -description: $description;
+
+    @if $result == fail {
+      @include _true-fail-details(false, $assert);
     }
   }
 
-  @include _true-report-assert($result, $description, $debug-message...);
+  @include _true-assert-stop($result);
 }
 
 
@@ -49,20 +47,19 @@
   $expected,
   $description: ''
 ) {
-  $debug-message: 'Expected (#{type-of($expected)}): #{inspect($expected)}',
-                  'Result (#{type-of($assert)}): #{inspect($assert)}';
-  $result: if(is-equal($assert, $expected), pass, fail);
+  @include _true-assert-start($description);
+  $result: if(_true-is-equal($assert, $expected), pass, fail);
 
-  @if index(_true-get(output), css) {
-    .assert-equal {
-      -result: to-upper-case($result);
-      -description: $description;
-      -expected: inspect($expected);
-      -returned: inspect($assert);
+  .assert-equal {
+    -result: to-upper-case($result);
+    -description: $description;
+
+    @if $result == fail {
+      @include _true-fail-details($expected, $assert);
     }
   }
 
-  @include _true-report-assert($result, $description, $debug-message...);
+  @include _true-assert-stop($result);
 }
 
 
@@ -71,20 +68,19 @@
   $expected,
   $description: ''
 ) {
-  $debug-message: 'Expected (#{type-of($expected)}): #{inspect($expected)}',
-                  'Result (#{type-of($assert)}): #{inspect($assert)}';
-  $result: if(is-equal($assert, $expected), fail, pass);
+  @include _true-assert-start($description);
+  $result: if(_true-is-equal($assert, $expected), fail, pass);
 
-  @if index(_true-get(output), css) {
-    .assert-unequal {
-      -result: to-upper-case($result);
-      -description: $description;
-      -expected: inspect($expected);
-      -returned: inspect($assert);
+  .assert-unequal {
+    -result: to-upper-case($result);
+    -description: $description;
+
+    @if $result == fail {
+      @include _true-fail-details($expected, $assert);
     }
   }
 
-  @include _true-report-assert($result, $description, $debug-message...);
+  @include _true-assert-stop($result);
 }
 
 
@@ -94,22 +90,13 @@
 @mixin assert(
   $description
 ) {
-  @include _true-context(assert, $description);
+  @include _true-assert-start($description);
 
-  @if not index(_true-get(output), css) {
-    @include _true-message('- CSS: #{_true-context(assert)}');
-
-    #{_true-selector(module test assert)} {
-      @content;
-    }
-  } @else {
-    #{_true-selector(assert)} {
-      @content;
-    }
+  #{_true-selector(assert)} {
+    @content;
   }
 
-  @include _true-report-assert(output-to-css, $description);
-  @include _true-context(assert, null);
+  @include _true-assert-stop(output-to-css);
 }
 
 @mixin input {
@@ -125,30 +112,46 @@
 }
 
 
-// Pass / Fail
-// -----------
+// Assert Start
+// ------------
 
-@mixin _true-report-assert(
-  $result,
-  $description,
-  $debug...
+@mixin _true-assert-start(
+  $name
 ) {
-  $name: _true-context(test);
+  @include _true-context(assert, $name);
+}
 
-  @if $result == fail {
-    @debug '# FAIL: #{$name}';
+@mixin _true-assert-stop(
+  $result
+) {
+  @include _true-update(test, $result);
+  @include _true-context(assert, null);
+}
 
-    @each $item in $debug {
-      @debug '- ' + $item;
-    }
 
-    @if $description {
-      @warn $description;
-    }
+// Details
+// -------
 
-    $details: $-tnl + '  - error: ' + '(#{$debug}) ' + $description;
-    @include _true-details-update($details);
+@mixin _true-fail-details(
+  $expected,
+  $returned,
+  $terminal: $true-terminal-output
+) {
+  $expected-type: type-of($expected);
+  $returned-type: type-of($returned);
+
+  -expected--#{$expected-type}: _true-inspect($expected);
+  -returned--#{$returned-type}: _true-inspect($returned);
+
+  @if $terminal == details {
+    @debug '[FAIL] #{_true-context(test)} » #{_true-context(assert)}';
+    @debug 'Expected #{$expected-type} »';
+    @debug inspect($expected);
+    @debug 'Returned #{$returned-type} »';
+    @debug inspect($returned);
   }
 
-  @include _true-update(test, $result);
+  @if $terminal {
+    @warn '#{_true-context(test)} » #{_true-context(assert)}';
+  }
 }

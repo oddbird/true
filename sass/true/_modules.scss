@@ -3,23 +3,11 @@
 
 
 @mixin test-module(
-  $name,
-  $output: _true-get(output)
+  $name
 ) {
-  $old-output: _true-get(output);
-  @include _true-set(output, $output);
-  @include _true-module-start($name, $output);
-
-  @if index($output, css) {
-    #{_true-selector(module)} {
-      @content;
-      @include _true-module-stop($name, $output);
-    }
-  } @else {
-    @content;
-    @include _true-module-stop($name, $output);
-  }
-  @include _true-set(output, $old-output);
+  @include _true-module-start($name);
+  @content;
+  @include _true-module-stop;
 }
 
 
@@ -27,47 +15,18 @@
 // ----------------------
 
 @mixin _true-module-start(
-  $name,
-  $output: _true-get(output)
+  $name
 ) {
   @include _true-reset(module);
   @include _true-context(module, $name);
-
-  @if index($output, comments) or index($output, css) {
-    @include _true-message('# #{$name} ----------', comments);
-  }
+  @include _true-message('# #{$name} ----------', comments);
 }
 
 
 // Module Stop (private)
 // ---------------------
 
-@mixin _true-module-stop(
-  $name,
-  $output: _true-get(output)
-) {
-  // Terminal
-  @if index($output, terminal) {
-    $message: _true-report-message(module, single);
-    $message: '#{$name}: #{$message}';
-    @include _true-message($message, debug);
-  }
-
-  // CSS & Comments
-  @if index($output, css) {
-    $results: _true-get-results(module);
-    @each $type, $count in $results {
-      $type: if($type == run, tests, $type);
-      -#{$type}: $count;
-    }
-  } @else if index($output, comments) {
-    $message: _true-report-message(module, multiple);
-    @include _true-spacer;
-    @include _true-message($message, comments);
-    @include _true-spacer;
-    @include _true-spacer;
-  }
-
+@mixin _true-module-stop {
   @include _true-update(global, null);
   @include _true-reset(module);
   @include _true-context(module, null);

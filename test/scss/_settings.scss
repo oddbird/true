@@ -2,25 +2,6 @@
 // ==============
 
 @include test-module('Settings') {
-
-  @include test('Default Settings') {
-    @include assert-equal(map-get($_true-defaults, output), comments,
-      'Default output is sent to comments');
-    @include assert-equal(map-get($_true-defaults, summary), terminal comments,
-      'Default summary is sent to terminal and comments');
-  }
-
-
-  @include test('true-get [function]') {
-    $true: map-merge($true, (test: comments)) !global;
-
-    @include assert-equal(_true-get(test), comments,
-      'True-get returns the current value of a setting');
-
-    $true: map-remove($true, test) !global;
-  }
-
-
   @include test('true-context [mixin]') {
     @include assert-equal(map-get($_true-context, fake), null,
       'Confirm that there is currently no "fake" scope');

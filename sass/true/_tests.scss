@@ -3,23 +3,14 @@
 
 
 @mixin test(
-  $name,
-  $output: _true-get(output)
+  $name
 ) {
-  $old-output: _true-get(output);
-  @include _true-set(output, $output);
   @include _true-test-start($name);
 
-  @if index($output, css) {
-    #{_true-selector(test)} {
-      @content;
-      @include _true-test-stop($name, $output);
-    }
-  } @else {
+  #{_true-selector(module test)} {
     @content;
-    @include _true-test-stop($name, $output);
+    @include _true-test-stop;
   }
-  @include _true-set(output, $old-output);
 }
 
 
@@ -31,47 +22,15 @@
 ) {
   @include _true-reset(test);
   @include _true-context(test, $name);
-  @include _true-details-reset;
+  @include _true-message($name, comments);
 }
 
 
 // Module Stop (private)
 // ---------------------
 
-@mixin _true-test-stop(
-  $name,
-  $output: _true-get(output)
-) {
-  $results: _true-get-result(test);
-  $message: '#{$name} (#{_true-report-message(test)})';
-  $comments: null;
-  $terminal: null;
-  $css: ();
-
-  @if index($results, fail) {
-    $comments: '- FAIL: ' + if($message, $message, '') + _true-details();
-    $terminal: 'FAIL: ' + if($message, $message, '');
-  } @else {
-    $comments: '- ' + if($message, $message, '');
-    $terminal: if($message, $message, '');
-  }
-
-  @if index($output, terminal) and $terminal {
-    @include _true-message($terminal, debug);
-  }
-
-  @if index($output, css) {
-    $summary: _true-get-results(test);
-    @each $type, $count in $summary {
-      $type: if($type == run, assertions, $type);
-      -#{$type}: $count;
-    }
-  } @else if index($output, comments) and $comments {
-    @include _true-message($comments, comments);
-  }
-
-  @include _true-update(module, $results);
+@mixin _true-test-stop {
+  @include _true-update(module, _true-get-result(test));
   @include _true-reset(test);
   @include _true-context(test, null);
-  @include _true-details-reset;
 }

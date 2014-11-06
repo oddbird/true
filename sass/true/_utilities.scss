@@ -2,7 +2,7 @@
 // =========
 
 // Add map values together
-@function map-add(
+@function _true-map-increment(
   $base,
   $add
 ) {
@@ -20,7 +20,7 @@
 }
 
 // Split a string
-@function str-split(
+@function _true-str-split(
   $string,
   $substring
 ) {
@@ -37,10 +37,37 @@
 
 
 // Check for strict equality
-@function is-equal($one, $two) {
+@function _true-is-equal($one, $two) {
   @if type-of($one) == number and type-of($two) == number {
     @return $one == $two and unit($one) == unit($two);
   } @else {
     @return $one == $two;
+  }
+}
+
+
+// Inspect
+@function _true-inspect(
+  $value
+) {
+  @if function-exists(inspect) {
+    @if type-of($value) == map {
+      @return '#{inspect($value)}';
+    } @else {
+      @return inspect($value);
+    }
+  } @else if $value == null {
+    @return 'null';
+  } @else if type-of($value) == map {
+    $map: '(';
+    $keys: map-keys($value);
+    @each $key in $keys {
+      $val: map-get($value, $key);
+      $last: if(index($keys, $key) == length($keys), true, false);
+      $map: '#{$map}#{$key}: #{$val}#{if($last, ")", ", ")}';
+    }
+    @return $map;
+  } @else {
+    @return $value;
   }
 }
