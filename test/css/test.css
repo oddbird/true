@@ -1,13 +1,12 @@
 /* # Settings ---------- */
 /* - Default Settings (2 Assertions, 2 Passed, 0 Failed) */
 /* - true-get [function] (1 Assertions, 1 Passed, 0 Failed) */
-/* - true-set [mixin] (4 Assertions, 4 Passed, 0 Failed) */
 /* - true-context [mixin] (3 Assertions, 3 Passed, 0 Failed) */
 /* - _true-context [function] (2 Assertions, 2 Passed, 0 Failed) */
 /*
 */
-/* 5 Tests: */
-/*  - 5 Passed */
+/* 4 Tests: */
+/*  - 4 Passed */
 /*  - 0 Failed */
 /*
 */
@@ -97,7 +96,7 @@
 /* # SUMMARY ---------- */
 /*
 */
-/* 17 Tests: */
-/*  - 16 Passed */
+/* 16 Tests: */
+/*  - 15 Passed */
 /*  - 0 Failed */
 /*  - 1 Output to CSS */

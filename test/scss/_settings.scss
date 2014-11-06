@@ -12,26 +12,12 @@
 
 
   @include test('true-get [function]') {
-    @include assert-equal(_true-get(output), comments,
+    $true: map-merge($true, (test: comments)) !global;
+
+    @include assert-equal(_true-get(test), comments,
       'True-get returns the current value of a setting');
-  }
 
-
-  @include test('true-set [mixin]') {
-    @include assert-equal(_true-get(summary), terminal comments,
-      'Check that summary setting is still using default value');
-
-    @include _true-set(summary, css);
-
-    @include assert-unequal(_true-get(summary), terminal,
-      'Check that summary is no longer set to default value');
-    @include assert-equal(_true-get(summary), css,
-      'Summary setting should be changed to "css"');
-
-    @include _true-set(summary, terminal comments);
-
-    @include assert-equal(_true-get(summary), terminal comments,
-      'Check that summary setting is returned to default value');
+    $true: map-remove($true, test) !global;
   }
 
 
