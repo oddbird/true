@@ -21,7 +21,7 @@ task :build => [:test, :gem]
 desc "Make make the prebuilt gem true-#{spec.version}.gem public."
 task :publish => [:record_version, :push_gem, :tag]
 
-desc "Build & Publish version #{spec.version}"
+desc "Build & Publish version #{spec.version}" 
 task :release => [:build, :publish]
 
 Gem::PackageTask.new(spec) do |pkg|
@@ -31,7 +31,20 @@ end
 
 desc "run the tests"
 task :test do
-  sh "cd test && bundle install --quiet && bundle exec true-cli scss/test.scss", :verbose => false
+  sh "cd test && bundle install --quiet && bundle exec compass compile --force 2> error.output > /dev/null --force && cd - > /dev/null", :verbose => false
+  open("test/error.output") do |f|
+    if f.read =~ /(.*):\d+.* (\d+) Passed.* (\d+) Failed/
+      unless $3 == "0"
+        puts File.read("test/css/test.css")
+        fail "#{$3} Tests Failed"
+      else
+        puts "#{$2} Tests Passed"
+      end
+    else
+      raise "unexpected output"
+    end
+  end
+  sh "rm test/error.output", :verbose => false
 end
 
 desc "Record the new version in version control for posterity"
