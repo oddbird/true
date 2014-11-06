@@ -1,6 +1,7 @@
 true-*.gem
 pkg/*
 .bundle
-Gemfile*.lock
+Gemfile.lock
 .sass-cache/
 test/.sass-cache/
+*.css.map

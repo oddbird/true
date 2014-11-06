@@ -1,4 +1,3 @@
 source "http://rubygems.org"
 
 gemspec :path => '../'
-gem "compass", "~> 1.0.0"
