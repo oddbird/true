@@ -21,7 +21,7 @@ task :build => [:test, :gem]
 desc "Make make the prebuilt gem true-#{spec.version}.gem public."
 task :publish => [:record_version, :push_gem, :tag]
 
-desc "Build & Publish version #{spec.version}"
+desc "Build & Publish version #{spec.version}" 
 task :release => [:build, :publish]
 
 Gem::PackageTask.new(spec) do |pkg|
