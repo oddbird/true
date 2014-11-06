@@ -57,8 +57,8 @@
     .assert-equal {
       -result: to-upper-case($result);
       -description: $description;
-      -expected: $expected;
-      -returned: $assert;
+      -expected: inspect($expected);
+      -returned: inspect($assert);
     }
   }
 
@@ -79,8 +79,8 @@
     .assert-unequal {
       -result: to-upper-case($result);
       -description: $description;
-      -expected: $expected;
-      -returned: $assert;
+      -expected: inspect($expected);
+      -returned: inspect($assert);
     }
   }
 
