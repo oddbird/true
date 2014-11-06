@@ -138,14 +138,14 @@ $_true-results: (
 @mixin report(
   $output: _true-get(summary)
 ) {
-  $message: _true-report-message(global, multiple);
-
   @if index($output, terminal) {
+    $message: _true-report-message(global, single);
     @include _true-message('# SUMMARY ----------', debug);
     @include _true-message($message, debug);
   }
 
   @if index($output, css) or index($output, comments) {
+    $message: _true-report-message(global, multiple);
     @include _true-message('# SUMMARY ----------', comments);
 
     @if index($output, css) {
