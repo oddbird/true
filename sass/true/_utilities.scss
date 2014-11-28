@@ -39,7 +39,11 @@
 // Check for strict equality
 @function _true-is-equal($one, $two) {
   @if type-of($one) == number and type-of($two) == number {
-    @return $one == $two and unit($one) == unit($two);
+    @if unit($one) == unit($two) {
+      @return $one == $two;
+    } @else {
+      @return false;
+    }
   } @else {
     @return $one == $two;
   }
