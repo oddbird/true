@@ -37,10 +37,13 @@
   -result: PASS;
   -description: "Returns true for numbers that are truely equal."; }
 
-/* Please Merge [function] */
-[data-module="Utilities"] [data-test="Please Merge [function]"] .assert-equal {
+/* True Inspect [function] */
+[data-module="Utilities"] [data-test="True Inspect [function]"] .assert-equal {
   -result: PASS;
-  -description: "Returns a merged map, even in libSass 3.0"; }
+  -description: "Maps are rendered to strings."; }
+[data-module="Utilities"] [data-test="True Inspect [function]"] .assert-equal {
+  -result: PASS;
+  -description: "Null is rendered to a string."; }
 
 /* # Messages ---------- */
 /* True selector */

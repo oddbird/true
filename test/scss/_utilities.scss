@@ -30,13 +30,15 @@
       'Returns true for numbers that are truely equal.');
   }
 
-  @include test('Please Merge [function]') {
-    $map1: (one: 1, two: 1, three: 1);
-    $map2: (two: 2);
-
-    $test: map-merge($map1, $map2);
-    $expect: (one: 1, two: 2, three: 1);
+  @include test('True Inspect [function]') {
+    $test: _true-inspect((foo: bar, baz: bing));
+    $expect: '(foo: bar, baz: bing)';
     @include assert-equal($test, $expect,
-      'Returns a merged map, even in libSass 3.0');
+      'Maps are rendered to strings.');
+
+    $test: _true-inspect(null);
+    $expect: 'null';
+    @include assert-equal($test, $expect,
+      'Null is rendered to a string.');
   }
 }

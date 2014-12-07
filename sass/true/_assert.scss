@@ -146,9 +146,9 @@
   @if $terminal == details {
     @debug '[FAIL] #{_true-context(test)} » #{_true-context(assert)}';
     @debug 'Expected #{$expected-type} »';
-    @debug inspect($expected);
+    @debug _true-inspect($expected);
     @debug 'Returned #{$returned-type} »';
-    @debug inspect($returned);
+    @debug _true-inspect($returned);
   }
 
   @if $terminal {
