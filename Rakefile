@@ -31,7 +31,7 @@ end
 
 desc "run the tests"
 task :test do
-  sh "cd test && bundle install --quiet && bundle exec sass scss/test.scss css/test.css --force 2> error.output > /dev/null && cd - > /dev/null", :verbose => false
+  sh "bundle install --quiet && bundle exec sass test/scss/test.scss test/css/test.css --force 2> test/error.output > /dev/null > /dev/null", :verbose => false
   open("test/error.output") do |f|
     if f.read =~ /(.*):\d+.* (\d+) Passed.* (\d+) Failed/
       unless $3 == "0"
