@@ -3,17 +3,36 @@
 
 $-tnl: "\a ";
 
-@mixin spacer-comment() {
+
+// Return a CSS selector for the current context
+@function _true-selector(
+  $scope
+) {
+  $selector: null;
+
+  @each $layer in $scope {
+    $this: '[data-#{$layer}="#{_true-context($layer)}"]';
+    $selector: if($selector, '#{$selector} #{$this}', $this);
+  }
+
+  @return $selector;
+}
+
+
+// Output a spacer comment
+@mixin _true-spacer() {
 /*
 */
 }
 
-@mixin result-message(
+
+// Output a message to CSS, Terminal, or Comments
+@mixin _true-message(
   $message,
-  $output
+  $output: comments
 ) {
-  $lines: str-split($message, $-tnl);
-  @if index($output, css) {
+  $lines: _true-str-split($message, $-tnl);
+  @if index($output, comments) {
     @each $line in $lines {
       /* #{$line} */
     }

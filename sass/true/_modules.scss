@@ -1,60 +1,33 @@
 // Test Module
 // ===========
 
-$module-results: null;
 
 @mixin test-module(
-  $name,
-  $output: map-get($true, output)
+  $name
 ) {
-  $module-results: $blank-results !global;
-  @include setup-module($name, $output);
+  @include _true-module-start($name);
   @content;
-  @include report-module($name, $module-results, $output);
-  $module-results: null !global;
+  @include _true-module-stop;
 }
 
 
-// Module Setup (private)
+// Module Start (private)
 // ----------------------
-@mixin setup-module(
-  $name,
-  $output: map-get($true, output)
+
+@mixin _true-module-start(
+  $name
 ) {
-  // Initial CSS Output
-  @if index($output, css) {
-    @include result-message('### #{$name} ----------', css);
-  }
+  @include _true-reset(module);
+  @include _true-context(module, $name);
+  @include _true-message('# #{$name} ----------', comments);
 }
 
 
-// Module Results (private)
-// ------------------------
-@mixin report-module(
-  $name,
-  $module-results,
-  $output: map-get($true, output)
-) {
+// Module Stop (private)
+// ---------------------
 
-  // Terminal Results
-  @if index($output, terminal) {
-    $debug-message: '#{$name}: #{report($module-results, Tests)})';
-    @include result-message($debug-message, debug);
-  }
-
-  // CSS Results
-  @if index($output, css) {
-    $run: map-get($module-results, run);
-    $pass: map-get($module-results, pass);
-    $fail: map-get($module-results, fail);
-
-    $css-message: '#{$run} Tests:#{$-tnl} - #{$pass} Passed#{$-tnl} - #{$fail} Failed';
-
-    @include spacer-comment;
-    @include result-message($css-message, css);
-    @include spacer-comment;
-  }
-
-  // Add to Total
-  $true-results: map-add($true-results, $module-results) !global;
+@mixin _true-module-stop {
+  @include _true-update(global, null);
+  @include _true-reset(module);
+  @include _true-context(module, null);
 }

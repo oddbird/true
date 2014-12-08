@@ -1,24 +1,150 @@
 // Results
 // =======
 
-@function report(
-  $results: $true-results,
-  $items: 'Tests'
+$_true-results-reset: (
+  run: 0,
+  pass: 0,
+  fail: 0,
+  output-to-css: 0,
+);
+
+$_true-results: (
+  global: $_true-results-reset,
+  module: $_true-results-reset,
+  test: $_true-results-reset,
+);
+
+
+// Reset
+// -----
+
+@mixin _true-reset(
+  $scope
 ) {
+  @if $scope == global {
+    $_true-results: (
+      global: $_true-results-reset,
+      module: $_true-results-reset,
+      test: $_true-results-reset,
+    ) !global;
+  } @else if $scope == module {
+    $update: (
+      module: $_true-results-reset,
+      test: $_true-results-reset,
+    );
+    $_true-results: map-merge($_true-results, $update) !global;
+  } @else if $scope == test {
+    $update: (
+      test: $_true-results-reset
+    );
+    $_true-results: map-merge($_true-results, $update) !global;
+  } @else {
+    @warn "#{$scope} is not a valid scope for _true-reset().";
+  }
+}
+
+
+// Get Results
+// -----------
+
+@function _true-get-results(
+  $scope
+) {
+  @return map-get($_true-results, $scope);
+}
+
+
+// Get Result
+// ----------
+
+@function _true-get-result(
+  $scope
+) {
+  $results: _true-get-results($scope);
+  $return: if(map-get($results, output-to-css) > 0, output-to-css, null);
+
+  @if map-get($results, fail) > 0 {
+    @return if($return, $return fail, fail);
+  } @else if map-get($results, pass) > 0 {
+    @return if($return, $return pass, pass);
+  } @else {
+    @return $return;
+  }
+}
+
+
+// Update
+// ------
+
+@mixin _true-update(
+  $scope,
+  $results
+) {
+  $current: _true-get-results($scope);
+  $update: (run: 1);
+
+  @if $scope == global {
+    $update: _true-get-results(module);
+  } @else {
+    @each $result in $results {
+      @if $result {
+        $update: map-merge($update, ($result: 1));
+      }
+    }
+  }
+
+  $scope: ($scope: _true-map-increment($current, $update));
+  $_true-results: map-merge($_true-results, $scope) !global;
+}
+
+
+// Report Message
+// --------------
+
+@function _true-report-message(
+  $scope: test,
+  $lines: single
+) {
+  $results: _true-get-results($scope);
   $run: map-get($results, run);
   $pass: map-get($results, pass);
   $fail: map-get($results, fail);
+  $output-to-css: map-get($results, output-to-css);
 
-  $message: '#{$run} #{$items}, #{$pass} Passed, #{$fail} Failed';
+  $items: null;
+  $message: null;
+
+  @if $scope == global or $scope == module {
+    $items: Tests;
+  } @else if $scope == test {
+    $items: Assertions;
+  }
+
+  @if $lines == single {
+    $message: '#{$run} #{$items}, #{$pass} Passed, #{$fail} Failed';
+    $message: if($output-to-css > 0, $message + ', #{$output-to-css} Output to CSS', $message);
+  } @else {
+    $message: '#{$run $items}:#{$-tnl} - #{$pass} Passed#{$-tnl} - #{$fail} Failed';
+    $message: if($output-to-css > 0, $message + '#{$-tnl} - #{$output-to-css} Output to CSS', $message);
+  }
 
   @return $message;
 }
 
+
+// Report
+// ------
+
 @mixin report(
-  $output: map-get($true, summary)
+  $terminal: $true-terminal-output
 ) {
-  $message: report($true-results);
-  @if index($output, terminal) {
-    @include result-message('SUMMARY: ' + $message, debug);
+  $message: _true-report-message(global, multiple);
+  @include _true-message('# SUMMARY ----------', comments);
+  @include _true-message($message, comments);
+  @include _true-message('--------------------', comments);
+
+  @if $terminal == details {
+    $message: _true-report-message(global, single);
+    @include _true-message($message, debug);
   }
 }

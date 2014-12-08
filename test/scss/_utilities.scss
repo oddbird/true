@@ -7,19 +7,38 @@
     $base: (one: 1, two: 1, three: 1);
     $add: (one: 1, two: 2, three: -1);
 
-    $test: map-add($base, $add);
+    $test: _true-map-increment($base, $add);
     $expect: (one: 2, two: 3, three: 0);
     @include assert-equal($test, $expect,
       'Returns the sum of two numeric maps');
   }
 
+  @include test('String Split [function]') {
+    $test: _true-str-split('one%stwo%sthree', '%s');
+    $expect: one two three;
+    @include assert-equal($test, $expect,
+      'Returns a list of substrings, based on any delimiter.');
+  }
+
   @include test('Strict Equal [function]') {
-    $test: is-equal(1, 1rem);
+    $test: _true-is-equal(1, 1rem);
     @include assert-equal($test, false,
       'Returns false for equal numbers with different units.');
 
-    $test: is-equal(1, 1);
+    $test: _true-is-equal(1, 1);
     @include assert-equal($test, true,
       'Returns true for numbers that are truely equal.');
+  }
+
+  @include test('True Inspect [function]') {
+    $test: _true-inspect((foo: bar, baz: bing));
+    $expect: '(foo: bar, baz: bing)';
+    @include assert-equal($test, $expect,
+      'Maps are rendered to strings.');
+
+    $test: _true-inspect(null);
+    $expect: 'null';
+    @include assert-equal($test, $expect,
+      'Null is rendered to a string.');
   }
 }

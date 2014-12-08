@@ -1,18 +1,27 @@
 // True Settings
 // =============
 
-$true: (
-  output: css,
-  summary: terminal css
-) !default;
+$true-terminal-output: true !default;
 
 
-// Results (private)
+// Context (private)
 // -----------------
-$blank-results: (
-  run: 0,
-  pass: 0,
-  fail: 0,
+
+$_true-context: (
+  module: null,
+  test: null,
+  assert: null,
 );
 
-$true-results: $blank-results;
+@mixin _true-context(
+  $scope,
+  $name
+) {
+  $_true-context: map-merge($_true-context, ($scope: $name)) !global;
+}
+
+@function _true-context(
+  $scope
+) {
+  @return map-get($_true-context, $scope);
+}

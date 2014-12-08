@@ -1,6 +1,13 @@
 True Changelog
 ==============
 
+2.0 (unreleased)
+----------------
+- Improve internal logic, and namespace private functions behind `_true-*`.
+- Add `assert()`, `input`, and `expect` mixins for testing CSS output.
+- Support for LibSass
+- Simplify output options down to single `$true-terminal-output` setting.
+
 
 1.0.1 (10/18/14)
 ----------------

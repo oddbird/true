@@ -1,0 +1,12 @@
+// Test Assertions
+// ===============
+
+@include test-module('Messages') {
+  @include test('True selector') {
+    $return: _true-selector(module test);
+    $expect: '[data-module="Messages"] [data-test="True selector"]';
+
+    @include assert-equal($return, $expect,
+      'Returns a selector string based on the current context');
+  }
+}

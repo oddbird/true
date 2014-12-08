@@ -1,69 +1,36 @@
 // Tests
 // =====
 
-$test-results: null;
-$test-details: '';
 
-// Establish a new test
 @mixin test(
-  $name,
-  $output: map-get($true, output)
+  $name
 ) {
-  $test-results: map-merge($blank-results, (name: $name)) !global;
-  $test-details: '' !global;
-  @content;
-  @include report-test($name, $test-results, $output, $test-details);
-  $test-results: null !global;
-  $test-details: '' !global;
+  @include _true-test-start($name);
+
+  #{_true-selector(module test)} {
+    @content;
+    @include _true-test-stop;
+  }
 }
 
-// Report test results
-// -------------------
 
-@mixin report-test(
-  $name,
-  $results,
-  $output: map-get($true, output),
-  $details: ''
+// Module Start (private)
+// ----------------------
+
+@mixin _true-test-start(
+  $name
 ) {
-  $pass: map-get($results, pass);
-  $fail: map-get($results, fail);
-  $result: if($fail > 0 or $pass < 1, fail, pass);
-
-  $message: '#{$name} (#{report($results, Assertions)})';
-
-  @include test-result($result, $message, $output, $details);
+  @include _true-reset(test);
+  @include _true-context(test, $name);
+  @include _true-message($name, comments);
 }
 
-// Pass / Fail Tests
-// -----------------
 
-@mixin test-result(
-  $result,
-  $message: '',
-  $output: map-get($true, output),
-  $details: ''
-) {
-  $css: null;
-  $terminal: null;
+// Module Stop (private)
+// ---------------------
 
-  @if $result == fail {
-    $message: if($message, $message, map-get($true, fail));
-    $css: '- FAIL: ' + if($message, $message, '') + $details;
-    $terminal: 'FAIL: ' + if($message, $message, '');
-  } @else if $result == pass {
-    $message: if($message, $message, map-get($true, pass));
-    $css: '- ' + if($message, $message, '');
-    $terminal: if($message, $message, '');
-  }
-
-  @if index($output, terminal) and $terminal {
-    @include result-message($terminal, debug);
-  }
-
-  @if index($output, css) and $css {
-    @include result-message($css, css);
-  }
-
-  $module-results: map-add($module-results, (run: 1, $result: 1)) !global;
+@mixin _true-test-stop {
+  @include _true-update(module, _true-get-result(test));
+  @include _true-reset(test);
+  @include _true-context(test, null);
 }

@@ -1,0 +1,33 @@
+// Test Assertions
+// ===============
+
+@include test-module('Results') {
+  @include test('Reset') {
+    @include assert-true(true,
+      'Add a passing result to the test');
+
+    @include assert-unequal(
+      map-get($_true-results, test),
+      $_true-results-reset,
+      'Check that test results are not in a clean state');
+
+    @include _true-reset(test);
+
+    @include assert-equal(
+      map-get($_true-results, test),
+      $_true-results-reset,
+      'Resets the results for a given scope');
+  }
+
+  @include test('Get results') {
+    @include assert-equal(
+      _true-get-results(module),
+      map-get($_true-results, module),
+      'Returns the current results map for a given scope');
+  }
+
+  @include test('Get result') {
+    @include assert-equal(_true-get-result(module), pass,
+      'Collates a set of results to pass up the scope hierarchy');
+  }
+}

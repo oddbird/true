@@ -3,7 +3,7 @@
 
 @include test-module('Assert') {
 
-  @include test('Simple assertions pass') {
+  @include test('Simple assertions') {
     @include assert-true(true,
       'True should assert true.');
     @include assert-false(false,
@@ -12,6 +12,29 @@
       '1 and 1 should be equal.');
     @include assert-unequal(1, 3,
       '1 and 3 should be un-equal.');
+  }
+
+  @include test('CSS output assertions') {
+    @include assert('Input and output selector patterns match') {
+      @include input {
+        -property: value;
+      }
+      @include expect {
+        -property: value;
+      }
+    }
+  }
+
+  @include test('_true-fail-details') {
+    @include assert('Fail details are output to CSS') {
+      @include input {
+        @include _true-fail-details('foo', 'bar', $terminal: false);
+      }
+      @include expect {
+        -expected--string: 'foo';
+        -returned--string: 'bar';
+      }
+    }
   }
 
 }

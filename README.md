@@ -76,7 +76,7 @@ Usage
       'Returns the sum of two numeric maps');
   }
 
-  @include test('Strict Equal [function]') {
+  @include test('Is Equal [function]') {
     $test: is-equal(1, 1rem);
     @include assert-equal($test, false,
       'Returns false for equal numbers with different units.');
@@ -86,20 +86,22 @@ Usage
       'Returns true for numbers that are truely equal.');
   }
 }
+
+@include report;
 ```
 
-**True** will report to both the terminal
-and an output css file by default.
+Settings
+--------
 
-Here's a sample of the CSS output:
+There is only one setting.
+`$true-terminal-output` controls what output (if any)
+is shown in the terminal.
+The default setting is `true`,
+which will show warnings in the terminal
+when an assertion fails.
+You can set it to `false` to turn off all terminal output,
+or `details` to show more `@debug` info on failures,
+and a final summary of the results.
 
-```css
-/* ### Utilities ---------- */
-/* - Map Add [function] (1 Assertions, 1 Passed, 0 Failed) */
-/* - Strict Equal [function] (2 Assertions, 2 Passed, 0 Failed) */
-/*
-*/
-/* 2 Tests: */
-/*  - 2 Passed */
-/*  - 0 Failed */
-```
+* LibSass doesn't support `@debug`.
+* The Ruby CLI requires the final summary output.

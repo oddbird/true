@@ -1,10 +1,16 @@
 // True Tests
 // ==========
 
-@import "true";
+$true-terminal-output: details;
 
+@import "../../sass/true";
+
+@import "settings";
 @import "utilities";
-@import "assert";
+@import "messages";
+@import "results";
 @import "modules";
+@import "tests";
+@import "assert";
 
 @include report;
