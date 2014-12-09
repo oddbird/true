@@ -5,3 +5,4 @@ Gemfile.lock
 .sass-cache/
 test/.sass-cache/
 *.css.map
+node_modules/
