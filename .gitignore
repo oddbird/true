@@ -6,3 +6,5 @@ Gemfile.lock
 test/.sass-cache/
 *.css.map
 node_modules/
+lib-cov/
+html-report/
