@@ -3,7 +3,7 @@ BIN = ./node_modules/.bin
 
 .PHONY: test
 test:
-	$(BIN)/mocha -R tap
+	$(BIN)/mocha -R spec
 
 
 lib-cov: clean-coverage
