@@ -43,8 +43,33 @@ describe('#parse', function () {
           description: "Desc",
           assert: "equal",
           passed: false,
-          expected: ['string', 'one'],
-          returned: ['string', 'two'],
+          expected: 'string: one',
+          returned: 'string: two',
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('parses a passing output test', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
+      '  color: green;',
+      '}',
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
+      '  color: green;',
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "A",
+          passed: true,
+          expected: {color: 'green'},
+          returned: {color: 'green'},
         }],
       }],
     }];
