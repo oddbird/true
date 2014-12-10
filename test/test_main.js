@@ -133,10 +133,26 @@ describe('#parse', function () {
     expect(main.parse('/* foo */')).to.deep.equal([]);
   });
 
-  it('throws on more than one selector', function () {
-    var attempt = function () { main.parse('.foo, .bar {}'); };
+  it('handles double selectors', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .input,',
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect',
+      '{ color: green; }',
+    ].join(' ');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "A",
+          passed: true,
+          expected: [['color', 'green']],
+          returned: [['color', 'green']],
+        }],
+      }],
+    }];
 
-    expect(attempt).to.throw(/too many selectors: .foo, .bar/);
+    expect(main.parse(css)).to.deep.equal(expected);
   });
 });
 
