@@ -6,6 +6,11 @@ test:
 	$(BIN)/mocha -R spec
 
 
+.PHONY: debug
+debug:
+	$(BIN)/mocha -R spec debug
+
+
 lib-cov: clean-coverage
 	$(BIN)/istanbul instrument --output lib-cov --no-compact --variable global.__coverage__ lib
 
