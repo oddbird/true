@@ -1,11 +1,7 @@
 var CODE = process.env.COVER ? '../lib-cov/' : '../lib/';
-var path = require('path');
 var expect = require('chai').expect;
 var main = require(CODE + 'main.js');
 
-// run True's True (Sass) tests
-var sassFile = path.join(__dirname, 'scss', 'test.scss');
-main.runSass({file: sassFile}, describe, it);
 
 describe('#runSass', function () {
   it('throws AssertionError on failure', function () {
