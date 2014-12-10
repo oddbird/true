@@ -1,9 +1,9 @@
 {
-  "name": "true",
+  "name": "sass-true",
   "version": "2.0.0-alpha.4",
   "description": "Unit testing for Sass.",
   "homepage": "http://ericsuzanne.com/true",
-  "main": "sass/_true.scss",
+  "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/ericam/true.git"
@@ -15,10 +15,22 @@
     "libsass",
     "TDD"
   ],
+  "dependencies": {
+    "node-sass": "~1.2.0",
+    "css": "~2.1.0"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1"
+  },
+  "scripts": {
+    "test": "make test"
+  },
   "author": "Eric M Suzanne <eric@oddbird.net>",
   "contributors": [
     "Scott Davis <me@sdavis.info>",
-    "Chris Eppstein <chris@eppsteins.net>"
+    "Chris Eppstein <chris@eppsteins.net>",
+    "Carl Meyer <carl@oddbird.net>"
   ],
   "license": "BSD-3-Clause",
   "bugs": {
