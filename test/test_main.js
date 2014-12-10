@@ -129,6 +129,10 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('ignores comments', function () {
+    expect(main.parse('/* foo */')).to.deep.equal([]);
+  });
+
   it('throws on more than one selector', function () {
     var attempt = function () { main.parse('.foo, .bar {}'); };
 
