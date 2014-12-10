@@ -3,7 +3,25 @@ var path = require('path');
 var expect = require('chai').expect;
 var main = require(CODE + 'main.js');
 
-main.runSass(path.join(__dirname, 'scss', 'test.scss'), describe, it);
+// run True's True (Sass) tests
+var sassFile = path.join(__dirname, 'scss', 'test.scss');
+main.runSass({file: sassFile}, describe, it);
+
+describe('#runSass', function () {
+  it('throws AssertionError on failure', function () {
+    var sass = [
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
+      '  color: green; }',
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
+      '  color: red; }',
+    ].join('\n');
+    var mock = function (name, cb) { cb(); };
+    var attempt = function () {
+      main.runSass({data: sass}, mock, mock);
+    };
+    expect(attempt).to.throw(/A \("color: green;" equal "color: red;"\)/);
+  });
+});
 
 describe('#parse', function () {
   it('parses a passing non-output test', function () {
