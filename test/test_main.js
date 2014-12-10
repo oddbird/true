@@ -1,7 +1,9 @@
 var CODE = process.env.COVER ? '../lib-cov/' : '../lib/';
-
+var path = require('path');
 var expect = require('chai').expect;
 var main = require(CODE + 'main.js');
+
+main.runSass(path.join(__dirname, 'scss', 'test.scss'), describe, it);
 
 describe('#parse', function () {
   it('parses a passing non-output test', function () {
