@@ -154,6 +154,14 @@ describe('#parse', function () {
 
     expect(main.parse(css)).to.deep.equal(expected);
   });
+
+  it('throws an error on bad selector', function () {
+    var attempt = function () {
+      main.parse('[data-foo="bar"] { color: red; }');
+    };
+
+    expect(attempt).to.throw(/Can\'t understand selector: \[data-foo="bar"\]/);
+  });
 });
 
 
@@ -164,6 +172,18 @@ describe('#parseSelector', function () {
       output: false,
       module: "M",
       test: "T",
+      assert: "equal",
+    };
+
+    expect(main.parseSelector(sel)).to.deep.equal(exp);
+  });
+
+  it('handles spaces in selectors', function () {
+    var sel = '[data-module="M 1"] [data-test="T 2"] .assert-equal';
+    var exp = {
+      output: false,
+      module: "M 1",
+      test: "T 2",
       assert: "equal",
     };
 
@@ -183,35 +203,35 @@ describe('#parseSelector', function () {
     expect(main.parseSelector(sel)).to.deep.equal(exp);
   });
 
-  it('throws an error on badly-quoted attr selector', function () {
+  it('returns undefined on badly-quoted attr selector', function () {
     var attempt = function () {
       main.parseSelector('[data-module=A]');
     };
 
-    expect(attempt).to.throw(/badly-quoted attribute selector value: A/);
+    expect(attempt()).to.be.undefined();
   });
 
-  it('throws an error on unknown attr selector', function () {
+  it('returns undefined on unknown attr selector', function () {
     var attempt = function () {
       main.parseSelector('[data-foo="bar"]');
     };
 
-    expect(attempt).to.throw(/unexpected attribute selector: data-foo/);
+    expect(attempt()).to.be.undefined();
   });
 
-  it('throws an error on unknown class selector', function () {
+  it('returns undefined on unknown class selector', function () {
     var attempt = function () {
       main.parseSelector('.foo');
     };
 
-    expect(attempt).to.throw(/unexpected selector component: .foo/);
+    expect(attempt()).to.be.undefined();
   });
 
-  it('throws an error on unknown selector type', function () {
+  it('returns undefined on unknown selector type', function () {
     var attempt = function () {
       main.parseSelector('#foo');
     };
 
-    expect(attempt).to.throw(/unexpected selector component: #foo/);
+    expect(attempt()).to.be.undefined();
   });
 });
