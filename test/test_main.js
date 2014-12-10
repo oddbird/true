@@ -52,6 +52,31 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('handles missing description', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] .assert-equal {',
+      '  -result: FAIL;',
+      '  -expected--string: one;',
+      '  -returned--string: two;',
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "",
+          assert: "equal",
+          passed: false,
+          expected: 'string: one',
+          returned: 'string: two',
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a passing output test', function () {
     var css = [
       '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
@@ -206,6 +231,24 @@ describe('#parseSelector', function () {
   it('returns undefined on badly-quoted attr selector', function () {
     var attempt = function () {
       main.parseSelector('[data-module=A]');
+    };
+
+    expect(attempt()).to.be.undefined();
+  });
+
+  it('returns undefined on unknown output clause', function () {
+    var attempt = function () {
+      main.parseSelector(
+        '[data-module="M"] [data-test="T"] [data-assert="A"] .foo');
+    };
+
+    expect(attempt()).to.be.undefined();
+  });
+
+  it('returns undefined on unknown non-output final class', function () {
+    var attempt = function () {
+      main.parseSelector(
+        '[data-module="M"] [data-test="T"] .foo');
     };
 
     expect(attempt()).to.be.undefined();
