@@ -26,6 +26,32 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('parses a failing non-output test', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] .assert-equal {',
+      '  -result: FAIL;',
+      "  -description: 'Desc';",
+      '  -expected--string: one;',
+      '  -returned--string: two;',
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "Desc",
+          assert: "equal",
+          passed: false,
+          expected: ['string', 'one'],
+          returned: ['string', 'two'],
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('throws on more than one selector', function () {
     var attempt = function () { main.parse('.foo, .bar {}'); };
 
