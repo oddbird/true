@@ -39,7 +39,7 @@ true-cli [options] PATH
 ```
 
 Options:
-* `-s` slient
+* `-s` silent
 * `-c` config file
 * `-d` debug config file settings
 

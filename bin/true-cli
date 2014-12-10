@@ -8,7 +8,7 @@ COLORS = {
   :fail => "\033[91m",
   :end => "\033[0m"
 }
-options = {'debug' => false, 'slient' => false, 'color' => false}
+options = {'debug' => false, 'silent' => false, 'color' => false}
 config_file = File.join(Dir.pwd, 'test', 'true.yml')
 OptionParser.new do |opts|
   opts.banner = "Usage: true-cli [options] file"
@@ -19,8 +19,8 @@ OptionParser.new do |opts|
   opts.on('-d', '--debug') do
     options['debug'] = true
   end
-  opts.on('-s', '--slient') do
-    options['slient'] = true
+  opts.on('-s', '--silent') do
+    options['silent'] = true
   end
 end.parse!(ARGV)
 
@@ -35,7 +35,7 @@ def with_captured_stdout
   end
 end
 if File.exists?(config_file)
-  puts "Using config file: #{config_file}" unless options['slient']
+  puts "Using config file: #{config_file}" unless options['silent']
   config_options = YAML.load(File.read(config_file))
   options.merge!(config_options['options']) if config_options.has_key?('options')
   if options['debug']
@@ -68,16 +68,16 @@ end
 if matches[:failed] == '0'
   if options['color']
     noun = matches[:tests].to_i == 1 ? 'Test' : 'Tests'
-    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['slient']
+    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['silent']
   else
-    puts output unless options['slient']
+    puts output unless options['silent']
   end
   exit(0)
 else
   if options['color']
-    puts COLORS[:fail] + output + COLORS[:end] unless options['slient']
+    puts COLORS[:fail] + output + COLORS[:end] unless options['silent']
   else
-    puts output unless options['slient']
+    puts output unless options['silent']
   end
   exit(3)
 end
