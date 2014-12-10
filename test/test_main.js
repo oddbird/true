@@ -92,9 +92,10 @@ describe('#parse', function () {
         test: "T",
         assertions: [{
           description: "A",
+          assert: 'equal',
           passed: true,
-          expected: [['color', 'green']],
-          returned: [['color', 'green']],
+          expected: 'color: green;',
+          returned: 'color: green;',
         }],
       }],
     }];
@@ -117,9 +118,10 @@ describe('#parse', function () {
         test: "T",
         assertions: [{
           description: "A",
+          assert: 'equal',
           passed: false,
-          expected: [['color', 'red']],
-          returned: [['color', 'green']],
+          expected: 'color: red;',
+          returned: 'color: green;',
         }],
       }],
     }];
@@ -144,9 +146,10 @@ describe('#parse', function () {
         test: "T",
         assertions: [{
           description: "A",
+          assert: 'equal',
           passed: false,
-          expected: [['background', 'white'], ['color', 'green']],
-          returned: [['color', 'green'], ['background', 'white']],
+          expected: 'background: white; color: green;',
+          returned: 'color: green; background: white;',
         }],
       }],
     }];
@@ -170,9 +173,10 @@ describe('#parse', function () {
         test: "T",
         assertions: [{
           description: "A",
+          assert: 'equal',
           passed: true,
-          expected: [['color', 'green']],
-          returned: [['color', 'green']],
+          expected: 'color: green;',
+          returned: 'color: green;',
         }],
       }],
     }];
