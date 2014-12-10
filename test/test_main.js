@@ -68,8 +68,60 @@ describe('#parse', function () {
         assertions: [{
           description: "A",
           passed: true,
-          expected: {color: 'green'},
-          returned: {color: 'green'},
+          expected: [['color', 'green']],
+          returned: [['color', 'green']],
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('parses a failing output test', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
+      '  color: green;',
+      '}',
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
+      '  color: red;',
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "A",
+          passed: false,
+          expected: [['color', 'red']],
+          returned: [['color', 'green']],
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('respects declaration order in output tests', function () {
+    var css = [
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
+      '  color: green;',
+      '  background: white;',
+      '}',
+      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
+      '  background: white;',
+      '  color: green;',
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "A",
+          passed: false,
+          expected: [['background', 'white'], ['color', 'green']],
+          returned: [['color', 'green'], ['background', 'white']],
         }],
       }],
     }];
