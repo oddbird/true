@@ -1,6 +1,5 @@
-var CODE = process.env.COVER ? '../lib-cov/' : '../lib/';
 var expect = require('chai').expect;
-var main = require(CODE + 'main.js');
+var main = require('../lib/main.js');
 
 
 describe('#runSass', function () {
