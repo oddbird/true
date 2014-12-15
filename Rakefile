@@ -31,20 +31,7 @@ end
 
 desc "run the tests"
 task :test do
-  sh "bundle install --quiet && bundle exec sass test/scss/test.scss test/css/test.css --force 2> test/error.output > /dev/null > /dev/null", :verbose => false
-  open("test/error.output") do |f|
-    if f.read =~ /(.*):\d+.* (\d+) Passed.* (\d+) Failed/
-      unless $3 == "0"
-        puts File.read("test/css/test.css")
-        fail "#{$3} Tests Failed"
-      else
-        puts "#{$2} Tests Passed"
-      end
-    else
-      raise "unexpected output"
-    end
-  end
-  sh "rm test/error.output", :verbose => false
+  sh "make test", :verbose => false
 end
 
 desc "Record the new version in version control for posterity"
