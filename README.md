@@ -34,6 +34,9 @@ bower install true
 Command Line
 ------------
 
+_This command-line tool uses Ruby
+and the Ruby Sass compiler._
+
 ```bash
 true-cli [options] PATH
 ```
@@ -93,15 +96,12 @@ Usage
 Settings
 --------
 
-There is only one setting.
-`$true-terminal-output` controls what output (if any)
-is shown in the terminal.
-The default setting is `true`,
-which will show warnings in the terminal
-when an assertion fails.
-You can set it to `false` to turn off all terminal output,
-or `details` to show more `@debug` info on failures,
-and a final summary of the results.
+There is only one setting:
+`$true-terminal-output`
+toggles output to the terminal on and off.
 
-* LibSass doesn't support `@debug`.
-* The Ruby CLI requires the final summary output.
+- `true` will display a final summary of your test results in the terminal,
+  and show detailed information on failing assertions.
+  *Required for `true-cli`.*
+- `false` to turn off all terminal output.
+  *Required for Libsass.*
