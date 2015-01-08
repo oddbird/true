@@ -143,7 +143,7 @@
   -expected--#{$expected-type}: _true-inspect($expected);
   -returned--#{$returned-type}: _true-inspect($returned);
 
-  @if $terminal == details {
+  @if $terminal {
     @debug '[FAIL] #{_true-context(test)} » #{_true-context(assert)}';
     @debug 'Expected #{$expected-type} »';
     @debug _true-inspect($expected);
@@ -151,7 +151,5 @@
     @debug _true-inspect($returned);
   }
 
-  @if $terminal {
-    @warn '#{_true-context(test)} » #{_true-context(assert)}';
-  }
+  @warn '#{_true-context(test)} » #{_true-context(assert)}';
 }

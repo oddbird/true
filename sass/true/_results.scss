@@ -143,7 +143,7 @@ $_true-results: (
   @include _true-message($message, comments);
   @include _true-message('--------------------', comments);
 
-  @if $terminal == details {
+  @if $terminal {
     $message: _true-report-message(global, single);
     @include _true-message($message, debug);
   }
