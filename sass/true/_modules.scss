@@ -1,7 +1,12 @@
 // Test Module
 // ===========
 
-
+/// Test module
+/// @access public
+/// @group module
+/// @param {String} $name - Module name
+/// @require {mixin} _true-module-start
+/// @require {mixin} _true-module-stop
 @mixin test-module(
   $name
 ) {
@@ -14,6 +19,13 @@
 // Module Start (private)
 // ----------------------
 
+/// Module start helper
+/// @access private
+/// @group module
+/// @param {String} $name - Module name
+/// @require {mixin} _true-reset
+/// @require {mixin} _true-context
+/// @require {mixin} _true-message
 @mixin _true-module-start(
   $name
 ) {
@@ -26,6 +38,12 @@
 // Module Stop (private)
 // ---------------------
 
+/// Module stop helper
+/// @access private
+/// @group module
+/// @require {mixin} _true-reset
+/// @require {mixin} _true-context
+/// @require {mixin} _true-message
 @mixin _true-module-stop {
   @include _true-update(global, null);
   @include _true-reset(module);

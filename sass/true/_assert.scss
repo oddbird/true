@@ -2,6 +2,14 @@
 // ======
 
 
+/// Assert true
+/// @access public
+/// @group assert
+/// @param {*} $assert - Assert
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-true(
   $assert,
   $description: ''
@@ -21,7 +29,14 @@
   @include _true-assert-stop($result);
 }
 
-
+/// Assert false
+/// @access public
+/// @group assert
+/// @param {*} $assert - Assert
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-false(
   $assert,
   $description: ''
@@ -41,7 +56,15 @@
   @include _true-assert-stop($result);
 }
 
-
+/// Assert equal
+/// @access public
+/// @group assert
+/// @param {*} $assert - Assert
+/// @param {*} $expected - Expected result
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-equal(
   $assert,
   $expected,
@@ -62,7 +85,15 @@
   @include _true-assert-stop($result);
 }
 
-
+/// Assert unequal
+/// @access public
+/// @group assert
+/// @param {*} $assert - Assert
+/// @param {*} $expected - Expected result
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-unequal(
   $assert,
   $expected,
@@ -87,6 +118,13 @@
 // CSS Output Tests
 // ----------------
 
+/// CSS Assert output
+/// @access public
+/// @group assert
+/// @param {String} $description - Assert description
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
+/// @require {function} _true-selector
 @mixin assert(
   $description
 ) {
@@ -99,12 +137,20 @@
   @include _true-assert-stop(output-to-css);
 }
 
+/// Input helper
+/// @access public
+/// @group assert
+/// @output `.input` selector
 @mixin input {
   .input {
     @content;
   }
 }
 
+/// Expect helper
+/// @access public
+/// @group assert
+/// @output `.expect` selector
 @mixin expect {
   .expect {
     @content;
@@ -115,12 +161,23 @@
 // Assert Start
 // ------------
 
+/// True assert start helper
+/// @access private
+/// @group assert
+/// @param {String} $name - Assert name
+/// @require {mixin} _true-context
 @mixin _true-assert-start(
   $name
 ) {
   @include _true-context(assert, $name);
 }
 
+/// True assert sort helper
+/// @access private
+/// @group assert
+/// @param {String} $result - Assert result
+/// @require {mixin} _true-context
+/// @require {mixin} _true-update
 @mixin _true-assert-stop(
   $result
 ) {
@@ -132,6 +189,15 @@
 // Details
 // -------
 
+/// Fail details
+/// @access private
+/// @access assert
+/// @param {*} $expected - Expected result
+/// @param {*} $returned - Returned result
+/// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
+/// @require $true-terminal-output
+/// @require {function} _true-inspect
+/// @require {function} _true-context
 @mixin _true-fail-details(
   $expected,
   $returned,
