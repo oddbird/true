@@ -16,9 +16,9 @@
     "TDD"
   ],
   "dependencies": {
-    "node-sass": "~1.2.0",
     "css": "~2.1.0",
     "css-selector-parser": "~1.0.0",
+    "node-sass": "^3.0.0",
     "underscore": "~1.7.0"
   },
   "devDependencies": {
