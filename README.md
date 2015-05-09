@@ -28,41 +28,15 @@ gem install true
 
 # bower package
 bower install true
+
+# npm module
+npm install sass-true
 ```
-
-
-Command Line
-------------
-
-_This command-line tool uses Ruby
-and the Ruby Sass compiler._
-
-```bash
-true-cli [options] PATH
-```
-
-Options:
-* `-s` silent
-* `-c` config file
-* `-d` debug config file settings
-
-Config file (optional):
-
-```yaml
-options:
-  color: true #enables colored output
-
-# require ruby sass extension libraries
-require:
-  - "compass"
-  - "serialy_sassy"
-```
-
-default location: `test/true.yml`
-
 
 Usage
 -----
+
+### In Sass
 
 ```scss
 @import "true";
@@ -93,6 +67,65 @@ Usage
 @include report;
 ```
 
+### With node-sass and Mocha (or other JS test runners)
+
+1. Install `true` via npm (`npm install sass-true`).
+
+2. Write some Sass tests in `test/test.scss` (see above, but `@import "../node_modules/sass-true/sass"`).
+
+3. Write a shim JS test file in `test/test_sass.js`:
+
+```js
+var path = require('path');
+var true = require('sass-true');
+
+var sassFile = path.join(__dirname, 'test.scss');
+true.runSass({file: sassFile}, describe, it);
+```
+
+4. Run Mocha, and see your Sass tests reported as individual test results.
+
+You can call `runSass` more than once, if you have multiple Sass test files you
+want to run separately.
+
+The first argument to `runSass` accepts the same options that node-sass'
+`renderSync` function accepts. The only modification `runSass` makes is to add
+True's sass path to the `includePaths` option, so `@import 'true';` works in
+your Sass test file.
+
+Any other JS test runner with equivalents to Mocha's `describe` and `it` should
+be usable in the same way; just pass your test runner's `describe` and `it`
+equivalents into `runSass`.
+
+### On the command line
+
+_This command-line tool uses Ruby
+and the Ruby Sass compiler._
+
+```bash
+true-cli [options] PATH
+```
+
+Options:
+* `-s` silent
+* `-c` config file
+* `-d` debug config file settings
+
+Config file (optional):
+
+```yaml
+options:
+  color: true  # enables colored output
+
+# require ruby sass extension libraries
+require:
+  - "compass"
+  - "serialy_sassy"
+```
+
+default location: `test/true.yml`
+
+
 Settings
 --------
 
@@ -104,4 +137,4 @@ toggles output to the terminal on and off.
   and show detailed information on failing assertions.
   *Required for `true-cli`.*
 - `false` to turn off all terminal output.
-  *Required for Libsass.*
+  *Default. Required for node-sass.*
