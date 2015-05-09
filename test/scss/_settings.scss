@@ -24,4 +24,9 @@
     @include assert-equal(_true-context(test), '_true-context [function]',
       'Returns the current test name');
   }
+
+  // @include test('true-terminal-output failure') {
+  //   @include assert-equal(1, 2,
+  //     'For testing the terminal output on failures.');
+  // }
 }

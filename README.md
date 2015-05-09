@@ -12,10 +12,6 @@ True
 3. To test your Sass code; debug, perfect, etc. (often using *True*):
   *True your sweet plugin before you deploy.*
 
-At this point
-True can only test values (e.g. function returns),
-not property/value output (e.g. mixin output).
-
 
 Install
 -------
@@ -43,6 +39,7 @@ Usage
 
 @include test-module('Utilities') {
 
+  // Testing Functions
   @include test('Map Add [function]') {
     $base: (one: 1, two: 1, three: 1);
     $add: (one: 1, two: 2, three: -1);
@@ -53,17 +50,24 @@ Usage
       'Returns the sum of two numeric maps');
   }
 
-  @include test('Is Equal [function]') {
-    $test: is-equal(1, 1rem);
-    @include assert-equal($test, false,
-      'Returns false for equal numbers with different units.');
+  // Testing Mixins
+  @include test('Font Size [mixin]') {
+    @include assert('Outputs a font size and line height based on keyword.') {
+      @include input {
+        @include font-size(large);
+      }
 
-    $test: is-equal(1, 1);
-    @include assert-equal($test, true,
-      'Returns true for numbers that are truely equal.');
+      @include expect {
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+    }
   }
 }
 
+// Optionally show summary report in CSS and/or the command line:
+// - If you use Mocha, reporting to the command line is automatic.
+// - if you use true-cli, report(terminal) is required for output.
 @include report;
 ```
 
@@ -97,10 +101,7 @@ Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
-### On the command line
-
-_This command-line tool uses Ruby
-and the Ruby Sass compiler._
+### With ruby-sass on the command line
 
 ```bash
 true-cli [options] PATH
@@ -131,10 +132,8 @@ Settings
 
 There is only one setting:
 `$true-terminal-output`
-toggles output to the terminal on and off.
+toggles output to the terminal on or off.
 
-- `true` will display a final summary of your test results in the terminal,
-  and show detailed information on failing assertions.
-  *Required for `true-cli`.*
+- `true` will show detailed information on failing assertions.
+  This is the default, and best for using `true-cli`.
 - `false` to turn off all terminal output.
-  *Default. Required for node-sass.*

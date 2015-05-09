@@ -26,7 +26,7 @@ $-tnl: "\a ";
 }
 
 
-// Output a message to CSS, Terminal, or Comments
+// Output a message to CSS comments, or command line terminal (via debug/warn)
 @mixin _true-message(
   $message,
   $output: comments

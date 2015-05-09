@@ -48,30 +48,3 @@
     @return $one == $two;
   }
 }
-
-
-// Inspect
-@function _true-inspect(
-  $value
-) {
-  @if function-exists(inspect) {
-    @if type-of($value) == map {
-      @return '#{inspect($value)}';
-    } @else {
-      @return inspect($value);
-    }
-  } @else if $value == null {
-    @return 'null';
-  } @else if type-of($value) == map {
-    $map: '(';
-    $keys: map-keys($value);
-    @each $key in $keys {
-      $val: map-get($value, $key);
-      $last: if(index($keys, $key) == length($keys), true, false);
-      $map: '#{$map}#{$key}: #{$val}#{if($last, ")", ", ")}';
-    }
-    @return $map;
-  } @else {
-    @return $value;
-  }
-}
