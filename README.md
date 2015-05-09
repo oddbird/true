@@ -71,17 +71,17 @@ Usage
 
 1. Install `true` via npm (`npm install sass-true`).
 
-2. Write some Sass tests in `test/test.scss` (see above, but `@import "../node_modules/sass-true/sass"`).
+2. Write some Sass tests in `test/test.scss` (see above).
 
 3. Write a shim JS test file in `test/test_sass.js`:
 
-```js
-var path = require('path');
-var true = require('sass-true');
+   ```js
+   var path = require('path');
+   var true = require('sass-true');
 
-var sassFile = path.join(__dirname, 'test.scss');
-true.runSass({file: sassFile}, describe, it);
-```
+   var sassFile = path.join(__dirname, 'test.scss');
+   true.runSass({file: sassFile}, describe, it);
+   ```
 
 4. Run Mocha, and see your Sass tests reported as individual test results.
 
