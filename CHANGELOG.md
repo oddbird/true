@@ -1,15 +1,15 @@
 True Changelog
 ==============
 
-2.0 (unreleased)
-----------------
+2.0.1 (5/9/15)
+--------------
 - Improve internal logic, and namespace private functions behind `_true-*`.
 - Add `assert()`, `input`, and `expect` mixins for testing CSS output.
 - Support for LibSass.
 - Add Mocha JS integration.
 — Create NPM package.
 - Simplify output options down to single `$true-terminal-output` setting.
-  Defaults to `false` (required for libsass).
+- Add eyeglass support.
 
 
 1.0.1 (10/18/14)
