@@ -5,7 +5,7 @@
 /// @access private
 /// @group message
 /// @type String
-$-tnl: "\a ";
+$-tnl: '\a ';
 
 
 /// Return a CSS selector for the current context
@@ -36,7 +36,7 @@ $-tnl: "\a ";
 }
 
 
-/// Output a message to CSS, Terminal, or Comments
+/// Output a message to CSS comments, or command line terminal (via debug/warn)
 /// @access private
 /// @group message
 /// @param {String} $message - Message to output

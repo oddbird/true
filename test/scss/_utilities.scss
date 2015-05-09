@@ -29,16 +29,4 @@
     @include assert-equal($test, true,
       'Returns true for numbers that are truely equal.');
   }
-
-  @include test('True Inspect [function]') {
-    $test: _true-inspect((foo: bar, baz: bing));
-    $expect: '(foo: bar, baz: bing)';
-    @include assert-equal($test, $expect,
-      'Maps are rendered to strings.');
-
-    $test: _true-inspect(null);
-    $expect: 'null';
-    @include assert-equal($test, $expect,
-      'Null is rendered to a string.');
-  }
 }

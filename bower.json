@@ -1,6 +1,6 @@
 {
   "name": "true",
-  "version": "2.0.0.beta.1",
+  "version": "2.0.1",
   "main": "sass/_true.scss",
   "description": "Unit testing for Sass.",
   "authors": [

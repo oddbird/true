@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.1",
   "description": "Unit testing for Sass.",
   "homepage": "http://ericsuzanne.com/true",
   "main": "lib/main.js",
@@ -13,12 +13,13 @@
     "test",
     "sass",
     "libsass",
-    "TDD"
+    "TDD",
+    "eyeglass-module"
   ],
   "dependencies": {
-    "node-sass": "~1.2.0",
     "css": "~2.1.0",
     "css-selector-parser": "~1.0.0",
+    "node-sass": "^3.0.0",
     "underscore": "~1.7.0"
   },
   "devDependencies": {
@@ -26,6 +27,9 @@
     "istanbul": "^0.3.5",
     "mocha": "^2.0.1",
     "mocha-istanbul": "^0.2.0"
+  },
+  "eyeglass": {
+    "exports": "eyeglass-exports.js"
   },
   "scripts": {
     "test": "make test"
