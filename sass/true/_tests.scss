@@ -1,13 +1,14 @@
 // Tests
 // =====
 
-/// Test
+/// Describe a Test
 /// @access public
 /// @group tests
 /// @param {String} $name - Test bame
 /// @require {mixin}_true-test-start
 /// @require {mixin}_true-test-stop
 /// @require {function} _true-selector
+/// @content Include the assertions that are part of this test
 @mixin test(
   $name
 ) {

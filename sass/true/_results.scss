@@ -1,7 +1,7 @@
 // Results
 // =======
 
-/// Reseted results map
+/// Initialized results map
 /// @access private
 /// @group results
 /// @type Map
@@ -178,7 +178,7 @@ $_true-results: (
 // Report
 // ------
 
-/// Report results
+/// Report results summary to CSS and/or command line
 /// @access public
 /// @group results
 /// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
