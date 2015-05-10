@@ -1,7 +1,12 @@
 // Utilities
 // =========
 
-// Add map values together
+/// Add map values together
+/// @access private
+/// @group x_private
+/// @param {Map} $base - Initial map
+/// @param {Map} $add - Extra map
+/// @return {Map}
 @function _true-map-increment(
   $base,
   $add
@@ -19,7 +24,12 @@
   @return $base;
 }
 
-// Split a string
+/// Split a string
+/// @access private
+/// @group x_private
+/// @param {String} $string - String to split
+/// @param {String} $substring - Delimiter
+/// @return {List} - `$string` fragments
 @function _true-str-split(
   $string,
   $substring
@@ -36,7 +46,12 @@
 }
 
 
-// Check for strict equality
+/// Check for strict equality
+/// @access private
+/// @group x_private
+/// @param {*} $one - First value
+/// @param {*} $two - Second value
+/// @return {Bool}
 @function _true-is-equal($one, $two) {
   @if type-of($one) == number and type-of($two) == number {
     @if unit($one) == unit($two) {

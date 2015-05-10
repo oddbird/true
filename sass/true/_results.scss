@@ -1,6 +1,10 @@
 // Results
 // =======
 
+/// Initialized results map
+/// @access private
+/// @group x_private
+/// @type Map
 $_true-results-reset: (
   run: 0,
   pass: 0,
@@ -8,6 +12,14 @@ $_true-results-reset: (
   output-to-css: 0,
 );
 
+/// Results map
+/// @access private
+/// @group x_private
+/// @type Map
+/// @require $_true-results-reset
+/// @prop {Map} global [$_true-results-reset] - Global results
+/// @prop {Map} module [$_true-results-reset] - Results for current module
+/// @prop {Map} test [$_true-results-reset] - Results for current test
 $_true-results: (
   global: $_true-results-reset,
   module: $_true-results-reset,
@@ -18,6 +30,12 @@ $_true-results: (
 // Reset
 // -----
 
+/// Reset helper
+/// @access private
+/// @group x_private
+/// @param {String} $scope - Scope to reset
+/// @require $_true-results-reset
+/// @require $_true-results
 @mixin _true-reset(
   $scope
 ) {
@@ -47,6 +65,11 @@ $_true-results: (
 // Get Results
 // -----------
 
+/// Results getter
+/// @access private
+/// @group x_private
+/// @param {String} $scope - Scope to get results from
+/// @require $_true-results
 @function _true-get-results(
   $scope
 ) {
@@ -57,6 +80,11 @@ $_true-results: (
 // Get Result
 // ----------
 
+/// Single result getter
+/// @access private
+/// @group x_private
+/// @param {String} $scope - Scope to get result form
+/// @require {function} _true-get-results
 @function _true-get-result(
   $scope
 ) {
@@ -76,6 +104,14 @@ $_true-results: (
 // Update
 // ------
 
+/// Update results
+/// @access private
+/// @group x_private
+/// @param {String} $scope - Scope to update results from
+/// @param {List} $results - Results
+/// @require {function} _true-get-results
+/// @require {function} _true-map-increment
+/// @require $_true-results
 @mixin _true-update(
   $scope,
   $results
@@ -101,6 +137,13 @@ $_true-results: (
 // Report Message
 // --------------
 
+/// Report message
+/// @access private
+/// @group x_private
+/// @param {String} $scope [test] - Scope
+/// @param {String} $lines [single] - Lines
+/// @return {String} - Reported message
+/// @require {function} _true-get-results
 @function _true-report-message(
   $scope: test,
   $lines: single
@@ -135,6 +178,12 @@ $_true-results: (
 // Report
 // ------
 
+/// Report results summary to CSS and/or command line
+/// @access public
+/// @group reporting
+/// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
+/// @require {function} _true-report-message
+/// @require {function} _true-message
 @mixin report(
   $terminal: $true-terminal-output
 ) {

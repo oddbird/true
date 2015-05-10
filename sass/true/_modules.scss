@@ -1,7 +1,13 @@
 // Test Module
 // ===========
 
-
+/// Define a Test Module
+/// @access public
+/// @group testing
+/// @param {String} $name - Module name
+/// @require {mixin} _true-module-start
+/// @require {mixin} _true-module-stop
+/// @content Include all the tests that are part of this module
 @mixin test-module(
   $name
 ) {
@@ -14,6 +20,13 @@
 // Module Start (private)
 // ----------------------
 
+/// Module start helper
+/// @access private
+/// @group x_private
+/// @param {String} $name - Module name
+/// @require {mixin} _true-reset
+/// @require {mixin} _true-context
+/// @require {mixin} _true-message
 @mixin _true-module-start(
   $name
 ) {
@@ -26,6 +39,12 @@
 // Module Stop (private)
 // ---------------------
 
+/// Module stop helper
+/// @access private
+/// @group x_private
+/// @require {mixin} _true-reset
+/// @require {mixin} _true-context
+/// @require {mixin} _true-message
 @mixin _true-module-stop {
   @include _true-update(global, null);
   @include _true-reset(module);

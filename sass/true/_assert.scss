@@ -2,6 +2,14 @@
 // ======
 
 
+/// Assert that a parameter is `true`
+/// @access public
+/// @group testing
+/// @param {*} $assert - Assert
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-true(
   $assert,
   $description: ''
@@ -21,7 +29,14 @@
   @include _true-assert-stop($result);
 }
 
-
+/// Assert that a parameter is `false`
+/// @access public
+/// @group testing
+/// @param {*} $assert - Assert
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-false(
   $assert,
   $description: ''
@@ -41,7 +56,15 @@
   @include _true-assert-stop($result);
 }
 
-
+/// /// Assert that two parameters are `equal`
+/// @access public
+/// @group testing
+/// @param {*} $assert - Assert
+/// @param {*} $expected - Expected result
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-equal(
   $assert,
   $expected,
@@ -62,7 +85,15 @@
   @include _true-assert-stop($result);
 }
 
-
+/// Assert that two parameters are `unequal`
+/// @access public
+/// @group testing
+/// @param {*} $assert - Assert
+/// @param {*} $expected - Expected result
+/// @param {String} $description [''] - Assert description
+/// @require {mixin} _true-fail-details
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
 @mixin assert-unequal(
   $assert,
   $expected,
@@ -87,6 +118,14 @@
 // CSS Output Tests
 // ----------------
 
+/// Define a CSS-output assertion
+/// @access public
+/// @group testing
+/// @param {String} $description - Assert description
+/// @content Use `input()` and `expect()` mixins to define blocks for comparison
+/// @require {mixin} _true-assert-start
+/// @require {mixin} _true-assert-stop
+/// @require {function} _true-selector
 @mixin assert(
   $description
 ) {
@@ -99,12 +138,20 @@
   @include _true-assert-stop(output-to-css);
 }
 
+/// Describe the test content to be evaluated
+/// The output will be compared against the results of the `expect()` mixin.
+/// @access public
+/// @group testing
 @mixin input {
   .input {
     @content;
   }
 }
 
+/// Describe the output content to be expected.
+/// The output will be compared against the results of the `input()` mixin.
+/// @access public
+/// @group testing
 @mixin expect {
   .expect {
     @content;
@@ -115,12 +162,23 @@
 // Assert Start
 // ------------
 
+/// True assert start helper
+/// @access private
+/// @group x_private
+/// @param {String} $name - Assert name
+/// @require {mixin} _true-context
 @mixin _true-assert-start(
   $name
 ) {
   @include _true-context(assert, $name);
 }
 
+/// True assert sort helper
+/// @access private
+/// @group x_private
+/// @param {String} $result - Assert result
+/// @require {mixin} _true-context
+/// @require {mixin} _true-update
 @mixin _true-assert-stop(
   $result
 ) {
@@ -132,6 +190,14 @@
 // Details
 // -------
 
+/// Fail details
+/// @access private
+/// @group x_private
+/// @param {*} $expected - Expected result
+/// @param {*} $returned - Returned result
+/// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
+/// @require $true-terminal-output
+/// @require {function} _true-context
 @mixin _true-fail-details(
   $expected,
   $returned,
@@ -140,15 +206,15 @@
   $expected-type: type-of($expected);
   $returned-type: type-of($returned);
 
-  -expected--#{$expected-type}: _true-inspect($expected);
-  -returned--#{$returned-type}: _true-inspect($returned);
+  -expected--#{$expected-type}: inspect($expected);
+  -returned--#{$returned-type}: inspect($returned);
 
   @if $terminal {
     @debug '[FAIL] #{_true-context(test)} » #{_true-context(assert)}';
     @debug 'Expected #{$expected-type} »';
-    @debug _true-inspect($expected);
+    @debug inspect($expected);
     @debug 'Returned #{$returned-type} »';
-    @debug _true-inspect($returned);
+    @debug inspect($returned);
   }
 
   @warn '#{_true-context(test)} » #{_true-context(assert)}';
