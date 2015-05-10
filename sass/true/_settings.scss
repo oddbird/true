@@ -3,7 +3,7 @@
 
 /// Whether or not to use the terminal as output stream
 /// @access public
-/// @group settings
+/// @group reporting
 /// @type Bool
 $true-terminal-output: true !default;
 
@@ -13,7 +13,7 @@ $true-terminal-output: true !default;
 
 /// True current context
 /// @access private
-/// @group settings
+/// @group x_private
 /// @type Map
 /// @prop {String} module [null]
 /// @prop {String} test [null]
@@ -26,7 +26,7 @@ $_true-context: (
 
 /// Update the current context
 /// @access private
-/// @group settings
+/// @group x_private
 /// @param {String} $scope - Either `module`, `test` or `assert`
 /// @param {String} $name - Name of current scope
 /// @require $_true-context
@@ -39,7 +39,7 @@ $_true-context: (
 
 /// Get information on current context
 /// @access private
-/// @group settings
+/// @group x_private
 /// @param {String} $scope - Either `module`, `test` or `assert`
 /// @return {String}
 @function _true-context(

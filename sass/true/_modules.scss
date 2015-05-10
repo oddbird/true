@@ -3,7 +3,7 @@
 
 /// Define a Test Module
 /// @access public
-/// @group module
+/// @group testing
 /// @param {String} $name - Module name
 /// @require {mixin} _true-module-start
 /// @require {mixin} _true-module-stop
@@ -22,7 +22,7 @@
 
 /// Module start helper
 /// @access private
-/// @group module
+/// @group x_private
 /// @param {String} $name - Module name
 /// @require {mixin} _true-reset
 /// @require {mixin} _true-context
@@ -41,7 +41,7 @@
 
 /// Module stop helper
 /// @access private
-/// @group module
+/// @group x_private
 /// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message

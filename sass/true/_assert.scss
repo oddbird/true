@@ -4,7 +4,7 @@
 
 /// Assert that a parameter is `true`
 /// @access public
-/// @group assert
+/// @group testing
 /// @param {*} $assert - Assert
 /// @param {String} $description [''] - Assert description
 /// @require {mixin} _true-fail-details
@@ -31,7 +31,7 @@
 
 /// Assert that a parameter is `false`
 /// @access public
-/// @group assert
+/// @group testing
 /// @param {*} $assert - Assert
 /// @param {String} $description [''] - Assert description
 /// @require {mixin} _true-fail-details
@@ -58,7 +58,7 @@
 
 /// /// Assert that two parameters are `equal`
 /// @access public
-/// @group assert
+/// @group testing
 /// @param {*} $assert - Assert
 /// @param {*} $expected - Expected result
 /// @param {String} $description [''] - Assert description
@@ -87,7 +87,7 @@
 
 /// Assert that two parameters are `unequal`
 /// @access public
-/// @group assert
+/// @group testing
 /// @param {*} $assert - Assert
 /// @param {*} $expected - Expected result
 /// @param {String} $description [''] - Assert description
@@ -120,7 +120,7 @@
 
 /// Define a CSS-output assertion
 /// @access public
-/// @group assert
+/// @group testing
 /// @param {String} $description - Assert description
 /// @content Use `input()` and `expect()` mixins to define blocks for comparison
 /// @require {mixin} _true-assert-start
@@ -141,7 +141,7 @@
 /// Describe the test content to be evaluated
 /// The output will be compared against the results of the `expect()` mixin.
 /// @access public
-/// @group assert
+/// @group testing
 @mixin input {
   .input {
     @content;
@@ -151,7 +151,7 @@
 /// Describe the output content to be expected.
 /// The output will be compared against the results of the `input()` mixin.
 /// @access public
-/// @group assert
+/// @group testing
 @mixin expect {
   .expect {
     @content;
@@ -164,7 +164,7 @@
 
 /// True assert start helper
 /// @access private
-/// @group assert
+/// @group x_private
 /// @param {String} $name - Assert name
 /// @require {mixin} _true-context
 @mixin _true-assert-start(
@@ -175,7 +175,7 @@
 
 /// True assert sort helper
 /// @access private
-/// @group assert
+/// @group x_private
 /// @param {String} $result - Assert result
 /// @require {mixin} _true-context
 /// @require {mixin} _true-update
@@ -192,7 +192,7 @@
 
 /// Fail details
 /// @access private
-/// @group assert
+/// @group x_private
 /// @param {*} $expected - Expected result
 /// @param {*} $returned - Returned result
 /// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output

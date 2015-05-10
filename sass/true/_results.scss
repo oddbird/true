@@ -3,7 +3,7 @@
 
 /// Initialized results map
 /// @access private
-/// @group results
+/// @group x_private
 /// @type Map
 $_true-results-reset: (
   run: 0,
@@ -14,7 +14,7 @@ $_true-results-reset: (
 
 /// Results map
 /// @access private
-/// @group results
+/// @group x_private
 /// @type Map
 /// @require $_true-results-reset
 /// @prop {Map} global [$_true-results-reset] - Global results
@@ -32,7 +32,7 @@ $_true-results: (
 
 /// Reset helper
 /// @access private
-/// @group results
+/// @group x_private
 /// @param {String} $scope - Scope to reset
 /// @require $_true-results-reset
 /// @require $_true-results
@@ -67,7 +67,7 @@ $_true-results: (
 
 /// Results getter
 /// @access private
-/// @group results
+/// @group x_private
 /// @param {String} $scope - Scope to get results from
 /// @require $_true-results
 @function _true-get-results(
@@ -82,7 +82,7 @@ $_true-results: (
 
 /// Single result getter
 /// @access private
-/// @group results
+/// @group x_private
 /// @param {String} $scope - Scope to get result form
 /// @require {function} _true-get-results
 @function _true-get-result(
@@ -106,7 +106,7 @@ $_true-results: (
 
 /// Update results
 /// @access private
-/// @group results
+/// @group x_private
 /// @param {String} $scope - Scope to update results from
 /// @param {List} $results - Results
 /// @require {function} _true-get-results
@@ -139,7 +139,7 @@ $_true-results: (
 
 /// Report message
 /// @access private
-/// @group results
+/// @group x_private
 /// @param {String} $scope [test] - Scope
 /// @param {String} $lines [single] - Lines
 /// @return {String} - Reported message
@@ -180,7 +180,7 @@ $_true-results: (
 
 /// Report results summary to CSS and/or command line
 /// @access public
-/// @group results
+/// @group reporting
 /// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
 /// @require {function} _true-report-message
 /// @require {function} _true-message

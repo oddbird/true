@@ -3,7 +3,7 @@
 
 /// Add map values together
 /// @access private
-/// @group utilities
+/// @group x_private
 /// @param {Map} $base - Initial map
 /// @param {Map} $add - Extra map
 /// @return {Map}
@@ -26,7 +26,7 @@
 
 /// Split a string
 /// @access private
-/// @group utilities
+/// @group x_private
 /// @param {String} $string - String to split
 /// @param {String} $substring - Delimiter
 /// @return {List} - `$string` fragments
@@ -48,7 +48,7 @@
 
 /// Check for strict equality
 /// @access private
-/// @group utilities
+/// @group x_private
 /// @param {*} $one - First value
 /// @param {*} $two - Second value
 /// @return {Bool}

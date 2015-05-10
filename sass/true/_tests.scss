@@ -3,7 +3,7 @@
 
 /// Describe a Test
 /// @access public
-/// @group tests
+/// @group testing
 /// @param {String} $name - Test bame
 /// @require {mixin}_true-test-start
 /// @require {mixin}_true-test-stop
@@ -26,7 +26,7 @@
 
 /// Test start helper
 /// @access private
-/// @group tests
+/// @group x_private
 /// @param {String} $name - Test name
 /// @require {mixin} _true-reset
 /// @require {mixin} _true-context
@@ -45,7 +45,7 @@
 
 /// Test stop helper
 /// @access private
-/// @group tests
+/// @group x_private
 /// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message

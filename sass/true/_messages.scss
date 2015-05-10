@@ -3,12 +3,14 @@
 
 /// New line helper
 /// @access private
-/// @group message
+/// @group x_private
 /// @type String
 $-tnl: '\a ';
 
 
 /// Return a CSS selector for the current context
+/// @access private
+/// @group x_private
 /// @param {List} $scope - Scope
 /// @require {function} _true-context
 /// @return {String} - CSS selector
@@ -28,7 +30,7 @@ $-tnl: '\a ';
 
 /// Output a spacer comment
 /// @access private
-/// @group message
+/// @group x_private
 /// @output A spacer comment
 @mixin _true-spacer() {
 /*
@@ -38,7 +40,7 @@ $-tnl: '\a ';
 
 /// Output a message to CSS comments, or command line terminal (via debug/warn)
 /// @access private
-/// @group message
+/// @group x_private
 /// @param {String} $message - Message to output
 /// @param {String} $output [comments] - Type of output, either `comments`, `terminal`, `debug` or `warn`
 /// @require {function} _true-str-split
