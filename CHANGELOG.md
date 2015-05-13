@@ -1,6 +1,12 @@
 True Changelog
 ==============
 
+
+2.0.2 (5/13/15)
+---------------
+- Fixes debug inspector.
+
+
 2.0.1 (5/9/15)
 --------------
 - Improve internal logic, and namespace private functions behind `_true-*`.
