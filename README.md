@@ -101,6 +101,32 @@ Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
+#### Running true with Grunt task (using Mocha)
+
+Run Mocha using the Grunt task supplied by [grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)
+
+Install `grunt-mocha-cli`:
+
+```
+npm install grunt-mocha-cli --save-dev
+```
+
+Configure task:
+
+```javascript
+grunt.loadNpmTasks('grunt-mocha');
+
+mochacli: {
+   all: ['test/test_sass.js']
+},
+```
+
+Run tests:
+
+```bash
+grunt mochacli
+```
+
 ### With ruby-sass on the command line
 
 ```bash
