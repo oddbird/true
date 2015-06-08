@@ -18,7 +18,7 @@ describe('#runSass', function () {
   });
 });
 
-describe('#printAssertions', function () {
+describe('#runAssertions', function () {
   it('throws AssertionError on input containing failed test', function () {
     var css = [
       '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
@@ -28,7 +28,7 @@ describe('#printAssertions', function () {
     ].join('\n');
     var mock = function (name, cb) { cb(); };
     var attempt = function () {
-      main.printAssertions(css, mock, mock);
+      main.runAssertions(css, mock, mock);
     };
     expect(attempt).to.throw(/A \("color: green;" equal "color: red;"\)/);
   });
