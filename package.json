@@ -29,6 +29,7 @@
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {
+    "name": "true",
     "exports": "eyeglass-exports.js"
   },
   "scripts": {
