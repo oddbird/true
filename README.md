@@ -107,16 +107,15 @@ Same as for standard node-sass example above except execute sass asyncronously a
 
 ```js
 before(function(done){
-    sass.render(eyeglass.sassOptions(), function(err, result) {
-        if (err) {
-            throw err;
-        }
-        else {
-            sassTrue.printResults(result.css.toString(), describe, it);
-            done();
-        }
-    });
-})
+  sass.render(eyeglass.sassOptions(), function(err, result) {
+    if (err) {
+      throw err;
+    } else {
+      sassTrue.printResults(result.css.toString(), describe, it);
+      done();
+    }
+  });
+});
 ```
 
 ### With ruby-sass on the command line
