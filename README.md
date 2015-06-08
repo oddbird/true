@@ -103,7 +103,7 @@ equivalents into `runSass`.
 
 ### With Eyeglass and Mocha
 
-Same as for standard node-sass example above except execute sass asyncronously and pass the results to printResults method like this:
+Same as for standard node-sass example above except execute sass asyncronously and pass the results to printAssertions method like this:
 
 ```js
 before(function(done){
@@ -111,7 +111,7 @@ before(function(done){
     if (err) {
       throw err;
     } else {
-      sassTrue.printResults(result.css.toString(), describe, it);
+      sassTrue.printAssertions(result.css.toString(), describe, it);
       done();
     }
   });
