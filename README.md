@@ -106,12 +106,21 @@ equivalents into `runSass`.
 Same as for standard node-sass example above except execute sass asyncronously and pass the results to printAssertions method like this:
 
 ```js
+var path = require('path');
+var sass = require('node-sass');
+var Eyeglass = require("eyeglass");
+var true = require('sass-true');
+
+var sassFile = path.join(__dirname, 'test.scss');
+var eyeglass = new Eyeglass({
+  file: sassFile
+});
 before(function(done){
   sass.render(eyeglass.sassOptions(), function(err, result) {
     if (err) {
       throw err;
     } else {
-      sassTrue.printAssertions(result.css.toString(), describe, it);
+      true.printAssertions(result.css, describe, it);
       done();
     }
   });
