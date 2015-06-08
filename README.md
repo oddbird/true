@@ -101,6 +101,24 @@ Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
+### With Eyeglass and Mocha
+
+Same as for standard node-sass example above except execute sass asyncronously and pass the results to printResults method like this:
+
+```js
+before(function(done){
+    sass.render(eyeglass.sassOptions(), function(err, result) {
+        if (err) {
+            throw err;
+        }
+        else {
+            sassTrue.printResults(result.css.toString(), describe, it);
+            done();
+        }
+    });
+})
+```
+
 ### With ruby-sass on the command line
 
 ```bash
