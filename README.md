@@ -103,7 +103,7 @@ equivalents into `runSass`.
 
 ### With Eyeglass and Mocha
 
-Same as for standard node-sass example above except execute sass asyncronously and pass the results to printAssertions method like this:
+Same as for standard node-sass example above except execute sass asynchronously and pass the results to printAssertions method like this:
 
 ```js
 var path = require('path');
