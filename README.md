@@ -81,10 +81,10 @@ Usage
 
    ```js
    var path = require('path');
-   var true = require('sass-true');
+   var sassTrue = require('sass-true');
 
    var sassFile = path.join(__dirname, 'test.scss');
-   true.runSass({file: sassFile}, describe, it);
+   sassTrue.runSass({file: sassFile}, describe, it);
    ```
 
 4. Run Mocha, and see your Sass tests reported as individual test results.
@@ -109,7 +109,7 @@ Same as for standard node-sass example above except execute sass asynchronously 
 var path = require('path');
 var sass = require('node-sass');
 var Eyeglass = require("eyeglass");
-var true = require('sass-true');
+var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
 var eyeglass = new Eyeglass({
@@ -120,7 +120,7 @@ before(function(done){
     if (err) {
       throw err;
     } else {
-      true.runAssertions(result.css, describe, it);
+      sassTrue.runAssertions(result.css, describe, it);
       done();
     }
   });
