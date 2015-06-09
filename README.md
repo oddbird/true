@@ -101,9 +101,27 @@ Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
-### With Eyeglass and Mocha
+### Eyeglass and asynchronous tests
 
-Same as for standard node-sass example above except execute sass asynchronously and pass the results to runAssertions method like this:
+Eyeglass requires tests to be run asynchronously.
+
+#### Mocha example
+
+Same as for standard node-sass example above except execute sass asynchronously and pass the output to the `generateTests` method before running mocha.  To achieve this we need to delay running the tests then tell mocha to run once the tests are ready.
+
+First we need to pass the `--delay` option to mocha. We can do this in our `package.json`:
+
+```js
+{
+  ...
+  "scripts": {
+    "test": "mocha --delay"
+  },
+  ...
+}
+```
+
+Now we can perform any asynchronous steps to generate our tests, then call mocha's `run` method.
 
 ```js
 var path = require('path');
@@ -115,15 +133,10 @@ var sassFile = path.join(__dirname, 'test.scss');
 var eyeglass = new Eyeglass({
   file: sassFile
 });
-before(function(done){
-  sass.render(eyeglass.sassOptions(), function(err, result) {
-    if (err) {
-      throw err;
-    } else {
-      sassTrue.runAssertions(result.css, describe, it);
-      done();
-    }
-  });
+sass.render(eyeglass.sassOptions(), function(err, output) {
+  if (err) throw err;
+  sassTrue.generateTests(output.css, describe, it);
+  run(); // tell mocha to start running the tests.
 });
 ```
 
