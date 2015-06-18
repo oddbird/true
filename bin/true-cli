@@ -298,8 +298,8 @@ def check(modules)
   failing.length == 0
 end
 
+all_succeed = false
 ARGV.each do |file|
-  failures = false
   sass_engine = Sass::Engine.for_file(file, {})
   # Use .to_tree rather than .render.
   tree = sass_engine.to_tree
@@ -315,9 +315,10 @@ ARGV.each do |file|
   # puts modules
   # puts '--------------------'
   all_succeed = check(modules)
-  if all_succeed
-    exit(0)
-  else
-    exit(3)
-  end
+end
+
+if all_succeed
+  exit(0)
+else
+  exit(3)
 end
