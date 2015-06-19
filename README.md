@@ -81,10 +81,10 @@ Usage
 
    ```js
    var path = require('path');
-   var true = require('sass-true');
+   var sassTrue = require('sass-true');
 
    var sassFile = path.join(__dirname, 'test.scss');
-   true.runSass({file: sassFile}, describe, it);
+   sassTrue.runSass({file: sassFile}, describe, it);
    ```
 
 4. Run Mocha, and see your Sass tests reported as individual test results.
