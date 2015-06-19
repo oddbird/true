@@ -248,7 +248,7 @@ end
 
 def print_failure_details(index, mod_name, test)
   # Print details about failed assertions for test.
-  puts # Empty line
+  puts unless $options['silent']# Empty line
   header_str = '(' + index.to_s + ') ' + mod_name + ': ' + test[:test]
   print_color(header_str, :emphasis, 2)
   test[:assertions].each { |assertion|
@@ -280,16 +280,18 @@ def check(modules)
         print_test(test[:test], failing.length)
       end
     }
-    puts # Print empty line.
+    puts unless $options['silent'] # Print empty line.
   }
   # Summarizing line
   print_results(passing, failing.length)
 
   # Failure details
   if failing.length > 0
-    puts
-    puts
-    print_color('Failing tests:', :emphasis, 1)
+    unless $options['silent']
+      puts
+      puts
+      print_color('Failing tests:', :emphasis, 1)
+    end
     failing.each_with_index { |cons, idx|
       print_failure_details(idx + 1, cons[0], cons[1])
     }
@@ -301,16 +303,21 @@ end
 all_succeed = false
 ARGV.each do |file|
   sass_engine = Sass::Engine.for_file(file, {})
-  # Use .to_tree rather than .render.
-  tree = sass_engine.to_tree
-  
-  # Generate a "static CSS tree"
-  Sass::Tree::Visitors::CheckNesting.visit(tree)
-  result = Sass::Tree::Visitors::Perform.visit(tree)
-  Sass::Tree::Visitors::CheckNesting.visit(result)
-  result, extends = Sass::Tree::Visitors::Cssize.visit(result)
-  Sass::Tree::Visitors::Extend.visit(result, extends)
 
+  result = false
+  output = with_captured_stdout do
+    # Use .to_tree rather than .render.
+    tree = sass_engine.to_tree
+    
+    # Generate a "static CSS tree"
+    Sass::Tree::Visitors::CheckNesting.visit(tree)
+    result = Sass::Tree::Visitors::Perform.visit(tree)
+    Sass::Tree::Visitors::CheckNesting.visit(result)
+    result, extends = Sass::Tree::Visitors::Cssize.visit(result)
+    Sass::Tree::Visitors::Extend.visit(result, extends)
+  end
+  puts output unless $options['silent']    
+    
   modules = process_css(result)
   # puts modules
   # puts '--------------------'
@@ -320,5 +327,6 @@ end
 if all_succeed
   exit(0)
 else
+  puts 'FAAAAALSE'
   exit(3)
 end
