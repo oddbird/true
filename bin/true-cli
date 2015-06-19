@@ -327,6 +327,5 @@ end
 if all_succeed
   exit(0)
 else
-  puts 'FAAAAALSE'
   exit(3)
 end
