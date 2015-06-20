@@ -96,7 +96,6 @@ def parse_selector (sel)
     rule.name == name
   }
 
-
   sequence=sel.members.first
   result = Hash.new
 
@@ -134,8 +133,26 @@ def process_css(tree)
   # Parse True output CSS and return an array of test modules.
   # (Essentially corresponds to 'parse' in lib/main.js.)
   modules = []
+  # Media queries: The #each method loops through ALL the
+  # nodes in the tree. So, in order to avoid testing rule
+  # nodes twice, we can't just take a MediaNode and take its
+  # child RuleNode. We have to store MediaNodes in a hash
+  # and look them up when we process a RuleNode.
+  media_queries = Hash.new
+
   tree.each do |node|
-    if node.is_a? Sass::Tree::RuleNode
+    if node.is_a? Sass::Tree::MediaNode
+      # Put it into the media queries hash with the rule
+      # node (sole child) as its key.
+      media_queries[node.children[0]] = node
+    elsif node.is_a? Sass::Tree::RuleNode
+
+      sel_info = parse_selector(node.resolved_rules)
+
+      mquery = media_queries[node]
+      if mquery.is_a? Sass::Tree::MediaNode
+        sel_info[:media_query] =  mquery.resolved_query.to_css
+      end
 
       decl_info = Hash.new
       node.each do |child|
@@ -143,8 +160,6 @@ def process_css(tree)
           decl_info[child.resolved_name] = child.resolved_value
         end
       end
-
-      sel_info = parse_selector(node.resolved_rules)
 
       matches = modules.select { |m| m[:module] == sel_info[:module] }
       cur_module = matches[0]
@@ -174,6 +189,7 @@ def process_css(tree)
           cur_assertion = Hash.new
           cur_assertion[:description] = sel_info[:assert]
           cur_assertion[:assert] = 'equal'
+          cur_assertion[:media_query] = sel_info[:media_query]
           cur_test[:assertions].push(cur_assertion)
         end
 
@@ -187,7 +203,14 @@ def process_css(tree)
           cur_assertion[:expected] = decl_string
         end
         if cur_assertion[:returned] && cur_assertion[:expected]
-          cur_assertion[:passed] = cur_assertion[:returned] == cur_assertion[:expected]
+          asstn_equal = cur_assertion[:returned] == cur_assertion[:expected]
+          if cur_assertion[:media_query] || sel_info[:media_query]
+            cur_assertion[:passed] = asstn_equal && 
+              sel_info[:media_query] == cur_assertion[:media_query]
+            cur_assertion[:expected_media_query] = sel_info[:media_query]
+            else
+            cur_assertion[:passed] = asstn_equal
+          end
         end
       else 
         cur_assertion = Hash.new
@@ -254,6 +277,14 @@ def print_failure_details(index, mod_name, test)
   test[:assertions].each { |assertion|
     if not assertion[:passed]
       print_color('FAILED: ' + assertion[:description], :normal, 3)
+
+      if assertion[:media_query] && 
+          (assertion[:media_query] != assertion[:expected_media_query])
+        print_color('Media_query mismatch, one: ' + 
+                    (assertion[:media_query] || ""), :normal, 3)
+        print_color('Media_query mismatch, two: ' + 
+                    (assertion[:expected_media_query] || ""), :normal, 3)
+      end
       print_color('Expected: ' + assertion[:expected], :normal, 3)
       print_color('Actual: ' + assertion[:returned], :normal, 3)
     end
@@ -280,7 +311,6 @@ def check(modules)
         print_test(test[:test], failing.length)
       end
     }
-    puts unless $options['silent'] # Print empty line.
   }
   # Summarizing line
   print_results(passing, failing.length)
