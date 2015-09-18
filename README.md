@@ -29,6 +29,7 @@ bower install true
 npm install sass-true
 ```
 
+
 Usage
 -----
 
@@ -71,6 +72,20 @@ Usage
 @include report;
 ```
 
+**Note:**
+Function unit-tests work across the board,
+but testing mixins can be a bit more complex.
+At this point,
+only Mocha is able to compare/report the results of mixin tests,
+as long as the mixins don't manipulate the selector chain
+(it can't test media-query mixins for example).
+Without using Mocha,
+you can test any mixin,
+but you will have to compare the expected and actual results manually
+in the output code.
+Version control can make that much easier than it sounds.
+
+
 ### With node-sass and Mocha (or other JS test runners)
 
 1. Install `true` via npm (`npm install sass-true`).
@@ -100,6 +115,7 @@ your Sass test file.
 Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
+
 
 ### With ruby-sass on the command line
 
