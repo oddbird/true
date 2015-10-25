@@ -24,7 +24,7 @@ $-tnl: '\a ';
     $selector: if($selector, '#{$selector} #{$this}', $this);
   }
 
-  @return $selector;
+  @return unquote($selector);
 }
 
 
