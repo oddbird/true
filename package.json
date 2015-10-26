@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Unit testing for Sass.",
   "homepage": "http://ericsuzanne.com/true",
   "main": "lib/main.js",
