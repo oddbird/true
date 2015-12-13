@@ -4,11 +4,11 @@
   "main": "sass/_true.scss",
   "description": "Unit testing for Sass.",
   "authors": [
-    "Eric Suzanne <eric@oddbird.net>",
+    "Miriam Eric Suzanne <miriam@oddbird.net>",
     "Scott Davis <me@sdavis.info>",
     "Chris Eppstein <chris@eppsteins.net>"
   ],
-  "homepage": "http://ericsuzanne.com/true",
+  "homepage": "http://oddbird.net/true",
   "keywords": [
     "unit-test", "test", "sass", "libsass", "TDD"
   ],

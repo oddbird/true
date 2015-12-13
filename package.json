@@ -2,11 +2,11 @@
   "name": "sass-true",
   "version": "2.0.3",
   "description": "Unit testing for Sass.",
-  "homepage": "http://ericsuzanne.com/true",
+  "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ericam/true.git"
+    "url": "git://github.com/oddbird/true.git"
   },
   "keywords": [
     "unit-test",
@@ -35,7 +35,7 @@
   "scripts": {
     "test": "make test"
   },
-  "author": "Eric M Suzanne <eric@oddbird.net>",
+  "author": "Miriam Eric Suzanne <miriam@oddbird.net>",
   "contributors": [
     "Scott Davis <me@sdavis.info>",
     "Chris Eppstein <chris@eppsteins.net>",
@@ -43,6 +43,6 @@
   ],
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/ericam/true/issues"
+    "url": "https://github.com/oddbird/true/issues"
   }
 }
