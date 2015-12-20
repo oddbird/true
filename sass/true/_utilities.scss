@@ -55,7 +55,7 @@
 @function _true-is-equal($one, $two) {
   @if type-of($one) == number and type-of($two) == number {
     @if unit($one) == unit($two) {
-      @return $one == $two;
+      @return inspect($one) == inspect($two);
     } @else {
       @return false;
     }
