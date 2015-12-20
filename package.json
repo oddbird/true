@@ -19,7 +19,7 @@
   "dependencies": {
     "css": "~2.1.0",
     "css-selector-parser": "~1.0.0",
-    "node-sass": "^3.4.0",
+    "node-sass": "^3.4.2",
     "underscore": "~1.7.0"
   },
   "devDependencies": {

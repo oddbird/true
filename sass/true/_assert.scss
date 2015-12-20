@@ -14,19 +14,8 @@
   $assert,
   $description: ''
 ) {
-  @include _true-assert-start($description);
-  $result: if($assert, pass, fail);
-
-  .assert-true {
-    -result: to-upper-case($result);
-    -description: $description;
-
-    @if $result == fail {
-      @include _true-fail-details(true, $assert);
-    }
-  }
-
-  @include _true-assert-stop($result);
+  @include _true-context('assert', $description);
+  @include _true-assert-results('assert-true', $assert, true);
 }
 
 /// Assert that a parameter is `false`
@@ -41,19 +30,8 @@
   $assert,
   $description: ''
 ) {
-  @include _true-assert-start($description);
-  $result: if($assert, fail, pass);
-
-  .assert-false {
-    -result: to-upper-case($result);
-    -description: $description;
-
-    @if $result == fail {
-      @include _true-fail-details(false, $assert);
-    }
-  }
-
-  @include _true-assert-stop($result);
+  @include _true-context('assert', $description);
+  @include _true-assert-results('assert-false', $assert, false);
 }
 
 /// /// Assert that two parameters are `equal`
@@ -70,19 +48,8 @@
   $expected,
   $description: ''
 ) {
-  @include _true-assert-start($description);
-  $result: if(_true-is-equal($assert, $expected), pass, fail);
-
-  .assert-equal {
-    -result: to-upper-case($result);
-    -description: $description;
-
-    @if $result == fail {
-      @include _true-fail-details($expected, $assert);
-    }
-  }
-
-  @include _true-assert-stop($result);
+  @include _true-context('assert', $description);
+  @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
 /// Assert that two parameters are `unequal`
@@ -99,19 +66,8 @@
   $expected,
   $description: ''
 ) {
-  @include _true-assert-start($description);
-  $result: if(_true-is-equal($assert, $expected), fail, pass);
-
-  .assert-unequal {
-    -result: to-upper-case($result);
-    -description: $description;
-
-    @if $result == fail {
-      @include _true-fail-details($expected, $assert);
-    }
-  }
-
-  @include _true-assert-stop($result);
+  @include _true-context('assert', $description);
+  @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
 }
 
 
@@ -129,93 +85,93 @@
 @mixin assert(
   $description
 ) {
-  @include _true-assert-start($description);
+  @include _true-context('assert', $description);
+  @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
-  #{_true-selector(assert)} {
-    @content;
-  }
+  @content;
 
-  @include _true-assert-stop(output-to-css);
+  @include _true-update('test', 'output-to-css');
+  @include _true-context('assert', null);
+  @include _true-message('  END_ASSERT  ', 'comments');
 }
 
 /// Describe the test content to be evaluated
 /// The output will be compared against the results of the `expect()` mixin.
 /// @access public
 /// @group testing
-@mixin input {
-  .input {
+@mixin input(
+  $selector: true
+) {
+  @include _true-message('  INPUT  ', 'comments');
+
+  @if $selector {
+    .input {
+      @content;
+    }
+  } @else {
     @content;
   }
+
+  @include _true-message('  END_INPUT  ', 'comments');
 }
 
 /// Describe the output content to be expected.
 /// The output will be compared against the results of the `input()` mixin.
 /// @access public
 /// @group testing
-@mixin expect {
-  .expect {
+@mixin expect(
+  $selector: true
+) {
+  @include _true-message('  EXPECTED  ', 'comments');
+
+  @if $selector {
+    .expect {
+      @content;
+    }
+  } @else {
     @content;
   }
+
+  @include _true-message('  END_EXPECTED  ', 'comments');
 }
 
 
-// Assert Start
-// ------------
+// Assert Results
+// --------------
 
-/// True assert start helper
-/// @access private
-/// @group x_private
-/// @param {String} $name - Assert name
-/// @require {mixin} _true-context
-@mixin _true-assert-start(
-  $name
-) {
-  @include _true-context(assert, $name);
-}
-
-/// True assert sort helper
-/// @access private
-/// @group x_private
-/// @param {String} $result - Assert result
-/// @require {mixin} _true-context
-/// @require {mixin} _true-update
-@mixin _true-assert-stop(
-  $result
-) {
-  @include _true-update(test, $result);
-  @include _true-context(assert, null);
-}
-
-
-// Details
-// -------
-
-/// Fail details
-/// @access private
-/// @group x_private
-/// @param {*} $expected - Expected result
-/// @param {*} $returned - Returned result
-/// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
-/// @require $true-terminal-output
-/// @require {function} _true-context
-@mixin _true-fail-details(
+@mixin _true-assert-results(
+  $type,
+  $assert,
   $expected,
-  $returned,
+  $unequal: false,
   $terminal: $true-terminal-output
 ) {
-  $expected-type: type-of($expected);
-  $returned-type: type-of($returned);
+  $assertion: _true-context('assert');
+  $equal: _true-is-equal($assert, $expected);
+  $pass: if($unequal, not $equal, $equal);
+  $result: if($pass, 'pass', 'fail');
 
-  -expected--#{$expected-type}: inspect($expected);
-  -returned--#{$returned-type}: inspect($returned);
+  @if $result == 'pass' {
+    @include _true-message('  ✔ #{$assertion}', 'comments');
+  } @else {
+    $module: _true-context('module');
+    $test: _true-context('test');
 
-  @if $terminal {
-    @debug '[FAIL] #{_true-context(test)} » #{_true-context(assert)}';
-    @debug 'Expected #{$expected-type} »';
-    @debug inspect($expected);
-    @debug 'Returned #{$returned-type} »';
-    @debug inspect($returned);
+    $title: 'FAILED [#{$type}]: #{$module} » #{$test} » #{$assertion}';
+    $ret: 'Returned [#{type-of($assert)}]: #{inspect($assert)}';
+    $exp: 'Expected [#{type-of($expected)}]: #{inspect($expected)}';
+
+    @include _true-message('  ✖ #{$title}', 'comments');
+    @include _true-message('    - #{$ret}', 'comments');
+    @include _true-message('    - #{$exp}', 'comments');
+
+    @if $terminal {
+      @include _true-message($title, 'warn');
+      @include _true-message($ret, 'debug');
+      @include _true-message($exp, 'debug');
+    }
   }
 
-  @warn '#{_true-context(test)} » #{_true-context(assert)}';
+  @include _true-update('test', $result);
+  @include _true-context('assert', null);
 }

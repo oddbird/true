@@ -1,120 +1,55 @@
-/* # Settings ---------- */
-/* true-context [mixin] */
-[data-module="Settings"] [data-test="true-context [mixin]"] .assert-equal {
-  -result: PASS;
-  -description: 'Confirm that there is currently no "fake" scope'; }
-[data-module="Settings"] [data-test="true-context [mixin]"] .assert-equal {
-  -result: PASS;
-  -description: 'Sets the value of scope "fake" to "this scope is not real"'; }
-[data-module="Settings"] [data-test="true-context [mixin]"] .assert-equal {
-  -result: PASS;
-  -description: 'Confirm that our "fake" scope has been removed'; }
+/*
+Error: File to import not found or unreadable: true.
+       Load path: /Users/miriam/Sites/true/test
+        on line 4 of scss/test.scss
 
-/* _true-context [function] */
-[data-module="Settings"] [data-test="_true-context [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns the current module name'; }
-[data-module="Settings"] [data-test="_true-context [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns the current test name'; }
+1: // True Tests
+2: // ==========
+3: 
+4: @import 'true';
+5: 
+6: @import 'settings';
+7: @import 'utilities';
+8: @import 'messages';
+9: @import 'results';
 
-/* # Utilities ---------- */
-/* Map Add [function] */
-[data-module="Utilities"] [data-test="Map Add [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns the sum of two numeric maps'; }
-
-/* String Split [function] */
-[data-module="Utilities"] [data-test="String Split [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns a list of substrings, based on any delimiter.'; }
-
-/* Strict Equal [function] */
-[data-module="Utilities"] [data-test="Strict Equal [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns false for equal numbers with different units.'; }
-[data-module="Utilities"] [data-test="Strict Equal [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns true for numbers that are truely equal.'; }
-
-/* True Inspect [function] */
-[data-module="Utilities"] [data-test="True Inspect [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Maps are rendered to strings.'; }
-[data-module="Utilities"] [data-test="True Inspect [function]"] .assert-equal {
-  -result: PASS;
-  -description: 'Null is rendered to a string.'; }
-
-/* # Messages ---------- */
-/* True selector */
-[data-module="Messages"] [data-test="True selector"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns a selector string based on the current context'; }
-
-/* # Results ---------- */
-/* Reset */
-[data-module="Results"] [data-test="Reset"] .assert-true {
-  -result: PASS;
-  -description: 'Add a passing result to the test'; }
-[data-module="Results"] [data-test="Reset"] .assert-unequal {
-  -result: PASS;
-  -description: 'Check that test results are not in a clean state'; }
-[data-module="Results"] [data-test="Reset"] .assert-equal {
-  -result: PASS;
-  -description: 'Resets the results for a given scope'; }
-
-/* Get results */
-[data-module="Results"] [data-test="Get results"] .assert-equal {
-  -result: PASS;
-  -description: 'Returns the current results map for a given scope'; }
-
-/* Get result */
-[data-module="Results"] [data-test="Get result"] .assert-equal {
-  -result: PASS;
-  -description: 'Collates a set of results to pass up the scope hierarchy'; }
-
-/* # Modules ---------- */
-/* test-module */
-[data-module="Modules"] [data-test="test-module"] .assert-equal {
-  -result: PASS;
-  -description: 'Resets module scope results'; }
-[data-module="Modules"] [data-test="test-module"] .assert-equal {
-  -result: PASS;
-  -description: 'Changes the current module context'; }
-
-/* # Tests ---------- */
-/* test [mixin] */
-[data-module="Tests"] [data-test="test [mixin]"] .assert-equal {
-  -result: PASS;
-  -description: 'Resets module scope results'; }
-[data-module="Tests"] [data-test="test [mixin]"] .assert-equal {
-  -result: PASS;
-  -description: 'Changes the current test context'; }
-
-/* # Assert ---------- */
-/* Simple assertions */
-[data-module="Assert"] [data-test="Simple assertions"] .assert-true {
-  -result: PASS;
-  -description: 'True should assert true.'; }
-[data-module="Assert"] [data-test="Simple assertions"] .assert-false {
-  -result: PASS;
-  -description: 'False should assert false.'; }
-[data-module="Assert"] [data-test="Simple assertions"] .assert-equal {
-  -result: PASS;
-  -description: '1 and 1 should be equal.'; }
-[data-module="Assert"] [data-test="Simple assertions"] .assert-unequal {
-  -result: PASS;
-  -description: '1 and 3 should be un-equal.'; }
-
-/* CSS output assertions */
-[data-module="Assert"] [data-test="CSS output assertions"] [data-assert="Input and output selector patterns match"] .input {
-  -property: value; }
-[data-module="Assert"] [data-test="CSS output assertions"] [data-assert="Input and output selector patterns match"] .expect {
-  -property: value; }
-
-/* # SUMMARY ---------- */
-/* 14 Tests: */
-/*  - 13 Passed */
-/*  - 0 Failed */
-/*  - 1 Output to CSS */
-/* -------------------- */
+Backtrace:
+scss/test.scss:4
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:66:in `rescue in import'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:45:in `import'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:28:in `imported_file'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:37:in `css_import?'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:301:in `visit_import'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:79:in `block in with_base'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:79:in `with_base'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `map'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/engine.rb:368:in `_render_with_sourcemap'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/engine.rb:285:in `render_with_sourcemap'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/sass_scss.rb:396:in `run'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/sass_scss.rb:62:in `process_result'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/base.rb:52:in `parse'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/base.rb:19:in `parse!'
+/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/bin/sass:13:in `<top (required)>'
+/Users/miriam/Sites/.venvs/true/rubygems/bin/sass:23:in `load'
+/Users/miriam/Sites/.venvs/true/rubygems/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: true.\A        Load path: /Users/miriam/Sites/true/test\A         on line 4 of scss/test.scss\A \A 1: // True Tests\A 2: // ==========\A 3: \A 4: @import 'true';\A 5: \A 6: @import 'settings';\A 7: @import 'utilities';\A 8: @import 'messages';\A 9: @import 'results';"; }
