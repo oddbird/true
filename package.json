@@ -17,15 +17,15 @@
     "eyeglass-module"
   ],
   "dependencies": {
-    "css": "~2.1.0",
-    "css-selector-parser": "~1.0.0",
+    "css": "^2.2.1",
+    "css-selector-parser": "^1.1.0",
     "node-sass": "^3.4.2",
-    "underscore": "~1.7.0"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "istanbul": "^0.3.5",
-    "mocha": "^2.0.1",
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {
