@@ -1,55 +1,110 @@
-/*
-Error: File to import not found or unreadable: true.
-       Load path: /Users/miriam/Sites/true/test
-        on line 4 of scss/test.scss
+@charset "UTF-8";
+/* # Module: Settings */
+/* ------------------ */
+/* Test: true-context [mixin] */
+/*   ✔ Confirm that there is currently no "fake" scope */
+/*   ✔ Sets the value of scope "fake" to "this scope is not real" */
+/*   ✔ Confirm that our "fake" scope has been removed */
+/*  */
+/* Test: _true-context [function] */
+/*   ✔ Returns the current module name */
+/*   ✔ Returns the current test name */
+/*  */
+/*  */
+/* # Module: Utilities */
+/* ------------------- */
+/* Test: Map Add [function] */
+/*   ✔ Returns the sum of two numeric maps */
+/*  */
+/* Test: String Split [function] */
+/*   ✔ Returns a list of substrings, based on any delimiter. */
+/*  */
+/* Test: Strict Equal [function] */
+/*   ✔ Returns false for equal numbers with different units. */
+/*   ✔ Returns true for numbers that are truely equal. */
+/*  */
+/*  */
+/* # Module: True Message */
+/* ---------------------- */
+/* Test: Simple messages */
+/*   ASSERT: Render as CSS comments   */
+/*   INPUT   */
+/* This is a simple message */
+/*   END_INPUT   */
+/*   EXPECTED   */
+/* This is a simple message */
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Multi-line messages */
+/*   ASSERT: Render as multiple CSS comments   */
+/*   INPUT   */
+/* This is a  */
+/* muliline message */
+/*   END_INPUT   */
+/*   EXPECTED   */
+/* This is a  */
+/* multiline message */
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # Module: Results */
+/* ----------------- */
+/* Test: Reset */
+/*   ✔ Add a passing result to the test */
+/*   ✔ Check that test results are not in a clean state */
+/*   ✔ Resets the results for a given scope */
+/*  */
+/* Test: Get results */
+/*   ✔ Returns the current results map for a given scope */
+/*  */
+/* Test: Get result */
+/*   ✔ Collates a set of results to pass up the scope hierarchy */
+/*  */
+/*  */
+/* # Module: Modules */
+/* ----------------- */
+/* Test: test-module */
+/*   ✔ Resets module scope results */
+/*   ✔ Changes the current module context */
+/*  */
+/*  */
+/* # Module: Tests */
+/* --------------- */
+/* Test: test [mixin] */
+/*   ✔ Resets module scope results */
+/*   ✔ Changes the current test context */
+/*  */
+/*  */
+/* # Module: Assert */
+/* ---------------- */
+/* Test: Simple assertions */
+/*   ✔ True should assert true. */
+/*   ✔ False should assert false. */
+/*   ✔ 1 and 1 should be equal. */
+/*   ✔ 1 and 3 should be un-equal. */
+/*  */
+/* Test: CSS output assertions */
+/*   ASSERT: Input and output selector patterns match   */
+/*   INPUT   */
+.input {
+  -property: value; }
 
-1: // True Tests
-2: // ==========
-3: 
-4: @import 'true';
-5: 
-6: @import 'settings';
-7: @import 'utilities';
-8: @import 'messages';
-9: @import 'results';
+/*   END_INPUT   */
+/*   EXPECTED   */
+.expect {
+  -property: value; }
 
-Backtrace:
-scss/test.scss:4
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:66:in `rescue in import'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:45:in `import'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:28:in `imported_file'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/import_node.rb:37:in `css_import?'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:301:in `visit_import'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:79:in `block in with_base'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:115:in `with_frame'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/stack.rb:79:in `with_base'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `map'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:157:in `visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/sass_scss.rb:396:in `run'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/sass_scss.rb:62:in `process_result'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/base.rb:52:in `parse'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/lib/sass/exec/base.rb:19:in `parse!'
-/Users/miriam/Sites/.venvs/true/rubygems/gems/sass-3.4.6/bin/sass:13:in `<top (required)>'
-/Users/miriam/Sites/.venvs/true/rubygems/bin/sass:23:in `load'
-/Users/miriam/Sites/.venvs/true/rubygems/bin/sass:23:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: true.\A        Load path: /Users/miriam/Sites/true/test\A         on line 4 of scss/test.scss\A \A 1: // True Tests\A 2: // ==========\A 3: \A 4: @import 'true';\A 5: \A 6: @import 'settings';\A 7: @import 'utilities';\A 8: @import 'messages';\A 9: @import 'results';"; }
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # SUMMARY ---------- */
+/* 14 Tests: */
+/*  - 11 Passed */
+/*  - 0 Failed */
+/*  - 3 Output to CSS */
+/* -------------------- */
+
+/*# sourceMappingURL=test.css.map */
