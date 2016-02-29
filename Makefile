@@ -10,6 +10,10 @@ test: coverage-clean
 debug:
 	$(BIN)/mocha -R spec debug
 
+.PHONY: compile
+compile:
+	$(BIN)/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/
+
 
 .PHONY: coverage-clean
 coverage-clean:
