@@ -21,16 +21,16 @@
 /*  */
 /* Test: Strict Equal [function] */
 /*   ✔ Returns false for equal numbers with different units. */
-/*   ✔ Returns true for numbers that are truely equal. */
+/*   ✔ Returns true for numbers that are truly equal. */
 /*  */
 /*  */
 /* # Module: True Message */
 /* ---------------------- */
 /* Test: Simple messages */
 /*   ASSERT: Render as CSS comments   */
-/*   INPUT   */
+/*   OUTPUT   */
 /* This is a simple message */
-/*   END_INPUT   */
+/*   END_OUTPUT   */
 /*   EXPECTED   */
 /* This is a simple message */
 /*   END_EXPECTED   */
@@ -38,10 +38,10 @@
 /*  */
 /* Test: Multi-line messages */
 /*   ASSERT: Render as multiple CSS comments   */
-/*   INPUT   */
+/*   OUTPUT   */
 /* This is a  */
 /* muliline message */
-/*   END_INPUT   */
+/*   END_OUTPUT   */
 /*   EXPECTED   */
 /* This is a  */
 /* multiline message */
@@ -86,14 +86,14 @@
 /*   ✔ 1 and 3 should be un-equal. */
 /*  */
 /* Test: CSS output assertions */
-/*   ASSERT: Input and output selector patterns match   */
-/*   INPUT   */
-.input {
+/*   ASSERT: Output and expected selector patterns match   */
+/*   OUTPUT   */
+.test-output {
   -property: value; }
 
-/*   END_INPUT   */
+/*   END_OUTPUT   */
 /*   EXPECTED   */
-.expect {
+.test-output {
   -property: value; }
 
 /*   END_EXPECTED   */

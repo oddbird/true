@@ -157,7 +157,7 @@
     $module: _true-context('module');
     $test: _true-context('test');
 
-    $title: 'FAILED [#{$type}]: #{$module} » #{$test} » #{$assertion}';
+    $title: 'FAILED [#{$type}]: #{$assertion}';
     $out: 'Output [#{type-of($assert)}]: #{inspect($assert)}';
     $exp: 'Expected [#{type-of($expected)}]: #{inspect($expected)}';
 
@@ -166,9 +166,10 @@
     @include _true-message('    - #{$exp}', 'comments');
 
     @if $terminal {
+      @include _true-message('#{$module} » #{$test}', 'debug');
+      @include _true-message('- #{$out}', 'debug');
+      @include _true-message('- #{$exp}', 'debug');
       @include _true-message($title, 'warn');
-      @include _true-message($out, 'debug');
-      @include _true-message($exp, 'debug');
     }
   }
 
