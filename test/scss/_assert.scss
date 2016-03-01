@@ -15,8 +15,8 @@
   }
 
   @include test('CSS output assertions') {
-    @include assert('Input and output selector patterns match') {
-      @include input {
+    @include assert('Output and expected selector patterns match') {
+      @include output {
         -property: value;
       }
 

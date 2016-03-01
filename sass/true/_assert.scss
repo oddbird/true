@@ -78,7 +78,7 @@
 /// @access public
 /// @group testing
 /// @param {String} $description - Assert description
-/// @content Use `input()` and `expect()` mixins to define blocks for comparison
+/// @content Use `output()` and `expect()` mixins to define blocks for comparison
 /// @require {mixin} _true-assert-start
 /// @require {mixin} _true-assert-stop
 /// @require {function} _true-selector
@@ -99,24 +99,24 @@
 /// The output will be compared against the results of the `expect()` mixin.
 /// @access public
 /// @group testing
-@mixin input(
+@mixin output(
   $selector: true
 ) {
-  @include _true-message('  INPUT  ', 'comments');
+  @include _true-message('  OUTPUT  ', 'comments');
 
   @if $selector {
-    .input {
+    .test-output {
       @content;
     }
   } @else {
     @content;
   }
 
-  @include _true-message('  END_INPUT  ', 'comments');
+  @include _true-message('  END_OUTPUT  ', 'comments');
 }
 
 /// Describe the output content to be expected.
-/// The output will be compared against the results of the `input()` mixin.
+/// The output will be compared against the results of the `output()` mixin.
 /// @access public
 /// @group testing
 @mixin expect(
@@ -125,7 +125,7 @@
   @include _true-message('  EXPECTED  ', 'comments');
 
   @if $selector {
-    .expect {
+    .test-output {
       @content;
     }
   } @else {
@@ -158,16 +158,16 @@
     $test: _true-context('test');
 
     $title: 'FAILED [#{$type}]: #{$module} » #{$test} » #{$assertion}';
-    $ret: 'Returned [#{type-of($assert)}]: #{inspect($assert)}';
+    $out: 'Output [#{type-of($assert)}]: #{inspect($assert)}';
     $exp: 'Expected [#{type-of($expected)}]: #{inspect($expected)}';
 
     @include _true-message('  ✖ #{$title}', 'comments');
-    @include _true-message('    - #{$ret}', 'comments');
+    @include _true-message('    - #{$out}', 'comments');
     @include _true-message('    - #{$exp}', 'comments');
 
     @if $terminal {
       @include _true-message($title, 'warn');
-      @include _true-message($ret, 'debug');
+      @include _true-message($out, 'debug');
       @include _true-message($exp, 'debug');
     }
   }

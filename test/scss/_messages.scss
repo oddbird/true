@@ -4,7 +4,7 @@
 @include test-module('True Message') {
   @include test('Simple messages') {
     @include assert('Render as CSS comments') {
-      @include input(false) {
+      @include output(false) {
         @include _true-message('This is a simple message', 'comments');
       }
 
@@ -16,7 +16,7 @@
 
   @include test('Multi-line messages') {
     @include assert('Render as multiple CSS comments') {
-      @include input(false) {
+      @include output(false) {
         @include _true-message('This is a #{$-tnl}muliline message', 'comments');
       }
 
