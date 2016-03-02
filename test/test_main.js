@@ -5,34 +5,36 @@ var main = require('../lib/main.js');
 describe('#runSass', function () {
   it('throws AssertionError on failure', function () {
     var sass = [
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
-      '  color: green; }',
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
-      '  color: red; }',
+      '/* # Module: Assert */',
+      '/* ---------------- */',
+      '/* Test: Simple assertions */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*     - Output [bool]: false */',
+      '/*     - Expected [bool]: true */',
+      '/*   ✔ False should assert false. */',
     ].join('\n');
     var mock = function (name, cb) { cb(); };
     var attempt = function () {
       main.runSass({data: sass}, mock, mock);
     };
-    expect(attempt).to.throw(/A \("color: green;" equal "color: red;"\)/);
+    expect(attempt).to.throw(/True should assert true. \(\"\[bool\] false\" assert-true \"\[bool\] true\"\)/);
   });
 });
 
 describe('#parse', function () {
   it('parses a passing non-output test', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] .assert-equal {',
-      '  -result: PASS;',
-      "  -description: 'Desc';",
-      '}'
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */'
     ].join('\n');
     var expected = [{
-      module: "M",
+      module: "Utilities",
       tests: [{
-        test: "T",
+        test: "Map Add [function]",
         assertions: [{
-          description: "Desc",
-          assert: "equal",
+          description: "Returns the sum of two numeric maps",
           passed: true,
         }],
       }],
@@ -43,48 +45,23 @@ describe('#parse', function () {
 
   it('parses a failing non-output test', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] .assert-equal {',
-      '  -result: FAIL;',
-      "  -description: 'Desc';",
-      '  -expected--string: one;',
-      '  -returned--string: two;',
-      '}'
+      '/* # Module: Assert */',
+      '/* ---------------- */',
+      '/* Test: Simple assertions */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*     - Output [bool]: false */',
+      '/*     - Expected [bool]: true */'
     ].join('\n');
     var expected = [{
-      module: "M",
+      module: "Assert",
       tests: [{
-        test: "T",
+        test: "Simple assertions",
         assertions: [{
-          description: "Desc",
-          assert: "equal",
+          description: "True should assert true.",
           passed: false,
-          expected: 'string: one',
-          returned: 'string: two',
-        }],
-      }],
-    }];
-
-    expect(main.parse(css)).to.deep.equal(expected);
-  });
-
-  it('handles missing description', function () {
-    var css = [
-      '[data-module="M"] [data-test="T"] .assert-equal {',
-      '  -result: FAIL;',
-      '  -expected--string: one;',
-      '  -returned--string: two;',
-      '}'
-    ].join('\n');
-    var expected = [{
-      module: "M",
-      tests: [{
-        test: "T",
-        assertions: [{
-          description: "",
-          assert: "equal",
-          passed: false,
-          expected: 'string: one',
-          returned: 'string: two',
+          assertionType: 'assert-true',
+          output: '[bool] false',
+          expected: '[bool] true'
         }],
       }],
     }];
@@ -94,23 +71,31 @@ describe('#parse', function () {
 
   it('parses a passing output test', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
-      '  color: green;',
-      '}',
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
-      '  color: green;',
-      '}'
+      '/* # Module: Assert */',
+      '/* Test: CSS output assertions */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_EXPECTED   */',
+      '/*   END_ASSERT   */'
     ].join('\n');
     var expected = [{
-      module: "M",
+      module: "Assert",
       tests: [{
-        test: "T",
+        test: "CSS output assertions",
         assertions: [{
-          description: "A",
-          assert: 'equal',
+          description: "Input and output selector patterns match",
+          assertionType: 'equal',
           passed: true,
-          expected: 'color: green;',
-          returned: 'color: green;',
+          output: '.test-output {\n  -property: value;\n}',
+          expected: '.test-output {\n  -property: value;\n}'
         }],
       }],
     }];
@@ -120,23 +105,31 @@ describe('#parse', function () {
 
   it('parses a failing output test', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
-      '  color: green;',
-      '}',
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
-      '  color: red;',
-      '}'
+      '/* # Module: Assert */',
+      '/* Test: CSS output assertions */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value1; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '.test-output {',
+      '  -property: value2; }',
+      '',
+      '/*   END_EXPECTED   */',
+      '/*   END_ASSERT   */'
     ].join('\n');
     var expected = [{
-      module: "M",
+      module: "Assert",
       tests: [{
-        test: "T",
+        test: "CSS output assertions",
         assertions: [{
-          description: "A",
-          assert: 'equal',
+          description: "Input and output selector patterns match",
+          assertionType: 'equal',
           passed: false,
-          expected: 'color: red;',
-          returned: 'color: green;',
+          expected: '.test-output {\n  -property: value2;\n}',
+          output: '.test-output {\n  -property: value1;\n}'
         }],
       }],
     }];
@@ -146,25 +139,34 @@ describe('#parse', function () {
 
   it('respects declaration order in output tests', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .input {',
-      '  color: green;',
-      '  background: white;',
+      '/* # Module: Assert */',
+      '/* Test: CSS output assertions */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property2: value2; ',
+      '  -property1: value1; ',
       '}',
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect {',
-      '  background: white;',
-      '  color: green;',
-      '}'
+      '',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '.test-output {',
+      '  -property1: value1; ',
+      '  -property2: value2; ',
+      '}',
+      '/*   END_EXPECTED   */',
+      '/*   END_ASSERT   */'
     ].join('\n');
     var expected = [{
-      module: "M",
+      module: "Assert",
       tests: [{
-        test: "T",
+        test: "CSS output assertions",
         assertions: [{
-          description: "A",
-          assert: 'equal',
+          description: "Input and output selector patterns match",
+          assertionType: 'equal',
           passed: false,
-          expected: 'background: white; color: green;',
-          returned: 'color: green; background: white;',
+          expected: '.test-output {\n  -property1: value1;\n  -property2: value2;\n}',
+          output: '.test-output {\n  -property2: value2;\n  -property1: value1;\n}',
         }],
       }],
     }];
@@ -172,128 +174,35 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
-  it('ignores comments', function () {
-    expect(main.parse('/* foo */')).to.deep.equal([]);
-  });
-
-  it('handles double selectors', function () {
+  it('parses tests of comment output', function () {
     var css = [
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .input,',
-      '[data-module="M"] [data-test="T"] [data-assert="A"] .expect',
-      '{ color: green; }',
-    ].join(' ');
+      '/* # Module: True Message */',
+      '/* ---------------------- */',
+      '/* Test: Simple messages */',
+      '/*   ASSERT: Render as CSS comments   */',
+      '/*   OUTPUT   */',
+      '/* This is a simple message */',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '/* This is a simple message */',
+      '/*   END_EXPECTED   */',
+      '/*   END_ASSERT   */',
+      '/*  */',
+    ].join('\n');
     var expected = [{
-      module: "M",
+      module: "True Message",
       tests: [{
-        test: "T",
+        test: "Simple messages",
         assertions: [{
-          description: "A",
-          assert: 'equal',
+          description: "Render as CSS comments",
+          assertionType: 'equal',
           passed: true,
-          expected: 'color: green;',
-          returned: 'color: green;',
+          expected: '/* This is a simple message */',
+          output: '/* This is a simple message */',
         }],
       }],
     }];
 
     expect(main.parse(css)).to.deep.equal(expected);
-  });
-
-  it('throws an error on bad selector', function () {
-    var attempt = function () {
-      main.parse('[data-foo="bar"] { color: red; }');
-    };
-
-    expect(attempt).to.throw(/Can\'t understand selector: \[data-foo="bar"\]/);
-  });
-});
-
-
-describe('#parseSelector', function () {
-  it('parses non-output test selector', function () {
-    var sel = '[data-module="M"] [data-test="T"] .assert-equal';
-    var exp = {
-      output: false,
-      module: "M",
-      test: "T",
-      assert: "equal",
-    };
-
-    expect(main.parseSelector(sel)).to.deep.equal(exp);
-  });
-
-  it('handles spaces in selectors', function () {
-    var sel = '[data-module="M 1"] [data-test="T 2"] .assert-equal';
-    var exp = {
-      output: false,
-      module: "M 1",
-      test: "T 2",
-      assert: "equal",
-    };
-
-    expect(main.parseSelector(sel)).to.deep.equal(exp);
-  });
-
-  it('parses output test selector', function () {
-    var sel = '[data-module="M"] [data-test="T"] [data-assert="A"] .input';
-    var exp = {
-      output: true,
-      module: "M",
-      test: "T",
-      assert: "A",
-      type: 'input',
-    };
-
-    expect(main.parseSelector(sel)).to.deep.equal(exp);
-  });
-
-  it('returns undefined on badly-quoted attr selector', function () {
-    var attempt = function () {
-      main.parseSelector('[data-module=A]');
-    };
-
-    expect(attempt()).to.be.undefined();
-  });
-
-  it('returns undefined on unknown output clause', function () {
-    var attempt = function () {
-      main.parseSelector(
-        '[data-module="M"] [data-test="T"] [data-assert="A"] .foo');
-    };
-
-    expect(attempt()).to.be.undefined();
-  });
-
-  it('returns undefined on unknown non-output final class', function () {
-    var attempt = function () {
-      main.parseSelector(
-        '[data-module="M"] [data-test="T"] .foo');
-    };
-
-    expect(attempt()).to.be.undefined();
-  });
-
-  it('returns undefined on unknown attr selector', function () {
-    var attempt = function () {
-      main.parseSelector('[data-foo="bar"]');
-    };
-
-    expect(attempt()).to.be.undefined();
-  });
-
-  it('returns undefined on unknown class selector', function () {
-    var attempt = function () {
-      main.parseSelector('.foo');
-    };
-
-    expect(attempt()).to.be.undefined();
-  });
-
-  it('returns undefined on unknown selector type', function () {
-    var attempt = function () {
-      main.parseSelector('#foo');
-    };
-
-    expect(attempt()).to.be.undefined();
   });
 });

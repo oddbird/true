@@ -80,7 +80,9 @@
 /* # Module: Assert */
 /* ---------------- */
 /* Test: Simple assertions */
-/*   ✔ True should assert true. */
+/*   ✖ FAILED [assert-true]: True should assert true. */
+/*     - Output [bool]: false */
+/*     - Expected [bool]: true */
 /*   ✔ False should assert false. */
 /*   ✔ 1 and 1 should be equal. */
 /*   ✔ 1 and 3 should be un-equal. */
