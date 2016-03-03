@@ -1,23 +1,51 @@
 var expect = require('chai').expect;
 var main = require('../lib/main.js');
+var path = require('path');
 
 
 describe('#runSass', function () {
   it('throws AssertionError on failure', function () {
     var sass = [
-      '/* # Module: Assert */',
-      '/* ---------------- */',
-      '/* Test: Simple assertions */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
-      '/*     - Output [bool]: false */',
-      '/*     - Expected [bool]: true */',
-      '/*   ✔ False should assert false. */',
+      '@import "true";',
+      '@include test-module("Assert") {',
+      '  @include test("Simple assertions") {',
+      '    @include assert-true(false, "True should assert true.");',
+      '  }',
+      '}'
     ].join('\n');
     var mock = function (name, cb) { cb(); };
     var attempt = function () {
       main.runSass({data: sass}, mock, mock);
     };
-    expect(attempt).to.throw(/True should assert true. \(\"\[bool\] false\" assert-true \"\[bool\] true\"\)/);
+    expect(attempt).to.throw(
+      'True should assert true. ("[bool] false" assert-true "[bool] true")');
+  });
+
+  it('can specify includePaths', function () {
+    var sass = [
+      '@import "include";',
+      '@import "true";',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        @include included-mixin();',
+      '      }',
+      '      @include expect() {',
+      '        -property: value;',
+      '      }',
+      '    }',
+      '  }',
+      '}'
+    ].join('\n');
+    var mock = function (name, cb) { cb(); };
+    main.runSass(
+      {
+        data: sass,
+        includePaths: [path.join(__dirname, 'scss/includes')]
+      },
+      mock,
+      mock);
   });
 });
 
@@ -50,7 +78,7 @@ describe('#parse', function () {
       '/* Test: Simple assertions */',
       '/*   ✖ FAILED [assert-true]: True should assert true. */',
       '/*     - Output [bool]: false */',
-      '/*     - Expected [bool]: true */'
+      '/*     - Expected [bool]: true */',
     ].join('\n');
     var expected = [{
       module: "Assert",
@@ -69,21 +97,53 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('parses a failing non-output test with no failure details', function () {
+    var css = [
+      '/* # Module: Assert */',
+      '/* ---------------- */',
+      '/* Test: Simple assertions */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*   ✔ False should assert false */'
+    ].join('\n');
+    var expected = [{
+      module: "Assert",
+      tests: [{
+        test: "Simple assertions",
+        assertions: [
+          {
+            description: "True should assert true.",
+            passed: false,
+            assertionType: 'assert-true'
+          },
+          {
+            description: "False should assert false",
+            passed: true
+          }
+        ],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a passing output test', function () {
     var css = [
       '/* # Module: Assert */',
       '/* Test: CSS output assertions */',
       '/*   ASSERT: Input and output selector patterns match   */',
+      '/* */',
       '/*   OUTPUT   */',
       '.test-output {',
       '  -property: value; }',
       '',
       '/*   END_OUTPUT   */',
+      '/* */',
       '/*   EXPECTED   */',
       '.test-output {',
       '  -property: value; }',
       '',
       '/*   END_EXPECTED   */',
+      '/* */',
       '/*   END_ASSERT   */'
     ].join('\n');
     var expected = [{
@@ -204,5 +264,226 @@ describe('#parse', function () {
     }];
 
     expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('throws error on unexpected rule type instead of module header', function () {
+    var css = '.foo { -prop: value; }';
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 1, column 1: Unexpected rule type "rule"; looking for module header');
+  });
+
+  it('throws error on unexpected comment instead of module header', function () {
+    var css = '/* foo */';
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 1, column 1: Unexpected comment "foo"; looking for module header');
+  });
+
+  it('handles a blank comment before module header', function () {
+    var css = [
+      '/*  */',
+      '/* # Module: M */'
+    ].join('\n');
+
+    expect(main.parse(css)).to.deep.equal([{
+      module: "M",
+      tests: []
+    }]);
+  });
+
+  it('throws error on unexpected rule type instead of test', function () {
+    var css = [
+      '/* # Module: M */',
+      '.foo { -prop: value; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 2, column 1: Unexpected rule type "rule"; looking for test');
+  });
+
+  it('handles a blank comment before test header', function () {
+    var css = [
+      '/* # Module: M */',
+      '/*  */',
+      '/* Test: T */',
+    ].join('\n');
+
+    expect(main.parse(css)).to.deep.equal([{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: []
+      }]
+    }]);
+  });
+
+  it('throws error on unexpected rule type instead of assertion', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '.foo { -prop: value; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 3, column 1: Unexpected rule type "rule"; looking for assertion');
+  });
+
+  it('handles a blank comment before assertion', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*  */',
+      '/*   ✔ Does the thing right */'
+    ].join('\n');
+
+    expect(main.parse(css)).to.deep.equal([{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: [{
+          description: "Does the thing right",
+          passed: true
+        }]
+      }]
+    }]);
+  });
+
+  it('throws error on unexpected rule type instead of failure detail', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '.foo { -prop: val; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 4, column 1: Unexpected rule type "rule"; looking for output/expected');
+  });
+
+  it('throws error on unexpected comment instead of failure detail', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*     - foobar */',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 4, column 1: Unexpected comment "- foobar"; looking for module header');
+  });
+
+  it('throws error on unexpected rule type instead of OUTPUT', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '.foo { -prop: val; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 4, column 1: Unexpected rule type "rule"; looking for OUTPUT');
+  });
+
+  it('throws error on unexpected comment instead of OUTPUT', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/* foo */',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 4, column 1: Unexpected comment "foo"; looking for OUTPUT');
+  });
+
+  it('throws error on unexpected rule type instead of EXPECTED', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value1; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '.foo { -prop: val; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 9, column 1: Unexpected rule type "rule"; looking for EXPECTED');
+  });
+
+  it('throws error on unexpected comment instead of EXPECTED', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value1; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/* foo */',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 9, column 1: Unexpected comment "foo"; looking for EXPECTED');
+  });
+
+  it('throws error on unexpected rule type instead of END_ASSERT', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value1; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_EXPECTED   */',
+      '.foo { -prop: val; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 14, column 1: Unexpected rule type "rule"; looking for END_ASSERT');
+  });
+
+  it('throws error on unexpected comment instead of END_ASSERT', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/*   OUTPUT   */',
+      '.test-output {',
+      '  -property: value1; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/*   EXPECTED   */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_EXPECTED   */',
+      '/* foo */',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 14, column 1: Unexpected comment "foo"; looking for END_ASSERT');
   });
 });
