@@ -182,7 +182,7 @@
 @mixin _true-assert-stop(
   $result
 ) {
-  @include _true-update(test, $result);
+  @include _true-update($result);
   @include _true-context(assert, null);
 }
 

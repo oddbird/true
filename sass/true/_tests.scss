@@ -28,13 +28,11 @@
 /// @access private
 /// @group x_private
 /// @param {String} $name - Test name
-/// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message
 @mixin _true-test-start(
   $name
 ) {
-  @include _true-reset(test);
   @include _true-context(test, $name);
   @include _true-message($name, comments);
 }
@@ -46,12 +44,9 @@
 /// Test stop helper
 /// @access private
 /// @group x_private
-/// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message
 /// @require {function} _true-get-result
 @mixin _true-test-stop {
-  @include _true-update(module, _true-get-result(test));
-  @include _true-reset(test);
   @include _true-context(test, null);
 }

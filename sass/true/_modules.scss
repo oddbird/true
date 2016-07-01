@@ -24,13 +24,11 @@
 /// @access private
 /// @group x_private
 /// @param {String} $name - Module name
-/// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message
 @mixin _true-module-start(
   $name
 ) {
-  @include _true-reset(module);
   @include _true-context(module, $name);
   @include _true-message('# #{$name} ----------', comments);
 }
@@ -42,11 +40,8 @@
 /// Module stop helper
 /// @access private
 /// @group x_private
-/// @require {mixin} _true-reset
 /// @require {mixin} _true-context
 /// @require {mixin} _true-message
 @mixin _true-module-stop {
-  @include _true-update(global, null);
-  @include _true-reset(module);
   @include _true-context(module, null);
 }

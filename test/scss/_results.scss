@@ -2,32 +2,19 @@
 // ===============
 
 @include test-module('Results') {
-  @include test('Reset') {
-    @include assert-true(true,
-      'Add a passing result to the test');
+  @include test('Update with pass') {
+    $before: $_true-results;
+    @include _true-update(pass);
+    $actual: $_true-results;
+    $_true-results: $before !global;
 
-    @include assert-unequal(
-      map-get($_true-results, test),
-      $_true-results-reset,
-      'Check that test results are not in a clean state');
-
-    @include _true-reset(test);
-
-    @include assert-equal(
-      map-get($_true-results, test),
-      $_true-results-reset,
-      'Resets the results for a given scope');
-  }
-
-  @include test('Get results') {
-    @include assert-equal(
-      _true-get-results(module),
-      map-get($_true-results, module),
-      'Returns the current results map for a given scope');
-  }
-
-  @include test('Get result') {
-    @include assert-equal(_true-get-result(module), pass,
-      'Collates a set of results to pass up the scope hierarchy');
+    @include assert-equal(map-get($actual, run), map-get($before, run) + 1,
+      'increments run');
+    @include assert-equal(map-get($actual, pass), map-get($before, pass) + 1,
+      'increments pass');
+    @include assert-equal(map-get($actual, fail), map-get($before, fail),
+      'leaves fails as-is');
+    @include assert-equal(map-get($actual, output-to-css), map-get($before, output-to-css),
+      'leaves output-to-css as-is');
   }
 }
