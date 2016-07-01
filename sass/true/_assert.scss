@@ -183,7 +183,7 @@
   $result
 ) {
   @include _true-update($result);
-  @include _true-context(assert, null);
+  @include _true-context-pop();
 }
 
 
