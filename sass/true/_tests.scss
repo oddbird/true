@@ -45,6 +45,6 @@
 /// @require {mixin} _true-message
 /// @require {function} _true-get-result
 @mixin _true-test-stop {
-  @include _true-context(test, null);
+  @include _true-context-pop();
   @include _true-message('', 'comments');
 }

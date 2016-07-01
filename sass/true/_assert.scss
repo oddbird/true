@@ -91,7 +91,7 @@
   @content;
 
   @include _true-update('output-to-css');
-  @include _true-context('assert', null);
+  @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
 
@@ -173,5 +173,5 @@
   }
 
   @include _true-update($result);
-  @include _true-context('assert', null);
+  @include _true-context-pop();
 }
