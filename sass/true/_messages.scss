@@ -19,9 +19,14 @@ $-tnl: '\a ';
 ) {
   $selector: null;
 
-  @each $layer in $scope {
-    $this: '[data-#{$layer}="#{_true-context($layer)}"]';
-    $selector: if($selector, '#{$selector} #{$this}', $this);
+  @each $entry in $_true-context {
+    $layer: nth($entry, 1);
+    $name: nth($entry, 2);
+
+    @if ($layer in $scope) {
+      $this: '[data-#{$layer}="#{$name}"]';
+      $selector: if($selector, '#{$selector} #{$this}', $this);
+    }
   }
 
   @return unquote($selector);

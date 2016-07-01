@@ -28,6 +28,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -52,6 +53,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -67,6 +69,33 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('parses a nested passing non-output test', function () {
+    var css = [
+      '[data-module="M"] [data-module="M2"] [data-test="T"] .assert-equal {',
+      '  -result: PASS;',
+      "  -description: 'Desc';",
+      '}'
+    ].join('\n');
+    var expected = [{
+      module: "M",
+      modules: [{
+        module: "M2",
+        modules: [],
+        tests: [{
+          test: "T",
+          assertions: [{
+            description: "Desc",
+            assert: "equal",
+            passed: true,
+          }],
+        }],
+      }],
+      tests: [],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('handles missing description', function () {
     var css = [
       '[data-module="M"] [data-test="T"] .assert-equal {',
@@ -77,6 +106,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -103,6 +133,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -129,6 +160,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -157,6 +189,7 @@ describe('#parse', function () {
     ].join('\n');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -184,6 +217,7 @@ describe('#parse', function () {
     ].join(' ');
     var expected = [{
       module: "M",
+      modules: [],
       tests: [{
         test: "T",
         assertions: [{
@@ -214,7 +248,7 @@ describe('#parseSelector', function () {
     var sel = '[data-module="M"] [data-test="T"] .assert-equal';
     var exp = {
       output: false,
-      module: "M",
+      modules: ["M"],
       test: "T",
       assert: "equal",
     };
@@ -226,7 +260,7 @@ describe('#parseSelector', function () {
     var sel = '[data-module="M 1"] [data-test="T 2"] .assert-equal';
     var exp = {
       output: false,
-      module: "M 1",
+      modules: ["M 1"],
       test: "T 2",
       assert: "equal",
     };
@@ -238,7 +272,7 @@ describe('#parseSelector', function () {
     var sel = '[data-module="M"] [data-test="T"] [data-assert="A"] .input';
     var exp = {
       output: true,
-      module: "M",
+      modules: ["M"],
       test: "T",
       assert: "A",
       type: 'input',

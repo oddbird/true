@@ -9,4 +9,13 @@
     @include assert-equal($return, $expect,
       'Returns a selector string based on the current context');
   }
+  @include test-module('nested') {
+    @include test('True selector') {
+      $return: _true-selector(module test);
+      $expect: '[data-module="Messages"] [data-module="nested"] [data-test="True selector"]';
+
+      @include assert-equal($return, $expect,
+        'Returns a selector string based on a nested context');
+    }
+  }
 }

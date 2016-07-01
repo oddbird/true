@@ -3,8 +3,6 @@
 
 @include test-module('Modules') {
   @include test('test-module') {
-    @include assert-equal(map-get($_true-results, module), $_true-results-reset,
-      'Resets module scope results');
     @include assert-equal(_true-context(module), 'Modules',
       'Changes the current module context');
   }
