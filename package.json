@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
@@ -29,8 +29,9 @@
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {
+    "needs": "^0.8.2",
     "name": "true",
-    "exports": "eyeglass-exports.js"
+    "exports": false
   },
   "scripts": {
     "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
