@@ -79,30 +79,46 @@
 /*  */
 /* # Module: Assert */
 /* ---------------- */
-/* Test: Simple assertions */
+/* Test: Assert True [mixin] */
 /*   ✔ True should assert true. */
+/*  */
+/* Test: Assert False [mixin] */
 /*   ✔ False should assert false. */
+/*  */
+/* Test: Assert Equal [mixin] */
 /*   ✔ 1 and 1 should be equal. */
+/*  */
+/* Test: Assert Unequal [mixin] */
 /*   ✔ 1 and 3 should be un-equal. */
 /*  */
-/* Test: CSS output assertions */
+/* Test: Assert CSS: output/expect [mixins] */
 /*   ASSERT: Output and expected selector patterns match   */
 /*   OUTPUT   */
 .test-output {
   -property: value; }
+  @media (min-width: 30em) {
+    .test-output {
+      -prop: val; }
+      .selector {
+        -prop: val; } }
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
   -property: value; }
+  @media (min-width: 30em) {
+    .test-output {
+      -prop: val; }
+      .selector {
+        -prop: val; } }
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 14 Tests: */
-/*  - 11 Passed */
+/* 17 Tests: */
+/*  - 14 Passed */
 /*  - 0 Failed */
 /*  - 3 Output to CSS */
 /* -------------------- */

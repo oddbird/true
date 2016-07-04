@@ -7,9 +7,9 @@ describe('#runSass', function () {
   it('throws AssertionError on failure', function () {
     var sass = [
       '@import "true";',
-      '@include test-module("Assert") {',
-      '  @include test("Simple assertions") {',
-      '    @include assert-true(false, "True should assert true.");',
+      '@include test-module("Throw an error") {',
+      '  @include test("assertionError") {',
+      '    @include assert-true(false, "This test is meant to fail.");',
       '  }',
       '}'
     ].join('\n');
@@ -18,7 +18,7 @@ describe('#runSass', function () {
       main.runSass({data: sass}, mock, mock);
     };
     expect(attempt).to.throw(
-      'True should assert true. ("[bool] false" assert-true "[bool] true")');
+      'This test is meant to fail. ("[bool] false" assert-true "[bool] true")');
   });
 
   it('can specify includePaths', function () {
