@@ -1,12 +1,29 @@
-// Test Assertions
-// ===============
+// Message Tests
+// =============
 
-@include test-module('Messages') {
-  @include test('True selector') {
-    $return: _true-selector(module test);
-    $expect: '[data-module="Messages"] [data-test="True selector"]';
+@include test-module('True Message') {
+  @include test('Simple messages') {
+    @include assert('Render as CSS comments') {
+      @include output(false) {
+        @include _true-message('This is a simple message', 'comments');
+      }
 
-    @include assert-equal($return, $expect,
-      'Returns a selector string based on the current context');
+      @include expect(false) {
+        /* This is a simple message */
+      }
+    }
+  }
+
+  @include test('Multi-line messages') {
+    @include assert('Render as multiple CSS comments') {
+      @include output(false) {
+        @include _true-message('This is a #{$-tnl}multiline message', 'comments');
+      }
+
+      @include expect(false) {
+        /* This is a  */
+        /* multiline message */
+      }
+    }
   }
 }

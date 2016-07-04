@@ -27,6 +27,6 @@
 
     $test: _true-is-equal(1, 1);
     @include assert-equal($test, true,
-      'Returns true for numbers that are truely equal.');
+      'Returns true for numbers that are truly equal.');
   }
 }

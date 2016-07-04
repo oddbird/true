@@ -76,9 +76,7 @@ Usage
 Function unit-tests work across the board,
 but testing mixins can be a bit more complex.
 At this point,
-only Mocha is able to compare/report the results of mixin tests,
-as long as the mixins don't manipulate the selector chain
-(it can't test media-query mixins for example).
+only Mocha is able to compare/report the results of mixin tests.
 Without using Mocha,
 you can test any mixin,
 but you will have to compare the expected and actual results manually

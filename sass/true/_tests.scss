@@ -13,11 +13,8 @@
   $name
 ) {
   @include _true-test-start($name);
-
-  #{_true-selector(module test)} {
-    @content;
-    @include _true-test-stop;
-  }
+  @content;
+  @include _true-test-stop;
 }
 
 
@@ -36,7 +33,7 @@
 ) {
   @include _true-reset(test);
   @include _true-context(test, $name);
-  @include _true-message($name, comments);
+  @include _true-message('Test: #{$name}', 'comments');
 }
 
 
@@ -54,4 +51,5 @@
   @include _true-update(module, _true-get-result(test));
   @include _true-reset(test);
   @include _true-context(test, null);
+  @include _true-message('', 'comments');
 }
