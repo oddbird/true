@@ -54,7 +54,7 @@ Usage
   // Testing Mixins
   @include test('Font Size [mixin]') {
     @include assert('Outputs a font size and line height based on keyword.') {
-      @include input {
+      @include output {
         @include font-size(large);
       }
 
