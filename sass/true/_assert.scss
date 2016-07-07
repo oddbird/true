@@ -15,7 +15,7 @@
   $description: ''
 ) {
   @include _true-context('assert', $description);
-  @include _true-assert-results('assert-true', $assert, true);
+  @include _true-assert-results('assert-true', not not $assert, true);
 }
 
 /// Assert that a parameter is `false`

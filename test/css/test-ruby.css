@@ -19,9 +19,20 @@
 /* Test: String Split [function] */
 /*   ✔ Returns a list of substrings, based on any delimiter. */
 /*  */
-/* Test: Strict Equal [function] */
+/*  */
+/* # Module: Is Equal [function] */
+/* ----------------------------- */
+/* Test: Simple numbers */
+/*   ✔ Returns true for numbers that are truely equal. */
+/*  */
+/* Test: Mismatched units */
 /*   ✔ Returns false for equal numbers with different units. */
-/*   ✔ Returns true for numbers that are truly equal. */
+/*  */
+/* Test: Adding floats */
+/*   ✔ 0.1 + 0.2 should equal .3. */
+/*  */
+/* Test: Rounded numbers with division */
+/*   ✔ 1/3 should equal .33333. */
 /*  */
 /*  */
 /* # Module: True Message */
@@ -77,21 +88,49 @@
 /*   ✔ Changes the current test context */
 /*  */
 /*  */
-/* # Module: Assert */
-/* ---------------- */
-/* Test: Assert True [mixin] */
-/*   ✔ True should assert true. */
+/* # Module: Assert True */
+/* --------------------- */
+/* Test: Truthiness */
+/*   ✔ Non-false properties return true. */
 /*  */
-/* Test: Assert False [mixin] */
-/*   ✔ False should assert false. */
 /*  */
-/* Test: Assert Equal [mixin] */
-/*   ✔ 1 and 1 should be equal. */
+/* # Module: Assert False */
+/* ---------------------- */
+/* Test: Falsiness */
+/*   ✔ Negated properties return false. */
 /*  */
-/* Test: Assert Unequal [mixin] */
-/*   ✔ 1 and 3 should be un-equal. */
 /*  */
-/* Test: Assert CSS: output/expect [mixins] */
+/* # Module: Assert Equal */
+/* ---------------------- */
+/* Test: Equality */
+/*   ✔ 2 - 1 should equal 1. */
+/*  */
+/*  */
+/* # Module: Assert UnEqual */
+/* ------------------------ */
+/* Test: Inequality */
+/*   ✔ 3 - 1 is not equal to 3. */
+/*  */
+/*  */
+/* # Module: Assert (output) */
+/* ------------------------- */
+/* Test: CSS output math */
+/*   ASSERT: Output math compares properly   */
+/*   OUTPUT   */
+.test-output {
+  -property1: 0.3;
+  -property2: 0.33333; }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  -property1: 0.3;
+  -property2: 0.33333; }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: output/expect [mixins] */
 /*   ASSERT: Output and expected selector patterns match   */
 /*   OUTPUT   */
 .test-output {
@@ -129,10 +168,10 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 17 Tests: */
-/*  - 14 Passed */
+/* 21 Tests: */
+/*  - 17 Passed */
 /*  - 0 Failed */
-/*  - 3 Output to CSS */
+/*  - 4 Output to CSS */
 /* -------------------- */
 
 /*# sourceMappingURL=test-ruby.css.map */
