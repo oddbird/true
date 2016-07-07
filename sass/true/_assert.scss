@@ -115,6 +115,19 @@
   @include _true-message('  END_OUTPUT  ', 'comments');
 }
 
+
+/// @alias output
+@mixin input(
+  $selector: true
+) {
+  @warn 'The `input` mixin has been renamed `output` and will be removed.';
+
+  @include output($selector) {
+    @content;
+  }
+}
+
+
 /// Describe the output content to be expected.
 /// The output will be compared against the results of the `output()` mixin.
 /// @access public

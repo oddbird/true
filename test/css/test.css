@@ -113,6 +113,18 @@
         -prop: val; } }
 
 /*   END_EXPECTED   */
+/*   ASSERT: Deprecated input alias works for now   */
+/*   OUTPUT   */
+.test {
+  -property: value; }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test {
+  -property: value; }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
 /*   END_ASSERT   */
 /*  */
 /*  */
