@@ -33,7 +33,8 @@ npm install sass-true
 Usage
 -----
 
-### In Sass
+With any Sass compiler
+~~~~~~~~~~~~~~~~~~~~~~
 
 ```scss
 @import "true";
@@ -84,7 +85,8 @@ in the output code.
 Version control can make that much easier than it sounds.
 
 
-### With node-sass and Mocha (or other JS test runners)
+With node-sass and Mocha (or other JS test runners)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Install `true` via npm (`npm install sass-true`).
 
@@ -115,7 +117,36 @@ be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
 
-### With ruby-sass on the command line
+#### With Grunt...
+
+Run Mocha using the Grunt task supplied by
+[grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)
+
+Install `grunt-mocha-cli`:
+
+```
+npm install grunt-mocha-cli --save-dev
+```
+
+Configure task:
+
+```javascript
+grunt.loadNpmTasks('grunt-mocha');
+
+mochacli: {
+   all: ['test/test_sass.js']
+},
+```
+
+Run tests:
+
+```bash
+grunt mochacli
+```
+
+
+With ruby-sass on the command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ```bash
 true-cli [options] PATH
