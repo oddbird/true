@@ -50,6 +50,20 @@ describe('#runSass', function () {
 });
 
 describe('#parse', function () {
+  it('ignores a summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '/* 17 Tests: */',
+      '/*  - 14 Passed */',
+      '/*  - 0 Failed */',
+      '/*  - 3 Output to CSS */',
+      '/* -------------------- */',
+    ].join('\n');
+    var expected = [];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a passing non-output test', function () {
     var css = [
       '/* # Module: Utilities */',
@@ -272,6 +286,17 @@ describe('#parse', function () {
 
     expect(attempt).to.throw(
       'Line 1, column 1: Unexpected rule type "rule"; looking for module header');
+  });
+
+  it('throws error on unexpected rule type instead of end summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '.foo { -prop: value; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css); };
+
+    expect(attempt).to.throw(
+      'Line 2, column 1: Unexpected rule type "rule"; looking for end summary');
   });
 
   it('throws error on unexpected comment instead of module header', function () {

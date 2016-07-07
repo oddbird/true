@@ -53,5 +53,18 @@
         }
       }
     }
+
+    @include assert('Deprecated input alias works for now') {
+      @include input(false) {
+        .test {
+          -property: value;
+        }
+      }
+      @include expect(false) {
+        .test {
+          -property: value;
+        }
+      }
+    }
   }
 }
