@@ -145,25 +145,25 @@ $_true-results: (
 /// @return {String} - Reported message
 /// @require {function} _true-get-results
 @function _true-report-message(
-  $scope: test,
-  $lines: single
+  $scope: 'test',
+  $lines: 'single'
 ) {
   $results: _true-get-results($scope);
-  $run: map-get($results, run);
-  $pass: map-get($results, pass);
-  $fail: map-get($results, fail);
-  $output-to-css: map-get($results, output-to-css);
+  $run: map-get($results, 'run');
+  $pass: map-get($results, 'pass');
+  $fail: map-get($results, 'fail');
+  $output-to-css: map-get($results, 'output-to-css');
 
   $items: null;
   $message: null;
 
-  @if $scope == global or $scope == module {
-    $items: Tests;
-  } @else if $scope == test {
+  @if $scope == 'global' or $scope == 'module' {
+    $items: 'Tests';
+  } @else if $scope == 'test' {
     $items: Assertions;
   }
 
-  @if $lines == single {
+  @if $lines == 'single' {
     $message: '#{$run} #{$items}, #{$pass} Passed, #{$fail} Failed';
     $message: if($output-to-css > 0, $message + ', #{$output-to-css} Output to CSS', $message);
   } @else {

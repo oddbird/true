@@ -8,36 +8,6 @@
 $-tnl: '\a ';
 
 
-/// Return a CSS selector for the current context
-/// @access private
-/// @group x_private
-/// @param {List} $scope - Scope
-/// @require {function} _true-context
-/// @return {String} - CSS selector
-@function _true-selector(
-  $scope
-) {
-  $selector: null;
-
-  @each $layer in $scope {
-    $this: '[data-#{$layer}="#{_true-context($layer)}"]';
-    $selector: if($selector, '#{$selector} #{$this}', $this);
-  }
-
-  @return unquote($selector);
-}
-
-
-/// Output a spacer comment
-/// @access private
-/// @group x_private
-/// @output A spacer comment
-@mixin _true-spacer() {
-/*
-*/
-}
-
-
 /// Output a message to CSS comments, or command line terminal (via debug/warn)
 /// @access private
 /// @group x_private
@@ -46,25 +16,20 @@ $-tnl: '\a ';
 /// @require {function} _true-str-split
 @mixin _true-message(
   $message,
-  $output: comments
+  $output: 'comments'
 ) {
   $lines: _true-str-split($message, $-tnl);
-  @if index($output, comments) {
+  @if index($output, 'comments') {
     @each $line in $lines {
       /* #{$line} */
     }
-  } @else if index($output, debug) or index($output, terminal) {
+  } @else if index($output, 'debug') or index($output, 'terminal') {
     @each $line in $lines  {
       @debug $line;
     }
-  } @else if index($output, warn) {
-    @warn $message;
+  } @else if index($output, 'warn') {
     @each $line in $lines {
-      @if index($lines, $line) == length($lines) {
-        @warn $line;
-      } @else {
-        @debug $line;
-      }
+      @warn $line;
     }
   }
 }

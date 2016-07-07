@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "2.0.3",
+  "version": "2.1.2",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
@@ -17,23 +17,27 @@
     "eyeglass-module"
   ],
   "dependencies": {
-    "css": "~2.1.0",
-    "css-selector-parser": "~1.0.0",
-    "node-sass": "^3.4.0",
-    "underscore": "~1.7.0"
+    "css": "^2.2.1",
+    "css-selector-parser": "^1.1.0",
+    "node-sass": "^3.4.2",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "istanbul": "^0.3.5",
-    "mocha": "^2.0.1",
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {
+    "needs": "^0.8.2",
     "name": "true",
-    "exports": "eyeglass-exports.js"
+    "exports": false
   },
   "scripts": {
-    "test": "make test"
+    "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
+    "debug": "./node_modules/.bin/mocha -R spec debug",
+    "compile": "./node_modules/.bin/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
+    "coverage-html": "./node_modules/.bin/istanbul report html"
   },
   "author": "Miriam Eric Suzanne <miriam@oddbird.net>",
   "contributors": [

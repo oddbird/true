@@ -113,6 +113,7 @@
         -prop: val; } }
 
 /*   END_EXPECTED   */
+/*   END_ASSERT   */
 /*   ASSERT: Deprecated input alias works for now   */
 /*   OUTPUT   */
 .test {
@@ -125,7 +126,6 @@
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
-/*   END_ASSERT   */
 /*  */
 /*  */
 /* # SUMMARY ---------- */
@@ -134,3 +134,5 @@
 /*  - 0 Failed */
 /*  - 3 Output to CSS */
 /* -------------------- */
+
+/*# sourceMappingURL=test-ruby.css.map */
