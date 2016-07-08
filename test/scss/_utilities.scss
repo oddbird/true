@@ -20,6 +20,13 @@
       'Returns a list of substrings, based on any delimiter.');
   }
 
+  @include test('String Join [function]') {
+    $test: _true-str-join(one two three, '%s');
+    $expect: 'one%stwo%sthree';
+    @include assert-equal($test, $expect,
+      'Returns a single string, based on any delimiter.');
+  }
+
   @include test('Strict Equal [function]') {
     $test: _true-is-equal(1, 1rem);
     @include assert-equal($test, false,
