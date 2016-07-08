@@ -30,7 +30,8 @@
   $name
 ) {
   @include _true-context(module, $name);
-  @include _true-message('# Module: #{$name}', 'comments');
+  $modules: _true-context-all('module');
+  @include _true-message('# Module: #{_true-str-join($modules, ' :: ')}', 'comments');
 
   $underline: '----------';
 

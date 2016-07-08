@@ -58,3 +58,22 @@ $_true-context: ();
   }
   @return null;
 }
+
+/// Get list of context names
+/// @access private
+/// @group x_private
+/// @param {String} $scope - Either `module`, `test` or `assert`
+/// @return {List}
+@function _true-context-all(
+  $scope
+) {
+  $list: ();
+  @for $i from 1 through length($_true-context) {
+    $entry: nth($_true-context, $i);
+    $entry-scope: nth($entry, 1);
+    @if $entry-scope == $scope {
+      $list: append($list, nth($entry, 2));
+    }
+  }
+  @return $list;
+}
