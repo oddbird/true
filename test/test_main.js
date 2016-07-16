@@ -50,20 +50,6 @@ describe('#runSass', function () {
 });
 
 describe('#parse', function () {
-  it('ignores a summary', function () {
-    var css = [
-      '/* # SUMMARY ---------- */',
-      '/* 17 Tests: */',
-      '/*  - 14 Passed */',
-      '/*  - 0 Failed */',
-      '/*  - 3 Output to CSS */',
-      '/* -------------------- */',
-    ].join('\n');
-    var expected = [];
-
-    expect(main.parse(css)).to.deep.equal(expected);
-  });
-
   it('parses a passing non-output test', function () {
     var css = [
       '/* # Module: Utilities */',
@@ -84,6 +70,47 @@ describe('#parse', function () {
 
     expect(main.parse(css)).to.deep.equal(expected);
   });
+  it('ignores a summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '/* 17 Tests: */',
+      '/*  - 14 Passed */',
+      '/*  - 0 Failed */',
+      '/*  - 3 Output to CSS */',
+      '/* -------------------- */',
+    ].join('\n');
+    var expected = [];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('parses a test following a summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '/* 17 Tests: */',
+      '/*  - 14 Passed */',
+      '/*  - 0 Failed */',
+      '/*  - 3 Output to CSS */',
+      '/* -------------------- */',
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      tests: [{
+        test: "Map Add [function]",
+        assertions: [{
+          description: "Returns the sum of two numeric maps",
+          passed: true,
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
 
   it('parses a nested passing non-output test', function () {
     var css = [
