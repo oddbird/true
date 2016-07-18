@@ -45,6 +45,31 @@
   @return $strings;
 }
 
+/// Join a list of strings
+/// @access private
+/// @group x_private
+/// @param {List} $list - List to join
+/// @param {String} $separator - Separator
+/// @return {String} - Joined string
+@function _true-str-join(
+  $list,
+  $separator
+) {
+  $length: length($list);
+
+  @if ($length == 0) {
+    @return '';
+  }
+
+  $result: nth($list, 1);
+  @if $length > 1 {
+    @for $index from 2 through $length {
+      $result: $result + $separator + nth($list, $index);
+    }
+  }
+  @return $result;
+}
+
 
 /// Check for strict equality
 /// @access private

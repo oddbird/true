@@ -19,6 +19,13 @@
       'one' 'two' 'three',
       'Returns a list of substrings, based on any delimiter.');
   }
+
+  @include test('String Join [function]') {
+    @include assert-equal(
+      _true-str-join(one two three, '%s'),
+      'one%stwo%sthree',
+      'Returns a single string, based on any delimiter.');
+  }
 }
 
 

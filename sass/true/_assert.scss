@@ -90,8 +90,8 @@
 
   @content;
 
-  @include _true-update('test', 'output-to-css');
-  @include _true-context('assert', null);
+  @include _true-update('output-to-css');
+  @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
 
@@ -148,7 +148,6 @@
   @include _true-message('  END_EXPECTED  ', 'comments');
 }
 
-
 // Assert Results
 // --------------
 
@@ -186,6 +185,6 @@
     }
   }
 
-  @include _true-update('test', $result);
-  @include _true-context('assert', null);
+  @include _true-update($result);
+  @include _true-context-pop();
 }

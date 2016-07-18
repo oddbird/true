@@ -85,6 +85,30 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('parses a nested passing non-output test', function () {
+    var css = [
+      '/* # Module: Utilities :: nested */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      modules: [{
+        module: "nested",
+        tests: [{
+          test: "Map Add [function]",
+          assertions: [{
+            description: "Returns the sum of two numeric maps",
+            passed: true,
+          }],
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a failing non-output test', function () {
     var css = [
       '/* # Module: Assert */',
