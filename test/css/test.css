@@ -10,6 +10,15 @@
 /*   ✔ Returns the current module name */
 /*   ✔ Returns the current test name */
 /*  */
+/* # Module: Settings :: nested */
+/* ---------------- */
+/* Test: _true-context [function] */
+/*   ✔ Returns the innermost module name */
+/*  */
+/* Test: _true-context-all [function] */
+/*   ✔ Returns the current stack of module names */
+/*  */
+/*  */
 /*  */
 /* # Module: Utilities */
 /* ------------------- */
@@ -18,6 +27,9 @@
 /*  */
 /* Test: String Split [function] */
 /*   ✔ Returns a list of substrings, based on any delimiter. */
+/*  */
+/* Test: String Join [function] */
+/*   ✔ Returns a single string, based on any delimiter. */
 /*  */
 /*  */
 /* # Module: Is Equal [function] */
@@ -62,29 +74,22 @@
 /*  */
 /* # Module: Results */
 /* ----------------- */
-/* Test: Reset */
-/*   ✔ Add a passing result to the test */
-/*   ✔ Check that test results are not in a clean state */
-/*   ✔ Resets the results for a given scope */
-/*  */
-/* Test: Get results */
-/*   ✔ Returns the current results map for a given scope */
-/*  */
-/* Test: Get result */
-/*   ✔ Collates a set of results to pass up the scope hierarchy */
+/* Test: Update with pass */
+/*   ✔ increments run */
+/*   ✔ increments pass */
+/*   ✔ leaves fails as-is */
+/*   ✔ leaves output-to-css as-is */
 /*  */
 /*  */
 /* # Module: Modules */
 /* ----------------- */
 /* Test: test-module */
-/*   ✔ Resets module scope results */
 /*   ✔ Changes the current module context */
 /*  */
 /*  */
 /* # Module: Tests */
 /* --------------- */
 /* Test: test [mixin] */
-/*   ✔ Resets module scope results */
 /*   ✔ Changes the current test context */
 /*  */
 /*  */
@@ -104,6 +109,9 @@
 /* ---------------------- */
 /* Test: Equality */
 /*   ✔ 2 - 1 should equal 1. */
+/*  */
+/* Test: Empty description */
+/*   ✔ Assert that "1" and "1" are equal */
 /*  */
 /*  */
 /* # Module: Assert UnEqual */
@@ -170,8 +178,8 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 21 Tests: */
-/*  - 17 Passed */
+/* 30 Tests: */
+/*  - 25 Passed */
 /*  - 0 Failed */
-/*  - 4 Output to CSS */
+/*  - 5 Output to CSS */
 /* -------------------- */

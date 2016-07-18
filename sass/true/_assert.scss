@@ -12,7 +12,7 @@
 /// @require {mixin} _true-assert-stop
 @mixin assert-true(
   $assert,
-  $description: ''
+  $description: 'Assert that "#{inspect($assert)}" is truthy'
 ) {
   @include _true-context('assert', $description);
   @include _true-assert-results('assert-true', not not $assert, true);
@@ -28,7 +28,7 @@
 /// @require {mixin} _true-assert-stop
 @mixin assert-false(
   $assert,
-  $description: ''
+  $description: 'Assert that "#{inspect($assert)}" is falsey'
 ) {
   @include _true-context('assert', $description);
   @include _true-assert-results('assert-false', $assert, false);
@@ -46,7 +46,7 @@
 @mixin assert-equal(
   $assert,
   $expected,
-  $description: ''
+  $description: 'Assert that "#{inspect($assert)}" and "#{inspect($expected)}" are equal'
 ) {
   @include _true-context('assert', $description);
   @include _true-assert-results('assert-equal', $assert, $expected);
@@ -64,7 +64,7 @@
 @mixin assert-unequal(
   $assert,
   $expected,
-  $description: ''
+  $description: 'Assert that "#{inspect($assert)}" and "#{inspect($expected)}" are not equal'
 ) {
   @include _true-context('assert', $description);
   @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
