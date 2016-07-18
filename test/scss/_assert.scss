@@ -84,11 +84,13 @@
     @include assert('Deprecated input alias works for now') {
       @include input(false) {
         .test {
+          /* comments are also allowed in assertions */
           -property: value;
         }
       }
       @include expect(false) {
         .test {
+          /* comments are also allowed in assertions */
           -property: value;
         }
       }
