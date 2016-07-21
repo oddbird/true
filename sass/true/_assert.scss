@@ -12,9 +12,11 @@
 /// @require {mixin} _true-assert-stop
 @mixin assert-true(
   $assert,
-  $description: 'Assert that "#{inspect($assert)}" is truthy'
+  $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" should be truthy';
+
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-true', not not $assert, true);
 }
 
@@ -28,9 +30,11 @@
 /// @require {mixin} _true-assert-stop
 @mixin assert-false(
   $assert,
-  $description: 'Assert that "#{inspect($assert)}" is falsey'
+  $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" should be falsey';
+
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-false', $assert, false);
 }
 
@@ -46,9 +50,11 @@
 @mixin assert-equal(
   $assert,
   $expected,
-  $description: 'Assert that "#{inspect($assert)}" and "#{inspect($expected)}" are equal'
+  $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should be equal';
+
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
@@ -64,9 +70,11 @@
 @mixin assert-unequal(
   $assert,
   $expected,
-  $description: 'Assert that "#{inspect($assert)}" and "#{inspect($expected)}" are not equal'
+  $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should not be equal';
+
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
 }
 
@@ -83,8 +91,10 @@
 /// @require {mixin} _true-assert-stop
 /// @require {function} _true-selector
 @mixin assert(
-  $description
+  $description: ''
 ) {
+  $default: _true-context('test') or 'CSS output should match expected output';
+
   @include _true-context('assert', $description);
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
@@ -94,6 +104,7 @@
   @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
+
 
 /// Describe the test content to be evaluated
 /// The output will be compared against the results of the `expect()` mixin.
@@ -147,6 +158,7 @@
 
   @include _true-message('  END_EXPECTED  ', 'comments');
 }
+
 
 // Assert Results
 // --------------

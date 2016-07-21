@@ -30,7 +30,7 @@
 @mixin _true-test-start(
   $name
 ) {
-  @include _true-context(test, $name);
+  @include _true-context('test', $name);
   @include _true-message('Test: #{$name}', 'comments');
 }
 
