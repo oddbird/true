@@ -1,7 +1,7 @@
 True
 ====
 
-[![Build Status](https://travis-ci.org/oddbird/true.png?branch=master)](https://travis-ci.org/ericam/true)
+[![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 
 *Verb*
 
