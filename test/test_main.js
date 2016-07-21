@@ -70,6 +70,7 @@ describe('#parse', function () {
 
     expect(main.parse(css)).to.deep.equal(expected);
   });
+
   it('ignores a summary', function () {
     var css = [
       '/* # SUMMARY ---------- */',
@@ -83,6 +84,28 @@ describe('#parse', function () {
 
     expect(main.parse(css)).to.deep.equal(expected);
   });
+
+  it('parses a passing non-output test sans description', function () {
+    var css = [
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      tests: [{
+        test: "Map Add [function]",
+        assertions: [{
+          description: "<no description>",
+          passed: true,
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
 
   it('parses a test following a summary', function () {
     var css = [
