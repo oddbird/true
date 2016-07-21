@@ -55,7 +55,7 @@ $_true-results: (
   @if $scope == 'global' or $scope == 'module' {
     $items: 'Tests';
   } @else if $scope == 'test' {
-    $items: Assertions;
+    $items: 'Assertions';
   }
 
   @if $lines == 'single' {
@@ -82,13 +82,13 @@ $_true-results: (
 @mixin report(
   $terminal: $true-terminal-output
 ) {
-  $message: _true-report-message(global, multiple);
-  @include _true-message('# SUMMARY ----------', comments);
-  @include _true-message($message, comments);
-  @include _true-message('--------------------', comments);
+  $message: _true-report-message('global', 'multiple');
+  @include _true-message('# SUMMARY ----------', 'comments');
+  @include _true-message($message, 'comments');
+  @include _true-message('--------------------', 'comments');
 
   @if $terminal {
-    $message: _true-report-message(global, single);
-    @include _true-message($message, debug);
+    $message: _true-report-message('global', 'single');
+    @include _true-message($message, 'debug');
   }
 }

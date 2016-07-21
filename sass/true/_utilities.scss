@@ -37,7 +37,7 @@
   $strings: ();
   $found-at: str-index($string, $substring);
   @while $found-at {
-    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ""));
+    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ''));
     $string: str-slice($string, $found-at + str-length($substring));
     $found-at: str-index($string, $substring);
   }
@@ -78,7 +78,7 @@
 /// @param {*} $two - Second value
 /// @return {Bool}
 @function _true-is-equal($one, $two) {
-  @if type-of($one) == number and type-of($two) == number {
+  @if type-of($one) == 'number' and type-of($two) == 'number' {
     @if unit($one) == unit($two) {
       @return inspect($one) == inspect($two);
     } @else {
