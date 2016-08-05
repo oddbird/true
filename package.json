@@ -25,8 +25,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "mocha-istanbul": "^0.2.0"
+    "mocha": "^3.0.1",
+    "mocha-istanbul": "^0.3.0"
   },
   "eyeglass": {
     "needs": "^0.8.2",
