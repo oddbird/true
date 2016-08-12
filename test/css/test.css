@@ -111,7 +111,7 @@
 /*   ✔ 2 - 1 should equal 1. */
 /*  */
 /* Test: Empty description */
-/*   ✔  */
+/*   ✔ "1" and "1" should be equal */
 /*  */
 /*  */
 /* # Module: Assert UnEqual */
@@ -177,9 +177,15 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: breakpoint */
+/* -------------------- */
+/* Test: should return the appropriate breakpoint value based on the passed key */
+/*   ✔ "940px" and "940px" should be equal */
+/*  */
+/*  */
 /* # SUMMARY ---------- */
-/* 30 Tests: */
-/*  - 25 Passed */
+/* 31 Tests: */
+/*  - 26 Passed */
 /*  - 0 Failed */
 /*  - 5 Output to CSS */
 /* -------------------- */

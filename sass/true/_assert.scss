@@ -15,8 +15,9 @@
   $description: ''
 ) {
   $default: '"#{inspect($assert)}" should be truthy';
+  $message: if(str-length($description) > 0, $description, $default);
 
-  @include _true-context('assert', $description or $default);
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-true', not not $assert, true);
 }
 
@@ -33,8 +34,9 @@
   $description: ''
 ) {
   $default: '"#{inspect($assert)}" should be falsey';
+  $message: if(str-length($description) > 0, $description, $default);
 
-  @include _true-context('assert', $description or $default);
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-false', $assert, false);
 }
 
@@ -53,8 +55,9 @@
   $description: ''
 ) {
   $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should be equal';
+  $message: if(str-length($description) > 0, $description, $default);
 
-  @include _true-context('assert', $description or $default);
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
@@ -73,8 +76,9 @@
   $description: ''
 ) {
   $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should not be equal';
+  $message: if(str-length($description) > 0, $description, $default);
 
-  @include _true-context('assert', $description or $default);
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
 }
 
@@ -94,6 +98,7 @@
   $description: ''
 ) {
   $default: _true-context('test') or 'CSS output should match expected output';
+  $message: if(str-length($description) > 0, $description, $default);
 
   @include _true-context('assert', $description);
   @include _true-message('  ASSERT: #{$description}  ', 'comments');

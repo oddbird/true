@@ -11,4 +11,19 @@
 @import 'tests';
 @import 'assert';
 
+@function kgs-breakpoint($name) {
+  @return 940px;
+}
+
+@include test-module('breakpoint') {
+  @include test('should return the appropriate breakpoint value based on the passed key') {
+
+    $actual   : kgs-breakpoint('break-3');
+    $expected : 940px;
+
+    @include assert-equal($actual, $expected);
+
+  }
+}
+
 @include report(terminal);
