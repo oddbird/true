@@ -34,7 +34,6 @@ Usage
 -----
 
 With any Sass compiler
-~~~~~~~~~~~~~~~~~~~~~~
 
 ```scss
 @import "true";
