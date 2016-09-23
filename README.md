@@ -1,5 +1,4 @@
-True
-====
+# True
 
 [![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 
@@ -13,8 +12,7 @@ True
   *True your sweet plugin before you deploy.*
 
 
-Install
--------
+## Install
 
 in command line:
 
@@ -30,11 +28,9 @@ npm install sass-true
 ```
 
 
-Usage
------
+## Usage
 
-With any Sass compiler
-~~~~~~~~~~~~~~~~~~~~~~
+### With any Sass compiler
 
 ```scss
 @import "true";
@@ -85,8 +81,7 @@ in the output code.
 Version control can make that much easier than it sounds.
 
 
-With node-sass and Mocha (or other JS test runners)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### With node-sass and Mocha (or other JS test runners)
 
 1. Install `true` via npm (`npm install sass-true`).
 
@@ -94,7 +89,7 @@ With node-sass and Mocha (or other JS test runners)
 
 3. Write a shim JS test file in `test/test_sass.js`:
 
-   ```js
+   ```javascript
    var path = require('path');
    var sassTrue = require('sass-true');
 
@@ -124,7 +119,7 @@ Run Mocha using the Grunt task supplied by
 
 Install `grunt-mocha-cli`:
 
-```
+```bash
 npm install grunt-mocha-cli --save-dev
 ```
 
@@ -144,18 +139,17 @@ Run tests:
 grunt mochacli
 ```
 
-
-With ruby-sass on the command line
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### With ruby-sass on the command line
 
 ```bash
 true-cli [options] PATH
 ```
 
 Options:
-* `-s` silent
-* `-c` config file
-* `-d` debug config file settings
+
+ * `-s` silent
+ * `-c` config file
+ * `-d` debug config file settings
 
 Config file (optional):
 
@@ -172,8 +166,7 @@ require:
 default location: `test/true.yml`
 
 
-Settings
---------
+## Settings
 
 There is only one setting:
 `$true-terminal-output`
