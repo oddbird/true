@@ -2,6 +2,12 @@ True Changelog
 ==============
 
 
+2.1.4 (12/22/16)
+----------------
+- Fix default assertion messages
+- Upgrade dependencies
+
+
 2.0.2 (5/13/15)
 ---------------
 - Fixes debug inspector.
