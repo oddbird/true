@@ -160,7 +160,7 @@ options:
 # require ruby sass extension libraries
 require:
   - "compass"
-  - "serialy_sassy"
+  - "serialy/sassy"
 ```
 
 default location: `test/true.yml`
