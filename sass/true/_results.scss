@@ -1,104 +1,16 @@
 // Results
 // =======
 
-/// Initialized results map
+/// Results map
 /// @access private
 /// @group x_private
 /// @type Map
-$_true-results-reset: (
+$_true-results: (
   run: 0,
   pass: 0,
   fail: 0,
   output-to-css: 0,
 );
-
-/// Results map
-/// @access private
-/// @group x_private
-/// @type Map
-/// @require $_true-results-reset
-/// @prop {Map} global [$_true-results-reset] - Global results
-/// @prop {Map} module [$_true-results-reset] - Results for current module
-/// @prop {Map} test [$_true-results-reset] - Results for current test
-$_true-results: (
-  global: $_true-results-reset,
-  module: $_true-results-reset,
-  test: $_true-results-reset,
-);
-
-
-// Reset
-// -----
-
-/// Reset helper
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Scope to reset
-/// @require $_true-results-reset
-/// @require $_true-results
-@mixin _true-reset(
-  $scope
-) {
-  @if $scope == global {
-    $_true-results: (
-      global: $_true-results-reset,
-      module: $_true-results-reset,
-      test: $_true-results-reset,
-    ) !global;
-  } @else if $scope == module {
-    $update: (
-      module: $_true-results-reset,
-      test: $_true-results-reset,
-    );
-    $_true-results: map-merge($_true-results, $update) !global;
-  } @else if $scope == test {
-    $update: (
-      test: $_true-results-reset
-    );
-    $_true-results: map-merge($_true-results, $update) !global;
-  } @else {
-    @warn "#{$scope} is not a valid scope for _true-reset().";
-  }
-}
-
-
-// Get Results
-// -----------
-
-/// Results getter
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Scope to get results from
-/// @require $_true-results
-@function _true-get-results(
-  $scope
-) {
-  @return map-get($_true-results, $scope);
-}
-
-
-// Get Result
-// ----------
-
-/// Single result getter
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Scope to get result form
-/// @require {function} _true-get-results
-@function _true-get-result(
-  $scope
-) {
-  $results: _true-get-results($scope);
-  $return: if(map-get($results, output-to-css) > 0, output-to-css, null);
-
-  @if map-get($results, fail) > 0 {
-    @return if($return, $return fail, fail);
-  } @else if map-get($results, pass) > 0 {
-    @return if($return, $return pass, pass);
-  } @else {
-    @return $return;
-  }
-}
 
 
 // Update
@@ -107,30 +19,14 @@ $_true-results: (
 /// Update results
 /// @access private
 /// @group x_private
-/// @param {String} $scope - Scope to update results from
-/// @param {List} $results - Results
-/// @require {function} _true-get-results
+/// @param {String} $result - Result (pass/fail/output-to-css)
 /// @require {function} _true-map-increment
 /// @require $_true-results
-@mixin _true-update(
-  $scope,
-  $results
-) {
-  $current: _true-get-results($scope);
-  $update: (run: 1);
-
-  @if $scope == global {
-    $update: _true-get-results(module);
-  } @else {
-    @each $result in $results {
-      @if $result {
-        $update: map-merge($update, ($result: 1));
-      }
-    }
-  }
-
-  $scope: ($scope: _true-map-increment($current, $update));
-  $_true-results: map-merge($_true-results, $scope) !global;
+@mixin _true-update($result) {
+  $_true-results: _true-map-increment($_true-results, (
+    run: 1,
+    $result: 1,
+  )) !global;
 }
 
 
@@ -148,11 +44,10 @@ $_true-results: (
   $scope: 'test',
   $lines: 'single'
 ) {
-  $results: _true-get-results($scope);
-  $run: map-get($results, 'run');
-  $pass: map-get($results, 'pass');
-  $fail: map-get($results, 'fail');
-  $output-to-css: map-get($results, 'output-to-css');
+  $run: map-get($_true-results, 'run');
+  $pass: map-get($_true-results, 'pass');
+  $fail: map-get($_true-results, 'fail');
+  $output-to-css: map-get($_true-results, 'output-to-css');
 
   $items: null;
   $message: null;
@@ -160,7 +55,7 @@ $_true-results: (
   @if $scope == 'global' or $scope == 'module' {
     $items: 'Tests';
   } @else if $scope == 'test' {
-    $items: Assertions;
+    $items: 'Assertions';
   }
 
   @if $lines == 'single' {
@@ -187,13 +82,13 @@ $_true-results: (
 @mixin report(
   $terminal: $true-terminal-output
 ) {
-  $message: _true-report-message(global, multiple);
-  @include _true-message('# SUMMARY ----------', comments);
-  @include _true-message($message, comments);
-  @include _true-message('--------------------', comments);
+  $message: _true-report-message('global', 'multiple');
+  @include _true-message('# SUMMARY ----------', 'comments');
+  @include _true-message($message, 'comments');
+  @include _true-message('--------------------', 'comments');
 
   @if $terminal {
-    $message: _true-report-message(global, single);
-    @include _true-message($message, debug);
+    $message: _true-report-message('global', 'single');
+    @include _true-message($message, 'debug');
   }
 }

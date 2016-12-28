@@ -71,6 +71,94 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
+  it('ignores a summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '/* 17 Tests: */',
+      '/*  - 14 Passed */',
+      '/*  - 0 Failed */',
+      '/*  - 3 Output to CSS */',
+      '/* -------------------- */',
+    ].join('\n');
+    var expected = [];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('parses a passing non-output test sans description', function () {
+    var css = [
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      tests: [{
+        test: "Map Add [function]",
+        assertions: [{
+          description: "<no description>",
+          passed: true,
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+
+  it('parses a test following a summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '/* 17 Tests: */',
+      '/*  - 14 Passed */',
+      '/*  - 0 Failed */',
+      '/*  - 3 Output to CSS */',
+      '/* -------------------- */',
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      tests: [{
+        test: "Map Add [function]",
+        assertions: [{
+          description: "Returns the sum of two numeric maps",
+          passed: true,
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+
+  it('parses a nested passing non-output test', function () {
+    var css = [
+      '/* # Module: Utilities :: nested */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */'
+    ].join('\n');
+    var expected = [{
+      module: "Utilities",
+      modules: [{
+        module: "nested",
+        tests: [{
+          test: "Map Add [function]",
+          assertions: [{
+            description: "Returns the sum of two numeric maps",
+            passed: true,
+          }],
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a failing non-output test', function () {
     var css = [
       '/* # Module: Assert */',
@@ -156,6 +244,46 @@ describe('#parse', function () {
           passed: true,
           output: '.test-output {\n  -property: value;\n}',
           expected: '.test-output {\n  -property: value;\n}'
+        }],
+      }],
+    }];
+
+    expect(main.parse(css)).to.deep.equal(expected);
+  });
+
+  it('parses a passing output test with loud comments', function () {
+    var css = [
+      '/* Some random loud comment */',
+      '/* # Module: Assert */',
+      '/* Test: CSS output assertions */',
+      '/*   ASSERT: Input and output selector patterns match   */',
+      '/* */',
+      '/*   OUTPUT   */',
+      '/* Some loud comment */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_OUTPUT   */',
+      '/* */',
+      '/*   EXPECTED   */',
+      '/* Some loud comment */',
+      '.test-output {',
+      '  -property: value; }',
+      '',
+      '/*   END_EXPECTED   */',
+      '/* */',
+      '/*   END_ASSERT   */'
+    ].join('\n');
+    var expected = [{
+      module: "Assert",
+      tests: [{
+        test: "CSS output assertions",
+        assertions: [{
+          description: "Input and output selector patterns match",
+          assertionType: 'equal',
+          passed: true,
+          output: '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}',
+          expected: '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}'
         }],
       }],
     }];
@@ -274,12 +402,15 @@ describe('#parse', function () {
       'Line 1, column 1: Unexpected rule type "rule"; looking for module header');
   });
 
-  it('throws error on unexpected comment instead of module header', function () {
-    var css = '/* foo */';
+  it('throws error on unexpected rule type instead of end summary', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '.foo { -prop: value; }',
+    ].join('\n');
     var attempt = function () { main.parse(css); };
 
     expect(attempt).to.throw(
-      'Line 1, column 1: Unexpected comment "foo"; looking for module header');
+      'Line 2, column 1: Unexpected rule type "rule"; looking for end summary');
   });
 
   it('handles a blank comment before module header', function () {
@@ -353,6 +484,33 @@ describe('#parse', function () {
     }]);
   });
 
+  it('allows unexpected comment before next module header', function () {
+    var css = [
+      '/* # Module: M */',
+      '/* Test: T */',
+      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*     - foobar */',
+      '/* # Module: M2 */',
+    ].join('\n');
+    expect(main.parse(css)).to.deep.equal([
+      {
+        module: "M",
+        tests: [{
+          test: "T",
+          assertions: [{
+            assertionType: "assert-true",
+            description: "True should assert true.",
+            passed: false,
+          }]
+        }],
+      },
+      {
+        module: "M2",
+        tests: [],
+      }
+    ]);
+  });
+
   it('throws error on unexpected rule type instead of failure detail', function () {
     var css = [
       '/* # Module: M */',
@@ -364,19 +522,6 @@ describe('#parse', function () {
 
     expect(attempt).to.throw(
       'Line 4, column 1: Unexpected rule type "rule"; looking for output/expected');
-  });
-
-  it('throws error on unexpected comment instead of failure detail', function () {
-    var css = [
-      '/* # Module: M */',
-      '/* Test: T */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
-      '/*     - foobar */',
-    ].join('\n');
-    var attempt = function () { main.parse(css); };
-
-    expect(attempt).to.throw(
-      'Line 4, column 1: Unexpected comment "- foobar"; looking for module header');
   });
 
   it('throws error on unexpected rule type instead of OUTPUT', function () {

@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "2.1.0",
+  "version": "2.1.4",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
@@ -19,13 +19,13 @@
   "dependencies": {
     "css": "^2.2.1",
     "css-selector-parser": "^1.1.0",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.0.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
+    "mocha": "^3.1.2",
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {

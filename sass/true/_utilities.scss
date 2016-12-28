@@ -37,12 +37,37 @@
   $strings: ();
   $found-at: str-index($string, $substring);
   @while $found-at {
-    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ""));
+    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ''));
     $string: str-slice($string, $found-at + str-length($substring));
     $found-at: str-index($string, $substring);
   }
   $strings: append($strings, $string);
   @return $strings;
+}
+
+/// Join a list of strings
+/// @access private
+/// @group x_private
+/// @param {List} $list - List to join
+/// @param {String} $separator - Separator
+/// @return {String} - Joined string
+@function _true-str-join(
+  $list,
+  $separator
+) {
+  $length: length($list);
+
+  @if ($length == 0) {
+    @return '';
+  }
+
+  $result: nth($list, 1);
+  @if $length > 1 {
+    @for $index from 2 through $length {
+      $result: $result + $separator + nth($list, $index);
+    }
+  }
+  @return $result;
 }
 
 
@@ -53,9 +78,9 @@
 /// @param {*} $two - Second value
 /// @return {Bool}
 @function _true-is-equal($one, $two) {
-  @if type-of($one) == number and type-of($two) == number {
+  @if type-of($one) == 'number' and type-of($two) == 'number' {
     @if unit($one) == unit($two) {
-      @return $one == $two;
+      @return inspect($one) == inspect($two);
     } @else {
       @return false;
     }

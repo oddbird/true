@@ -14,8 +14,11 @@
   $assert,
   $description: ''
 ) {
-  @include _true-context('assert', $description);
-  @include _true-assert-results('assert-true', $assert, true);
+  $default: '"#{inspect($assert)}" should be truthy';
+  $message: if(str-length($description) > 0, $description, $default);
+
+  @include _true-context('assert', $message);
+  @include _true-assert-results('assert-true', not not $assert, true);
 }
 
 /// Assert that a parameter is `false`
@@ -30,7 +33,10 @@
   $assert,
   $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" should be falsey';
+  $message: if(str-length($description) > 0, $description, $default);
+
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-false', $assert, false);
 }
 
@@ -48,7 +54,10 @@
   $expected,
   $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should be equal';
+  $message: if(str-length($description) > 0, $description, $default);
+
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
@@ -66,7 +75,10 @@
   $expected,
   $description: ''
 ) {
-  @include _true-context('assert', $description);
+  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should not be equal';
+  $message: if(str-length($description) > 0, $description, $default);
+
+  @include _true-context('assert', $message);
   @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
 }
 
@@ -83,17 +95,21 @@
 /// @require {mixin} _true-assert-stop
 /// @require {function} _true-selector
 @mixin assert(
-  $description
+  $description: ''
 ) {
+  $default: _true-context('test') or 'CSS output should match expected output';
+  $message: if(str-length($description) > 0, $description, $default);
+
   @include _true-context('assert', $description);
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
 
-  @include _true-update('test', 'output-to-css');
-  @include _true-context('assert', null);
+  @include _true-update('output-to-css');
+  @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
+
 
 /// Describe the test content to be evaluated
 /// The output will be compared against the results of the `expect()` mixin.
@@ -114,6 +130,19 @@
 
   @include _true-message('  END_OUTPUT  ', 'comments');
 }
+
+
+/// @alias output
+@mixin input(
+  $selector: true
+) {
+  @warn 'The `input` mixin has been renamed `output` and will be removed.';
+
+  @include output($selector) {
+    @content;
+  }
+}
+
 
 /// Describe the output content to be expected.
 /// The output will be compared against the results of the `output()` mixin.
@@ -173,6 +202,6 @@
     }
   }
 
-  @include _true-update('test', $result);
-  @include _true-context('assert', null);
+  @include _true-update($result);
+  @include _true-context-pop();
 }

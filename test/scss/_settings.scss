@@ -3,17 +3,17 @@
 
 @include test-module('Settings') {
   @include test('true-context [mixin]') {
-    @include assert-equal(map-get($_true-context, fake), null,
+    @include assert-equal(_true-context(fake), null,
       'Confirm that there is currently no "fake" scope');
 
     @include _true-context(fake, 'this scope is not real');
 
-    @include assert-equal(map-get($_true-context, fake), 'this scope is not real',
+    @include assert-equal(_true-context(fake), 'this scope is not real',
       'Sets the value of scope "fake" to "this scope is not real"');
 
-    $_true-context: map-remove($_true-context, fake);
+    @include _true-context-pop();
 
-    @include assert-equal(map-get($_true-context, fake), null,
+    @include assert-equal(_true-context(fake), null,
       'Confirm that our "fake" scope has been removed');
   }
 
@@ -23,6 +23,18 @@
 
     @include assert-equal(_true-context(test), '_true-context [function]',
       'Returns the current test name');
+  }
+
+  @include test-module('nested') {
+    @include test('_true-context [function]') {
+      @include assert-equal(_true-context(module), 'nested',
+        'Returns the innermost module name');
+    }
+
+    @include test('_true-context-all [function]') {
+      @include assert-equal(_true-context-all(module), 'Settings' 'nested',
+        'Returns the current stack of module names');
+    }
   }
 
   // @include test('true-terminal-output failure') {

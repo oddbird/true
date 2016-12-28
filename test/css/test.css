@@ -10,6 +10,15 @@
 /*   ✔ Returns the current module name */
 /*   ✔ Returns the current test name */
 /*  */
+/* # Module: Settings :: nested */
+/* ---------------- */
+/* Test: _true-context [function] */
+/*   ✔ Returns the innermost module name */
+/*  */
+/* Test: _true-context-all [function] */
+/*   ✔ Returns the current stack of module names */
+/*  */
+/*  */
 /*  */
 /* # Module: Utilities */
 /* ------------------- */
@@ -19,9 +28,23 @@
 /* Test: String Split [function] */
 /*   ✔ Returns a list of substrings, based on any delimiter. */
 /*  */
-/* Test: Strict Equal [function] */
+/* Test: String Join [function] */
+/*   ✔ Returns a single string, based on any delimiter. */
+/*  */
+/*  */
+/* # Module: Is Equal [function] */
+/* ----------------------------- */
+/* Test: Simple numbers */
+/*   ✔ Returns true for numbers that are truely equal. */
+/*  */
+/* Test: Mismatched units */
 /*   ✔ Returns false for equal numbers with different units. */
-/*   ✔ Returns true for numbers that are truly equal. */
+/*  */
+/* Test: Adding floats */
+/*   ✔ 0.1 + 0.2 should equal .3. */
+/*  */
+/* Test: Rounded numbers with division */
+/*   ✔ 1/3 should equal .33333. */
 /*  */
 /*  */
 /* # Module: True Message */
@@ -51,47 +74,71 @@
 /*  */
 /* # Module: Results */
 /* ----------------- */
-/* Test: Reset */
-/*   ✔ Add a passing result to the test */
-/*   ✔ Check that test results are not in a clean state */
-/*   ✔ Resets the results for a given scope */
-/*  */
-/* Test: Get results */
-/*   ✔ Returns the current results map for a given scope */
-/*  */
-/* Test: Get result */
-/*   ✔ Collates a set of results to pass up the scope hierarchy */
+/* Test: Update with pass */
+/*   ✔ increments run */
+/*   ✔ increments pass */
+/*   ✔ leaves fails as-is */
+/*   ✔ leaves output-to-css as-is */
 /*  */
 /*  */
 /* # Module: Modules */
 /* ----------------- */
 /* Test: test-module */
-/*   ✔ Resets module scope results */
 /*   ✔ Changes the current module context */
 /*  */
 /*  */
 /* # Module: Tests */
 /* --------------- */
 /* Test: test [mixin] */
-/*   ✔ Resets module scope results */
 /*   ✔ Changes the current test context */
 /*  */
 /*  */
-/* # Module: Assert */
-/* ---------------- */
-/* Test: Assert True [mixin] */
-/*   ✔ True should assert true. */
+/* # Module: Assert True */
+/* --------------------- */
+/* Test: Truthiness */
+/*   ✔ Non-false properties return true. */
 /*  */
-/* Test: Assert False [mixin] */
-/*   ✔ False should assert false. */
 /*  */
-/* Test: Assert Equal [mixin] */
-/*   ✔ 1 and 1 should be equal. */
+/* # Module: Assert False */
+/* ---------------------- */
+/* Test: Falsiness */
+/*   ✔ Negated properties return false. */
 /*  */
-/* Test: Assert Unequal [mixin] */
-/*   ✔ 1 and 3 should be un-equal. */
 /*  */
-/* Test: Assert CSS: output/expect [mixins] */
+/* # Module: Assert Equal */
+/* ---------------------- */
+/* Test: Equality */
+/*   ✔ 2 - 1 should equal 1. */
+/*  */
+/* Test: Empty description */
+/*   ✔ "1" and "1" should be equal */
+/*  */
+/*  */
+/* # Module: Assert UnEqual */
+/* ------------------------ */
+/* Test: Inequality */
+/*   ✔ 3 - 1 is not equal to 3. */
+/*  */
+/*  */
+/* # Module: Assert (output) */
+/* ------------------------- */
+/* Test: CSS output math */
+/*   ASSERT: Output math compares properly   */
+/*   OUTPUT   */
+.test-output {
+  -property1: 0.3;
+  -property2: 0.33333; }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  -property1: 0.3;
+  -property2: 0.33333; }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: output/expect [mixins] */
 /*   ASSERT: Output and expected selector patterns match   */
 /*   OUTPUT   */
 .test-output {
@@ -114,5 +161,31 @@
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
+/*   ASSERT: Deprecated input alias works for now   */
+/*   OUTPUT   */
+.test {
+  /* comments are also allowed in assertions */
+  -property: value; }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test {
+  /* comments are also allowed in assertions */
+  -property: value; }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: breakpoint */
+/* -------------------- */
+/* Test: should return the appropriate breakpoint value based on the passed key */
+/*   ✔ "940px" and "940px" should be equal */
+/*  */
+/*  */
+/* # SUMMARY ---------- */
+/* 31 Tests: */
+/*  - 26 Passed */
+/*  - 0 Failed */
+/*  - 5 Output to CSS */
+/* -------------------- */

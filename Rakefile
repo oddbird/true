@@ -31,7 +31,7 @@ end
 
 desc "run the tests"
 task :test do
-  sh "sass test/scss/test-ruby.scss test/css/test-ruby.css", :verbose => false
+  sh "bundle exec true-cli test/scss/test.scss", :verbose => false
 end
 
 desc "Record the new version in version control for posterity"

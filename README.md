@@ -1,7 +1,6 @@
-True
-====
+# True
 
-[![Build Status](https://travis-ci.org/oddbird/true.png?branch=master)](https://travis-ci.org/ericam/true)
+[![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 
 *Verb*
 
@@ -13,8 +12,7 @@ True
   *True your sweet plugin before you deploy.*
 
 
-Install
--------
+## Install
 
 in command line:
 
@@ -30,10 +28,9 @@ npm install sass-true
 ```
 
 
-Usage
------
+## Usage
 
-### In Sass
+### With any Sass compiler
 
 ```scss
 @import "true";
@@ -54,7 +51,7 @@ Usage
   // Testing Mixins
   @include test('Font Size [mixin]') {
     @include assert('Outputs a font size and line height based on keyword.') {
-      @include input {
+      @include output {
         @include font-size(large);
       }
 
@@ -92,7 +89,7 @@ Version control can make that much easier than it sounds.
 
 3. Write a shim JS test file in `test/test_sass.js`:
 
-   ```js
+   ```javascript
    var path = require('path');
    var sassTrue = require('sass-true');
 
@@ -115,6 +112,33 @@ be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
 
+#### With Grunt...
+
+Run Mocha using the Grunt task supplied by
+[grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)
+
+Install `grunt-mocha-cli`:
+
+```bash
+npm install grunt-mocha-cli --save-dev
+```
+
+Configure task:
+
+```javascript
+grunt.loadNpmTasks('grunt-mocha');
+
+mochacli: {
+   all: ['test/test_sass.js']
+},
+```
+
+Run tests:
+
+```bash
+grunt mochacli
+```
+
 ### With ruby-sass on the command line
 
 ```bash
@@ -122,9 +146,10 @@ true-cli [options] PATH
 ```
 
 Options:
-* `-s` silent
-* `-c` config file
-* `-d` debug config file settings
+
+ * `-s` silent
+ * `-c` config file
+ * `-d` debug config file settings
 
 Config file (optional):
 
@@ -141,8 +166,7 @@ require:
 default location: `test/true.yml`
 
 
-Settings
---------
+## Settings
 
 There is only one setting:
 `$true-terminal-output`
