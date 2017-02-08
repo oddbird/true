@@ -2,14 +2,14 @@
 // ======
 
 
+
+// Assert True
+// -----------
 /// Assert that a parameter is `true`
 /// @access public
 /// @group testing
 /// @param {*} $assert - Assert
 /// @param {String} $description [''] - Assert description
-/// @require {mixin} _true-fail-details
-/// @require {mixin} _true-assert-start
-/// @require {mixin} _true-assert-stop
 @mixin assert-true(
   $assert,
   $description: ''
@@ -21,14 +21,17 @@
   @include _true-assert-results('assert-true', not not $assert, true);
 }
 
+
+
+// Assert False
+// ------------
 /// Assert that a parameter is `false`
 /// @access public
 /// @group testing
-/// @param {*} $assert - Assert
-/// @param {String} $description [''] - Assert description
-/// @require {mixin} _true-fail-details
-/// @require {mixin} _true-assert-start
-/// @require {mixin} _true-assert-stop
+/// @param {*} $assert -
+///   Assert
+/// @param {String} $description [''] -
+///   Assert description
 @mixin assert-false(
   $assert,
   $description: ''
@@ -40,15 +43,19 @@
   @include _true-assert-results('assert-false', $assert, false);
 }
 
-/// /// Assert that two parameters are `equal`
+
+
+// Assert Equal
+// ------------
+/// Assert that two parameters are `equal`
 /// @access public
 /// @group testing
-/// @param {*} $assert - Assert
-/// @param {*} $expected - Expected result
-/// @param {String} $description [''] - Assert description
-/// @require {mixin} _true-fail-details
-/// @require {mixin} _true-assert-start
-/// @require {mixin} _true-assert-stop
+/// @param {*} $assert -
+///   Assert
+/// @param {*} $expected -
+///   Expected result
+/// @param {String} $description [''] -
+///   Assert description
 @mixin assert-equal(
   $assert,
   $expected,
@@ -61,15 +68,18 @@
   @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
+
+// Assert UnEqual
+// --------------
 /// Assert that two parameters are `unequal`
 /// @access public
 /// @group testing
-/// @param {*} $assert - Assert
-/// @param {*} $expected - Expected result
-/// @param {String} $description [''] - Assert description
-/// @require {mixin} _true-fail-details
-/// @require {mixin} _true-assert-start
-/// @require {mixin} _true-assert-stop
+/// @param {*} $assert -
+///   Assert
+/// @param {*} $expected -
+///   Expected result
+/// @param {String} $description [''] -
+///   Assert description
 @mixin assert-unequal(
   $assert,
   $expected,
@@ -89,11 +99,10 @@
 /// Define a CSS-output assertion
 /// @access public
 /// @group testing
-/// @param {String} $description - Assert description
-/// @content Use `output()` and `expect()` mixins to define blocks for comparison
-/// @require {mixin} _true-assert-start
-/// @require {mixin} _true-assert-stop
-/// @require {function} _true-selector
+/// @param {String} $description -
+///   Assert description
+/// @content Use `output()` and `expect()` mixins
+///   to define blocks for comparison
 @mixin assert(
   $description: ''
 ) {
@@ -111,8 +120,12 @@
 }
 
 
+
+// Output
+// ------
 /// Describe the test content to be evaluated
-/// The output will be compared against the results of the `expect()` mixin.
+/// The output will be compared against the results
+/// of the `expect()` mixin.
 /// @access public
 /// @group testing
 @mixin output(
@@ -144,8 +157,12 @@
 }
 
 
+
+// Expect
+// ------
 /// Describe the output content to be expected.
-/// The output will be compared against the results of the `output()` mixin.
+/// The output will be compared against the results
+///  of the `output()` mixin.
 /// @access public
 /// @group testing
 @mixin expect(
@@ -165,9 +182,10 @@
 }
 
 
+
 // Assert Results
 // --------------
-
+/// @access private
 @mixin _true-assert-results(
   $type,
   $assert,

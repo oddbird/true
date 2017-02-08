@@ -1,0 +1,86 @@
+// Context Management
+// ==================
+
+
+
+// Context [variable]
+// ------------------
+/// True current context
+/// @access private
+/// @type list
+$_true-context: ();
+
+
+
+// Context [mixin]
+// ---------------
+/// Update the current context for a given scope
+/// @access private
+/// @param {String} $scope - Either `module`, `test` or `assert`
+/// @param {String} $name - Name of current scope
+@mixin _true-context(
+  $scope,
+  $name
+) {
+  $_true-context: append($_true-context, ($scope, $name)) !global;
+}
+
+
+
+// Context Pop [mixin]
+// -------------------
+/// Remove the deepest context layer
+/// @access private
+@mixin _true-context-pop() {
+  $new: ();
+
+  @for $i from 1 to length($_true-context) {
+    $new: append($new, nth($_true-context, $i));
+  }
+
+  $_true-context: $new !global;
+}
+
+
+
+// Context [function]
+// ------------------
+/// Get information on current context for a given scope
+/// @access private
+/// @param {String} $scope
+/// @return {String}
+@function _true-context(
+  $scope
+) {
+  $value: null;
+
+  @each $entry-scope, $entry-value in $_true-context {
+    @if $entry-scope == $scope {
+      $value: $entry-value;
+    }
+  }
+
+  @return $value;
+}
+
+
+
+// Context All [function]
+// ----------------------
+/// Get list of context names for a given scope
+/// @access private
+/// @param {String} $scope
+/// @return {List}
+@function _true-context-all(
+  $scope
+) {
+  $list: ();
+
+  @each $entry-scope, $entry-value in $_true-context {
+    @if $entry-scope == $scope {
+      $list: append($list, $entry-value);
+    }
+  }
+
+  @return $list;
+}

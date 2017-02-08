@@ -1,79 +1,12 @@
 // True Settings
 // =============
 
+
+
+// Terminal Output
+// ---------------
 /// Whether or not to use the terminal as output stream
 /// @access public
 /// @group reporting
 /// @type Bool
 $true-terminal-output: true !default;
-
-
-// Context (private)
-// -----------------
-
-/// True current context
-/// @access private
-/// @group x_private
-/// @type Map
-/// @prop {String} module [null]
-/// @prop {String} test [null]
-/// @prop {String} assert [null]
-$_true-context: ();
-
-/// Update the current context
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Either `module`, `test` or `assert`
-/// @param {String} $name - Name of current scope
-/// @require $_true-context
-@mixin _true-context(
-  $scope,
-  $name
-) {
-  $_true-context: append($_true-context, ($scope, $name)) !global;
-}
-
-@mixin _true-context-pop() {
-  $new: ();
-  @for $i from 1 to length($_true-context) {
-    $new: append($new, nth($_true-context, $i));
-  }
-  $_true-context: $new !global;
-}
-
-/// Get information on current context
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Either `module`, `test` or `assert`
-/// @return {String}
-@function _true-context(
-  $scope
-) {
-  @for $i from length($_true-context) through 1 {
-    $entry: nth($_true-context, $i);
-    $entry-scope: nth($entry, 1);
-    @if $entry-scope == $scope {
-      @return nth($entry, 2);
-    }
-  }
-  @return null;
-}
-
-/// Get list of context names
-/// @access private
-/// @group x_private
-/// @param {String} $scope - Either `module`, `test` or `assert`
-/// @return {List}
-@function _true-context-all(
-  $scope
-) {
-  $list: ();
-  @for $i from 1 through length($_true-context) {
-    $entry: nth($_true-context, $i);
-    $entry-scope: nth($entry, 1);
-    @if $entry-scope == $scope {
-      $list: append($list, nth($entry, 2));
-    }
-  }
-  @return $list;
-}

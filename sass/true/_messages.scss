@@ -1,24 +1,30 @@
 // Messages
 // ========
 
+
+// TNL
+// ---
 /// New line helper
 /// @access private
-/// @group x_private
 /// @type String
-$-tnl: '\a ';
+$_tnl: '\a ';
 
 
-/// Output a message to CSS comments, or command line terminal (via debug/warn)
+
+// True Message
+// ------------
+/// Output a message to CSS comments,
+/// or command line terminal (via debug/warn)
 /// @access private
-/// @group x_private
-/// @param {String} $message - Message to output
-/// @param {String} $output [comments] - Type of output, either `comments`, `terminal`, `debug` or `warn`
-/// @require {function} _true-str-split
+/// @param {String} $message -
+///   Message to output
+/// @param {String} $output [comments] -
+///   Type of output, either `comments`, `terminal`, `debug` or `warn`
 @mixin _true-message(
   $message,
   $output: 'comments'
 ) {
-  $lines: _true-str-split($message, $-tnl);
+  $lines: _true-str-split($message, $_tnl);
   @if index($output, 'comments') {
     @each $line in $lines {
       /* #{$line} */

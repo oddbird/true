@@ -1,9 +1,46 @@
 // Results
 // =======
 
+
+
+// Report
+// ------
+/// Report results summary to CSS and/or command line
+/// @access public
+/// @group reporting
+/// @param {Bool} $terminal [$true-terminal-output] -
+///   Optionally output results to the terminal
+/// @param {Bool} $fail-on-error [false] -
+///   Optionally error out of the compiler if tests have failed
+/// @require {function} _true-report-message
+/// @require {function} _true-message
+@mixin report(
+  $terminal: $true-terminal-output,
+  $fail-on-error: false
+) {
+  $message: _true-report-message('global', 'multiple');
+
+  $fail: map-get($_true-results, 'fail');
+  @if $fail-on-error and ($fail > 0) {
+    @error "#{$fail} tests failed."
+  }
+
+  @include _true-message('# SUMMARY ----------', 'comments');
+  @include _true-message($message, 'comments');
+  @include _true-message('--------------------', 'comments');
+
+  @if $terminal {
+    $message: _true-report-message('global', 'single');
+    @include _true-message($message, 'debug');
+  }
+}
+
+
+
+// Results
+// -------
 /// Results map
 /// @access private
-/// @group x_private
 /// @type Map
 $_true-results: (
   run: 0,
@@ -13,12 +50,11 @@ $_true-results: (
 );
 
 
+
 // Update
 // ------
-
 /// Update results
 /// @access private
-/// @group x_private
 /// @param {String} $result - Result (pass/fail/output-to-css)
 /// @require {function} _true-map-increment
 /// @require $_true-results
@@ -30,12 +66,11 @@ $_true-results: (
 }
 
 
+
 // Report Message
 // --------------
-
 /// Report message
 /// @access private
-/// @group x_private
 /// @param {String} $scope [test] - Scope
 /// @param {String} $lines [single] - Lines
 /// @return {String} - Reported message
@@ -62,33 +97,9 @@ $_true-results: (
     $message: '#{$run} #{$items}, #{$pass} Passed, #{$fail} Failed';
     $message: if($output-to-css > 0, $message + ', #{$output-to-css} Output to CSS', $message);
   } @else {
-    $message: '#{$run $items}:#{$-tnl} - #{$pass} Passed#{$-tnl} - #{$fail} Failed';
-    $message: if($output-to-css > 0, $message + '#{$-tnl} - #{$output-to-css} Output to CSS', $message);
+    $message: '#{$run $items}:#{$_tnl} - #{$pass} Passed#{$_tnl} - #{$fail} Failed';
+    $message: if($output-to-css > 0, $message + '#{$_tnl} - #{$output-to-css} Output to CSS', $message);
   }
 
   @return $message;
-}
-
-
-// Report
-// ------
-
-/// Report results summary to CSS and/or command line
-/// @access public
-/// @group reporting
-/// @param {Bool} $terminal [$true-terminal-output] - Whether or not to use terminal output
-/// @require {function} _true-report-message
-/// @require {function} _true-message
-@mixin report(
-  $terminal: $true-terminal-output
-) {
-  $message: _true-report-message('global', 'multiple');
-  @include _true-message('# SUMMARY ----------', 'comments');
-  @include _true-message($message, 'comments');
-  @include _true-message('--------------------', 'comments');
-
-  @if $terminal {
-    $message: _true-report-message('global', 'single');
-    @include _true-message($message, 'debug');
-  }
 }

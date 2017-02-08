@@ -1,11 +1,16 @@
 // Utilities
 // =========
 
+
+
+// Map Increment
+// -------------
 /// Add map values together
 /// @access private
-/// @group x_private
-/// @param {Map} $base - Initial map
-/// @param {Map} $add - Extra map
+/// @param {Map} $base -
+///   Initial map to add values to
+/// @param {Map} $add -
+///   Map of values to be added
 /// @return {Map}
 @function _true-map-increment(
   $base,
@@ -24,12 +29,18 @@
   @return $base;
 }
 
-/// Split a string
+
+
+// String Split
+// ------------
+/// Split a string into a list
 /// @access private
-/// @group x_private
-/// @param {String} $string - String to split
-/// @param {String} $substring - Delimiter
-/// @return {List} - `$string` fragments
+/// @param {String} $string -
+///   String to split
+/// @param {String} $substring -
+///   Delimiter
+/// @return {List} -
+///   List of string fragments
 @function _true-str-split(
   $string,
   $substring
@@ -45,12 +56,18 @@
   @return $strings;
 }
 
-/// Join a list of strings
+
+
+// String Join
+// -----------
+/// Join a list of strings into a single string
 /// @access private
-/// @group x_private
-/// @param {List} $list - List to join
-/// @param {String} $separator - Separator
-/// @return {String} - Joined string
+/// @param {List} $list -
+///   List of strings to join
+/// @param {String} $separator -
+///   Separator to add between items
+/// @return {String} -
+///   Joined string
 @function _true-str-join(
   $list,
   $separator
@@ -71,11 +88,15 @@
 }
 
 
-/// Check for strict equality
+
+// Is Equal
+// --------
+/// Check for equality, excluding comparable numbers
 /// @access private
-/// @group x_private
-/// @param {*} $one - First value
-/// @param {*} $two - Second value
+/// @param {*} $one -
+///   First value
+/// @param {*} $two -
+///   Second value
 /// @return {Bool}
 @function _true-is-equal($one, $two) {
   @if type-of($one) == 'number' and type-of($two) == 'number' {

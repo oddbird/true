@@ -1,13 +1,14 @@
 // Tests
 // =====
 
+
+
+// Test
+// ----
 /// Describe a Test
 /// @access public
 /// @group testing
 /// @param {String} $name - Test bame
-/// @require {mixin}_true-test-start
-/// @require {mixin}_true-test-stop
-/// @require {function} _true-selector
 /// @content Include the assertions that are part of this test
 @mixin test(
   $name
@@ -18,15 +19,12 @@
 }
 
 
-// Module Start (private)
-// ----------------------
 
+// Test Start
+// ----------
 /// Test start helper
 /// @access private
-/// @group x_private
 /// @param {String} $name - Test name
-/// @require {mixin} _true-context
-/// @require {mixin} _true-message
 @mixin _true-test-start(
   $name
 ) {
@@ -35,15 +33,11 @@
 }
 
 
-// Module Stop (private)
-// ---------------------
 
+// Test Stop
+// ---------
 /// Test stop helper
 /// @access private
-/// @group x_private
-/// @require {mixin} _true-context
-/// @require {mixin} _true-message
-/// @require {function} _true-get-result
 @mixin _true-test-stop {
   @include _true-context-pop();
   @include _true-message('', 'comments');
