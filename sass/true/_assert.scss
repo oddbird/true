@@ -40,7 +40,7 @@
   $message: if(str-length($description) > 0, $description, $default);
 
   @include _true-context('assert', $message);
-  @include _true-assert-results('assert-false', $assert, false);
+  @include _true-assert-results('assert-false', not $assert, true);
 }
 
 

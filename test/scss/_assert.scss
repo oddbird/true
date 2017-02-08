@@ -15,6 +15,12 @@
       not 'anything',
       'Negated properties return false.');
   }
+
+  @include test('null') {
+    @include assert-false(
+      null,
+      'Null properties return false.');
+  }
 }
 
 @include test-module('Assert Equal') {
