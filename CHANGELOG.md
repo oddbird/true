@@ -2,8 +2,8 @@ True Changelog
 ==============
 
 
-2.2.0 UNRELEASED
-----------------
+2.2.1 (2/7/17)
+--------------
 - Output CSS context around Mocha parsing errors.
 - Added `$fail-on-error` argument to `report()` mixin.
   Set to `true` if you need the Sass compiler to fail
