@@ -1,20 +1,28 @@
 // Test Assertions
 // ===============
 
-@include test-module('Results') {
-  @include test('Update with pass') {
+@include test-module('Update Results') {
+  @include test('Update global results with pass') {
     $before: $_true-results;
-    @include _true-update(pass);
+    @include _true-update('pass');
     $actual: $_true-results;
     $_true-results: $before !global;
 
-    @include assert-equal(map-get($actual, run), map-get($before, run) + 1,
+    @include assert-equal(
+      map-get($actual, 'run'),
+      map-get($before, 'run') + 1,
       'increments run');
-    @include assert-equal(map-get($actual, pass), map-get($before, pass) + 1,
+    @include assert-equal(
+      map-get($actual, 'pass'),
+      map-get($before, 'pass') + 1,
       'increments pass');
-    @include assert-equal(map-get($actual, fail), map-get($before, fail),
+    @include assert-equal(
+      map-get($actual, 'fail'),
+      map-get($before, 'fail'),
       'leaves fails as-is');
-    @include assert-equal(map-get($actual, output-to-css), map-get($before, output-to-css),
+    @include assert-equal(
+      map-get($actual, 'output-to-css'),
+      map-get($before, 'output-to-css'),
       'leaves output-to-css as-is');
   }
 }

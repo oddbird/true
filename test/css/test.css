@@ -11,7 +11,7 @@
 /*   ✔ Returns the current test name */
 /*  */
 /* # Module: Settings :: nested */
-/* ---------------- */
+/* ---------------------------- */
 /* Test: _true-context [function] */
 /*   ✔ Returns the innermost module name */
 /*  */
@@ -72,9 +72,9 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: Results */
-/* ----------------- */
-/* Test: Update with pass */
+/* # Module: Update Results */
+/* ------------------------ */
+/* Test: Update global results with pass */
 /*   ✔ increments run */
 /*   ✔ increments pass */
 /*   ✔ leaves fails as-is */
@@ -85,6 +85,12 @@
 /* ----------------- */
 /* Test: test-module */
 /*   ✔ Changes the current module context */
+/*  */
+/* # Module: Modules :: Unquoted Module Name */
+/* ----------------------------------------- */
+/* Test: Don’t barf on unquoted names */
+/*   ✔ Please don’t barf on me */
+/*  */
 /*  */
 /*  */
 /* # Module: Tests */
@@ -103,6 +109,9 @@
 /* ---------------------- */
 /* Test: Falsiness */
 /*   ✔ Negated properties return false. */
+/*  */
+/* Test: null */
+/*   ✔ Null properties return false. */
 /*  */
 /*  */
 /* # Module: Assert Equal */
@@ -177,15 +186,9 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: breakpoint */
-/* -------------------- */
-/* Test: should return the appropriate breakpoint value based on the passed key */
-/*   ✔ "940px" and "940px" should be equal */
-/*  */
-/*  */
 /* # SUMMARY ---------- */
-/* 31 Tests: */
-/*  - 26 Passed */
+/* 25 Tests: */
+/*  - 21 Passed */
 /*  - 0 Failed */
-/*  - 5 Output to CSS */
+/*  - 4 Output to CSS */
 /* -------------------- */

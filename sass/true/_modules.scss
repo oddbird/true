@@ -30,11 +30,12 @@
 ) {
   @include _true-context(module, $name);
   $modules: _true-context-all('module');
-  @include _true-message('# Module: #{_true-str-join($modules, ' :: ')}', 'comments');
+  $modules: _true-str-join($modules, ' :: ');
+  @include _true-message('# Module: #{$modules}', 'comments');
 
   $underline: '----------';
 
-  @for $i from 1 through str-length($name) {
+  @for $i from 1 through str-length(inspect($modules)) {
     $underline: '#{$underline}-';
   }
 

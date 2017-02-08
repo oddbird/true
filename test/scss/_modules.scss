@@ -6,4 +6,10 @@
     @include assert-equal(_true-context(module), 'Modules',
       'Changes the current module context');
   }
+
+  @include test-module(Unquoted Module Name) {
+    @include test(Don’t barf on unquoted names) {
+      @include assert-true(true, Please don’t barf on me);
+    }
+  }
 }

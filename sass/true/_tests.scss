@@ -39,6 +39,7 @@
 /// Test stop helper
 /// @access private
 @mixin _true-test-stop {
+  @include _true-update($_true-test-result);
   @include _true-context-pop();
   @include _true-message('', 'comments');
 }

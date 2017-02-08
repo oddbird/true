@@ -12,8 +12,6 @@
 ///   Optionally output results to the terminal
 /// @param {Bool} $fail-on-error [false] -
 ///   Optionally error out of the compiler if tests have failed
-/// @require {function} _true-report-message
-/// @require {function} _true-message
 @mixin report(
   $terminal: $true-terminal-output,
   $fail-on-error: false
@@ -39,15 +37,38 @@
 
 // Results
 // -------
-/// Results map
+/// Global test-results map
 /// @access private
 /// @type Map
 $_true-results: (
-  run: 0,
-  pass: 0,
-  fail: 0,
-  output-to-css: 0,
+  'run': 0,
+  'pass': 0,
+  'fail': 0,
+  'output-to-css': 0,
 );
+
+
+
+// Test Fail
+// ---------
+// Local flags for tracking assertion results in a test
+/// @access private
+/// @type String
+$_true-test-result: null;
+
+
+
+// Update Test
+// -----------
+@mixin _true-update-test(
+  $result
+) {
+  @if ($result == 'fail') or ($_true-test-result == 'fail') {
+    $_true-test-result: 'fail' !global;
+  } @else if ($_true-test-result != 'output-to-css') {
+    $_true-test-result: $result !global;
+  }
+}
 
 
 
@@ -55,14 +76,16 @@ $_true-results: (
 // ------
 /// Update results
 /// @access private
-/// @param {String} $result - Result (pass/fail/output-to-css)
-/// @require {function} _true-map-increment
-/// @require $_true-results
-@mixin _true-update($result) {
+/// @param {String} $result -
+///   Result (pass/fail/output-to-css)
+@mixin _true-update(
+  $result
+) {
   $_true-results: _true-map-increment($_true-results, (
-    run: 1,
+    'run': 1,
     $result: 1,
   )) !global;
+  $_true-test-result: null !global;
 }
 
 
@@ -74,7 +97,6 @@ $_true-results: (
 /// @param {String} $scope [test] - Scope
 /// @param {String} $lines [single] - Lines
 /// @return {String} - Reported message
-/// @require {function} _true-get-results
 @function _true-report-message(
   $scope: 'test',
   $lines: 'single'

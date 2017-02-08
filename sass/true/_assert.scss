@@ -12,12 +12,10 @@
 /// @param {String} $description [''] - Assert description
 @mixin assert-true(
   $assert,
-  $description: ''
+  $description: null
 ) {
   $default: '"#{inspect($assert)}" should be truthy';
-  $message: if(str-length($description) > 0, $description, $default);
-
-  @include _true-context('assert', $message);
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-true', not not $assert, true);
 }
 
@@ -34,12 +32,10 @@
 ///   Assert description
 @mixin assert-false(
   $assert,
-  $description: ''
+  $description: null
 ) {
   $default: '"#{inspect($assert)}" should be falsey';
-  $message: if(str-length($description) > 0, $description, $default);
-
-  @include _true-context('assert', $message);
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-false', not $assert, true);
 }
 
@@ -59,12 +55,10 @@
 @mixin assert-equal(
   $assert,
   $expected,
-  $description: ''
+  $description: null
 ) {
   $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should be equal';
-  $message: if(str-length($description) > 0, $description, $default);
-
-  @include _true-context('assert', $message);
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-equal', $assert, $expected);
 }
 
@@ -83,12 +77,10 @@
 @mixin assert-unequal(
   $assert,
   $expected,
-  $description: ''
+  $description: null
 ) {
   $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should not be equal';
-  $message: if(str-length($description) > 0, $description, $default);
-
-  @include _true-context('assert', $message);
+  @include _true-context('assert', $description or $default);
   @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
 }
 
@@ -104,17 +96,15 @@
 /// @content Use `output()` and `expect()` mixins
 ///   to define blocks for comparison
 @mixin assert(
-  $description: ''
+  $description: null
 ) {
   $default: _true-context('test') or 'CSS output should match expected output';
-  $message: if(str-length($description) > 0, $description, $default);
-
-  @include _true-context('assert', $description);
+  @include _true-context('assert', $description or $default);
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
 
-  @include _true-update('output-to-css');
+  @include _true-update-test('output-to-css');
   @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
@@ -220,6 +210,6 @@
     }
   }
 
-  @include _true-update($result);
+  @include _true-update-test($result);
   @include _true-context-pop();
 }

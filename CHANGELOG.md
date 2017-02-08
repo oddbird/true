@@ -9,6 +9,8 @@ True Changelog
   Set to `true` if you need the Sass compiler to fail
   on broken tests.
 - Fix bug with `assert-false` causing it to fail on `null` values.
+- Allow unquoted descriptions and test/module names.
+- Fix bug throwing off test-count and reporting.
 
 
 2.1.4 (12/22/16)
