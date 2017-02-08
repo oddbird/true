@@ -2,12 +2,13 @@ True Changelog
 ==============
 
 
-2.1.5 UNRELEASED
+2.2.0 UNRELEASED
 ----------------
 - Output CSS context around Mocha parsing errors.
 - Added `$fail-on-error` argument to `report()` mixin.
   Set to `true` if you need the Sass compiler to fail
   on broken tests.
+- Fix bug with `assert-false` causing it to fail on `null` values.
 
 
 2.1.4 (12/22/16)
