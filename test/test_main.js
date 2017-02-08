@@ -398,8 +398,12 @@ describe('#parse', function () {
     var css = '.foo { -prop: value; }';
     var attempt = function () { main.parse(css); };
 
-    expect(attempt).to.throw(
-      'Line 1, column 1: Unexpected rule type "rule"; looking for module header');
+    expect(attempt).to.throw([
+      'Line 1, column 1: Unexpected rule type "rule"; looking for module header.',
+      '-- Context --',
+      '.foo { -prop: value; }',
+      '^'
+    ].join('\n'));
   });
 
   it('throws error on unexpected rule type instead of end summary', function () {
@@ -409,8 +413,28 @@ describe('#parse', function () {
     ].join('\n');
     var attempt = function () { main.parse(css); };
 
-    expect(attempt).to.throw(
-      'Line 2, column 1: Unexpected rule type "rule"; looking for end summary');
+    expect(attempt).to.throw([
+      'Line 2, column 1: Unexpected rule type "rule"; looking for end summary.',
+      '-- Context --',
+      '/* # SUMMARY ---------- */',
+      '.foo { -prop: value; }',
+      '^'
+    ].join('\n'));
+  });
+
+  it('accepts a number of context lines to display on error', function () {
+    var css = [
+      '/* # SUMMARY ---------- */',
+      '.foo { -prop: value; }',
+    ].join('\n');
+    var attempt = function () { main.parse(css, 1); };
+
+    expect(attempt).to.throw([
+      'Line 2, column 1: Unexpected rule type "rule"; looking for end summary.',
+      '-- Context --',
+      '.foo { -prop: value; }',
+      '^'
+    ].join('\n'));
   });
 
   it('handles a blank comment before module header', function () {

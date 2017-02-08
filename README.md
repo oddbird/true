@@ -111,6 +111,12 @@ Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
 equivalents into `runSass`.
 
+If True's Mocha plugin can't parse the CSS output from True, it'll give you
+some context lines of CSS as part of the error message. This context will
+likely be helpful in understanding the parse failure. By default it provides up
+to 10 lines of context; if you need more, you can provide a numeric fourth
+argument to `runSass`, the maximum number of context lines to provide.
+
 
 #### With Grunt...
 
