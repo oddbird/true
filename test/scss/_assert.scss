@@ -21,6 +21,18 @@
       null,
       'Null properties return false.');
   }
+
+  @include test('Empty string') {
+    @include assert-false(
+      '',
+      'Empty string return false.')
+  }
+
+  @include test('empty list') {
+    @include assert-false(
+      (),
+      'Empty lists return false.');
+  }
 }
 
 @include test-module('Assert Equal') {

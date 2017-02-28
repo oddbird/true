@@ -5,7 +5,7 @@
 
 // Assert True
 // -----------
-/// Assert that a parameter is `true`
+/// Assert that a parameter is truey (anything not falsey)
 /// @access public
 /// @group testing
 /// @param {*} $assert - Assert
@@ -15,15 +15,21 @@
   $description: null
 ) {
   $default: '"#{inspect($assert)}" should be truthy';
+  $truey-assert: if(
+    not not $assert and
+    $assert != '' and
+    $assert != (),
+    true,
+    false);
   @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-true', not not $assert, true);
+  @include _true-assert-results('assert-true', $truey-assert, true);
 }
 
 
 
 // Assert False
 // ------------
-/// Assert that a parameter is `false`
+/// Assert that a parameter is falsey (false, null, empty stirng or empty list)
 /// @access public
 /// @group testing
 /// @param {*} $assert -
@@ -35,8 +41,14 @@
   $description: null
 ) {
   $default: '"#{inspect($assert)}" should be falsey';
+  $falsey-assert: if(
+    not $assert or
+    $assert == '' or
+    $assert == (),
+    true,
+    false);
   @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-false', not $assert, true);
+  @include _true-assert-results('assert-false', $falsey-assert, true);
 }
 
 
