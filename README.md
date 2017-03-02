@@ -181,3 +181,131 @@ toggles output to the terminal on or off.
 - `true` will show detailed information on failing assertions.
   This is the default, and best for using `true-cli`.
 - `false` to turn off all terminal output.
+
+## API
+
+### Tests
+
+Tests help define what we are testing for. They can be used individually or
+grouped as a test module.
+
+#### `@include test-module()`
+
+Defines a test module. Allows the grouping of several common purposed tests.
+
+- `@param` {`String`} `$description` [''] - Module description
+
+```scss
+  @include test-module('Description of the module being tested') {
+    // Your tests here
+  }
+```
+
+#### `@include test()`
+
+Defines a test. Allows the definition of a single test for your module.
+
+- `@param` {`String`} `$description` [''] - Test description
+
+```scss
+  @include test-module('My test module description') {
+    @include test('Your test description') {
+      // Your asserts go here.
+    }
+  }
+```
+
+### Asserts
+
+Asserts help define what we are testing for. A test must contain at least one
+assert but can have as many as necessary based on your testing needs.
+
+#### `@include assert()`
+
+Defines a single assert for a CSS output. It's used together with the
+`output()` and `expect()` mixins to compare a mixin with it's expected output.
+
+
+```scss
+  @include test('Your test description') {
+    @include assert('Your assert description') {
+      @include output {
+        // Mixin to be evaluated
+        @include the-mixin-to-be-tested();
+      }
+
+      @include expect {
+        // The expected output of the-mixin-to-be-tested()
+        ...
+      }
+    }
+  }
+```
+
+
+#### `@include assert-false()`
+
+Asserts that the output of a test is falsy. This includes `false`, `null`,
+`''` (empty string) and `()` (empty list).
+
+- `@param` {`*`} `$assert` - Assert to be tested
+- `@param` {`String`} `$description` [''] - Assert description
+
+```scss
+  @include test('Your test description') {
+    $test: sample-function(5);
+
+    @include assert-false($test, 'Your assert description');
+  }
+```
+
+
+#### `@include assert-true()`
+
+Asserts that the output of a test is not falsy. The test will pass as long as
+the assert returns something.
+
+- `@param` {`*`} `$assert` - Assert to be tested
+- `@param` {`String`} `$description` [''] - Assert description
+
+```scss
+  @include test('Your test description') {
+    $test: sample-function(5);
+
+    @include assert-true($test, 'Your assert description');
+  }
+```
+
+
+#### `@include assert-equal()`
+
+Asserts that two parameters are equal.
+
+- `@param` {`*`} `$assert` - Assert to be tested
+- `@param` {`*`} `$expected` - Expected result
+- `@param` {`String`} `$description` [''] - Assert description
+
+```scss
+  @include test('Your test description') {
+    $test: sample-function(5);
+
+    @include assert-equals($test, 10, 'Your assert description');
+  }
+```
+
+
+#### `@include assert-unequal()`
+
+Asserts that two parameters are unequal.
+
+- `@param` {`*`} `$assert` - Assert to be tested
+- `@param` {`*`} `$expected` - Expected result
+- `@param` {`String`} `$description` [''] - Assert description
+
+```scss
+  @include test('Your test description') {
+    $test: sample-function(5);
+
+    @include assert-unequal($test, 10, 'Your assert description');
+  }
+```
