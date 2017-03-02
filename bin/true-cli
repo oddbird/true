@@ -7,9 +7,12 @@ require 'optparse'
 COLORS = {
   :ok => "\033[92m",
   :fail => "\033[91m",
-  :end => "\033[0m"
+  :end => "\033[0m",
+  :emphasis => "",
+  :normal => ""
 }
-options = {'debug' => false, 'silent' => false, 'color' => false}
+INDENT_AMOUNT = 4 # Number of space chars for each indentation level.
+$options = {'debug' => false, 'silent' => false, 'color' => false}
 config_file = File.join(Dir.pwd, 'test', 'true.yml')
 OptionParser.new do |opts|
   opts.banner = "Usage: true-cli [options] file"
@@ -18,10 +21,13 @@ OptionParser.new do |opts|
     config_file  = File.join(Dir.pwd, config)
   end
   opts.on('-d', '--debug') do
-    options['debug'] = true
+    $options['debug'] = true
   end
   opts.on('-s', '--silent') do
-    options['silent'] = true
+    $options['silent'] = true
+  end
+  opts.on('-C', '--color') do
+    $options['color'] = true
   end
 end.parse!(ARGV)
 
@@ -36,10 +42,10 @@ def with_captured_stdout
   end
 end
 if File.exists?(config_file)
-  puts "Using config file: #{config_file}" unless options['silent']
+  puts "Using config file: #{config_file}" unless $options['silent']
   config_options = YAML.load(File.read(config_file))
-  options.merge!(config_options['options']) if config_options.has_key?('options')
-  if options['debug']
+  $options.merge!(config_options['options']) if config_options.has_key?('options')
+  if $options['debug']
     puts config_options.inspect
   end
   if config_options.has_key?('require')
@@ -60,25 +66,297 @@ output = with_captured_stdout do
 end
 
 
-matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
-if matches.nil? # return sass errors
-  puts output
-  exit(2)
+def parse_selector (sel)
+  # If I (O.S.) understand things correctly, the only
+  # selector rules we have to care about are either of the
+  # form:
+
+  # CSS: [data-module="<module name>"] [data-test="<test name>"] [data-assert="<description>"] <input-or-expect>
+  # with <input-or-expect> := .expect | .input
+
+  # OR of the form:
+
+  # CSS: [data-module="<module name>"] [data-test="<test name>"] .assert-<something>
+
+  # Translated into Sass's 'static CSS tree' data structure, that would be
+  # e. g. for the first variant:
+
+  # Sass::Selector::CommaSequence        # Having a single member here
+  #     Sass::Selector::Sequence
+  #         Sass::Selector::SimpleSequence  # Each one having a single member
+  #             Sass::Selector::Attribute   # [data-module="<module name>"]
+  #         Sass::Selector::SimpleSequence
+  #             Sass::Selector::Attribute   # [data-test="<test name>"]
+  #         Sass::Selector::SimpleSequence
+  #             Sass::Selector::Attribute   # [data-assert="<description>"]
+  #         Sass::Selector::SimpleSequence
+  #             Sass::Selector::Class       # <input-or-expect>
+
+  attr_name_is = lambda { |rule, name| 
+    rule.is_a?(Sass::Selector::Attribute) and
+    rule.name == name
+  }
+
+  sequence=sel.members.first
+  result = Hash.new
+
+  attrs = sequence.members.collect do |simseq|
+    simseq.members.first
+  end
+
+  att = attrs.shift
+  if attr_name_is.call(att, 'data-module')
+    result[:module] = att.value[1..-2]
+    att = attrs.shift
+    if attr_name_is.call(att, 'data-test')
+      result[:test] = att.value[1..-2]
+      att = attrs.shift
+      if attr_name_is.call(att, 'data-assert')
+        result[:output] = true
+        result[:assert] = att.value[1..-2]
+        att = attrs.shift
+        if att.is_a?(Sass::Selector::Class) and
+            ['input', 'expect'].include? att.name
+          result[:type] = att.name
+          return result
+        end
+      elsif att.is_a?(Sass::Selector::Class) and
+          att.name[0,7] == 'assert-'
+        result[:assert] = att.name[7..-1]
+        return result
+      end
+    end
+  end
 end
 
-if matches[:failed] == '0'
-  if options['color']
-    noun = matches[:tests].to_i == 1 ? 'Test' : 'Tests'
-    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['silent']
-  else
-    puts output unless options['silent']
+
+def process_css(tree)
+  # Parse True output CSS and return an array of test modules.
+  # (Essentially corresponds to 'parse' in lib/main.js.)
+  modules = []
+  # Media queries: The #each method loops through ALL the
+  # nodes in the tree. So, in order to avoid testing rule
+  # nodes twice, we can't just take a MediaNode and take its
+  # child RuleNode. We have to store MediaNodes in a hash
+  # and look them up when we process a RuleNode.
+  media_queries = Hash.new
+
+  tree.each do |node|
+    if node.is_a? Sass::Tree::MediaNode
+      # Put it into the media queries hash with the rule
+      # node (sole child) as its key.
+      media_queries[node.children[0]] = node
+    elsif node.is_a? Sass::Tree::RuleNode
+
+      sel_info = parse_selector(node.resolved_rules)
+
+      mquery = media_queries[node]
+      if mquery.is_a? Sass::Tree::MediaNode
+        sel_info[:media_query] =  mquery.resolved_query.to_css
+      end
+
+      decl_info = Hash.new
+      node.each do |child|
+        if child.is_a? Sass::Tree::PropNode
+          decl_info[child.resolved_name] = child.resolved_value
+        end
+      end
+
+      matches = modules.select { |m| m[:module] == sel_info[:module] }
+      cur_module = matches[0]
+      if not cur_module
+        cur_module = Hash.new
+        cur_module[:module] = sel_info[:module]
+        cur_module[:tests] = []
+        modules.push(cur_module)
+      end
+
+      matches = cur_module[:tests].select { |t| t[:test] == sel_info[:test] }
+      cur_test = matches[0]
+
+      if not cur_test
+        cur_test = Hash.new
+        cur_test[:test] = sel_info[:test]
+        cur_test[:assertions] = []
+        cur_module[:tests].push(cur_test)
+      end
+
+      if sel_info[:output]
+        matches = cur_test[:assertions].select { |a| 
+          a[:description] == sel_info[:assert] }
+        cur_assertion = matches[0]
+
+        if not cur_assertion
+          cur_assertion = Hash.new
+          cur_assertion[:description] = sel_info[:assert]
+          cur_assertion[:assert] = 'equal'
+          cur_assertion[:media_query] = sel_info[:media_query]
+          cur_test[:assertions].push(cur_assertion)
+        end
+
+        decl_string = decl_info.collect { |pair|
+          pair[0] + ':' + pair[1] + ';'
+        }.join(' ')
+
+        if sel_info[:type] == 'input'
+          cur_assertion[:returned] = decl_string
+        else
+          cur_assertion[:expected] = decl_string
+        end
+        if cur_assertion[:returned] && cur_assertion[:expected]
+          asstn_equal = cur_assertion[:returned] == cur_assertion[:expected]
+          if cur_assertion[:media_query] || sel_info[:media_query]
+            cur_assertion[:passed] = asstn_equal && 
+              sel_info[:media_query] == cur_assertion[:media_query]
+            cur_assertion[:expected_media_query] = sel_info[:media_query]
+            else
+            cur_assertion[:passed] = asstn_equal
+          end
+        end
+      else 
+        cur_assertion = Hash.new
+        cur_assertion[:assert] = sel_info[:assert]
+        cur_assertion[:description] = (decl_info['-description'] || '""')[1..-2]
+        cur_assertion[:passed] = decl_info['-result'] == 'PASS'
+        decl_info.each { |pair|
+          if ['-expected--', '-returned--'].include?(pair[0][0..10])
+            attr = pair[0][1..8].to_sym
+            type = pair[0][11..-1]
+            val = pair[1]
+            cur_assertion[attr] = type + ': ' + val
+          end
+        }
+        cur_test[:assertions].push(cur_assertion)
+      end
+    end
   end
+  modules
+end
+
+
+
+def print_color(str, color, indent)
+  # Print STR to the console in COLOR (a symbol) and with
+  # indentation level INDENT (an integer).
+  unless $options['silent']
+    indent = Array.new(INDENT_AMOUNT * indent, " ").join
+    if $options['color']
+      puts COLORS[color] + indent + str + COLORS[:end]
+    else
+      puts indent + str
+    end
+  end
+end
+
+CHECKMARK = "\u2713  "
+
+def print_test(name, failed)
+  # Print a success/failure statement for test NAME to the
+  # console.
+  if not failed
+    str = CHECKMARK.encode('utf-8') + name
+    color = :ok
+  else
+    str = '(' + failed.to_s + ') ' + name
+    color = :fail
+  end
+  print_color(str, color, 2)
+end
+
+def print_results(passing, failing)
+  # Print a summarizing line of passes and failures to the console.
+  n_tests = passing + failing
+  str="#{n_tests} tests: #{passing} passing, #{failing} failing."
+  print_color(str, :emphasis, 1)
+end
+
+def print_failure_details(index, mod_name, test)
+  # Print details about failed assertions for test.
+  puts unless $options['silent']# Empty line
+  header_str = '(' + index.to_s + ') ' + mod_name + ': ' + test[:test]
+  print_color(header_str, :emphasis, 2)
+  test[:assertions].each { |assertion|
+    if not assertion[:passed]
+      print_color('FAILED: ' + assertion[:description], :normal, 3)
+
+      if assertion[:media_query] && 
+          (assertion[:media_query] != assertion[:expected_media_query])
+        print_color('Media_query mismatch, one: ' + 
+                    (assertion[:media_query] || ""), :normal, 3)
+        print_color('Media_query mismatch, two: ' + 
+                    (assertion[:expected_media_query] || ""), :normal, 3)
+      end
+      print_color('Expected: ' + assertion[:expected], :normal, 3)
+      print_color('Actual: ' + assertion[:returned], :normal, 3)
+    end
+  }
+end
+
+def check(modules)
+  # Loop through MODULES and print out the results of their tests.
+  passing = 0
+  failing = []
+
+  modules.each { |mod|
+    print_color(mod[:module], :normal, 1)
+    mod[:tests].each { |test| 
+      # Check whether all assertions have succeeded.:
+      passed = test[:assertions].all? { |a| a[:passed] }
+
+      if passed
+        passing += 1
+        print_test(test[:test], false)
+      else
+        failing.push([mod[:module], test])
+        # Failures are printed to the console with an index number.
+        print_test(test[:test], failing.length)
+      end
+    }
+  }
+  # Summarizing line
+  print_results(passing, failing.length)
+
+  # Failure details
+  if failing.length > 0
+    unless $options['silent']
+      puts
+      puts
+      print_color('Failing tests:', :emphasis, 1)
+    end
+    failing.each_with_index { |cons, idx|
+      print_failure_details(idx + 1, cons[0], cons[1])
+    }
+  end
+  # Return true if all tests succeeded
+  failing.length == 0
+end
+
+all_succeed = false
+ARGV.each do |file|
+  sass_engine = Sass::Engine.for_file(file, {})
+
+  result = false
+  output = with_captured_stdout do
+    # Use .to_tree rather than .render.
+    tree = sass_engine.to_tree
+    
+    # Generate a "static CSS tree"
+    Sass::Tree::Visitors::CheckNesting.visit(tree)
+    result = Sass::Tree::Visitors::Perform.visit(tree)
+    Sass::Tree::Visitors::CheckNesting.visit(result)
+    result, extends = Sass::Tree::Visitors::Cssize.visit(result)
+    Sass::Tree::Visitors::Extend.visit(result, extends)
+  end
+  puts output unless $options['silent']    
+    
+  modules = process_css(result)
+  # puts modules
+  # puts '--------------------'
+  all_succeed = check(modules)
+end
+
+if all_succeed
   exit(0)
 else
-  if options['color']
-    puts COLORS[:fail] + output + COLORS[:end] unless options['silent']
-  else
-    puts output unless options['silent']
-  end
   exit(3)
 end
