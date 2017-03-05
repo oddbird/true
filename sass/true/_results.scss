@@ -11,10 +11,13 @@
 /// @param {Bool} $terminal [$true-terminal-output] -
 ///   Optionally output results to the terminal
 /// @param {Bool} $fail-on-error [false] -
-///   Optionally error out of the compiler if tests have failed
+///   Optionally error out the compiler if tests have failed
+/// @param {Bool} $stats [true] -
+///   Optionally output number of modules, tests, and assertions found
 @mixin report(
   $terminal: $true-terminal-output,
-  $fail-on-error: false
+  $fail-on-error: false,
+  $stats: true
 ) {
   $message: _true-report-message('global', 'multiple');
 
@@ -29,6 +32,11 @@
 
   @if $terminal {
     $message: _true-report-message('global', 'single');
+    @include _true-message($message, 'debug');
+  }
+
+  @if $stats {
+    $message: _true-stats-message();
     @include _true-message($message, 'debug');
   }
 }
@@ -122,6 +130,53 @@ $_true-test-result: null;
     $message: '#{$run $items}:#{$_tnl} - #{$pass} Passed#{$_tnl} - #{$fail} Failed';
     $message: if($output-to-css > 0, $message + '#{$_tnl} - #{$output-to-css} Output to CSS', $message);
   }
+
+  @return $message;
+}
+
+// Stats Count
+// -----------
+/// Global stats count
+/// @access private
+/// @type Map<Number>
+$_true-stats-count: (
+  'modules': 0,
+  'tests': 0,
+  'assertions': 0
+);
+
+
+
+// Update stats count
+// ------------------
+/// Add to a stats count type count by 1
+/// @param {String} $type - The stats type to add to
+/// @access private
+@mixin _true-update-stats-count($type) {
+  @if index(map-keys($_true-stats-count), $type) {
+    $new-count: map-get($_true-stats-count, $type) + 1;
+    $new-count-map: ($type: $new-count);
+    $_true-stats-count: map-merge($_true-stats-count, ($type: $new-count)) !global;
+  } @else {
+    @warn '\'#{$type}\' statistic type does not exist.';
+  }
+}
+
+
+
+// Stats Message
+// -------------
+/// Stats message
+/// @access private
+/// @return {String} - Stats debug message
+@function _true-stats-message($stats: $_true-stats-count) {
+  $message: null;
+
+  $modules: map-get($stats, 'modules');
+  $tests: map-get($stats, 'tests');
+  $assertions: map-get($stats, 'assertions');
+
+  $message: '#{$modules} Modules, #{$tests} Tests, #{$assertions} Assertions';
 
   @return $message;
 }

@@ -1,5 +1,5 @@
-// Test Assertions
-// ===============
+// Test Results
+// ============
 
 @include test-module('Update Results') {
   @include test('Update global results with pass') {
@@ -24,5 +24,45 @@
       map-get($actual, 'output-to-css'),
       map-get($before, 'output-to-css'),
       'leaves output-to-css as-is');
+  }
+}
+
+@include test-module('Stats') {
+  @include test('Count updates') {
+    $before: $_true-stats-count;
+    @include _true-update-stats-count('assertions');
+    $actual: $_true-stats-count;
+    $_true-stats-count: $before !global;
+
+    @include assert-equal(
+      map-get($actual, 'assertions'),
+      map-get($before, 'assertions') + 1,
+      'assertions counts is updated'
+    );
+
+    @include assert-equal(
+      map-get($actual, 'modules'),
+      map-get($before, 'modules'),
+      'leaves modules counts is as-is'
+    );
+
+    @include assert-equal(
+      map-get($actual, 'tests'),
+      map-get($before, 'tests'),
+      'tests counts is updated'
+    );
+  }
+
+  @include test('Stats message creation') {
+    $test-map: (
+      'modules': 4,
+      'tests': 6,
+      'assertions': 25
+    );
+
+    $actual-message: _true-stats-message($test-map);
+    $expected-message: '4 Modules, 6 Tests, 25 Assertions';
+
+    @include assert-equal($actual-message, $expected-message);
   }
 }
