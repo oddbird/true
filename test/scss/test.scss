@@ -11,4 +11,4 @@
 @import 'tests';
 @import 'assert';
 
-@include report('terminal', $stats: true);
+@include report('terminal');
