@@ -318,10 +318,9 @@ Reports show a summary of total, passed, failed, and output to CSS tests. The su
 
 Reports summary and stats data into CSS and/or onto the terminal.
 
-- `@param` {`Bool`} `$terminal` [`true`] - Optionally output results to the terminal,
+- `@param` {`Bool`} `$terminal` [`true`] - Optionally output results to the terminal
 - `@param` {`Bool`} `$fail-on-error` [`false`] - Optionally error out the compiler if tests have failed
-- `@param` {`Bool`} `$stats` [`false`] - Optionally output number of modules, tests, and assertions found
 
 ```scss
-  @include report($terminal: true, $stats: true);
+  @include report();
 ```
