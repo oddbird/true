@@ -81,6 +81,17 @@
 /*   ✔ leaves output-to-css as-is */
 /*  */
 /*  */
+/* # Module: Stats */
+/* --------------- */
+/* Test: Count updates */
+/*   ✔ assertions counts is updated */
+/*   ✔ leaves modules counts is as-is */
+/*   ✔ tests counts is updated */
+/*  */
+/* Test: Stats message creation */
+/*   ✔ "4 Modules, 6 Tests, 25 Assertions" and "4 Modules, 6 Tests, 25 Assertions" should be equal */
+/*  */
+/*  */
 /* # Module: Modules */
 /* ----------------- */
 /* Test: test-module */
@@ -112,6 +123,12 @@
 /*  */
 /* Test: null */
 /*   ✔ Null properties return false. */
+/*  */
+/* Test: Empty string */
+/*   ✔ Empty string return false. */
+/*  */
+/* Test: empty list */
+/*   ✔ Empty lists return false. */
 /*  */
 /*  */
 /* # Module: Assert Equal */
@@ -191,8 +208,8 @@
 /*  - 25 Passed */
 /*  - 0 Failed */
 /*  - 4 Output to CSS */
-/* Stats: */
-/*  - 15 Modules */
-/*  - 29 Tests */
+/* Stats:  */
+/*  - 15 Modules  */
+/*  - 29 Tests  */
 /*  - 38 Assertions */
 /* -------------------- */

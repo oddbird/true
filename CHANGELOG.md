@@ -1,6 +1,12 @@
 True Changelog
 ==============
 
+2.2.2 (4/11/17)
+---------------
+- `assert-true` returns false on empty strings and lists
+- `assert-false` returns true on empty strings and lists
+- Module/Test/Assertion stats are included in reports
+
 
 2.2.1 (2/7/17)
 --------------
