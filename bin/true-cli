@@ -59,8 +59,9 @@ output = with_captured_stdout do
   end
 end
 
+matches = output.match(%r{(?<tests>\d+) Tests?, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
+stats_matches = output.match(%r{(?<modules>\d+) Modules?, (?<tests>\d+) Tests?, (?<assertions>\d+) Assertions?})
 
-matches = output.match(%r{(?<tests>\d+) Tests, (?<passed>\d+) Passed, (?<failed>\d+) Failed})
 if matches.nil? # return sass errors
   puts output
   exit(2)
@@ -68,10 +69,15 @@ end
 
 if matches[:failed] == '0'
   if options['color']
-    noun = matches[:tests].to_i == 1 ? 'Test' : 'Tests'
-    puts COLORS[:ok] + "#{matches[:tests]} #{noun}, #{matches[:passed]} Passed, #{matches[:failed]} Failed" + COLORS[:end] unless options['silent']
+    unless options['silent']
+      puts COLORS[:ok] + matches.to_s + COLORS[:end]
+      puts COLORS[:ok] + stats_matches.to_s + COLORS[:end]
+    end
   else
-    puts output unless options['silent']
+    unless options['silent']
+      puts matches
+      puts stats_matches
+    end
   end
   exit(0)
 else

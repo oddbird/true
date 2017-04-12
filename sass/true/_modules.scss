@@ -49,6 +49,7 @@
 /// Module stop helper
 /// @access private
 @mixin _true-module-stop {
+  @include _true-update-stats-count('modules');
   @include _true-context-pop();
   @include _true-message('', 'comments');
 }

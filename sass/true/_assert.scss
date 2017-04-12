@@ -117,6 +117,7 @@
   @content;
 
   @include _true-update-test('output-to-css');
+  @include _true-update-stats-count('assertions');
   @include _true-context-pop();
   @include _true-message('  END_ASSERT  ', 'comments');
 }
@@ -223,5 +224,6 @@
   }
 
   @include _true-update-test($result);
+  @include _true-update-stats-count('assertions');
   @include _true-context-pop();
 }

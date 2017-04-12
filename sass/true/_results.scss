@@ -11,12 +11,13 @@
 /// @param {Bool} $terminal [$true-terminal-output] -
 ///   Optionally output results to the terminal
 /// @param {Bool} $fail-on-error [false] -
-///   Optionally error out of the compiler if tests have failed
+///   Optionally error out the compiler if tests have failed
 @mixin report(
   $terminal: $true-terminal-output,
   $fail-on-error: false
 ) {
   $message: _true-report-message('global', 'multiple');
+  $stats-message: _true-stats-message($_true-stats-count, 'multiple');
 
   $fail: map-get($_true-results, 'fail');
   @if $fail-on-error and ($fail > 0) {
@@ -25,12 +26,17 @@
 
   @include _true-message('# SUMMARY ----------', 'comments');
   @include _true-message($message, 'comments');
+  @include _true-message($stats-message, 'comments');
   @include _true-message('--------------------', 'comments');
 
   @if $terminal {
     $message: _true-report-message('global', 'single');
     @include _true-message($message, 'debug');
+
+    $stats-message: _true-stats-message($_true-stats-count, 'single');
+    @include _true-message($stats-message, 'debug');
   }
+
 }
 
 
@@ -95,7 +101,8 @@ $_true-test-result: null;
 /// Report message
 /// @access private
 /// @param {String} $scope [test] - Scope
-/// @param {String} $lines [single] - Lines
+/// @param {String} $lines [single] -
+///   Return message either as a single line or in multiple lines
 /// @return {String} - Reported message
 @function _true-report-message(
   $scope: 'test',
@@ -110,9 +117,9 @@ $_true-test-result: null;
   $message: null;
 
   @if $scope == 'global' or $scope == 'module' {
-    $items: 'Tests';
+    $items: if($run == 1, 'Test', 'Tests');
   } @else if $scope == 'test' {
-    $items: 'Assertions';
+    $items: if($run == 1, 'Assertion', 'Assertions');
   }
 
   @if $lines == 'single' {
@@ -121,6 +128,62 @@ $_true-test-result: null;
   } @else {
     $message: '#{$run $items}:#{$_tnl} - #{$pass} Passed#{$_tnl} - #{$fail} Failed';
     $message: if($output-to-css > 0, $message + '#{$_tnl} - #{$output-to-css} Output to CSS', $message);
+  }
+
+  @return $message;
+}
+
+// Stats Count
+// -----------
+/// Global stats count of how many modules, tests, and assertions are found
+/// @access private
+/// @type Map<String: Number>
+$_true-stats-count: (
+  'modules': 0,
+  'tests': 0,
+  'assertions': 0
+);
+
+
+
+// Update stats count
+// ------------------
+/// Add to a stats count type count by 1
+/// @param {String} $type - The stats type to add to
+/// @access private
+@mixin _true-update-stats-count($type) {
+  $_true-stats-count: _true-map-increment($_true-stats-count, ($type: 1)) !global;
+}
+
+
+
+// Stats Message
+// -------------
+/// Stats message
+/// @access private
+/// @param {Map<String: Number>} $stats [$_true-stats-count] -
+///   Map that contains the stats counts for modules, tests, and assertions found
+/// @param {String} $lines [single] -
+///   Return message either as a single line or in multiple lines
+/// @return {String} - Stats count message
+@function _true-stats-message(
+  $stats: $_true-stats-count,
+  $lines: 'single'
+) {
+  $message: null;
+
+  $modules: map-get($stats, 'modules');
+  $tests: map-get($stats, 'tests');
+  $assertions: map-get($stats, 'assertions');
+
+  $modules-label: if($modules == 1, 'Module', 'Modules');
+  $tests-label: if($tests == 1, 'Test', 'Tests');
+  $assertions-label: if($assertions == 1, 'Assertion', 'Assertions');
+
+  @if $lines == 'single' {
+    $message: '#{$modules} #{$modules-label}, #{$tests} #{$tests-label}, #{$assertions} #{$assertions-label}';
+  } @else {
+    $message: 'Stats: #{$_tnl} - #{$modules} #{$modules-label} #{$_tnl} - #{$tests} #{$tests-label} #{$_tnl} - #{$assertions} #{$assertions-label}';
   }
 
   @return $message;

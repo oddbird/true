@@ -309,3 +309,18 @@ Asserts that two parameters are unequal.
     @include assert-unequal($test, 10, 'Your assert description');
   }
 ```
+
+### Summary
+
+Reports show a summary of total, passed, failed, and output to CSS tests. The summary can be output into CSS and/or onto the terminal. If you use Mocha, reporting to the command line is automatic. If you use true-cli, `@include report(terminal)` is required at the end of your main test file for output.
+
+#### `@include report()`
+
+Reports summary and stats data into CSS and/or onto the terminal.
+
+- `@param` {`Bool`} `$terminal` [`true`] - Optionally output results to the terminal
+- `@param` {`Bool`} `$fail-on-error` [`false`] - Optionally error out the compiler if tests have failed
+
+```scss
+  @include report();
+```
