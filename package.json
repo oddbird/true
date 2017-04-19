@@ -29,8 +29,9 @@
     "mocha-istanbul": "^0.2.0"
   },
   "eyeglass": {
-    "needs": "^0.8.2",
+    "needs": "^1.0",
     "name": "true",
+    "sassDir": "./sass/",
     "exports": false
   },
   "scripts": {
