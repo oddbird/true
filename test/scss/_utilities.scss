@@ -22,7 +22,7 @@
 
   @include test('String Join [function]') {
     @include assert-equal(
-      _true-str-join(one two three, '%s'),
+      _true-str-join('one' 'two' 'three', '%s'),
       'one%stwo%sthree',
       'Returns a single string, based on any delimiter.');
   }
@@ -42,6 +42,12 @@
       'Returns false for equal numbers with different units.');
   }
 
+  @include test('Mismatched types') {
+    @include assert-false(
+      _true-is-equal(unquote('1rem'), 1rem),
+      'Returns false for equal values with different data types.');
+  }
+
   @include test('Adding floats') {
     @include assert-true(
       _true-is-equal(0.1 + 0.2, 0.3),
@@ -52,5 +58,29 @@
     @include assert-true(
       _true-is-equal(1/3, 0.333333),
       '1/3 should equal .33333.');
+  }
+
+  @include test('Single-item lists') {
+    $one: join((), 'test', space);
+    $two: join((), 'test', comma);
+
+    @include assert-true(
+      _true-is-equal($one, $two),
+      'Delimiters are ignored in single-item lists.');
+  }
+
+  @include test('Multi-item lists') {
+    $one: join('test', 'test', space);
+    $two: join('test', 'test', comma);
+
+    @include assert-false(
+      _true-is-equal($one, $two),
+      '1/3 should equal .33333.');
+  }
+
+  @include test('Rounded Colors') {
+    @include assert-true(
+      _true-is-equal(#3b3b3b, lighten(#333, 3.125%)),
+      'Rounded colors match their output.');
   }
 }

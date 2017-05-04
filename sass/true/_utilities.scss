@@ -91,21 +91,35 @@
 
 // Is Equal
 // --------
-/// Check for equality, excluding comparable numbers
+/// Check for equality, with a few changes from the Sass ``==`` comparison.
+/// - We allow single-item and empty lists to ignore delimiters
+///   so that `join((), 'test') == ('test',)` since they have the same output
+/// - Rounded values (number & colors) are compared after rounding
+///   so that `1/3 == 0.33333333`
+/// - We insist that numbers have the same units,
+///   not just comparable values
+/// - Like Sass, we still compare variable-types in addition to output values
+///   because that distinction is important for most Sass tools
+///   (`1em + 1em == 2em` while `"1em" + "1em" == "1em1em"`)
 /// @access private
 /// @param {*} $one -
-///   First value
+///   First value for comparison
 /// @param {*} $two -
-///   Second value
+///   Second value for comparison
 /// @return {Bool}
 @function _true-is-equal($one, $two) {
-  @if type-of($one) == 'number' and type-of($two) == 'number' {
-    @if unit($one) == unit($two) {
-      @return inspect($one) == inspect($two);
-    } @else {
-      @return false;
+  $type-one: type-of($one);
+  $type-two: type-of($two);
+
+  @if $type-one == $type-two {
+    // force short lists to use the same separator
+    @if ($type-one == 'list') {
+      $one: if(length($one) < 2, join((), $one, space), $one);
+      $two: if(length($two) < 2, join((), $two, space), $two);
     }
-  } @else {
-    @return $one == $two;
+
+    @return inspect($one) == inspect($two);
   }
+
+  @return false;
 }
