@@ -1,6 +1,24 @@
 True Changelog
 ==============
 
+
+2.2.3 (unreleased)
+------------------
+- Changes to equality-comparisons,
+  and how they differ from the Sass ``==`` comparison...
+  - [CHANGED] We allow single-item and empty lists to ignore delimiters
+    so that `join((), 'test') == ('test',)` since they have the same output
+  - [CHANGED] Rounded values (numbers & colors) are compared after rounding
+    so that `1/3 == 0.33333333`
+    (previously didn't include colors)
+  - [unchanged] We still insist that numbers have the same units,
+    not just comparable values
+  - [unchanged] We still compare variable-types
+    in addition to output values
+    because that distinction is important for most Sass tools
+    (`1em + 1em == 2em` while `"1em" + "1em" == "1em1em"`)
+
+
 2.2.2 (4/11/17)
 ---------------
 - `assert-true` returns false on empty strings and lists
