@@ -2,21 +2,29 @@ True Changelog
 ==============
 
 
-2.2.3 (unreleased)
+3.0.0 (unreleased)
 ------------------
-- Changes to equality-comparisons,
-  and how they differ from the Sass ``==`` comparison...
-  - [CHANGED] We allow single-item and empty lists to ignore delimiters
-    so that `join((), 'test') == ('test',)` since they have the same output
-  - [CHANGED] Rounded values (numbers & colors) are compared after rounding
-    so that `1/3 == 0.33333333`
-    (previously didn't include colors)
-  - [unchanged] We still insist that numbers have the same units,
-    not just comparable values
-  - [unchanged] We still compare variable-types
-    in addition to output values
-    because that distinction is important for most Sass tools
-    (`1em + 1em == 2em` while `"1em" + "1em" == "1em1em"`)
+- Added `$inspect` argument to `assert-equal` and `assert-unequal` mixins,
+  for comparing `inspect($assert) == inspect($expected)`
+  instead of `$assert == $expected`.
+  This helps with several of the equality edge-cases listed below
+  (rounding and units).
+- BREAKING: Removes special-handling of equality,
+  in favor of allowing Sass to determine the best comparisons.
+  There are a few edge-cases to be aware of:
+  - In some versions of Sass,
+    manipulated numbers and colors are compared without rounding,
+    so `1/3 != 0.333333` and `lighten(#246, 15%) != #356a9f`.
+    Use the `$inspect` argument to compare rounded output values.
+  - In all versions of Sass,
+    unitless numbers are considered comparable to all units,
+    so `1 == 1x` where `x` represents any unit.
+    Use the `$inspect` argument to compare output values with units.
+  - Lists compare both values and delimiter,
+    so `(one two three) != (one, two, three)`.
+    This can be particularly confusing for single-item lists,
+    which still have a delimiter assigned,
+    even though it is not used.
 
 
 2.2.2 (4/11/17)

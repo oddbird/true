@@ -1,44 +1,64 @@
 // Settings Tests
 // ==============
 
-@include test-module('Settings') {
-  @include test('true-context [mixin]') {
-    @include assert-equal(_true-context('fake'), null,
-      'Confirm that there is currently no "fake" scope');
 
-    @include _true-context(fake, 'this scope is not real');
+// Adding and removing context
+@include test-module('true-context & true-context-pop [mixins]') {
+  @include test('Adds scope and name to context') {
+    @each $entry-scope, $entry-name in $_true-context {
+      @include assert-unequal(
+        $entry-scope,
+        'fake',
+        'Confirm that there is currently no "fake" scope');
+    }
 
-    @include assert-equal(_true-context('fake'), 'this scope is not real',
+    @include _true-context(
+      'fake',
+      'this scope is not real');
+
+    @include assert-equal(
+      _true-context('fake'),
+      'this scope is not real',
       'Sets the value of scope "fake" to "this scope is not real"');
 
     @include _true-context-pop();
 
-    @include assert-equal(_true-context('fake'), null,
-      'Confirm that our "fake" scope has been removed');
+    @each $entry-scope, $entry-name in $_true-context {
+      @include assert-unequal(
+        $entry-scope,
+        'fake',
+        'Confirm that "fake" scope has been removed');
+    }
+  }
+}
+
+
+// Inspecting context
+@include test-module('true-context & true-context-all [functions]') {
+  @include test('Returns current module context') {
+    @include assert-equal(
+      _true-context('module'),
+      'true-context & true-context-all [functions]');
   }
 
-  @include test('_true-context [function]') {
-    @include assert-equal(_true-context('module'), 'Settings',
-      'Returns the current module name');
-
-    @include assert-equal(_true-context('test'), '_true-context [function]',
-      'Returns the current test name');
+  @include test('Returns current test context') {
+    @include assert-equal(
+      _true-context('test'),
+      'Returns current test context');
   }
 
   @include test-module('nested') {
-    @include test('_true-context [function]') {
-      @include assert-equal(_true-context('module'), 'nested',
-        'Returns the innermost module name');
+    @include test('Returns the innermost module name') {
+      @include assert-equal(
+        _true-context('module'),
+        'nested');
     }
 
     @include test('_true-context-all [function]') {
-      @include assert-equal(_true-context-all('module'), 'Settings' 'nested',
+      @include assert-equal(
+        _true-context-all('module'),
+        'true-context & true-context-all [functions]' 'nested',
         'Returns the current stack of module names');
     }
   }
-
-  // @include test('true-terminal-output failure') {
-  //   @include assert-equal(1, 2,
-  //     'For testing the terminal output on failures.');
-  // }
 }

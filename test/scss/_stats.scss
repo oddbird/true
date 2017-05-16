@@ -1,0 +1,48 @@
+// Stats Reporting Tests
+// =====================
+
+@include test-module('Update Stats Count') {
+  $before: $_true-stats;
+  @include _true-update-stats-count('assertions');
+  $actual: $_true-stats;
+  $_true-stats: $before !global;
+
+  @include test('Assertions counts are updated') {
+    @include assert-equal(
+      map-get($actual, 'assertions'),
+      map-get($before, 'assertions') + 1);
+  }
+
+  @include test('Modules counts are left as-is') {
+    @include assert-equal(
+      map-get($actual, 'modules'),
+      map-get($before, 'modules'));
+  }
+
+  @include test('Tests counts are left as-is') {
+    @include assert-equal(
+      map-get($actual, 'tests'),
+      map-get($before, 'tests'));
+  }
+}
+
+@include test-module('stats-message [function]') {
+  $test-map: (
+    'modules': 4,
+    'tests': 6,
+    'assertions': 25
+  );
+
+  @include test('Single Line') {
+    @include assert-equal(
+      _true-stats-message($stats: $test-map),
+      '4 Modules, 6 Tests, 25 Assertions');
+  }
+
+  @include test('Linebreaks') {
+    $message: ('Stats:', '- 4 Modules', '- 6 Tests', '- 25 Assertions');
+    @include assert-equal(
+      _true-stats-message('linebreaks', $test-map),
+      $message);
+  }
+}

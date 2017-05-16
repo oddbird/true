@@ -1,0 +1,43 @@
+// Report Tests
+// ============
+
+@include test-module('report-message [function]') {
+  $fake-stats: (
+    'modules': 4,
+    'tests': 6,
+    'assertions': 25
+  );
+
+  $single-stats: '4 Modules, 6 Tests, 25 Assertions';
+  $multi-stats: ('Stats:', '- 4 Modules', '- 6 Tests', '- 25 Assertions');
+
+  $fake-results: (
+    'run': 10,
+    'pass': 6,
+    'fail': 1,
+    'output-to-css': 0,
+  );
+
+  $single-results: '10 Tests, 6 Passed, 1 Failed';
+  $multi-results: ('10 Tests:', '- 6 Passed', '- 1 Failed');
+
+  $single: ($single-results, $single-stats);
+  $multi: _true-join-multiple(
+    '# SUMMARY ----------',
+    $multi-results,
+    $multi-stats,
+    '--------------------'
+    );
+
+  @include test('Single Line') {
+    @include assert-equal(
+      _true-report-message(not 'linebreaks', $fake-results, $fake-stats),
+      $single);
+  }
+
+  @include test('Linebreaks') {
+    @include assert-equal(
+      _true-report-message('linebreaks', $fake-results, $fake-stats),
+      $multi);
+  }
+}

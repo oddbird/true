@@ -30,96 +30,29 @@
 }
 
 
-
-// String Split
-// ------------
-/// Split a string into a list
-/// @access private
-/// @param {String} $string -
-///   String to split
-/// @param {String} $substring -
-///   Delimiter
-/// @return {List} -
-///   List of string fragments
-@function _true-str-split(
-  $string,
-  $substring
+// Join Multiple
+// -------------
+@function _true-join-multiple(
+  $lists...
 ) {
-  $strings: ();
-  $found-at: str-index($string, $substring);
-  @while $found-at {
-    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ''));
-    $string: str-slice($string, $found-at + str-length($substring));
-    $found-at: str-index($string, $substring);
-  }
-  $strings: append($strings, $string);
-  @return $strings;
-}
+  $return: nth($lists, 1);
+  $type: list-separator($return);
+  $last: nth($lists, -1);
+  $length: length($lists);
 
+  @if ($last == 'space') or ($last == 'comma') {
+    $length: $length - 1;
+    $type: $last;
 
-
-// String Join
-// -----------
-/// Join a list of strings into a single string
-/// @access private
-/// @param {List} $list -
-///   List of strings to join
-/// @param {String} $separator -
-///   Separator to add between items
-/// @return {String} -
-///   Joined string
-@function _true-str-join(
-  $list,
-  $separator
-) {
-  $length: length($list);
-
-  @if ($length == 0) {
-    @return '';
   }
 
-  $result: nth($list, 1);
-  @if $length > 1 {
-    @for $index from 2 through $length {
-      $result: $result + $separator + nth($list, $index);
-    }
-  }
-  @return $result;
-}
-
-
-
-// Is Equal
-// --------
-/// Check for equality, with a few changes from the Sass ``==`` comparison.
-/// - We allow single-item and empty lists to ignore delimiters
-///   so that `join((), 'test') == ('test',)` since they have the same output
-/// - Rounded values (number & colors) are compared after rounding
-///   so that `1/3 == 0.33333333`
-/// - We insist that numbers have the same units,
-///   not just comparable values
-/// - Like Sass, we still compare variable-types in addition to output values
-///   because that distinction is important for most Sass tools
-///   (`1em + 1em == 2em` while `"1em" + "1em" == "1em1em"`)
-/// @access private
-/// @param {*} $one -
-///   First value for comparison
-/// @param {*} $two -
-///   Second value for comparison
-/// @return {Bool}
-@function _true-is-equal($one, $two) {
-  $type-one: type-of($one);
-  $type-two: type-of($two);
-
-  @if $type-one == $type-two {
-    // force short lists to use the same separator
-    @if ($type-one == 'list') {
-      $one: if(length($one) < 2, join((), $one, space), $one);
-      $two: if(length($two) < 2, join((), $two, space), $two);
-    }
-
-    @return inspect($one) == inspect($two);
+  @if ($length < 2) {
+    @error 'Must provide at least 2 lists for _true-join-multiple';
   }
 
-  @return false;
+  @for $i from 2 through $length {
+    $return: join($return, nth($lists, $i), $type);
+  }
+
+  @return $return;
 }

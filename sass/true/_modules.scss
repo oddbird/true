@@ -29,8 +29,17 @@
   $name
 ) {
   @include _true-context(module, $name);
-  $modules: _true-context-all('module');
-  $modules: _true-str-join($modules, ' :: ');
+  $module-list: _true-context-all('module');
+  $modules: nth($module-list, 1);
+
+  $length: length($module-list);
+
+  @if $length > 1 {
+    @for $i from 2 through $length {
+      $modules: $modules + ' :: ' + nth($module-list, $i);
+    }
+  }
+
   @include _true-message('# Module: #{$modules}', 'comments');
 
   $underline: '----------';

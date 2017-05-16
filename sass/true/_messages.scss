@@ -2,15 +2,6 @@
 // ========
 
 
-// TNL
-// ---
-/// New line helper
-/// @access private
-/// @type String
-$_tnl: '\a ';
-
-
-
 // True Message
 // ------------
 /// Output a message to CSS comments,
@@ -22,19 +13,27 @@ $_tnl: '\a ';
 ///   Type of output, either `comments`, `terminal`, `debug` or `warn`
 @mixin _true-message(
   $message,
-  $output: 'comments'
+  $output: 'comments',
+  $comment-padding: 0
 ) {
-  $lines: _true-str-split($message, $_tnl);
-  @if index($output, 'comments') {
-    @each $line in $lines {
-      /* #{$line} */
+  $pad: '';
+
+  @if ($comment-padding > 0) {
+    @for $i from 0 to $comment-padding {
+      $pad: $pad + ' ';
     }
-  } @else if index($output, 'debug') or index($output, 'terminal') {
-    @each $line in $lines  {
+  }
+
+  @each $line in $message {
+    @if index($output, 'comments') {
+      /* #{$pad + $line} */
+    }
+
+    @if index($output, 'debug') or index($output, 'terminal') {
       @debug $line;
     }
-  } @else if index($output, 'warn') {
-    @each $line in $lines {
+
+    @if index($output, 'warn') {
       @warn $line;
     }
   }
