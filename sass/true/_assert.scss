@@ -210,11 +210,11 @@
 /// provide details as necessary,
 /// and end the assertion.
 /// @access private
+/// @group private
 /// @param {*} $assert - Value to consider
 /// @param {*} $expected - Expected match
 /// @param {bool} $unequal [false] -
 ///   Set to `true` if the comparison is expected to fail
-/// @return {'pass' | 'fail'}
 @mixin _true-assert-results(
   $assert,
   $expected,
@@ -240,6 +240,7 @@
 /// Check that a value is truthy
 /// (empty lists and strings return false)
 /// @access private
+/// @group private
 /// @param {*} $assert - Value to consider
 /// @return {bool}
 @function _true-is-truthy(

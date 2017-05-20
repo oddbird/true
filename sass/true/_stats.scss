@@ -6,6 +6,7 @@
 // -----------
 /// Global stats count of how many modules, tests, and assertions are found
 /// @access private
+/// @group private
 /// @type Map<String: Number>
 $_true-stats: (
   'modules': 0,
@@ -20,6 +21,7 @@ $_true-stats: (
 /// Add to a stats count type count by 1
 /// @param {String} $type - The stats type to add to
 /// @access private
+/// @group private
 @mixin _true-update-stats-count(
   $type
 ) {
@@ -33,6 +35,7 @@ $_true-stats: (
 // -------------
 /// Stats message
 /// @access private
+/// @group private
 /// @param {Bool} $linebreak [false] -
 ///   Return message either as a single line or in multiple lines
 /// @param {Map} $stats [$_true-stats] -

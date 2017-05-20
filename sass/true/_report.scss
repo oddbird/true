@@ -22,7 +22,7 @@
 ) {
   $fail: map-get($results, 'fail');
   @if $fail-on-error and ($fail > 0) {
-    @error "#{$fail} tests failed.";
+    @error '#{$fail} tests failed.';
   }
 
   $run: map-get($results, 'run');
@@ -51,6 +51,7 @@
 /// Report results summary to CSS
 /// and (optionally) the command line
 /// @access private
+/// @group private
 /// @param {Bool} $linebreak [false] -
 ///   Return single-line messages for results/stats,
 ///   or optionally break into multi-line lists.

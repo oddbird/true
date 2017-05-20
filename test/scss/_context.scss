@@ -21,7 +21,7 @@
       'this scope is not real',
       'Sets the value of scope "fake" to "this scope is not real"');
 
-    @include _true-context-pop();
+    @include _true-context-pop;
 
     @each $entry-scope, $entry-name in $_true-context {
       @include assert-unequal(

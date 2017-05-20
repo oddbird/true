@@ -7,6 +7,7 @@
 /// Output a message to CSS comments,
 /// or command line terminal (via debug/warn)
 /// @access private
+/// @group private
 /// @param {String} $message -
 ///   Message to output
 /// @param {String} $output [comments] -
@@ -26,11 +27,11 @@
 
   @each $line in $message {
     @if index($output, 'comments') {
-      /* #{$pad + $line} */
+      /* #{$pad + $line} */ // sass-lint:disable-line no-css-comments
     }
 
     @if index($output, 'debug') or index($output, 'terminal') {
-      @debug $line;
+      @debug $line; // sass-lint:disable-line no-debug
     }
 
     @if index($output, 'warn') {

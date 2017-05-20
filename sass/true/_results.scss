@@ -6,6 +6,7 @@
 // ----------
 /// Compare two values, and return a `pass` or `fail` result.
 /// @access private
+/// @group private
 /// @param {*} $assert - Value to consider
 /// @param {*} $expected - Expected match
 /// @param {bool} $unequal [false] -
@@ -28,6 +29,7 @@
 // -------
 /// Global test-results map
 /// @access private
+/// @group private
 /// @type Map
 $_true-results: (
   'run': 0,
@@ -41,6 +43,7 @@ $_true-results: (
 // ------
 /// Update global results data
 /// @access private
+/// @group private
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
 @mixin _true-update(
   $result
@@ -59,6 +62,7 @@ $_true-results: (
 // ------------
 // Local flags for tracking assertion results in a test
 /// @access private
+/// @group private
 /// @type String
 $_true-test-result: null;
 
@@ -67,6 +71,7 @@ $_true-test-result: null;
 // -----------
 /// Update test result flag with new data
 /// @access private
+/// @group private
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
 @mixin _true-update-test(
   $result
@@ -83,6 +88,7 @@ $_true-test-result: null;
 // ---------------
 /// Report message
 /// @access private
+/// @group private
 /// @param {Bool} $linebreak [false] -
 ///   Return message either as a single line or in multiple lines
 /// @param {Map} $results [$_true-results] -

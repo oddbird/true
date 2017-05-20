@@ -7,6 +7,7 @@
 // ------------------
 /// True current context
 /// @access private
+/// @group private
 /// @type list
 $_true-context: ();
 
@@ -16,6 +17,7 @@ $_true-context: ();
 // ---------------
 /// Update the current context for a given scope
 /// @access private
+/// @group private
 /// @param {String} $scope - Either `module`, `test` or `assert`
 /// @param {String} $name - Name of current scope
 @mixin _true-context(
@@ -31,7 +33,8 @@ $_true-context: ();
 // -------------------
 /// Remove the deepest context layer
 /// @access private
-@mixin _true-context-pop() {
+/// @group private
+@mixin _true-context-pop {
   $new: ();
 
   @for $i from 1 to length($_true-context) {
@@ -47,6 +50,7 @@ $_true-context: ();
 // ------------------
 /// Get information on current context for a given scope
 /// @access private
+/// @group private
 /// @param {String} $scope
 /// @return {String}
 @function _true-context(
@@ -69,6 +73,7 @@ $_true-context: ();
 // ----------------------
 /// Get list of context names for a given scope
 /// @access private
+/// @group private
 /// @param {String} $scope
 /// @return {List}
 @function _true-context-all(
