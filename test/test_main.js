@@ -167,6 +167,7 @@ describe('#parse', function () {
       '/*   ✖ FAILED: [assert-true] True should assert true. */',
       '/*     - Output: [bool] false */',
       '/*     - Expected: [bool] true */',
+      '/*     - Details: Broken tautology is broken. */'
     ].join('\n');
     var expected = [{
       module: "Assert",
@@ -177,7 +178,8 @@ describe('#parse', function () {
           passed: false,
           assertionType: 'assert-true',
           output: '[bool] false',
-          expected: '[bool] true'
+          expected: '[bool] true',
+          details: 'Broken tautology is broken.'
         }],
       }],
     }];
