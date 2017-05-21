@@ -1,6 +1,56 @@
 // Test Assertions
 // ===============
 
+
+// Is Truthy
+@include test-module('Is Truthy') {
+  @include test('True is truthy') {
+    @include assert-equal(
+      _true-is-truthy(true),
+      true);
+  }
+
+  @include test('String is truthy') {
+    @include assert-equal(
+      _true-is-truthy('string'),
+      true);
+  }
+
+  @include test('List is truthy') {
+    @include assert-equal(
+      _true-is-truthy('one' 'two' 'three'),
+      true);
+  }
+
+  @include test('False is not truthy') {
+    @include assert-equal(
+      _true-is-truthy(false),
+      false);
+  }
+
+  @include test('Null is not truthy') {
+    @include assert-equal(
+      _true-is-truthy(null),
+      false);
+  }
+
+  @include test('Empty string is not truthy') {
+    @include assert-equal(
+      _true-is-truthy(''),
+      false);
+  }
+
+  @include test('Empty list is not truthy') {
+    $list: ();
+
+    @include assert-equal(
+      _true-is-truthy($list),
+      false);
+  }
+}
+
+
+// Assert True
 @include test-module('Assert True') {
   @include test('Truthiness') {
     @include assert-true(
@@ -9,6 +59,8 @@
   }
 }
 
+
+// Assert False
 @include test-module('Assert False') {
   @include test('Falsiness') {
     @include assert-false(
@@ -29,12 +81,16 @@
   }
 
   @include test('empty list') {
+    $empty: ();
+
     @include assert-false(
-      (),
+      $empty,
       'Empty lists return false.');
   }
 }
 
+
+// Assert Equal
 @include test-module('Assert Equal') {
   @include test('Equality') {
     @include assert-equal(
@@ -46,8 +102,45 @@
   @include test('Empty description') {
     @include assert-equal(1, 1);
   }
+
+  @include test('Adding floats') {
+    @include assert-equal(
+      0.1 + 0.2,
+      0.3);
+  }
+
+  @include test('Rounded numbers with $inspect') {
+    @include assert-equal(
+      1/3,
+      0.333333,
+      $inspect: true);
+  }
+
+  @include test('Rounded colors with $inspect') {
+    $origin: #246;
+    $expected: #356a9f;
+
+    @include assert-equal(
+      lighten($origin, 15%),
+      $expected,
+      $inspect: true);
+  }
+
+  @include test('Mismatched types with $inspect') {
+    @include assert-unequal(
+      unquote('1rem'),
+      1rem,
+      'normally unequal');
+
+    @include assert-equal(
+      unquote('1rem'),
+      1rem,
+      $inspect: true);
+  }
 }
 
+
+// Assert UnEqual
 @include test-module('Assert UnEqual') {
   @include test('Inequality') {
     @include assert-unequal(
@@ -55,8 +148,28 @@
       3,
       '3 - 1 is not equal to 3.');
   }
+
+  @include test('Mismatched types') {
+    @include assert-unequal(
+      unquote('1rem'),
+      1rem);
+  }
+
+  @include test('Mismatched units with $inspect') {
+    @include assert-equal(
+      1,
+      1rem,
+      'normally equal');
+
+    @include assert-unequal(
+      1,
+      1rem,
+      $inspect: true);
+  }
 }
 
+
+// Assert [output]
 @include test-module('Assert (output)') {
   @include test('CSS output math') {
     @include assert('Output math compares properly') {
@@ -99,21 +212,6 @@
               -prop: val;
             }
           }
-        }
-      }
-    }
-
-    @include assert('Deprecated input alias works for now') {
-      @include input(false) {
-        .test {
-          /* comments are also allowed in assertions */
-          -property: value;
-        }
-      }
-      @include expect(false) {
-        .test {
-          /* comments are also allowed in assertions */
-          -property: value;
         }
       }
     }

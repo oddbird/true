@@ -1,0 +1,77 @@
+// Final Reporting
+// ===============
+
+
+// Report
+// ------
+/// Report results summary to CSS
+/// and (optionally) the command line
+/// @access public
+/// @group reporting
+/// @param {Bool} $terminal [$true-terminal-output] -
+///   Optionally output results to the terminal
+/// @param {Bool} $fail-on-error [false] -
+///   Optionally error out the compiler if tests have failed
+/// @param {Map} $results [$_true-results] -
+///   A map of run, pass, fail, and output-to-css results
+@mixin report(
+  $terminal: $true-terminal-output,
+  $fail-on-error: false,
+  $results: $_true-results,
+  $stats: $_true-stats
+) {
+  $fail: map-get($results, 'fail');
+  @if $fail-on-error and ($fail > 0) {
+    @error '#{$fail} tests failed.';
+  }
+
+  $run: map-get($results, 'run');
+  $pass: map-get($results, 'pass');
+  $fail: map-get($results, 'fail');
+  $output: map-get($results, 'output-to-css');
+  $total: $pass + $fail + $output;
+  $tests: map-get($stats, 'tests');
+
+  @if ($run != $tests) or ($run != $total) {
+    @warn 'These numbers don’t add up. Are all your tests properly structured?';
+  }
+
+  $comment: _true-report-message('linebreak', $results, $stats);
+  @include _true-message($comment, 'comments');
+
+  @if $terminal {
+    $debug: _true-report-message('linebreak', $results, $stats);
+    @include _true-message($debug, 'debug');
+  }
+}
+
+
+// Report Message
+// --------------
+/// Report results summary to CSS
+/// and (optionally) the command line
+/// @access private
+/// @group private
+/// @param {Bool} $linebreak [false] -
+///   Return single-line messages for results/stats,
+///   or optionally break into multi-line lists.
+/// @param {Map} $results [$_true-results] -
+///   A map of run, pass, fail, and output-to-css results
+/// @param {Map} $stats [$_true-stats] -
+///   A map of module, test, and assertion-counts in your project
+@function _true-report-message(
+  $linebreak: false,
+  $results: $_true-results,
+  $stats: $_true-stats
+) {
+  @if $linebreak {
+    @return _true-join-multiple(
+      '# SUMMARY ----------',
+      _true-results-message('linebreak'),
+      _true-stats-message('linebreak'),
+      '--------------------'
+      );
+  }
+
+  @return (_true-results-message(), _true-stats-message());
+}

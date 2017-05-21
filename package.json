@@ -24,9 +24,15 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chalk": "^1.1.3",
+    "gulp": "^3.9.1",
+    "gulp-sass-lint": "^1.3.2",
+    "gulp-util": "^3.0.8",
     "istanbul": "^0.4.2",
     "mocha": "^3.1.2",
-    "mocha-istanbul": "^0.2.0"
+    "mocha-istanbul": "^0.2.0",
+    "sassdoc": "^2.2.2",
+    "sassdoc-theme-herman": "^0.5.5"
   },
   "eyeglass": {
     "needs": "^1.0",
@@ -37,6 +43,7 @@
   "scripts": {
     "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
     "debug": "./node_modules/.bin/mocha -R spec debug",
+    "commit": "npm test; rake test; gulp sasslint; gulp sassdoc",
     "compile": "./node_modules/.bin/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
     "coverage-html": "./node_modules/.bin/istanbul report html"
   },
@@ -44,7 +51,8 @@
   "contributors": [
     "Scott Davis <me@sdavis.info>",
     "Chris Eppstein <chris@eppsteins.net>",
-    "Carl Meyer <carl@oddbird.net>"
+    "Carl Meyer <carl@oddbird.net>",
+    "David Glick <david@oddbird.net>"
   ],
   "license": "BSD-3-Clause",
   "bugs": {

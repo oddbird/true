@@ -1,0 +1,129 @@
+// Test Result Output
+// ==================
+
+
+// Pass Details
+// ------------
+/// @access private
+/// @group private
+@mixin _true-pass-details {
+  $assertion: _true-context('assert');
+  @include _true-message('✔ #{$assertion}', 'comments', 2);
+}
+
+
+// Fail Details
+// ------------
+/// @access private
+/// @group private
+@mixin _true-fail-details(
+  $assert,
+  $expected,
+  $terminal: $true-terminal-output
+) {
+  $location: if($terminal, ('comments', 'debug'), 'comments');
+
+  // Title Messages
+  $assertion: _true-context('assert');
+  $title: 'FAILED: #{$assertion}';
+  @include _true-message('✖ #{$title}', $location, 2);
+
+
+  // Details Message
+  $out: _true-variable-details($assert);
+  $exp: _true-variable-details($expected);
+  $details: ('- Output: #{$out}', '- Expected: #{$exp}');
+  @include _true-message($details, $location, 4);
+
+
+  // Edge Failure Notes
+  @if str-index($assertion, 'assert-equal') {
+    $notes: _true-edgefail-notes($assert, $expected);
+    @if $notes {
+      @include _true-message($notes, $location, 4);
+    }
+  }
+
+
+  // Context Message
+  $module: _true-context('module');
+  $test: _true-context('test');
+  $context: ('- Module: #{$module}', '- Test: #{$test}');
+  @include _true-message($context, $location, 4);
+
+
+  // Terminal Warning
+  @if $terminal {
+    @include _true-message($assertion, 'warn');
+  }
+}
+
+
+// Variable Details
+// ----------------
+/// @access private
+/// @group private
+@function _true-variable-details(
+  $var
+) {
+  $inspect: inspect($var);
+  $type: type-of($var);
+
+  @if $type == 'list' {
+    $type: '#{list-separator($var)}-#{$type}';
+  }
+
+  @return '[#{$type}] #{$inspect}';
+}
+
+
+// EdgeFail Notes
+// --------------
+/// @access private
+/// @group private
+@function _true-edgefail-notes(
+  $one,
+  $two
+) {
+  $one-type: type-of($one);
+  $two-type: type-of($two);
+
+  $note: null;
+  $pre: '- Details: ';
+  $inspect: '(set `$inspect: true` to compare output values)';
+
+
+  // List Separators
+  @if ($one-type == 'list') and ($two-type == 'list')  {
+    @if (join((), $one, comma) == join((), $two, comma)) {
+      $message: 'list-separators do not match';
+      $note: $pre + $message;
+    }
+  }
+
+
+  @if inspect($one) == inspect($two) {
+    // Type
+    @if ($one-type != $two-type) {
+      $message: 'variable types do not match';
+      $note: $pre + $message + ' ' + $inspect;
+    }
+
+    // Rounding
+    $number: ($one-type == 'number') and ($two-type == 'number');
+    $color: ($one-type == 'color') and ($two-type == 'color');
+
+    @if ($number or $color) {
+      $type: if($number, 'numbers', 'colors');
+      $message: '#{$type} may need to be rounded before comparison';
+      $note: $pre + $message + ' ' + $inspect;
+    }
+
+    // Catch-All (I think this may not be currently possible)
+    @if (not $note) {
+      $note: $pre + $inspect;
+    }
+  }
+
+  @return $note;
+}

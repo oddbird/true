@@ -24,6 +24,7 @@
 // ----------
 /// Test start helper
 /// @access private
+/// @group private
 /// @param {String} $name - Test name
 @mixin _true-test-start(
   $name
@@ -38,9 +39,10 @@
 // ---------
 /// Test stop helper
 /// @access private
+/// @group private
 @mixin _true-test-stop {
   @include _true-update($_true-test-result);
   @include _true-update-stats-count('tests');
-  @include _true-context-pop();
+  @include _true-context-pop;
   @include _true-message('', 'comments');
 }

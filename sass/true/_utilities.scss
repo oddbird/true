@@ -7,6 +7,7 @@
 // -------------
 /// Add map values together
 /// @access private
+/// @group private
 /// @param {Map} $base -
 ///   Initial map to add values to
 /// @param {Map} $add -
@@ -30,82 +31,29 @@
 }
 
 
-
-// String Split
-// ------------
-/// Split a string into a list
-/// @access private
-/// @param {String} $string -
-///   String to split
-/// @param {String} $substring -
-///   Delimiter
-/// @return {List} -
-///   List of string fragments
-@function _true-str-split(
-  $string,
-  $substring
+// Join Multiple
+// -------------
+@function _true-join-multiple(
+  $lists...
 ) {
-  $strings: ();
-  $found-at: str-index($string, $substring);
-  @while $found-at {
-    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ''));
-    $string: str-slice($string, $found-at + str-length($substring));
-    $found-at: str-index($string, $substring);
-  }
-  $strings: append($strings, $string);
-  @return $strings;
-}
+  $return: nth($lists, 1);
+  $type: list-separator($return);
+  $last: nth($lists, -1);
+  $length: length($lists);
 
+  @if ($last == 'space') or ($last == 'comma') {
+    $length: $length - 1;
+    $type: $last;
 
-
-// String Join
-// -----------
-/// Join a list of strings into a single string
-/// @access private
-/// @param {List} $list -
-///   List of strings to join
-/// @param {String} $separator -
-///   Separator to add between items
-/// @return {String} -
-///   Joined string
-@function _true-str-join(
-  $list,
-  $separator
-) {
-  $length: length($list);
-
-  @if ($length == 0) {
-    @return '';
   }
 
-  $result: nth($list, 1);
-  @if $length > 1 {
-    @for $index from 2 through $length {
-      $result: $result + $separator + nth($list, $index);
-    }
+  @if ($length < 2) {
+    @error 'Must provide at least 2 lists for _true-join-multiple';
   }
-  @return $result;
-}
 
-
-
-// Is Equal
-// --------
-/// Check for equality, excluding comparable numbers
-/// @access private
-/// @param {*} $one -
-///   First value
-/// @param {*} $two -
-///   Second value
-/// @return {Bool}
-@function _true-is-equal($one, $two) {
-  @if type-of($one) == 'number' and type-of($two) == 'number' {
-    @if unit($one) == unit($two) {
-      @return inspect($one) == inspect($two);
-    } @else {
-      @return false;
-    }
-  } @else {
-    @return $one == $two;
+  @for $i from 2 through $length {
+    $return: join($return, nth($lists, $i), $type);
   }
+
+  @return $return;
 }
