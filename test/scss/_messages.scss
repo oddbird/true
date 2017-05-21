@@ -17,11 +17,11 @@
   @include test('Multi-line messages') {
     @include assert('Render as multiple CSS comments') {
       @include output(false) {
-        @include _true-message('This is a #{$_tnl}multiline message', 'comments');
+        @include _true-message('This is a' 'multiline message', 'comments');
       }
 
       @include expect(false) {
-        /* This is a  */
+        /* This is a */
         /* multiline message */
       }
     }

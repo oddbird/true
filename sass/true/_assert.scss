@@ -5,73 +5,80 @@
 
 // Assert True
 // -----------
-/// Assert that a parameter is truey (anything not falsey)
+/// Assert that a parameter is truthy.
+/// Empty lists and strings are excluded from default Sass truthyness.
 /// @access public
-/// @group testing
-/// @param {*} $assert - Assert
-/// @param {String} $description [''] - Assert description
+/// @group assertions
+/// @param {*} $assert -
+///   Asserted value to test
+/// @param {String} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
 @mixin assert-true(
   $assert,
   $description: null
 ) {
-  $default: '"#{inspect($assert)}" should be truthy';
-  $truey-assert: if(
-    not not $assert and
-    $assert != '' and
-    $assert != (),
-    true,
-    false);
-  @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-true', $truey-assert, true);
-}
+  $default: _true-context('test');
+  $truthy: _true-is-truthy($assert);
 
+  @include _true-context('assert', '[assert-true] #{$description or $default}');
+  @include _true-assert-results($truthy, true);
+}
 
 
 // Assert False
 // ------------
-/// Assert that a parameter is falsey (false, null, empty stirng or empty list)
+/// Assert that a parameter is falsey.
+/// Empty lists and strings are added to default Sass falseyness.
 /// @access public
-/// @group testing
+/// @group assertions
 /// @param {*} $assert -
-///   Assert
-/// @param {String} $description [''] -
-///   Assert description
+///   Asserted value to test
+/// @param {String} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
 @mixin assert-false(
   $assert,
   $description: null
 ) {
-  $default: '"#{inspect($assert)}" should be falsey';
-  $falsey-assert: if(
-    not $assert or
-    $assert == '' or
-    $assert == (),
-    true,
-    false);
-  @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-false', $falsey-assert, true);
-}
+  $default: _true-context('test');
+  $falsey: not _true-is-truthy($assert);
 
+  @include _true-context('assert', '[assert-false] #{$description or $default}');
+  @include _true-assert-results($falsey, true);
+}
 
 
 // Assert Equal
 // ------------
 /// Assert that two parameters are `equal`
 /// @access public
-/// @group testing
+/// @group assertions
 /// @param {*} $assert -
-///   Assert
+///   Asserted value to test
 /// @param {*} $expected -
-///   Expected result
-/// @param {String} $description [''] -
-///   Assert description
+///   Expected match
+/// @param {String} $description [null] -
+///   Description of the assertion being tested
+///   (a `null` of `false` value generates a default description)
+/// @param {Bool} $inspect [false] -
+///   Optionally compare inspected values
+///   (useful for comparing CSS output rather than Sass values)
 @mixin assert-equal(
   $assert,
   $expected,
-  $description: null
+  $description: null,
+  $inspect: false
 ) {
-  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should be equal';
-  @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-equal', $assert, $expected);
+  $default: _true-context('test');
+
+  @if $inspect {
+    $assert: inspect($assert);
+    $expected: inspect($expected);
+  }
+
+  @include _true-context('assert', '[assert-equal] #{$description or $default}');
+  @include _true-assert-results($assert, $expected);
 }
 
 
@@ -79,39 +86,51 @@
 // --------------
 /// Assert that two parameters are `unequal`
 /// @access public
-/// @group testing
+/// @group assertions
 /// @param {*} $assert -
-///   Assert
+///   Asserted value to test
 /// @param {*} $expected -
-///   Expected result
-/// @param {String} $description [''] -
-///   Assert description
+///   Expected mismatch
+/// @param {String} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
+/// @param {Bool} $inspect [false] -
+///   Optionally compare inspected values
+///   (useful for comparing CSS output rather than Sass values)
 @mixin assert-unequal(
   $assert,
   $expected,
-  $description: null
+  $description: null,
+  $inspect: false
 ) {
-  $default: '"#{inspect($assert)}" and "#{inspect($expected)}" should not be equal';
-  @include _true-context('assert', $description or $default);
-  @include _true-assert-results('assert-unequal', $assert, $expected, 'unequal');
+  $default: _true-context('test');
+
+  @if $inspect {
+    $assert: inspect($assert);
+    $expected: inspect($expected);
+  }
+
+  @include _true-context('assert', '[assert-unequal] #{$description or $default}');
+  @include _true-assert-results($assert, $expected, 'unequal');
 }
 
 
-// CSS Output Tests
-// ----------------
 
+// Assert [output]
+// ---------------
 /// Define a CSS-output assertion
 /// @access public
-/// @group testing
-/// @param {String} $description -
-///   Assert description
+/// @group assertions
+/// @param {String} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
 /// @content Use `output()` and `expect()` mixins
 ///   to define blocks for comparison
 @mixin assert(
   $description: null
 ) {
-  $default: _true-context('test') or 'CSS output should match expected output';
-  @include _true-context('assert', $description or $default);
+  $default: _true-context('test');
+  @include _true-context('assert', '[output] #{$description or $default}');
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
@@ -130,7 +149,10 @@
 /// The output will be compared against the results
 /// of the `expect()` mixin.
 /// @access public
-/// @group testing
+/// @group assertions
+/// @param {Bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
 @mixin output(
   $selector: true
 ) {
@@ -148,18 +170,6 @@
 }
 
 
-/// @alias output
-@mixin input(
-  $selector: true
-) {
-  @warn 'The `input` mixin has been renamed `output` and will be removed.';
-
-  @include output($selector) {
-    @content;
-  }
-}
-
-
 
 // Expect
 // ------
@@ -167,7 +177,10 @@
 /// The output will be compared against the results
 ///  of the `output()` mixin.
 /// @access public
-/// @group testing
+/// @group assertions
+/// @param {Bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
 @mixin expect(
   $selector: true
 ) {
@@ -186,44 +199,56 @@
 
 
 
+// Assertion Helpers
+// =================
+
+
 // Assert Results
 // --------------
+/// Get an official result,
+/// record it in the database and output,
+/// provide details as necessary,
+/// and end the assertion.
 /// @access private
+/// @group private
+/// @param {*} $assert - Value to consider
+/// @param {*} $expected - Expected match
+/// @param {bool} $unequal [false] -
+///   Set to `true` if the comparison is expected to fail
 @mixin _true-assert-results(
-  $type,
   $assert,
   $expected,
   $unequal: false,
   $terminal: $true-terminal-output
 ) {
-  $assertion: _true-context('assert');
-  $equal: _true-is-equal($assert, $expected);
-  $pass: if($unequal, not $equal, $equal);
-  $result: if($pass, 'pass', 'fail');
+  $result: _true-get-result($assert, $expected, $unequal);
 
   @if $result == 'pass' {
-    @include _true-message('  ✔ #{$assertion}', 'comments');
+    @include _true-pass-details;
   } @else {
-    $module: _true-context('module');
-    $test: _true-context('test');
-
-    $title: 'FAILED [#{$type}]: #{$assertion}';
-    $out: 'Output [#{type-of($assert)}]: #{inspect($assert)}';
-    $exp: 'Expected [#{type-of($expected)}]: #{inspect($expected)}';
-
-    @include _true-message('  ✖ #{$title}', 'comments');
-    @include _true-message('    - #{$out}', 'comments');
-    @include _true-message('    - #{$exp}', 'comments');
-
-    @if $terminal {
-      @include _true-message('#{$module} » #{$test}', 'debug');
-      @include _true-message('- #{$out}', 'debug');
-      @include _true-message('- #{$exp}', 'debug');
-      @include _true-message($title, 'warn');
-    }
+    @include _true-fail-details($assert, $expected, $terminal);
   }
 
   @include _true-update-test($result);
   @include _true-update-stats-count('assertions');
   @include _true-context-pop();
+}
+
+
+// Is Truthy
+// ---------
+/// Check that a value is truthy
+/// (empty lists and strings return false)
+/// @access private
+/// @group private
+/// @param {*} $assert - Value to consider
+/// @return {bool}
+@function _true-is-truthy(
+  $assert
+) {
+  $truthy: if(
+    (not not $assert) and ($assert != '') and ($assert != ()),
+    true, false);
+
+  @return $truthy;
 }

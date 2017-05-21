@@ -1,50 +1,8 @@
 @charset "UTF-8";
-/* # Module: Settings */
-/* ------------------ */
-/* Test: true-context [mixin] */
-/*   ✔ Confirm that there is currently no "fake" scope */
-/*   ✔ Sets the value of scope "fake" to "this scope is not real" */
-/*   ✔ Confirm that our "fake" scope has been removed */
-/*  */
-/* Test: _true-context [function] */
-/*   ✔ Returns the current module name */
-/*   ✔ Returns the current test name */
-/*  */
-/* # Module: Settings :: nested */
+/* # Module: Map Add [function] */
 /* ---------------------------- */
-/* Test: _true-context [function] */
-/*   ✔ Returns the innermost module name */
-/*  */
-/* Test: _true-context-all [function] */
-/*   ✔ Returns the current stack of module names */
-/*  */
-/*  */
-/*  */
-/* # Module: Utilities */
-/* ------------------- */
-/* Test: Map Add [function] */
-/*   ✔ Returns the sum of two numeric maps */
-/*  */
-/* Test: String Split [function] */
-/*   ✔ Returns a list of substrings, based on any delimiter. */
-/*  */
-/* Test: String Join [function] */
-/*   ✔ Returns a single string, based on any delimiter. */
-/*  */
-/*  */
-/* # Module: Is Equal [function] */
-/* ----------------------------- */
-/* Test: Simple numbers */
-/*   ✔ Returns true for numbers that are truely equal. */
-/*  */
-/* Test: Mismatched units */
-/*   ✔ Returns false for equal numbers with different units. */
-/*  */
-/* Test: Adding floats */
-/*   ✔ 0.1 + 0.2 should equal .3. */
-/*  */
-/* Test: Rounded numbers with division */
-/*   ✔ 1/3 should equal .33333. */
+/* Test: Returns a map with the sum-values of two numeric maps */
+/*   ✔ [assert-equal] Returns a map with the sum-values of two numeric maps */
 /*  */
 /*  */
 /* # Module: True Message */
@@ -62,88 +20,187 @@
 /* Test: Multi-line messages */
 /*   ASSERT: Render as multiple CSS comments   */
 /*   OUTPUT   */
-/* This is a  */
+/* This is a */
 /* multiline message */
 /*   END_OUTPUT   */
 /*   EXPECTED   */
-/* This is a  */
+/* This is a */
 /* multiline message */
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: true-context & true-context-pop [mixins] */
+/* -------------------------------------------------- */
+/* Test: Adds scope and name to context */
+/*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
+/*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
+/*   ✔ [assert-equal] Sets the value of scope "fake" to "this scope is not real" */
+/*   ✔ [assert-unequal] Confirm that "fake" scope has been removed */
+/*   ✔ [assert-unequal] Confirm that "fake" scope has been removed */
+/*  */
+/*  */
+/* # Module: true-context & true-context-all [functions] */
+/* ----------------------------------------------------- */
+/* Test: Returns current module context */
+/*   ✔ [assert-equal] Returns current module context */
+/*  */
+/* Test: Returns current test context */
+/*   ✔ [assert-equal] Returns current test context */
+/*  */
+/* # Module: true-context & true-context-all [functions] :: nested */
+/* --------------------------------------------------------------- */
+/* Test: Returns the innermost module name */
+/*   ✔ [assert-equal] Returns the innermost module name */
+/*  */
+/* Test: _true-context-all [function] */
+/*   ✔ [assert-equal] Returns the current stack of module names */
+/*  */
+/*  */
+/*  */
 /* # Module: Update Results */
 /* ------------------------ */
 /* Test: Update global results with pass */
-/*   ✔ increments run */
-/*   ✔ increments pass */
-/*   ✔ leaves fails as-is */
-/*   ✔ leaves output-to-css as-is */
+/*   ✔ [assert-equal] increments run */
+/*   ✔ [assert-equal] increments pass */
+/*   ✔ [assert-equal] leaves fails as-is */
+/*   ✔ [assert-equal] leaves output-to-css as-is */
 /*  */
 /*  */
 /* # Module: Stats */
 /* --------------- */
 /* Test: Count updates */
-/*   ✔ assertions counts is updated */
-/*   ✔ leaves modules counts is as-is */
-/*   ✔ tests counts is updated */
+/*   ✔ [assert-equal] assertions counts is updated */
+/*   ✔ [assert-equal] leaves modules counts is as-is */
+/*   ✔ [assert-equal] tests counts is updated */
 /*  */
 /* Test: Stats message creation */
-/*   ✔ "4 Modules, 6 Tests, 25 Assertions" and "4 Modules, 6 Tests, 25 Assertions" should be equal */
+/*   ✔ [assert-equal] Stats message creation */
+/*  */
+/*  */
+/* # Module: pass-details [mixin] */
+/* ------------------------------ */
+/* Test: Properly output a passing assertion result */
+/*   ASSERT: passing test   */
+/*   OUTPUT   */
+.test-output {
+  /*   ✔ [output] passing test */ }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /*   ✔ [output] passing test */ }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # Module: variable-details [function] */
+/* ------------------------------------- */
+/* Test: Number */
+/*   ✔ [assert-equal] Number */
+/*  */
+/* Test: String */
+/*   ✔ [assert-equal] String */
+/*  */
+/* Test: Map */
+/*   ✔ [assert-equal] Map */
+/*  */
+/* Test: Comma List */
+/*   ✔ [assert-equal] Comma List */
+/*  */
+/* Test: Space List */
+/*   ✔ [assert-equal] Space List */
 /*  */
 /*  */
 /* # Module: Modules */
 /* ----------------- */
 /* Test: test-module */
-/*   ✔ Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
 /*  */
 /* # Module: Modules :: Unquoted Module Name */
 /* ----------------------------------------- */
 /* Test: Don’t barf on unquoted names */
-/*   ✔ Please don’t barf on me */
+/*   ✔ [assert-true] Please don’t barf on me */
 /*  */
 /*  */
 /*  */
 /* # Module: Tests */
 /* --------------- */
 /* Test: test [mixin] */
-/*   ✔ Changes the current test context */
+/*   ✔ [assert-equal] Changes the current test context */
+/*  */
+/*  */
+/* # Module: Is Truthy */
+/* ------------------- */
+/* Test: True is truthy */
+/*   ✔ [assert-equal] True is truthy */
+/*  */
+/* Test: String is truthy */
+/*   ✔ [assert-equal] String is truthy */
+/*  */
+/* Test: List is truthy */
+/*   ✔ [assert-equal] List is truthy */
+/*  */
+/* Test: False is not truthy */
+/*   ✔ [assert-equal] False is not truthy */
+/*  */
+/* Test: Null is not truthy */
+/*   ✔ [assert-equal] Null is not truthy */
+/*  */
+/* Test: Empty string is not truthy */
+/*   ✔ [assert-equal] Empty string is not truthy */
+/*  */
+/* Test: Empty list is not truthy */
+/*   ✔ [assert-equal] Empty list is not truthy */
 /*  */
 /*  */
 /* # Module: Assert True */
 /* --------------------- */
 /* Test: Truthiness */
-/*   ✔ Non-false properties return true. */
+/*   ✔ [assert-true] Non-false properties return true. */
 /*  */
 /*  */
 /* # Module: Assert False */
 /* ---------------------- */
 /* Test: Falsiness */
-/*   ✔ Negated properties return false. */
+/*   ✔ [assert-false] Negated properties return false. */
 /*  */
 /* Test: null */
-/*   ✔ Null properties return false. */
+/*   ✔ [assert-false] Null properties return false. */
 /*  */
 /* Test: Empty string */
-/*   ✔ Empty string return false. */
+/*   ✔ [assert-false] Empty string return false. */
 /*  */
 /* Test: empty list */
-/*   ✔ Empty lists return false. */
+/*   ✔ [assert-false] Empty lists return false. */
 /*  */
 /*  */
 /* # Module: Assert Equal */
 /* ---------------------- */
 /* Test: Equality */
-/*   ✔ 2 - 1 should equal 1. */
+/*   ✔ [assert-equal] 2 - 1 should equal 1. */
 /*  */
 /* Test: Empty description */
-/*   ✔ "1" and "1" should be equal */
+/*   ✔ [assert-equal] Empty description */
+/*  */
+/* Test: Adding floats */
+/*   ✔ [assert-equal] Adding floats */
+/*  */
+/* Test: Rounded numbers with $inspect */
+/*   ✔ [assert-equal] Rounded numbers with $inspect */
+/*  */
+/* Test: Rounded colors with $inspect */
+/*   ✔ [assert-equal] Rounded colors with $inspect */
 /*  */
 /*  */
 /* # Module: Assert UnEqual */
 /* ------------------------ */
 /* Test: Inequality */
-/*   ✔ 3 - 1 is not equal to 3. */
+/*   ✔ [assert-unequal] 3 - 1 is not equal to 3. */
+/*  */
+/* Test: Mismatched types */
+/*   ✔ [assert-unequal] Mismatched types */
 /*  */
 /*  */
 /* # Module: Assert (output) */
@@ -187,29 +244,15 @@
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
-/*   ASSERT: Deprecated input alias works for now   */
-/*   OUTPUT   */
-.test {
-  /* comments are also allowed in assertions */
-  -property: value; }
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test {
-  /* comments are also allowed in assertions */
-  -property: value; }
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 29 Tests: */
-/*  - 25 Passed */
+/* 41 Tests: */
+/*  - 36 Passed */
 /*  - 0 Failed */
-/*  - 4 Output to CSS */
-/* Stats:  */
-/*  - 15 Modules  */
-/*  - 29 Tests  */
-/*  - 38 Assertions */
+/*  - 5 Output to CSS */
+/* Stats: */
+/* - 18 Modules */
+/* - 41 Tests */
+/* - 50 Assertions */
 /* -------------------- */

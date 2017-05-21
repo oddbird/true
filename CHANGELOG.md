@@ -1,6 +1,32 @@
 True Changelog
 ==============
 
+
+3.0.0 (unreleased)
+------------------
+- Added `$inspect` argument to `assert-equal` and `assert-unequal` mixins,
+  for comparing `inspect($assert) == inspect($expected)`
+  instead of `$assert == $expected`.
+  This helps with several of the equality edge-cases listed below
+  (rounding and units).
+- BREAKING: Removes special-handling of equality,
+  in favor of allowing Sass to determine the best comparisons.
+  There are a few edge-cases to be aware of:
+  - In some versions of Sass,
+    manipulated numbers and colors are compared without rounding,
+    so `1/3 != 0.333333` and `lighten(#246, 15%) != #356a9f`.
+    Use the `$inspect` argument to compare rounded output values.
+  - In all versions of Sass,
+    unitless numbers are considered comparable to all units,
+    so `1 == 1x` where `x` represents any unit.
+    Use the `$inspect` argument to compare output values with units.
+  - Lists compare both values and delimiter,
+    so `(one two three) != (one, two, three)`.
+    This can be particularly confusing for single-item lists,
+    which still have a delimiter assigned,
+    even though it is not used.
+
+
 2.2.2 (4/11/17)
 ---------------
 - `assert-true` returns false on empty strings and lists

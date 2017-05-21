@@ -164,9 +164,10 @@ describe('#parse', function () {
       '/* # Module: Assert */',
       '/* ---------------- */',
       '/* Test: Simple assertions */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
-      '/*     - Output [bool]: false */',
-      '/*     - Expected [bool]: true */',
+      '/*   ✖ FAILED: [assert-true] True should assert true. */',
+      '/*     - Output: [bool] false */',
+      '/*     - Expected: [bool] true */',
+      '/*     - Details: Broken tautology is broken. */'
     ].join('\n');
     var expected = [{
       module: "Assert",
@@ -177,7 +178,8 @@ describe('#parse', function () {
           passed: false,
           assertionType: 'assert-true',
           output: '[bool] false',
-          expected: '[bool] true'
+          expected: '[bool] true',
+          details: 'Broken tautology is broken.'
         }],
       }],
     }];
@@ -190,7 +192,7 @@ describe('#parse', function () {
       '/* # Module: Assert */',
       '/* ---------------- */',
       '/* Test: Simple assertions */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*   ✖ FAILED: [assert-true] True should assert true. */',
       '/*   ✔ False should assert false */'
     ].join('\n');
     var expected = [{
@@ -512,7 +514,7 @@ describe('#parse', function () {
     var css = [
       '/* # Module: M */',
       '/* Test: T */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*   ✖ FAILED: [assert-true] True should assert true. */',
       '/*     - foobar */',
       '/* # Module: M2 */',
     ].join('\n');
@@ -539,7 +541,7 @@ describe('#parse', function () {
     var css = [
       '/* # Module: M */',
       '/* Test: T */',
-      '/*   ✖ FAILED [assert-true]: True should assert true. */',
+      '/*   ✖ FAILED: [assert-true] True should assert true. */',
       '.foo { -prop: val; }',
     ].join('\n');
     var attempt = function () { main.parse(css); };
