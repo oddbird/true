@@ -7,6 +7,9 @@
 @import 'utilities';
 @import 'messages';
 
+// Ignore Non-Test Output
+.not-a-test { break: please-no; }
+
 // Database
 @import 'stats';
 @import 'context';

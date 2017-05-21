@@ -5,6 +5,15 @@
 /*   ✔ [assert-equal] Returns a map with the sum-values of two numeric maps */
 /*  */
 /*  */
+/* # Module: Join Multiple [function */
+/* --------------------------------- */
+/* Test: Combines multiple lists */
+/*   ✔ [assert-equal] Combines multiple lists */
+/*  */
+/* Test: Sets new list-separator */
+/*   ✔ [assert-equal] Sets new list-separator */
+/*  */
+/*  */
 /* # Module: True Message */
 /* ---------------------- */
 /* Test: Simple messages */
@@ -28,6 +37,30 @@
 /* multiline message */
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
+/*  */
+/*  */
+.not-a-test {
+  break: please-no; }
+
+/* # Module: Update Stats Count */
+/* ---------------------------- */
+/* Test: Assertions counts are updated */
+/*   ✔ [assert-equal] Assertions counts are updated */
+/*  */
+/* Test: Modules counts are left as-is */
+/*   ✔ [assert-equal] Modules counts are left as-is */
+/*  */
+/* Test: Tests counts are left as-is */
+/*   ✔ [assert-equal] Tests counts are left as-is */
+/*  */
+/*  */
+/* # Module: stats-message [function] */
+/* ---------------------------------- */
+/* Test: Single Line */
+/*   ✔ [assert-equal] Single Line */
+/*  */
+/* Test: Linebreaks */
+/*   ✔ [assert-equal] Linebreaks */
 /*  */
 /*  */
 /* # Module: true-context & true-context-pop [mixins] */
@@ -58,24 +91,68 @@
 /*  */
 /*  */
 /*  */
+/* # Module: Get Result */
+/* -------------------- */
+/* Test: Equal Pass */
+/*   ✔ [assert-equal] Equal Pass */
+/*  */
+/* Test: Equal Fail */
+/*   ✔ [assert-equal] Equal Fail */
+/*  */
+/* Test: Unequal pass */
+/*   ✔ [assert-equal] Unequal pass */
+/*  */
+/* Test: Unequal fail */
+/*   ✔ [assert-equal] Unequal fail */
+/*  */
+/*  */
 /* # Module: Update Results */
 /* ------------------------ */
-/* Test: Update global results with pass */
-/*   ✔ [assert-equal] increments run */
-/*   ✔ [assert-equal] increments pass */
-/*   ✔ [assert-equal] leaves fails as-is */
-/*   ✔ [assert-equal] leaves output-to-css as-is */
+/* Test: Add one run */
+/*   ✔ [assert-equal] Add one run */
+/*  */
+/* Test: Add one pass */
+/*   ✔ [assert-equal] Add one pass */
+/*  */
+/* Test: Fail counts are left as-is */
+/*   ✔ [assert-equal] Fail counts are left as-is */
+/*  */
+/* Test: Output counts are left as-is */
+/*   ✔ [assert-equal] Output counts are left as-is */
 /*  */
 /*  */
-/* # Module: Stats */
-/* --------------- */
-/* Test: Count updates */
-/*   ✔ [assert-equal] assertions counts is updated */
-/*   ✔ [assert-equal] leaves modules counts is as-is */
-/*   ✔ [assert-equal] tests counts is updated */
+/* # Module: Update Test */
+/* --------------------- */
+/* Test: Updates global test-result */
+/*   ✔ [assert-equal] confirm the default state */
+/*   ✔ [assert-equal] confirm updated test-result */
 /*  */
-/* Test: Stats message creation */
-/*   ✔ [assert-equal] Stats message creation */
+/* Test: Output-to-css overrides pass */
+/*   ✔ [assert-equal] Output-to-css overrides pass */
+/*  */
+/* Test: Pass does not override output-to-css */
+/*   ✔ [assert-equal] Pass does not override output-to-css */
+/*  */
+/* Test: Fail overrides everything */
+/*   ✔ [assert-equal] Fail overrides everything */
+/*  */
+/* Test: Nothing overrides fail */
+/*   ✔ [assert-equal] Nothing overrides fail */
+/*  */
+/*  */
+/* # Module: results-message [function] */
+/* ------------------------------------ */
+/* Test: Single Line */
+/*   ✔ [assert-equal] Single Line */
+/*  */
+/* Test: Linebreaks */
+/*   ✔ [assert-equal] Linebreaks */
+/*  */
+/* Test: No output tests */
+/*   ✔ [assert-equal] No output tests */
+/*  */
+/* Test: Single test */
+/*   ✔ [assert-equal] Single test */
 /*  */
 /*  */
 /* # Module: pass-details [mixin] */
@@ -103,6 +180,9 @@
 /* Test: String */
 /*   ✔ [assert-equal] String */
 /*  */
+/* Test: Color */
+/*   ✔ [assert-equal] Color */
+/*  */
 /* Test: Map */
 /*   ✔ [assert-equal] Map */
 /*  */
@@ -111,6 +191,49 @@
 /*  */
 /* Test: Space List */
 /*   ✔ [assert-equal] Space List */
+/*  */
+/*  */
+/* # Module: edgefail-notes [function] */
+/* ----------------------------------- */
+/* Test: Type mismatch */
+/*   ✔ [assert-equal] Type mismatch */
+/*   ✔ [assert-equal] Type mismatch */
+/*  */
+/* Test: Number rounding */
+/*   ✔ [assert-equal] Number rounding */
+/*  */
+/* Test: Color rounding */
+/*   ✔ [assert-equal] Color rounding */
+/*  */
+/* Test: List Separators */
+/*   ✔ [assert-equal] List Separators */
+/*  */
+/*  */
+/* # Module: fail-details [mixin] */
+/* ------------------------------ */
+/* Test: Compiles full failure details */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  /*   ✖ FAILED: [assert-equal] Test assertion */
+  /*     - Output: [number] 0.33333 */
+  /*     - Expected: [number] 0.33333 */
+  /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+  /*     - Module: fail-details [mixin] */
+  /*     - Test: Compiles full failure details */ }
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /*   ✖ FAILED: [assert-equal] Test assertion */
+  /*     - Output: [number] 0.33333 */
+  /*     - Expected: [number] 0.33333 */
+  /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+  /*     - Module: fail-details [mixin] */
+  /*     - Test: Compiles full failure details */ }
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
 /*  */
 /*  */
 /* # Module: Modules */
@@ -193,6 +316,10 @@
 /* Test: Rounded colors with $inspect */
 /*   ✔ [assert-equal] Rounded colors with $inspect */
 /*  */
+/* Test: Mismatched types with $inspect */
+/*   ✔ [assert-unequal] normally unequal */
+/*   ✔ [assert-equal] Mismatched types with $inspect */
+/*  */
 /*  */
 /* # Module: Assert UnEqual */
 /* ------------------------ */
@@ -201,6 +328,10 @@
 /*  */
 /* Test: Mismatched types */
 /*   ✔ [assert-unequal] Mismatched types */
+/*  */
+/* Test: Mismatched units with $inspect */
+/*   ✔ [assert-equal] normally equal */
+/*   ✔ [assert-unequal] Mismatched units with $inspect */
 /*  */
 /*  */
 /* # Module: Assert (output) */
@@ -247,12 +378,12 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 41 Tests: */
-/*  - 36 Passed */
-/*  - 0 Failed */
-/*  - 5 Output to CSS */
+/* 70 Tests: */
+/* - 64 Passed */
+/* - 0 Failed */
+/* - 6 Output to CSS */
 /* Stats: */
-/* - 18 Modules */
-/* - 41 Tests */
-/* - 50 Assertions */
+/* - 25 Modules */
+/* - 70 Tests */
+/* - 78 Assertions */
 /* -------------------- */
