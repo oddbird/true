@@ -3,6 +3,21 @@ var main = require('../lib/main.js');
 var path = require('path');
 
 
+describe('#fail', function () {
+  it('formats failure message', function () {
+    var msg = main.formatFailureMessage({
+      description: 'It broke.',
+      assertionType: 'assert-equal',
+      expected: '1',
+      output: '2',
+      details: 'It really broke.'
+    });
+
+    expect(msg).to.equal('It broke. ("2" assert-equal "1" -- It really broke.)');
+  });
+});
+
+
 describe('#runSass', function () {
   it('throws AssertionError on failure', function () {
     var sass = [
@@ -445,15 +460,16 @@ describe('#parse', function () {
     }]);
   });
 
-  it('throws error on unexpected rule type instead of test', function () {
+  it('ignores unexpected rule type instead of test', function () {
     var css = [
       '/* # Module: M */',
       '.foo { -prop: value; }',
     ].join('\n');
-    var attempt = function () { main.parse(css); };
 
-    expect(attempt).to.throw(
-      'Line 2, column 1: Unexpected rule type "rule"; looking for test');
+    expect(main.parse(css)).to.deep.equal([{
+      module: "M",
+      tests: []
+    }]);
   });
 
   it('handles a blank comment before test header', function () {
@@ -472,7 +488,7 @@ describe('#parse', function () {
     }]);
   });
 
-  it('throws error on unexpected rule type instead of assertion', function () {
+  it('ignores unexpected rule type instead of assertion', function () {
     var css = [
       '/* # Module: M */',
       '/* Test: T */',
@@ -480,8 +496,13 @@ describe('#parse', function () {
     ].join('\n');
     var attempt = function () { main.parse(css); };
 
-    expect(attempt).to.throw(
-      'Line 3, column 1: Unexpected rule type "rule"; looking for assertion');
+    expect(main.parse(css)).to.deep.equal([{
+      module: "M",
+      tests: [{
+        test: "T",
+        assertions: []
+      }]
+    }]);
   });
 
   it('handles a blank comment before assertion', function () {
