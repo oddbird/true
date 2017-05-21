@@ -51,7 +51,8 @@
   "contributors": [
     "Scott Davis <me@sdavis.info>",
     "Chris Eppstein <chris@eppsteins.net>",
-    "Carl Meyer <carl@oddbird.net>"
+    "Carl Meyer <carl@oddbird.net>",
+    "David Glick <david@oddbird.net>"
   ],
   "license": "BSD-3-Clause",
   "bugs": {
