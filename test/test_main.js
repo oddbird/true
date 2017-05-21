@@ -394,16 +394,10 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
-  it('throws error on unexpected rule type instead of module header', function () {
+  it('ignores unexpected rule types', function () {
     var css = '.foo { -prop: value; }';
-    var attempt = function () { main.parse(css); };
 
-    expect(attempt).to.throw([
-      'Line 1, column 1: Unexpected rule type "rule"; looking for module header.',
-      '-- Context --',
-      '.foo { -prop: value; }',
-      '^'
-    ].join('\n'));
+    expect(main.parse(css)).to.deep.equal([]);
   });
 
   it('throws error on unexpected rule type instead of end summary', function () {
