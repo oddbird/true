@@ -130,11 +130,13 @@
   $description: null
 ) {
   $default: _true-context('test');
+  @include _true-output-context('assert');
   @include _true-context('assert', '[output] #{$description or $default}');
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
 
+  @include _true-output-context(null);
   @include _true-update-test('output-to-css');
   @include _true-update-stats-count('assertions');
   @include _true-context-pop();
@@ -156,6 +158,8 @@
 @mixin output(
   $selector: true
 ) {
+  @include _true-context-or-error;
+  @include _true-output-context('output');
   @include _true-message('  OUTPUT  ', 'comments');
 
   @if $selector {
@@ -184,6 +188,8 @@
 @mixin expect(
   $selector: true
 ) {
+  @include _true-context-or-error;
+  @include _true-output-context('expect');
   @include _true-message('  EXPECTED  ', 'comments');
 
   @if $selector {
