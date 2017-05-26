@@ -158,7 +158,6 @@
 @mixin output(
   $selector: true
 ) {
-  @include _true-context-or-error;
   @include _true-output-context('output');
   @include _true-message('  OUTPUT  ', 'comments');
 
@@ -188,7 +187,6 @@
 @mixin expect(
   $selector: true
 ) {
-  @include _true-context-or-error;
   @include _true-output-context('expect');
   @include _true-message('  EXPECTED  ', 'comments');
 

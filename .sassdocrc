@@ -1,2 +1,11 @@
 theme: 'herman'
 dest: gh-pages/sassdoc
+
+autofill:
+  - throw
+  - content
+  - require
+
+groups:
+  private-context: Context (private)
+
