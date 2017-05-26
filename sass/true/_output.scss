@@ -73,6 +73,10 @@
     $type: '#{list-separator($var)}-#{$type}';
   }
 
+  @if ($type == 'string') and ($var != unquote($var)) {
+    $type: 'quoted-#{$type}';
+  }
+
   @return '[#{$type}] #{$inspect}';
 }
 
@@ -102,7 +106,18 @@
   }
 
 
-  @if inspect($one) == inspect($two) {
+  // String Quotes
+  @if ($one-type == 'string') and ($two-type == 'string')  {
+    @if (unquote($one) == unquote($two)) {
+      $message: 'string quotations do not match';
+      $note: $pre + $message;
+    }
+  }
+
+  $one: if(($one-type == 'string'), unquote($one), $one);
+  $two: if(($two-type == 'string'), unquote($two), $two);
+
+  @if (inspect($one) == inspect($two)) {
     // Type
     @if ($one-type != $two-type) {
       $message: 'variable types do not match';

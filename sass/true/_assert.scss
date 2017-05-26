@@ -130,14 +130,16 @@
   $description: null
 ) {
   $default: _true-context('test');
+  @include _true-output-context('assert');
   @include _true-context('assert', '[output] #{$description or $default}');
   @include _true-message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
 
+  @include _true-output-context(null);
   @include _true-update-test('output-to-css');
   @include _true-update-stats-count('assertions');
-  @include _true-context-pop();
+  @include _true-context-pop;
   @include _true-message('  END_ASSERT  ', 'comments');
 }
 
@@ -156,6 +158,7 @@
 @mixin output(
   $selector: true
 ) {
+  @include _true-output-context('output');
   @include _true-message('  OUTPUT  ', 'comments');
 
   @if $selector {
@@ -184,6 +187,7 @@
 @mixin expect(
   $selector: true
 ) {
+  @include _true-output-context('expect');
   @include _true-message('  EXPECTED  ', 'comments');
 
   @if $selector {
@@ -231,7 +235,7 @@
 
   @include _true-update-test($result);
   @include _true-update-stats-count('assertions');
-  @include _true-context-pop();
+  @include _true-context-pop;
 }
 
 
@@ -246,9 +250,10 @@
 @function _true-is-truthy(
   $assert
 ) {
-  $truthy: if(
-    (not not $assert) and ($assert != '') and ($assert != ()),
-    true, false);
+  $not: (not not $assert);
+  $list: ($assert != ());
+  $string: ($assert != '');
+  $truthy: if(($not and $list and $string), true, false);
 
   @return $truthy;
 }

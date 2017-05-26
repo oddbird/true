@@ -91,6 +91,18 @@
 /*  */
 /*  */
 /*  */
+/* # Module: true-output-context [mixin] */
+/* ------------------------------------- */
+/* Test: Appends new context */
+/*   ✔ [assert-equal] Check initial value */
+/*   ✔ [assert-equal] Appends new context */
+/*   ✔ [assert-equal] Appends new context */
+/*   ✔ [assert-equal] Appends new context */
+/*  */
+/* Test: Resets context */
+/*   ✔ [assert-equal] Resets context */
+/*  */
+/*  */
 /* # Module: Get Result */
 /* -------------------- */
 /* Test: Equal Pass */
@@ -378,12 +390,12 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 70 Tests: */
-/* - 64 Passed */
+/* 72 Tests: */
+/* - 66 Passed */
 /* - 0 Failed */
 /* - 6 Output to CSS */
 /* Stats: */
-/* - 25 Modules */
-/* - 70 Tests */
-/* - 78 Assertions */
+/* - 26 Modules */
+/* - 72 Tests */
+/* - 83 Assertions */
 /* -------------------- */

@@ -62,3 +62,51 @@
     }
   }
 }
+
+
+// Output context
+@include test-module('true-output-context [mixin]') {
+  $empty-list: ();
+  $before: $_true-output-context;
+  @include _true-output-context('assert');
+  $assert: $_true-output-context;
+  @include _true-output-context('expect');
+  $expect: $_true-output-context;
+  @include _true-output-context('output');
+  $output: $_true-output-context;
+  @include _true-output-context(null);
+  $reset: $_true-output-context;
+
+  @include test('Appends new context') {
+    @include assert-equal(
+      $before,
+      $empty-list,
+      'Check initial value');
+
+    @include assert-equal(
+      $assert,
+      join((), 'assert'));
+
+    @include assert-equal(
+      $expect,
+      ('assert' 'expect'));
+
+    @include assert-equal(
+      $output,
+      ('assert' 'expect' 'output'));
+  }
+
+  @include test('Resets context') {
+    @include assert-equal(
+      $reset,
+      $before);
+  }
+
+  // @include expect { /* test that this breaks things */ }
+  // @include output { /* test that this breaks things */ }
+  // @include assert { /* test that this breaks things */ }
+  // @include assert {
+  //   @include expect { /* nothing */ }
+  //   @include expect { /* an error */ }
+  // }
+}

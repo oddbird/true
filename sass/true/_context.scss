@@ -7,7 +7,7 @@
 // ------------------
 /// True current context
 /// @access private
-/// @group private
+/// @group private-context
 /// @type list
 $_true-context: ();
 
@@ -17,7 +17,7 @@ $_true-context: ();
 // ---------------
 /// Update the current context for a given scope
 /// @access private
-/// @group private
+/// @group private-context
 /// @param {String} $scope - Either `module`, `test` or `assert`
 /// @param {String} $name - Name of current scope
 @mixin _true-context(
@@ -33,7 +33,7 @@ $_true-context: ();
 // -------------------
 /// Remove the deepest context layer
 /// @access private
-/// @group private
+/// @group private-context
 @mixin _true-context-pop {
   $new: ();
 
@@ -46,11 +46,70 @@ $_true-context: ();
 
 
 
+// Output-context [variable]
+// -------------------------
+/// Make sure every output test includes an `assert`, `output`, and `expect`
+/// @access private
+/// @group private-context
+/// @type list
+$_true-output-context: ();
+
+
+
+// Output-context [mixin]
+// ----------------------
+/// Add `assert`, `output`, or `expect` context to an output test,
+/// or check to make sure they all exist before resetting the context.
+/// @access private
+/// @group private-context
+/// @param {'assert' | 'output' | 'expect' | null} $new -
+///   Add a new `assert`, `output`, or `expect` layer
+///   to the context of an output-test,
+///   or use `null` to check that all context is properly formed
+///   and then reset it at the end of a test
+/// @throw Error when adding unknown context
+/// @throw Error when trying to add context that already exists
+/// @throw Error when `assert()` is missing before `expect` or `output`
+/// @throw Error when context is missing before a reset
+@mixin _true-output-context(
+  $new
+) {
+  $valid: 'assert' 'expect' 'output';
+
+  @if $new and not (index($valid, $new)) {
+    @error '#{$new} is not a valid context for output tests: #{$valid}';
+  }
+
+  @if index($_true-output-context, $new) {
+    @if ($new == 'assert') {
+      @error 'The `assert()` mixin can not contain another `assert()`';
+    }
+
+    @error 'The `#{$new}()` mixin must only be used once per `assert()`';
+  } @else if $new {
+    @if index('expect' 'output', $new) and not index($_true-output-context, 'assert') {
+      @error 'The `assert()` wrapper is required for `output()` and `expect()`';
+    }
+
+    $_true-output-context: append($_true-output-context, $new) !global;
+  } @else {
+    $length: length($_true-output-context);
+    $has-both: index($_true-output-context, 'output') and index($_true-output-context, 'expect');
+
+    @if ($length != 3) or (not $has-both) {
+      @error 'Each `assert()` must contain one `output()` and one `expect()`';
+    }
+
+    $_true-output-context: () !global;
+  }
+}
+
+
 // Context [function]
 // ------------------
 /// Get information on current context for a given scope
 /// @access private
-/// @group private
+/// @group private-context
 /// @param {String} $scope
 /// @return {String}
 @function _true-context(
@@ -73,7 +132,7 @@ $_true-context: ();
 // ----------------------
 /// Get list of context names for a given scope
 /// @access private
-/// @group private
+/// @group private-context
 /// @param {String} $scope
 /// @return {List}
 @function _true-context-all(

@@ -27,9 +27,11 @@
   }
 
   @include test('String') {
+    $string: unquote('hello world');
+
     @include assert-equal(
-      _true-variable-details('hello world'),
-      '[string] hello world');
+      _true-variable-details($string),
+      '[string] #{$string}');
   }
 
   @include test('Color') {
@@ -79,6 +81,19 @@
     @include assert-equal(
       _true-edgefail-notes($list, $string),
       $message);
+  }
+
+  $string-one: unquote('hello world');
+  $string-two: quote('hello world');
+
+  @if ($string-one != $string-two) {
+    @include test('String quotes') {
+      $message: '- Details: string quotations do not match';
+
+      @include assert-equal(
+        _true-edgefail-notes($string-one, $string-two),
+        $message);
+    }
   }
 
   @include test('Number rounding') {
