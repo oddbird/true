@@ -8,8 +8,9 @@
 /// Describe a Test
 /// @access public
 /// @group testing
-/// @param {String} $name - Test bame
-/// @content Include the assertions that are part of this test
+/// @param {string} $name -
+///   Describe what is being tested
+/// @content Include any assertions that are part of this test
 @mixin test(
   $name
 ) {
@@ -24,8 +25,9 @@
 // ----------
 /// Test start helper
 /// @access private
-/// @group private
-/// @param {String} $name - Test name
+/// @group private-test
+/// @param {string} $name -
+///   Describe what is being tested
 @mixin _true-test-start(
   $name
 ) {
@@ -39,7 +41,7 @@
 // ---------
 /// Test stop helper
 /// @access private
-/// @group private
+/// @group private-test
 @mixin _true-test-stop {
   @include _true-update($_true-test-result);
   @include _true-update-stats-count('tests');

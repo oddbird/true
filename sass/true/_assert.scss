@@ -7,11 +7,10 @@
 // -----------
 /// Assert that a parameter is truthy.
 /// Empty lists and strings are excluded from default Sass truthyness.
-/// @access public
-/// @group assertions
+/// @group assert
 /// @param {*} $assert -
 ///   Asserted value to test
-/// @param {String} $description [null] -
+/// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
 @mixin assert-true(
@@ -30,11 +29,10 @@
 // ------------
 /// Assert that a parameter is falsey.
 /// Empty lists and strings are added to default Sass falseyness.
-/// @access public
-/// @group assertions
+/// @group assert
 /// @param {*} $assert -
 ///   Asserted value to test
-/// @param {String} $description [null] -
+/// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
 @mixin assert-false(
@@ -52,16 +50,15 @@
 // Assert Equal
 // ------------
 /// Assert that two parameters are `equal`
-/// @access public
-/// @group assertions
+/// @group assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {*} $expected -
 ///   Expected match
-/// @param {String} $description [null] -
+/// @param {string} $description [null] -
 ///   Description of the assertion being tested
 ///   (a `null` of `false` value generates a default description)
-/// @param {Bool} $inspect [false] -
+/// @param {bool} $inspect [false] -
 ///   Optionally compare inspected values
 ///   (useful for comparing CSS output rather than Sass values)
 @mixin assert-equal(
@@ -85,16 +82,15 @@
 // Assert UnEqual
 // --------------
 /// Assert that two parameters are `unequal`
-/// @access public
-/// @group assertions
+/// @group assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {*} $expected -
 ///   Expected mismatch
-/// @param {String} $description [null] -
+/// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
-/// @param {Bool} $inspect [false] -
+/// @param {bool} $inspect [false] -
 ///   Optionally compare inspected values
 ///   (useful for comparing CSS output rather than Sass values)
 @mixin assert-unequal(
@@ -119,9 +115,8 @@
 // Assert [output]
 // ---------------
 /// Define a CSS-output assertion
-/// @access public
-/// @group assertions
-/// @param {String} $description [null] -
+/// @group assert
+/// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
 /// @content Use `output()` and `expect()` mixins
@@ -150,9 +145,8 @@
 /// Describe the test content to be evaluated
 /// The output will be compared against the results
 /// of the `expect()` mixin.
-/// @access public
-/// @group assertions
-/// @param {Bool} $selector [true] -
+/// @group assert
+/// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,
 ///   so you can test property-value output directly.
 @mixin output(
@@ -179,9 +173,8 @@
 /// Describe the output content to be expected.
 /// The output will be compared against the results
 ///  of the `output()` mixin.
-/// @access public
-/// @group assertions
-/// @param {Bool} $selector [true] -
+/// @group assert
+/// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,
 ///   so you can test property-value output directly.
 @mixin expect(
@@ -202,11 +195,6 @@
 }
 
 
-
-// Assertion Helpers
-// =================
-
-
 // Assert Results
 // --------------
 /// Get an official result,
@@ -214,7 +202,7 @@
 /// provide details as necessary,
 /// and end the assertion.
 /// @access private
-/// @group private
+/// @group private-assert
 /// @param {*} $assert - Value to consider
 /// @param {*} $expected - Expected match
 /// @param {bool} $unequal [false] -
@@ -244,7 +232,7 @@
 /// Check that a value is truthy
 /// (empty lists and strings return false)
 /// @access private
-/// @group private
+/// @group private-assert
 /// @param {*} $assert - Value to consider
 /// @return {bool}
 @function _true-is-truthy(

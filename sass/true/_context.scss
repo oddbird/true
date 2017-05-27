@@ -5,7 +5,7 @@
 
 // Context [variable]
 // ------------------
-/// True current context
+/// Stores the current module/test/assertion context stack
 /// @access private
 /// @group private-context
 /// @type list
@@ -18,8 +18,10 @@ $_true-context: ();
 /// Update the current context for a given scope
 /// @access private
 /// @group private-context
-/// @param {String} $scope - Either `module`, `test` or `assert`
-/// @param {String} $name - Name of current scope
+/// @param {string} $scope -
+///   Either `module`, `test` or `assert`
+/// @param {string} $name -
+///   Name or description of the current scope
 @mixin _true-context(
   $scope,
   $name
@@ -31,7 +33,7 @@ $_true-context: ();
 
 // Context Pop [mixin]
 // -------------------
-/// Remove the deepest context layer
+/// Remove the deepest context layer from `$_true-context`
 /// @access private
 /// @group private-context
 @mixin _true-context-pop {
@@ -48,7 +50,8 @@ $_true-context: ();
 
 // Output-context [variable]
 // -------------------------
-/// Make sure every output test includes an `assert`, `output`, and `expect`
+/// Make sure every output test
+/// includes an `assert`, `output`, and `expect`
 /// @access private
 /// @group private-context
 /// @type list
@@ -110,8 +113,8 @@ $_true-output-context: ();
 /// Get information on current context for a given scope
 /// @access private
 /// @group private-context
-/// @param {String} $scope
-/// @return {String}
+/// @param {string} $scope
+/// @return {string}
 @function _true-context(
   $scope
 ) {
@@ -133,8 +136,8 @@ $_true-output-context: ();
 /// Get list of context names for a given scope
 /// @access private
 /// @group private-context
-/// @param {String} $scope
-/// @return {List}
+/// @param {string} $scope
+/// @return {list}
 @function _true-context-all(
   $scope
 ) {

@@ -7,7 +7,7 @@
 /// Report results summary to CSS
 /// and (optionally) the command line
 /// @access public
-/// @group reporting
+/// @group report
 /// @param {Bool} $terminal [$true-terminal-output] -
 ///   Optionally output results to the terminal
 /// @param {Bool} $fail-on-error [false] -
@@ -51,7 +51,7 @@
 /// Report results summary to CSS
 /// and (optionally) the command line
 /// @access private
-/// @group private
+/// @group private-message
 /// @param {Bool} $linebreak [false] -
 ///   Return single-line messages for results/stats,
 ///   or optionally break into multi-line lists.

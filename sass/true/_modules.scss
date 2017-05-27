@@ -5,11 +5,13 @@
 
 // Test Module
 // -----------
-/// Define a Test Module
+/// Test Modules are optional,
+/// and can be used to group tests and other modules
+/// for organizational purposes.
 /// @access public
 /// @group testing
-/// @param {String} $name - Module name
-/// @content Include all the tests that are part of this module
+/// @param {string} $name - module name
+/// @content Include all the tests & modules that are part of this module
 @mixin test-module(
   $name
 ) {
@@ -24,8 +26,8 @@
 // ------------
 /// Module start helper
 /// @access private
-/// @group private
-/// @param {String} $name - Module name
+/// @group private-testing
+/// @param {string} $name - module name
 @mixin _true-module-start(
   $name
 ) {
@@ -58,7 +60,7 @@
 // -----------
 /// Module stop helper
 /// @access private
-/// @group private
+/// @group private-testing
 @mixin _true-module-stop {
   @include _true-update-stats-count('modules');
   @include _true-context-pop;
