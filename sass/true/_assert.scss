@@ -7,7 +7,7 @@
 // -----------
 /// Assert that a parameter is truthy.
 /// Empty lists and strings are excluded from default Sass truthyness.
-/// @group assert
+/// @group api-assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {string} $description [null] -
@@ -29,7 +29,7 @@
 // ------------
 /// Assert that a parameter is falsey.
 /// Empty lists and strings are added to default Sass falseyness.
-/// @group assert
+/// @group api-assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {string} $description [null] -
@@ -50,7 +50,7 @@
 // Assert Equal
 // ------------
 /// Assert that two parameters are `equal`
-/// @group assert
+/// @group api-assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {*} $expected -
@@ -82,7 +82,7 @@
 // Assert UnEqual
 // --------------
 /// Assert that two parameters are `unequal`
-/// @group assert
+/// @group api-assert
 /// @param {*} $assert -
 ///   Asserted value to test
 /// @param {*} $expected -
@@ -115,7 +115,7 @@
 // Assert [output]
 // ---------------
 /// Define a CSS-output assertion
-/// @group assert
+/// @group api-assert
 /// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
@@ -145,7 +145,7 @@
 /// Describe the test content to be evaluated
 /// The output will be compared against the results
 /// of the `expect()` mixin.
-/// @group assert
+/// @group api-assert
 /// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,
 ///   so you can test property-value output directly.
@@ -173,7 +173,7 @@
 /// Describe the output content to be expected.
 /// The output will be compared against the results
 ///  of the `output()` mixin.
-/// @group assert
+/// @group api-assert
 /// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,
 ///   so you can test property-value output directly.

@@ -9,7 +9,7 @@
 /// and can be used to group tests and other modules
 /// for organizational purposes.
 /// @access public
-/// @group testing
+/// @group api-testing
 /// @param {string} $name - module name
 /// @content Include all the tests & modules that are part of this module
 @mixin test-module(

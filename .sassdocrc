@@ -7,10 +7,11 @@ autofill:
   - require
 
 groups:
-  assert: Assertion API
-  test: Testing API
-  report: Reporting API
+  api-assert: Assertion API
+  api-test: Testing API
+  api-report: Reporting API
   private-assert: '[assertion helpers]'
   private-context: '[data helpers]'
   private-message: '[reporting helpers]'
-  private-test: '[module helpers]'
+  private-testing: '[test helpers]'
+  private-utils: [internal utilities]
