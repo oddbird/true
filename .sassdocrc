@@ -1,10 +1,8 @@
-theme: 'herman'
-dest: gh-pages/sassdoc
+theme: './node_modules/sassdoc-theme-herman'
 
-autofill:
-  - throw
-  - content
-  - require
+herman:
+  sass:
+    includes: ['./sass/true']
 
 groups:
   api-assert: Assertion API
@@ -13,5 +11,5 @@ groups:
   private-assert: '[assertion helpers]'
   private-context: '[data helpers]'
   private-message: '[reporting helpers]'
-  private-testing: '[test helpers]'
-  private-utils: [internal utilities]
+  private-test: '[test helpers]'
+  private-utils: '[internal utilities]'

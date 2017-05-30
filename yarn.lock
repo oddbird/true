@@ -3051,9 +3051,9 @@ sassdoc-theme-default@^2.5.2:
     swig "1.4.0"
     swig-extras "0.0.1"
 
-sassdoc-theme-herman@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-0.6.0.tgz#d26935fb3338c4f9590bb9743e241b6d316536aa"
+sassdoc-theme-herman@1.0.0-alpha.1:
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-1.0.0-alpha.1.tgz#f96e64b5cebe5d7a7da12e74a06cdf0880a1b7f6"
   dependencies:
     bluebird "^3.4.6"
     extend "^3.0.0"
@@ -3092,6 +3092,10 @@ sassdoc@^2.2.2:
     update-notifier "^2.1.0"
     vinyl-fs "^2.4.4"
     vinyl-source-stream "^1.0.0"
+
+sassdocify@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/sassdocify/-/sassdocify-0.3.4.tgz#d965444d1ac90ad9ec98f55d85644bb6909c7f12"
 
 scss-comment-parser@^0.8.1:
   version "0.8.2"

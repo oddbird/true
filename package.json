@@ -6,7 +6,7 @@
   "main": "lib/main.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/oddbird/true.git"
+    "url": "http://github.com/oddbird/true.git"
   },
   "keywords": [
     "unit-test",
@@ -32,7 +32,8 @@
     "mocha": "^3.1.2",
     "mocha-istanbul": "^0.3.0",
     "sassdoc": "^2.2.2",
-    "sassdoc-theme-herman": "^0.6.0"
+    "sassdoc-theme-herman": "1.0.0-alpha.1",
+    "sassdocify": "^0.3.4"
   },
   "eyeglass": {
     "needs": "^1.0",
@@ -43,7 +44,8 @@
   "scripts": {
     "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
     "debug": "./node_modules/.bin/mocha -R spec debug",
-    "commit": "npm test; rake test; gulp sasslint; gulp sassdoc",
+    "sassdoc": "sassdocify sass",
+    "commit": "npm test; rake test; gulp sasslint; npm run sassdoc",
     "compile": "./node_modules/.bin/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
     "coverage-html": "./node_modules/.bin/istanbul report html"
   },
