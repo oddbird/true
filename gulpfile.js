@@ -5,7 +5,6 @@
 var chalk = require('chalk');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var sassdoc = require('sassdoc');
 var sasslint = require('gulp-sass-lint');
 
 var paths = {
@@ -49,27 +48,4 @@ var sasslintTask = function (src, failOnError, log) {
 
 gulp.task('sasslint', function () {
   return sasslintTask(paths.ALL_SASS, true);
-});
-
-gulp.task('sasslint-nofail', function () {
-  return sasslintTask(paths.ALL_SASS);
-});
-
-gulp.task('sassdoc', function () {
-  return gulp.src(paths.SASS)
-    .pipe(sassdoc());
-});
-
-gulp.task('watch', function () {
-  gulp.watch(paths.SASS, ['sassdoc']);
-
-  // lint scss on changes
-  gulp.watch(paths.ALL_SASS, function (ev) {
-    if (ev.type === 'added' || ev.type === 'changed') {
-      sasslintTask(ev.path, false, true);
-    }
-  });
-
-  // lint all scss when rules change
-  gulp.watch('**/.sass-lint.yml', ['sasslint-nofail']);
 });
