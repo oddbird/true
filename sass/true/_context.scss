@@ -70,41 +70,70 @@ $_true-output-context: ();
 ///   to the context of an output-test,
 ///   or use `null` to check that all context is properly formed
 ///   and then reset it at the end of a test
-/// @throw Error when adding unknown context
-/// @throw Error when trying to add context that already exists
-/// @throw Error when `assert()` is missing before `expect` or `output`
-/// @throw Error when context is missing before a reset
+/// @param {list} $context [$_true-output-context] -
+///   The current output context
 @mixin _true-output-context(
-  $new
+  $new,
+  $context: $_true-output-context
+) {
+  $valid: 'assert' 'expect' 'output';
+
+  $_true-output-context: _true-validate-output-context($new, $context) !global;
+}
+
+
+// Validate Output-context [function]
+// ----------------------------------
+/// Validate the new context, and return an updated context value
+/// @access private
+/// @group private-context
+/// @param {'assert' | 'output' | 'expect' | null} $new -
+///   Add a new `assert`, `output`, or `expect` layer
+///   to the context of an output-test,
+///   or use `null` to check that all context is properly formed
+///   and then reset it at the end of a test
+/// @param {list} $context [$_true-output-context] -
+///   The current output context
+/// @return {list} Updated output context
+/// @throw When adding unknown context
+/// @throw When trying to add context that already exists
+/// @throw When `assert()` is missing before `expect` or `output`
+/// @throw When context is missing before a reset
+@function _true-validate-output-context(
+  $new,
+  $context: $_true-output-context
 ) {
   $valid: 'assert' 'expect' 'output';
 
   @if $new and not (index($valid, $new)) {
-    @error '#{$new} is not a valid context for output tests: #{$valid}';
-  }
-
-  @if index($_true-output-context, $new) {
+    $error: '#{$new} is not a valid context for output tests: #{$valid}';
+    @return _true-error($error, 'output-context');
+  } @else if index($context, $new) {
     @if ($new == 'assert') {
-      @error 'The `assert()` mixin can not contain another `assert()`';
+      $error: 'The `assert()` mixin can not contain another `assert()`';
+      @return _true-error($error, 'output-context');
     }
 
-    @error 'The `#{$new}()` mixin must only be used once per `assert()`';
+    $error: 'The `#{$new}()` mixin must only be used once per `assert()`';
+    @return _true-error($error, 'output-context');
   } @else if $new {
-    @if index('expect' 'output', $new) and not index($_true-output-context, 'assert') {
-      @error 'The `assert()` wrapper is required for `output()` and `expect()`';
+    @if index('expect' 'output', $new) and not index($context, 'assert') {
+      $error: 'The `assert()` wrapper is required for `output()` and `expect()`';
+      @return _true-error($error, 'output-context');
     }
 
-    $_true-output-context: append($_true-output-context, $new) !global;
-  } @else {
-    $length: length($_true-output-context);
-    $has-both: index($_true-output-context, 'output') and index($_true-output-context, 'expect');
-
-    @if ($length != 3) or (not $has-both) {
-      @error 'Each `assert()` must contain one `output()` and one `expect()`';
-    }
-
-    $_true-output-context: () !global;
+    @return append($context, $new);
   }
+
+  $length: length($context);
+  $has-both: index($context, 'output') and index($context, 'expect');
+
+  @if ($length != 3) or (not $has-both) {
+    $error: 'Each `assert()` must contain one `output()` and one `expect()`';
+    @return _true-error($error, 'output-context');
+  }
+
+  @return ();
 }
 
 

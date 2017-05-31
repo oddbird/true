@@ -64,6 +64,64 @@
 }
 
 
+// valid output context
+@include test-module('true-validate-output-context [function]') {
+  $valid: 'assert' 'expect' 'output';
+
+  @include test('unknown context name') {
+    @include assert-equal(
+      _true-validate-output-context('wtf'),
+      'ERROR [output-context] #{'wtf'} is not a valid context for output tests: #{$valid}');
+  }
+
+  @include test('duplicate assert') {
+    $_true-output-context: 'assert' 'output' !global;
+
+    @include assert-equal(
+      _true-validate-output-context('assert'),
+      'ERROR [output-context] The `assert()` mixin can not contain another `assert()`');
+
+    $_true-output-context: () !global;
+  }
+
+  @include test('duplicate output/expect') {
+    $_true-output-context: 'assert' 'output' !global;
+
+    @include assert-equal(
+      _true-validate-output-context('output'),
+      'ERROR [output-context] The `output()` mixin must only be used once per `assert()`');
+
+    $_true-output-context: () !global;
+  }
+
+  @include test('missing assert') {
+    @include assert-equal(
+      _true-validate-output-context('output'),
+      'ERROR [output-context] The `assert()` wrapper is required for `output()` and `expect()`');
+  }
+
+  @include test('wrong length') {
+    $_true-output-context: 'assert' 'wtf' 'output' 'expect' !global;
+
+    @include assert-equal(
+      _true-validate-output-context(null),
+      'ERROR [output-context] Each `assert()` must contain one `output()` and one `expect()`');
+
+    $_true-output-context: () !global;
+  }
+
+  @include test('missing context') {
+    $_true-output-context: 'assert' 'wtf' 'output' !global;
+
+    @include assert-equal(
+      _true-validate-output-context(null),
+      'ERROR [output-context] Each `assert()` must contain one `output()` and one `expect()`');
+
+    $_true-output-context: () !global;
+  }
+}
+
+
 // Output context
 @include test-module('true-output-context [mixin]') {
   $empty-list: ();
@@ -101,12 +159,4 @@
       $reset,
       $before);
   }
-
-  // @include expect { /* test that this breaks things */ }
-  // @include output { /* test that this breaks things */ }
-  // @include assert { /* test that this breaks things */ }
-  // @include assert {
-  //   @include expect { /* nothing */ }
-  //   @include expect { /* an error */ }
-  // }
 }

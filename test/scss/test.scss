@@ -3,6 +3,9 @@
 
 @import '../../sass/true';
 
+// Error Override
+$_true-error-output-override: true;
+
 // Config
 @import 'utilities';
 @import 'messages';
@@ -20,6 +23,6 @@
 @import 'modules';
 @import 'tests';
 @import 'assert';
-// @import 'report';
+@import 'report';
 
 @include report();
