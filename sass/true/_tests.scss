@@ -5,12 +5,23 @@
 
 // Test
 // ----
-/// Describe a Test
+/// The `test()` wrapper-mixin groups related assertions,
+/// to describe the behavior they are testing.
+/// Tests should always contain one or more assertions.
 /// @access public
 /// @group api-test
 /// @param {string} $name -
 ///   Describe what is being tested
 /// @content Include any assertions that are part of this test
+/// @example scss
+///   @include test('Returns lists zipped together') {
+///     @include assert-equal(
+///       zip(a b c, 1 2 3),
+///       (a 1, b 2, c 3));
+///     @include assert-equal(
+///       zip(1px 1px 3px, solid dashed solid, red green blue),
+///       (1px solid red, 1px dashed green, 3px solid blue));
+///   }
 @mixin test(
   $name
 ) {

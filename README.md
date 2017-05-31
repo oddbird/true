@@ -1,20 +1,36 @@
 # True
 
 [![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-*Verb*
+True is a unit-testing tool
+for Sass code –
+initially developed for the
+[Susy layout toolkit](http://susy.oddbird.net).
+All of the test code is written in pure Sass,
+and can be compiled by any Sass compiler –
+but we also provide integration with
+[Mocha JS](https://mochajs.org/),
+for extra features and simpler reporting.
+
+**Verb**
 
 1. To make true; shape, adjust, place, etc., exactly or accurately:
+
   *True the wheels of a bicycle after striking a pothole.*
+
 2. To make even, symmetrical, level, etc. (often followed by *up*):
+
   *True up the sides of a door.*
+
 3. To test your Sass code; debug, perfect, etc. (often using *True*):
+
   *True your sweet plugin before you deploy.*
 
 
 ## Install
 
-in command line:
+In command line:
 
 ```bash
 # ruby gem
@@ -27,30 +43,54 @@ bower install true
 npm install sass-true
 ```
 
+Import in your test directory,
+like any other Sass file:
+
+```scss
+@import "true";
+```
+
+Depending on your setup,
+you may need to include the full path name:
+
+```scss
+// This is only an example
+@import "../node_modules/sass-true/sass/true";
+```
+
+
+## Settings
+
+`$true-terminal-output` (boolean),
+defaults to `true`
+
+- `true` will show detailed information in the terminal,
+  for debugging failed assertions, or reporting final results.
+  This is the default, and best for using `true-cli`.
+- `false` will turn off all terminal output from Sass,
+  though Mocha continues to use the terminal in any case.
+
 
 ## Usage
+
 
 ### With any Sass compiler
 
 ```scss
-@import "true";
+// Create modules to organize your tests
+@include test-module('Utility Tests') {
 
-@include test-module('Utilities') {
-
-  // Testing Functions
-  @include test('Map Add [function]') {
-    $base: (one: 1, two: 1, three: 1);
-    $add: (one: 1, two: 2, three: -1);
-
-    $test: map-add($base, $add);
-    $expect: (one: 2, two: 3, three: 0);
-    @include assert-equal($test, $expect,
-      'Returns the sum of two numeric maps');
+  // Test return-values of functions and variables
+  @include test('Zips multiple lists into a multi-dimensional list') {
+    // Assert the expected results
+    @include assert-equal(
+      zip(a b c, 1 2 3),
+      (a 1, b 2, c 3));
   }
 
-  // Testing Mixins
+  // Test CSS output from mixins
   @include test('Font Size [mixin]') {
-    @include assert('Outputs a font size and line height based on keyword.') {
+    @include assert('Outputs a font size and line height based on keyword') {
       @include output {
         @include font-size(large);
       }
@@ -63,22 +103,16 @@ npm install sass-true
   }
 }
 
-// Optionally show summary report in CSS and/or the command line:
-// - If you use Mocha, reporting to the command line is automatic.
-// - if you use true-cli, report(terminal) is required for output.
+// Optionally show a summary report in CSS and/or the command line:
 @include report;
 ```
 
 **Note:**
-Function unit-tests work across the board,
-but testing mixins can be a bit more complex.
-At this point,
-only Mocha is able to compare/report the results of mixin tests.
-Without using Mocha,
-you can test any mixin,
-but you will have to compare the expected and actual results manually
-in the output code.
-Version control can make that much easier than it sounds.
+Sass is able to compare values internally,
+but output tests have to be compared after compilation.
+You can do that by hand
+(`git diff` is helpful for noticing changes),
+or you can use out [Mocha JS](https://mochajs.org/) integration.
 
 
 ### With node-sass and Mocha (or other JS test runners)
@@ -97,7 +131,7 @@ Version control can make that much easier than it sounds.
    sassTrue.runSass({file: sassFile}, describe, it);
    ```
 
-4. Run Mocha, and see your Sass tests reported as individual test results.
+4. Run Mocha, and see your Sass tests reported in the command line.
 
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
@@ -145,6 +179,7 @@ Run tests:
 grunt mochacli
 ```
 
+
 ### With ruby-sass on the command line
 
 ```bash
@@ -171,156 +206,3 @@ require:
 
 default location: `test/true.yml`
 
-
-## Settings
-
-There is only one setting:
-`$true-terminal-output`
-toggles output to the terminal on or off.
-
-- `true` will show detailed information on failing assertions.
-  This is the default, and best for using `true-cli`.
-- `false` to turn off all terminal output.
-
-## API
-
-### Tests
-
-Tests help define what we are testing for. They can be used individually or
-grouped as a test module.
-
-#### `@include test-module()`
-
-Defines a test module. Allows the grouping of several common purposed tests.
-
-- `@param` {`String`} `$description` [''] - Module description
-
-```scss
-  @include test-module('Description of the module being tested') {
-    // Your tests here
-  }
-```
-
-#### `@include test()`
-
-Defines a test. Allows the definition of a single test for your module.
-
-- `@param` {`String`} `$description` [''] - Test description
-
-```scss
-  @include test-module('My test module description') {
-    @include test('Your test description') {
-      // Your asserts go here.
-    }
-  }
-```
-
-### Asserts
-
-Asserts help define what we are testing for. A test must contain at least one
-assert but can have as many as necessary based on your testing needs.
-
-#### `@include assert()`
-
-Defines a single assert for a CSS output. It's used together with the
-`output()` and `expect()` mixins to compare a mixin with it's expected output.
-
-
-```scss
-  @include test('Your test description') {
-    @include assert('Your assert description') {
-      @include output {
-        // Mixin to be evaluated
-        @include the-mixin-to-be-tested();
-      }
-
-      @include expect {
-        // The expected output of the-mixin-to-be-tested()
-        ...
-      }
-    }
-  }
-```
-
-
-#### `@include assert-false()`
-
-Asserts that the output of a test is falsy. This includes `false`, `null`,
-`''` (empty string) and `()` (empty list).
-
-- `@param` {`*`} `$assert` - Assert to be tested
-- `@param` {`String`} `$description` [''] - Assert description
-
-```scss
-  @include test('Your test description') {
-    $test: sample-function(5);
-
-    @include assert-false($test, 'Your assert description');
-  }
-```
-
-
-#### `@include assert-true()`
-
-Asserts that the output of a test is not falsy. The test will pass as long as
-the assert returns something.
-
-- `@param` {`*`} `$assert` - Assert to be tested
-- `@param` {`String`} `$description` [''] - Assert description
-
-```scss
-  @include test('Your test description') {
-    $test: sample-function(5);
-
-    @include assert-true($test, 'Your assert description');
-  }
-```
-
-
-#### `@include assert-equal()`
-
-Asserts that two parameters are equal.
-
-- `@param` {`*`} `$assert` - Assert to be tested
-- `@param` {`*`} `$expected` - Expected result
-- `@param` {`String`} `$description` [''] - Assert description
-
-```scss
-  @include test('Your test description') {
-    $test: sample-function(5);
-
-    @include assert-equals($test, 10, 'Your assert description');
-  }
-```
-
-
-#### `@include assert-unequal()`
-
-Asserts that two parameters are unequal.
-
-- `@param` {`*`} `$assert` - Assert to be tested
-- `@param` {`*`} `$expected` - Expected result
-- `@param` {`String`} `$description` [''] - Assert description
-
-```scss
-  @include test('Your test description') {
-    $test: sample-function(5);
-
-    @include assert-unequal($test, 10, 'Your assert description');
-  }
-```
-
-### Summary
-
-Reports show a summary of total, passed, failed, and output to CSS tests. The summary can be output into CSS and/or onto the terminal. If you use Mocha, reporting to the command line is automatic. If you use true-cli, `@include report(terminal)` is required at the end of your main test file for output.
-
-#### `@include report()`
-
-Reports summary and stats data into CSS and/or onto the terminal.
-
-- `@param` {`Bool`} `$terminal` [`true`] - Optionally output results to the terminal
-- `@param` {`Bool`} `$fail-on-error` [`false`] - Optionally error out the compiler if tests have failed
-
-```scss
-  @include report();
-```

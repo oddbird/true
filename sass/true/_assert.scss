@@ -6,11 +6,10 @@
 // Assert True
 // -----------
 /// Assert that a parameter is truthy.
-/// Empty lists and strings are excluded from default Sass truthyness.
+/// - Empty lists and strings are excluded from default Sass truthyness.
 /// Assertions are used inside the `test()` mixin
-/// to define what will be tested.
 ///
-/// @group api-assert
+/// @group api-assert-values
 ///
 /// @param {*} $assert -
 ///   Asserted value to test
@@ -20,7 +19,9 @@
 ///
 /// @example scss -
 ///   @include test('Non-empty strings are truthy') {
-///     @include assert-true('Hello World');
+///     @include assert-true(
+///       'Hello World',
+///       'You can optionally describe the assertion...');
 ///   }
 @mixin assert-true(
   $assert,
@@ -37,11 +38,10 @@
 // Assert False
 // ------------
 /// Assert that a parameter is falsey.
-/// Empty lists and strings are added to default Sass falseyness.
-/// Assertions are used inside the `test()` mixin
-/// to define what will be tested.
+/// - Empty lists and strings are added to default Sass falseyness.
+/// to define the expected results of the test.
 ///
-/// @group api-assert
+/// @group api-assert-values
 ///
 /// @param {*} $assert -
 ///   Asserted value to test
@@ -51,7 +51,9 @@
 ///
 /// @example scss -
 ///   @include test('Empty strings are falsey') {
-///     @include assert-false('');
+///     @include assert-false(
+///       '',
+///       'You can optionally describe the assertion...');
 ///   }
 @mixin assert-false(
   $assert,
@@ -69,9 +71,9 @@
 // ------------
 /// Assert that two parameters are `equal`
 /// Assertions are used inside the `test()` mixin
-/// to define what will be tested.
+/// to define the expected results of the test.
 ///
-/// @group api-assert
+/// @group api-assert-values
 ///
 /// @param {*} $assert -
 ///   Asserted value to test
@@ -86,7 +88,10 @@
 ///
 /// @example scss -
 ///   @include test('Division works as expected in Sass') {
-///     @include assert-equal(8 / 2, 4);
+///     @include assert-equal(
+///       8 / 2,
+///       4,
+///       'You can optionally describe the assertion...');
 ///   }
 @mixin assert-equal(
   $assert,
@@ -110,9 +115,9 @@
 // --------------
 /// Assert that two parameters are `unequal`
 /// Assertions are used inside the `test()` mixin
-/// to define what will be tested.
+/// to define the expected results of the test.
 ///
-/// @group api-assert
+/// @group api-assert-values
 ///
 /// @param {*} $assert -
 ///   Asserted value to test
@@ -127,7 +132,9 @@
 ///
 /// @example scss -
 ///   @include test('Strings and numbers hare not the same') {
-///     @include assert-unequal(1em, '1em');
+///     @include assert-unequal(
+///       1em,
+///       '1em');
 ///   }
 @mixin assert-unequal(
   $assert,
@@ -151,20 +158,20 @@
 // Assert [output]
 // ---------------
 /// Define a CSS-output assertion.
-/// The `assert()` mixin is a wrapper,
-/// and should contain one `output()` block and one `expect()` block
-/// as nested contents.
-/// These three mixins together describe a single
-/// `assert-equal` comparison on output HTML.
-/// When using Mocha integration, the output comparison is automated –
-/// otherwise you will have to compare the output manually.
-/// Using `git diff` is a great way to watch for changes in output.
-/// The output will be compared against the results
-/// of the `expect()` mixin.
 /// Assertions are used inside the `test()` mixin
-/// to define what will be tested.
+/// to define the expected results of the test.
+/// - The `assert()` mixin is a wrapper,
+///   and should contain one `output()` block and one `expect()` block
+///   as nested contents.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
 ///
-/// @group api-assert
+/// @group api-assert-output
 ///
 /// @param {string} $description [null] -
 ///   Description of the assertion being tested.
@@ -175,7 +182,7 @@
 ///
 /// @example scss -
 ///   @include test('Sass math compiles before output') {
-///     @include assert {
+///     @include assert('You can also describe the assertion...') {
 ///       @include output {
 ///         width: 14em + 2;
 ///       }
@@ -207,18 +214,20 @@
 // ------
 /// Describe the test content to be evaluated
 /// against the paired `expect()` block.
-/// The `output()` mixin requires a content block,
-/// and should be nested inside the `assert()` mixin
-/// along with a single `expect()` block.
-/// These three mixins together describe a single
-/// `assert-equal` comparison on output HTML.
-/// When using Mocha integration, the output comparison is automated –
-/// otherwise you will have to compare the output manually.
-/// Using `git diff` is a great way to watch for changes in output.
-/// The output will be compared against the results
-/// of the `expect()` mixin.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - The `output()` mixin requires a content block,
+///   and should be nested inside the `assert()` mixin
+///   along with a single `expect()` block.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
 ///
-/// @group api-assert
+/// @group api-assert-output
 ///
 /// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,
@@ -262,15 +271,17 @@
 /// The `expect()` mixin requires a content block,
 /// and should be nested inside the `assert()` mixin,
 /// along with a single `output()` block.
-/// These three mixins together describe a single
-/// `assert-equal` comparison on output HTML.
-/// When using Mocha integration, the output comparison is automated –
-/// otherwise you will have to compare the output manually.
-/// Using `git diff` is a great way to watch for changes in output.
-/// The output will be compared against the results
-/// of the `expect()` mixin.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
 ///
-/// @group api-assert
+/// @group api-assert-output
 ///
 /// @param {bool} $selector [true] -
 ///   Optionally wrap the contents in a `.test-output` selector block,

@@ -32,7 +32,7 @@
     "mocha": "^3.1.2",
     "mocha-istanbul": "^0.3.0",
     "sassdoc": "^2.2.2",
-    "sassdoc-theme-herman": "1.0.0-alpha.2",
+    "sassdoc-theme-herman": "^1.0.0-alpha.3",
     "sassdocify": "^0.3.4"
   },
   "eyeglass": {

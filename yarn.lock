@@ -3051,9 +3051,9 @@ sassdoc-theme-default@^2.5.2:
     swig "1.4.0"
     swig-extras "0.0.1"
 
-sassdoc-theme-herman@1.0.0-alpha.2:
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-1.0.0-alpha.2.tgz#44673c7e720550e995304f6ca38cf43cc67d9066"
+sassdoc-theme-herman@^1.0.0-alpha.3:
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-1.0.0-alpha.3.tgz#7e975bf22624779310b28c7a36954b00e299c174"
   dependencies:
     bluebird "^3.4.6"
     extend "^3.0.0"
