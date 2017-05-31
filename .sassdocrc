@@ -1,8 +1,8 @@
-theme: './node_modules/sassdoc-theme-herman'
+theme: 'herman'
 
 herman:
   sass:
-    includepaths: [ 'sass' ]
+    includepaths: ['sass']
     includes: ['true']
 
 groups:
