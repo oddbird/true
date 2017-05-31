@@ -28,6 +28,7 @@ for extra features and simpler reporting.
   *True your sweet plugin before you deploy.*
 
 
+
 ## Install
 
 In command line:
@@ -73,9 +74,6 @@ defaults to `true`
 
 ## Usage
 
-
-### With any Sass compiler
-
 ```scss
 // Create modules to organize your tests
 @include test-module('Utility Tests') {
@@ -114,8 +112,12 @@ You can do that by hand
 (`git diff` is helpful for noticing changes),
 or you can use out [Mocha JS](https://mochajs.org/) integration.
 
+See the [full documentation online](http://oddbird.net/true)
+or in the `.sassdoc` directory,
+for more details.
 
-### With node-sass and Mocha (or other JS test runners)
+
+## Using Mocha (or other JS test runners)
 
 1. Install `true` via npm (`npm install sass-true`).
 
@@ -152,7 +154,7 @@ to 10 lines of context; if you need more, you can provide a numeric fourth
 argument to `runSass`, the maximum number of context lines to provide.
 
 
-#### With Grunt...
+## Using Grunt
 
 Run Mocha using the Grunt task supplied by
 [grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)
@@ -180,7 +182,7 @@ grunt mochacli
 ```
 
 
-### With ruby-sass on the command line
+## Using Ruby Sass, and the Ruby CLI
 
 ```bash
 true-cli [options] PATH
@@ -205,4 +207,3 @@ require:
 ```
 
 default location: `test/true.yml`
-
