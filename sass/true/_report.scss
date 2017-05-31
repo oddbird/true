@@ -38,7 +38,7 @@
   @include _true-message($comment, 'comments');
 
   @if $terminal {
-    $debug: _true-report-message('linebreak', $results, $stats);
+    $debug: _true-report-message(not 'linebreak', $results, $stats);
     @include _true-message($debug, 'debug');
   }
 
