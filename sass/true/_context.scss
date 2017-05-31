@@ -104,7 +104,6 @@ $_true-output-context: ();
   $context: $_true-output-context
 ) {
   $valid: 'assert' 'expect' 'output';
-  $return: ();
 
   @if $new and not (index($valid, $new)) {
     $error: '#{$new} is not a valid context for output tests: #{$valid}';

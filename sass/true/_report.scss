@@ -26,7 +26,6 @@
   $stats: $_true-stats
 ) {
   $fail: map-get($results, 'fail');
-  $error: null;
 
   $run: map-get($results, 'run');
   $pass: map-get($results, 'pass');
@@ -73,7 +72,6 @@
   $results: $_true-results,
   $stats: $_true-stats
 ) {
-
   @if $linebreak {
     @return _true-join-multiple(
       '# SUMMARY ----------',
@@ -83,8 +81,10 @@
     );
   }
 
-  @return (
+  $report: (
     _true-results-message(null, $results),
     _true-stats-message(null, $stats),
   );
+
+  @return $report;
 }

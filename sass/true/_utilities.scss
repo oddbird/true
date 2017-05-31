@@ -53,7 +53,7 @@ $_true-error-output-override: false !default;
 ///   The source of the error
 /// @param {bool} $override [$_true-error-output-override] -
 ///   Optionally override error-output for testing failure-cases
-/// @return {string}
+/// @output
 ///   A message detailing the source and error,
 ///   when the `$override` is `true`
 /// @throw
@@ -111,7 +111,7 @@ $_true-error-output-override: false !default;
 ///   Any number of lists to be joined,
 ///   with an optional final argument describing
 ///   the desired list-separator ('space' or 'comma')
-/// @return
+/// @return {list} Joined items in a single list
 @function _true-join-multiple(
   $lists...
 ) {
