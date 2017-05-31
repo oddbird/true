@@ -1,5 +1,7 @@
 # True
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 
 *Verb*
