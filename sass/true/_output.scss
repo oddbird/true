@@ -4,8 +4,11 @@
 
 // Pass Details
 // ------------
+/// Ouptut a success message for passing tests
 /// @access private
-/// @group private
+/// @group private-assert
+/// @output -
+///   a passing-test comment with the name of the passing assertion
 @mixin _true-pass-details {
   $assertion: _true-context('assert');
   @include _true-message('✔ #{$assertion}', 'comments', 2);
@@ -14,8 +17,14 @@
 
 // Fail Details
 // ------------
+/// Failure message, with appropriate details
+/// to help you debug various common problems.
 /// @access private
-/// @group private
+/// @group private-assert
+/// @param {*} $assert - The assertion value
+/// @param {*} $expected - The expected value
+/// @param {bool} $terminal [$true-terminal-output] -
+///   whether to use the terminal as an output stream
 @mixin _true-fail-details(
   $assert,
   $expected,
@@ -61,8 +70,14 @@
 
 // Variable Details
 // ----------------
+/// Provide the details (type, list-separator, quotation)
+/// for a given variable -
+/// used to provide context in failure reporting
 /// @access private
-/// @group private
+/// @group private-assert
+/// @param {*} $var -
+///   Pass in asserted and expected values individually
+///   to retrieve comparable details for both
 @function _true-variable-details(
   $var
 ) {
@@ -83,8 +98,17 @@
 
 // EdgeFail Notes
 // --------------
+/// There are some common test failures that can be confusing,
+/// where results look identical in the output,
+/// but represent different values internally.
+/// This function looks for those edge-case failures
+/// and adds a clarifying note in the results.
 /// @access private
-/// @group private
+/// @group private-assert
+/// @param {*} $one - One of the values being compared
+/// @param {*} $two - The other calue being compared
+/// @return {null | string} -
+///   A helpful note related to your edge-case, when appropriate
 @function _true-edgefail-notes(
   $one,
   $two

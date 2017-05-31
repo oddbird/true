@@ -5,8 +5,9 @@
 
 // Terminal Output
 // ---------------
-/// Whether or not to use the terminal as output stream
-/// @access public
-/// @group reporting
-/// @type Bool
+/// While Mocha always reports to the terminal,
+/// this setting allows you to get terminal reports
+/// even when compiling True manually with Sass.
+/// @group api-xreport
+/// @type bool
 $true-terminal-output: true !default;

@@ -5,11 +5,31 @@
 
 // Test Module
 // -----------
-/// Define a Test Module
+/// Test Modules are optional,
+/// and can be used to group tests and other modules
+/// for organizational purposes.
+/// Modules can be nested for additional organization.
 /// @access public
-/// @group testing
-/// @param {String} $name - Module name
-/// @content Include all the tests that are part of this module
+/// @group api-test
+/// @param {string} $name - module name
+/// @content Include all the tests & modules that are part of this module
+/// @example scss
+///   // Module Group
+///   @include test-module('zip [function]') {
+///     // Test 1
+///     @include test('Returns two lists zipped together') {
+///       @include assert-equal(
+///         zip(a b c, 1 2 3),
+///         (a 1, b 2, c 3));
+///     }
+///
+///     // Test 2
+///     @include test('Returns three zipped lists') {
+///       @include assert-equal(
+///         zip(1px 1px 3px, solid dashed solid, red green blue),
+///         (1px solid red, 1px dashed green, 3px solid blue));
+///     }
+///   }
 @mixin test-module(
   $name
 ) {
@@ -24,8 +44,8 @@
 // ------------
 /// Module start helper
 /// @access private
-/// @group private
-/// @param {String} $name - Module name
+/// @group private-test
+/// @param {string} $name - module name
 @mixin _true-module-start(
   $name
 ) {
@@ -58,7 +78,7 @@
 // -----------
 /// Module stop helper
 /// @access private
-/// @group private
+/// @group private-test
 @mixin _true-module-stop {
   @include _true-update-stats-count('modules');
   @include _true-context-pop;

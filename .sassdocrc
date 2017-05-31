@@ -1,11 +1,17 @@
 theme: 'herman'
-dest: gh-pages/sassdoc
 
-autofill:
-  - throw
-  - content
-  - require
+herman:
+  sass:
+    includepaths: ['sass']
+    includes: ['true']
 
 groups:
-  private-context: Context (private)
-
+  api-assert-values: 'Comparing Values'
+  api-assert-output: 'Comparing Output'
+  api-test: 'Describing Tests'
+  api-xreport: 'Reporting Results'
+  private-assert: '_[assertion helpers]'
+  private-context: '_[data helpers]'
+  private-message: '_[reporting helpers]'
+  private-test: '_[test helpers]'
+  private-utils: '_[internal utilities]'

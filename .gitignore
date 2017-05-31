@@ -8,4 +8,4 @@ test/.sass-cache/
 *.css.map
 node_modules/
 coverage/
-gh-pages/
+.pages/
