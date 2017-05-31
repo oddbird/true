@@ -26,9 +26,6 @@
   $stats: $_true-stats
 ) {
   $fail: map-get($results, 'fail');
-  @if $fail-on-error and ($fail > 0) {
-    @error '#{$fail} tests failed.';
-  }
 
   $run: map-get($results, 'run');
   $pass: map-get($results, 'pass');
@@ -37,16 +34,22 @@
   $total: $pass + $fail + $output;
   $tests: map-get($stats, 'tests');
 
-  @if ($run != $tests) or ($run != $total) {
-    @warn 'These numbers don’t add up. Are all your tests properly structured?';
-  }
-
   $comment: _true-report-message('linebreak', $results, $stats);
   @include _true-message($comment, 'comments');
 
   @if $terminal {
-    $debug: _true-report-message('linebreak', $results, $stats);
+    $debug: _true-report-message(not 'linebreak', $results, $stats);
     @include _true-message($debug, 'debug');
+  }
+
+  @if ($run != $tests) or ($run != $total) {
+    $error: 'The results don’t add up. Are all your tests properly structured?';
+    @include _true-error($error, 'report');
+  }
+
+  @if $fail-on-error and ($fail > 0) {
+    $plural: if(($fail == 1), 'test', 'tests');
+    @include _true-error('#{$fail} #{$plural} failed', 'report');
   }
 }
 
@@ -72,11 +75,16 @@
   @if $linebreak {
     @return _true-join-multiple(
       '# SUMMARY ----------',
-      _true-results-message('linebreak'),
-      _true-stats-message('linebreak'),
+      _true-results-message('linebreak', $results),
+      _true-stats-message('linebreak', $stats),
       '--------------------'
-      );
+    );
   }
 
-  @return (_true-results-message(), _true-stats-message());
+  $report: (
+    _true-results-message(null, $results),
+    _true-stats-message(null, $stats),
+  );
+
+  @return $report;
 }

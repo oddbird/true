@@ -1,6 +1,30 @@
 // Utility Tests
 // =============
 
+
+@include test-module('True Error [function]') {
+  @include test('Allow errors to return without blocking compilation') {
+    @include assert-equal(
+      _true-error('This is a test error message', '_true-error test'),
+      'ERROR [_true-error test] This is a test error message');
+  }
+}
+
+
+@include test-module('True Error [mixin]') {
+  @include test('Allow errors to output without blocking compilation') {
+    @include assert {
+      @include output {
+        @include _true-error('This is a test error message', '_true-error test');
+      }
+      @include expect {
+        @include _true-message('ERROR [_true-error test] This is a test error message', 'comments');
+      }
+    }
+  }
+}
+
+
 @include test-module('Map Add [function]') {
   @include test('Returns a map with the sum-values of two numeric maps') {
     $base: (one: 1, two: 1, three: 1);
@@ -12,6 +36,7 @@
       $expect);
   }
 }
+
 
 @include test-module('Join Multiple [function') {
   $one: ('one', 'two', 'three');

@@ -2,17 +2,87 @@
 // =========
 
 
+// True Error Output Override
+// --------------------------
+/// Override error-output for the purpose of testing failure-cases
+/// @access private
+/// @group private-utils
+/// @type bool
+$_true-error-output-override: false !default;
+
+
+
+// True Error [function]
+// ---------------------
+/// Optionally override error-output for testing failure-cases
+/// @access private
+/// @group private-utils
+/// @param {string} $message -
+///   The error to report
+/// @param {string} $source -
+///   The source of the error
+/// @param {bool} $override [$_true-error-output-override] -
+///   Optionally override error-output for testing failure-cases
+/// @return {string}
+///   A message detailing the source and error,
+///   when the `$override` is `true`
+/// @throw
+///   A message detailing the source and error,
+///   when the `$override` is `false`
+@function _true-error(
+  $message,
+  $source,
+  $override: $_true-error-output-override
+) {
+  @if $override {
+    @return 'ERROR [#{$source}] #{$message}';
+  }
+
+  @error '[#{$source}] #{$message}';
+}
+
+
+// True Error [mixin]
+// ---------------------
+/// Optionally override error-output for testing failure-cases
+/// @access private
+/// @group private-utils
+/// @param {string} $message -
+///   The error to report
+/// @param {string} $source -
+///   The source of the error
+/// @param {bool} $override [$_true-error-output-override] -
+///   Optionally override error-output for testing failure-cases
+/// @output
+///   A message detailing the source and error,
+///   when the `$override` is `true`
+/// @throw
+///   A message detailing the source and error,
+///   when the `$override` is `false`
+@mixin _true-error(
+  $message,
+  $source,
+  $override: $_true-error-output-override
+) {
+  @if $override {
+    $error: 'ERROR [#{$source}] #{$message}';
+    @include _true-message($error, 'comments');
+  } @else {
+    @error '[#{$source}] #{$message}';
+  }
+}
+
 
 // Map Increment
 // -------------
 /// Add map values together
 /// @access private
 /// @group private-utils
-/// @param {Map} $base -
+/// @param {map} $base -
 ///   Initial map to add values to
-/// @param {Map} $add -
+/// @param {map} $add -
 ///   Map of values to be added
-/// @return {Map}
+/// @return {map}
 @function _true-map-increment(
   $base,
   $add
@@ -33,6 +103,15 @@
 
 // Join Multiple
 // -------------
+/// Extends the Sass `join()` function
+/// to accept and combine any number of lists
+/// @access private
+/// @group private-utils
+/// @param {list | 'space' | 'comma'} $lists... -
+///   Any number of lists to be joined,
+///   with an optional final argument describing
+///   the desired list-separator ('space' or 'comma')
+/// @return {list} Joined items in a single list
 @function _true-join-multiple(
   $lists...
 ) {
@@ -48,7 +127,8 @@
   }
 
   @if ($length < 2) {
-    @error 'Must provide at least 2 lists for _true-join-multiple';
+    $error: 'Must provide at least 2 lists';
+    @return _true-error($error, '_true-join-multiple');
   }
 
   @for $i from 2 through $length {
