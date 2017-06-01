@@ -7,14 +7,14 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
 
 True is a unit-testing tool
-for Sass code –
+for [Sass](http://sass-lang.com) code –
 initially developed for the
 [Susy layout toolkit](http://susy.oddbird.net).
 All of the test code is written in pure Sass,
 and can be compiled by any Sass compiler –
 but we also provide integration with
 [Mocha JS](https://mochajs.org/),
-for extra features and simpler reporting.
+for extra features and improved reporting.
 
 **Verb**
 
@@ -57,57 +57,89 @@ you may need to include the full path name:
 ```
 
 
-## Settings
+## One Setting
 
 `$true-terminal-output` (boolean),
 defaults to `true`
 
-- `true` will show detailed information in the terminal,
+- `true` will show detailed information in the terminal
   for debugging failed assertions, or reporting final results.
-  This is the default, and best for using `true-cli`.
+  This is the default, and best for compiling without Mocha.
 - `false` will turn off all terminal output from Sass,
-  though Mocha continues to use the terminal in any case.
+  though Mocha will continue to use the terminal for reporting.
 
 
 ## Usage
 
-```scss
-// Create modules to organize your tests
-@include test-module('Utility Tests') {
+True is based on common JS-testing patterns,
+allowing both a `test-module`/`test` syntax,
+and the newer `describe`/`it` for defining the structure:
 
-  // Test return-values of functions and variables
-  @include test('Zips multiple lists into a multi-dimensional list') {
+```scss
+@include test-module('Zip [function]') {
+  @include test('Zips multiple lists into a single multi-dimensional list') {
+
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
       (a 1, b 2, c 3));
   }
+}
+```
 
-  // Test CSS output from mixins
-  @include test('Font Size [mixin]') {
-    @include assert('Outputs a font size and line height based on keyword') {
-      @include output {
-        @include font-size(large);
-      }
+This is the same as…
 
-      @include expect {
-        font-size: 2rem;
-        line-height: 3rem;
-      }
+```scss
+@include describe('Zip [function]') {
+  @include it('Zips multiple lists into a single multi-dimensional list') {
+
+    // Assert the expected results
+    @include assert-equal(
+      zip(a b c, 1 2 3),
+      (a 1, b 2, c 3));
+  }
+}
+```
+
+Sass is able to compare values internally,
+meaning function-output and variable values
+can easily be compared and reported during Sass compilation.
+
+CSS output tests, on the other hand,
+have to be compared after compilation is complete.
+You can do that by hand if you want
+(`git diff` is helpful for noticing changes),
+or you can use out [Mocha JS](https://mochajs.org/) integration.
+
+Output tests fit the same structure,
+but assertions take a slightly different form,
+with an outer `assert` mixin,
+and a matching pair of `output` and `expect`
+to contain the output-values.
+
+```scss
+// Test CSS output from mixins
+@include it('Outputs a font size and line height based on keyword') {
+  @include assert {
+    @include output {
+      @include font-size('large');
+    }
+
+    @include expect {
+      font-size: 2rem;
+      line-height: 3rem;
     }
   }
 }
-
-// Optionally show a summary report in CSS and/or the command line:
-@include report;
 ```
 
-**Note:**
-Sass is able to compare values internally,
-but output tests have to be compared after compilation.
-You can do that by hand
-(`git diff` is helpful for noticing changes),
-or you can use out [Mocha JS](https://mochajs.org/) integration.
+You can optionally show a summary report
+in CSS and/or the command line,
+after the tests have completed:
+
+```scss
+@include report;
+```
 
 See the [full documentation online](http://oddbird.net/true)
 or in the `.sassdoc` directory,
@@ -151,7 +183,7 @@ to 10 lines of context; if you need more, you can provide a numeric fourth
 argument to `runSass`, the maximum number of context lines to provide.
 
 
-## Using Grunt
+### …With Grunt…
 
 Run Mocha using the Grunt task supplied by
 [grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)

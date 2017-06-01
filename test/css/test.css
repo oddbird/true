@@ -292,16 +292,22 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: Modules */
-/* ----------------- */
-/* Test: test-module */
+/* # Module: test-module [mixin] */
+/* ----------------------------- */
+/* Test: Changes the current module context */
 /*   ✔ [assert-equal] Changes the current module context */
 /*  */
-/* # Module: Modules :: Unquoted Module Name */
-/* ----------------------------------------- */
+/* # Module: test-module [mixin] :: Unquoted Module Name */
+/* ----------------------------------------------------- */
 /* Test: Don’t barf on unquoted names */
 /*   ✔ [assert-true] Please don’t barf on me */
 /*  */
+/*  */
+/*  */
+/* # Module: Describe/it syntax */
+/* ---------------------------- */
+/* Test: Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
 /*  */
 /*  */
 /* # Module: Tests */
@@ -540,12 +546,12 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 85 Tests: */
-/* - 75 Passed */
+/* 86 Tests: */
+/* - 76 Passed */
 /* - 0 Failed */
 /* - 10 Output to CSS */
 /* Stats: */
-/* - 31 Modules */
-/* - 85 Tests */
-/* - 96 Assertions */
+/* - 32 Modules */
+/* - 86 Tests */
+/* - 97 Assertions */
 /* -------------------- */
