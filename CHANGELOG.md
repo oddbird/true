@@ -4,6 +4,8 @@ True Changelog
 
 3.0.0 (unreleased)
 ------------------
+- Added `describe` and `it` mixins,
+  as alias for `test-module` and `test` respectively.
 - Added `$inspect` argument to `assert-equal` and `assert-unequal` mixins,
   for comparing `inspect($assert) == inspect($expected)`
   instead of `$assert == $expected`.
