@@ -144,6 +144,8 @@ after the tests have completed:
 See the [full documentation online](http://oddbird.net/true)
 or in the `.sassdoc` directory,
 for more details.
+See [CHANGELOG.md](https://github.com/oddbird/true/blob/master/CHANGELOG.md)
+when upgrading from an older version of True.
 
 
 ## Using Mocha (or other JS test runners)
