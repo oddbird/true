@@ -4,8 +4,6 @@
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
-
 True is a unit-testing tool
 for [Sass](http://sass-lang.com) code –
 initially developed for the
