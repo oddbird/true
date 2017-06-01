@@ -209,3 +209,22 @@ Run tests:
 ```bash
 grunt mochacli
 ```
+
+### Imports without Webpack
+
+If you use Webpack's tilde notation, like `@import
+'~accoutrement-init/sass/init'`, you'll need to tell `runSass` how to handle
+that. That will require writing a custom importer and passing it into the
+configuration for `runSass`. Something like:
+
+```js
+function importer(url, prev, done) {
+  if (url[0] === '~') {
+    url = path.resolve('node_modules', url.substr(1));
+  }
+
+  return { file: url };
+}
+
+sassTrue.runSass({ importer, file: sassFile }, describe, it);
+```
