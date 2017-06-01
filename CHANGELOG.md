@@ -9,6 +9,8 @@ True Changelog
   instead of `$assert == $expected`.
   This helps with several of the equality edge-cases listed below
   (rounding and units).
+- BREAKING: No more Ruby gem or Ruby CLI
+- BREAKING: No more bower package
 - BREAKING: Removes special-handling of equality,
   in favor of allowing Sass to determine the best comparisons.
   There are a few edge-cases to be aware of:

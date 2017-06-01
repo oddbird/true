@@ -37,12 +37,6 @@ for extra features and simpler reporting.
 In command line:
 
 ```bash
-# ruby gem
-gem install true
-
-# bower package
-bower install true
-
 # npm module
 npm install sass-true
 ```
@@ -183,30 +177,3 @@ Run tests:
 ```bash
 grunt mochacli
 ```
-
-
-## Using Ruby Sass, and the Ruby CLI
-
-```bash
-true-cli [options] PATH
-```
-
-Options:
-
- * `-s` silent
- * `-c` config file
- * `-d` debug config file settings
-
-Config file (optional):
-
-```yaml
-options:
-  color: true  # enables colored output
-
-# require ruby sass extension libraries
-require:
-  - "compass"
-  - "serialy/sassy"
-```
-
-default location: `test/true.yml`
