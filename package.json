@@ -1,6 +1,6 @@
 {
   "name": "sass-true",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
@@ -19,7 +19,7 @@
   "dependencies": {
     "css": "^2.2.1",
     "css-selector-parser": "^1.1.0",
-    "node-sass": "^4.0.0",
+    "node-sass": "^4.5.3",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
@@ -31,8 +31,8 @@
     "istanbul": "^0.4.2",
     "mocha": "^3.1.2",
     "mocha-istanbul": "^0.3.0",
-    "sassdoc": "^2.2.2",
-    "sassdoc-theme-herman": "^1.0.0-alpha.3",
+    "sassdoc": "^2.3.0",
+    "sassdoc-theme-herman": "^1.0.0-alpha.9",
     "sassdocify": "^0.3.4"
   },
   "eyeglass": {
@@ -51,7 +51,7 @@
     "release": "npm test; npm run compile; gulp sasslint; npm run sassdocify",
     "coverage-html": "./node_modules/.bin/istanbul report html"
   },
-  "author": "Miriam Eric Suzanne <miriam@oddbird.net>",
+  "author": "Miriam Suzanne <miriam@oddbird.net>",
   "contributors": [
     "Scott Davis <me@sdavis.info>",
     "Chris Eppstein <chris@eppsteins.net>",
