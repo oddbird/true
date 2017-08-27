@@ -44,11 +44,9 @@
   "scripts": {
     "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
     "debug": "./node_modules/.bin/mocha -R spec debug",
-    "sassdoc": "sassdoc sass/ --dest .sassdoc",
-    "sassdocify": "sassdocify sass && cd .pages && git remote set-url origin git@github.com:oddbird/true.git",
+    "sassdoc": "sassdoc sass/",
     "compile": "./node_modules/.bin/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
     "commit": "npm test; npm run compile; gulp sasslint; npm run sassdoc",
-    "release": "npm test; npm run compile; gulp sasslint; npm run sassdocify",
     "coverage-html": "./node_modules/.bin/istanbul report html"
   },
   "author": "Miriam Suzanne <miriam@oddbird.net>",

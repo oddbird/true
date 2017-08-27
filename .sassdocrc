@@ -1,4 +1,5 @@
 theme: 'herman'
+dest: docs/
 
 herman:
   sass:
