@@ -1,6 +1,10 @@
 True Changelog
 ==============
 
+3.0.1 (9/13/17)
+---------------
+- Update docs
+
 3.0.0 (8/26/17)
 ---------------
 - Update dependencies & release

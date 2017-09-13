@@ -1,12 +1,12 @@
 {
   "name": "sass-true",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/oddbird/true.git"
+    "url": "https://github.com/oddbird/true.git"
   },
   "keywords": [
     "unit-test",
