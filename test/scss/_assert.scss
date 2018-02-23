@@ -24,8 +24,8 @@
 
   @include test('False is not truthy') {
     @include assert-equal(
-      _true-is-truthy(false),
-      false);
+       _true-is-truthy(false),
+        false);
   }
 
   @include test('Null is not truthy') {
@@ -65,7 +65,7 @@
   @include test('Falsiness') {
     @include assert-false(
       not 'anything',
-      'Negated properties return false.');
+        'Negated properties return false.');
   }
 
   @include test('null') {
@@ -204,14 +204,147 @@
 
       @include expect {
         -property: value;
-
         @media (min-width: 30em) {
           -prop: val;
-
           @at-root {
             .selector {
               -prop: val;
             }
+          }
+        }
+      }
+    }
+  }
+
+  @include test-module('Assert (contains)') {
+    @include test('Passes if the property in "contains" exists in the "output" and has the same value') {
+      @include assert {
+        @include output {
+          height: 10px;
+          width: 20px;
+        }
+
+        @include contains {
+          height: 10px;
+        }
+      }
+    }
+
+    @include test('Passes if the property and its value in class in "contains" exists in the same class in "output"') {
+      @include assert {
+        @include output {
+          height: 20px;
+          .class {
+            height: 10px;
+          }
+          .other-class {
+            height: 10px;
+          }
+        }
+
+        @include contains {
+          .class {
+            height: 10px;
+          }
+        }
+      }
+    }
+
+    @include test('Can be used with nested classes') {
+      @include assert {
+        @include output {
+          height: 20px;
+          .class {
+            height: 10px;
+            .other-class {
+              height: 10px;
+            }
+          }
+        }
+
+        @include contains {
+          .class {
+            .other-class {
+              height: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    @include test('Can be used with nested @media queries') {
+      @include assert {
+        @include output {
+          .class{
+            height:20px;
+          }
+          @media (min-width: 30em) {
+            @media (min-width: 40em) {
+              .selector {
+                height: 10px;
+              }
+              .selector2 {
+                height: 10px;
+              }
+            }
+            .selector3 {
+              height: 10px;
+            }
+          }
+        }
+
+        @include contains {
+          @media (min-width: 30em) {
+            @media (min-width: 40em) {
+              .selector2 {
+                height: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include test('Can be used with @at-root') {
+      @include assert {
+        @include output {
+          @at-root {
+            .selector {
+              height: 10px;
+            }
+          }
+        }
+
+        @include contains {
+          @at-root {
+            .selector {
+              height: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    @include test('Can be used for all selector types') {
+      @include assert {
+        @include output {
+          .selector {
+            -prop: val;
+          }
+          #id {
+            -prop: value1
+          }
+          div {
+            -prop: value2
+          }
+        }
+
+        @include contains {
+          .selector {
+            -prop: val;
+          }
+          div {
+            -prop: value2
           }
         }
       }
