@@ -317,6 +317,23 @@
   @include _true-message('  END_EXPECTED  ', 'comments');
 }
 
+@mixin contains(
+  $selector: true
+) {
+  @include _true-output-context('contains');
+  @include _true-message('  CONTAINED  ', 'comments');
+
+  @if $selector {
+    .test-output {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+
+  @include _true-message('  END_CONTAINED  ', 'comments');
+}
+
 
 // Assert Results
 // --------------
