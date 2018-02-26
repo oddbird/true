@@ -394,7 +394,7 @@
         @include contains {
           @at-root {
             .selector {
-              min-height: 10px;
+              min-height: 5px;
               max-height: 20px;
             }
           }
