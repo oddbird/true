@@ -51,7 +51,7 @@ $_true-context: ();
 // Output-context [variable]
 // -------------------------
 /// Make sure every output test
-/// includes an `assert`, `output`, and `expect`
+/// includes an `assert`, `output`, `expect` and `contains`
 /// @access private
 /// @group private-context
 /// @type list
@@ -103,7 +103,7 @@ $_true-output-context: ();
   $new,
   $context: $_true-output-context
 ) {
-  $valid: 'assert' 'expect' 'output';
+  $valid: 'assert' 'expect' 'output' 'contains';
 
   @if $new and not (index($valid, $new)) {
     $error: '#{$new} is not a valid context for output tests: #{$valid}';
@@ -126,10 +126,10 @@ $_true-output-context: ();
   }
 
   $length: length($context);
-  $has-both: index($context, 'output') and index($context, 'expect');
+  $has-both: index($context, 'output') and (index($context, 'expect') or index($context, 'contains'));
 
   @if ($length != 3) or (not $has-both) {
-    $error: 'Each `assert()` must contain one `output()` and one `expect()`';
+    $error: 'Each `assert()` must contain one `output()`, and one `expect()` or `contains()`';
     @return _true-error($error, 'output-context');
   }
 
