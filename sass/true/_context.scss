@@ -65,8 +65,8 @@ $_true-output-context: ();
 /// or check to make sure they all exist before resetting the context.
 /// @access private
 /// @group private-context
-/// @param {'assert' | 'output' | 'expect' | null} $new -
-///   Add a new `assert`, `output`, or `expect` layer
+/// @param {'assert' | 'output' | 'expect' | 'contains' | null} $new -
+///   Add a new `assert`, `output`, `expect`, or `contains` layer
 ///   to the context of an output-test,
 ///   or use `null` to check that all context is properly formed
 ///   and then reset it at the end of a test
@@ -87,8 +87,8 @@ $_true-output-context: ();
 /// Validate the new context, and return an updated context value
 /// @access private
 /// @group private-context
-/// @param {'assert' | 'output' | 'expect' | null} $new -
-///   Add a new `assert`, `output`, or `expect` layer
+/// @param {'assert' | 'output' | 'expect' | 'contains' | null} $new -
+///   Add a new `assert`, `output`, `expect`, or `contains` layer
 ///   to the context of an output-test,
 ///   or use `null` to check that all context is properly formed
 ///   and then reset it at the end of a test
