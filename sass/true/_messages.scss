@@ -26,7 +26,7 @@
   }
 
   @each $line in $message {
-    @if index($output, 'comments') {
+    @if index($output, 'comments') { // sass-lint:disable-line no-empty-rulesets
       /* #{$pad + $line} */ // sass-lint:disable-line no-css-comments
     }
 
