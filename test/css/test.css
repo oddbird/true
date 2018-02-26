@@ -438,6 +438,163 @@
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
+/* # Module: Assert (output) :: Assert (contains) */
+/* ---------------------------------------------- */
+/* Test: Passes if the property in "contains" exists in the "output" and has the same value */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 10px;
+  width: 20px; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output {
+  height: 10px; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Passes if the property and its value in class in "contains" exists in the same class in "output" */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 20px; }
+  .test-output .class {
+    height: 10px; }
+  .test-output .other-class {
+    height: 10px; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .class {
+  height: 10px; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can be used with nested classes */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 20px; }
+  .test-output .class {
+    height: 10px; }
+    .test-output .class .other-class {
+      height: 10px; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .class .other-class {
+  height: 10px; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can be used with nested @media queries */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .class {
+  height: 20px; }
+
+@media (min-width: 30em) and (min-width: 40em) {
+  .test-output .selector {
+    height: 10px; }
+  .test-output .selector2 {
+    height: 10px; } }
+
+@media (min-width: 30em) {
+  .test-output .selector3 {
+    height: 10px; } }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+@media (min-width: 30em) and (min-width: 40em) {
+  .test-output .selector2 {
+    height: 10px; } }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can be used with @at-root */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.selector {
+  height: 10px; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.selector {
+  height: 10px; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can be used for all selector types */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .selector {
+  -prop: val; }
+
+.test-output #id {
+  -prop: value1; }
+
+.test-output div {
+  -prop: value2;
+  min-height: 20px;
+  max-height: 30px; }
+
+.test-output input[type="text"] {
+  color: rebeccapurple; }
+
+.test-output * + * {
+  color: red;
+  display: none; }
+
+.test-output body > h1 {
+  font-weight: bold; }
+
+.test-output i::before {
+  -prop: value3; }
+
+.test-output div ~ p {
+  color: green; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .selector {
+  -prop: val; }
+
+.test-output div {
+  max-height: 30px; }
+
+.test-output body > h1 {
+  font-weight: bold; }
+
+.test-output * + * {
+  display: none; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can assert multiple properties within a selector */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .selector {
+  width: 10px;
+  min-height: 5px;
+  max-height: 20px; }
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .selector {
+  width: 10px;
+  max-height: 20px; }
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
 /*  */
 /* # Module: report [mixin] */
 /* ------------------------ */
@@ -546,12 +703,12 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 86 Tests: */
+/* 93 Tests: */
 /* - 76 Passed */
 /* - 0 Failed */
-/* - 10 Output to CSS */
+/* - 17 Output to CSS */
 /* Stats: */
-/* - 32 Modules */
-/* - 86 Tests */
-/* - 97 Assertions */
+/* - 33 Modules */
+/* - 93 Tests */
+/* - 104 Assertions */
 /* -------------------- */
