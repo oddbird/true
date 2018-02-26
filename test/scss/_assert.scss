@@ -393,7 +393,7 @@
 
         @include contains {
           .selector {
-            min-height: 5px;
+            width: 10px;
             max-height: 20px;
           }
         }
