@@ -332,10 +332,33 @@
             -prop: val;
           }
           #id {
-            -prop: value1
+            -prop: value1;
           }
           div {
-            -prop: value2
+            -prop: value2;
+            min-height: 20px;
+            max-height: 30px;
+          }
+
+          input[type="text"] {
+            color: rebeccapurple;
+          }
+
+          * + * {
+            color: red;
+            display: none;
+          }
+
+          body > h1 {
+            font-weight: bold;
+          }
+
+          i::before {
+            -prop: value3;
+          }
+
+          div ~ p {
+            color: green;
           }
         }
 
@@ -344,7 +367,15 @@
             -prop: val;
           }
           div {
-            -prop: value2
+            max-height: 30px;
+          }
+
+          body > h1 {
+            font-weight: bold;
+          }
+
+          * + * {
+            display: none;
           }
         }
       }
