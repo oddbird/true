@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <title>Search Results | True Documentation</title>
+  <title>Contributing | True Documentation</title>
 
   <link href="assets/img/favicon.ico" rel="shortcut icon">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
@@ -71,7 +71,7 @@
           
             
             <li class="nav-item">
-              <a href="CONTRIBUTING.html" data-nav="is-not-active">Contributing</a>
+              <a href="CONTRIBUTING.html" data-nav="is-active">Contributing</a>
             </li>
           
             
@@ -176,12 +176,59 @@
   <nav class="breadcrumb">
     
     <a href="index.html" >True</a> »
-    <strong>Search Results</strong>
+    <strong>Contributing</strong>
   </nav>
 
 
-        <div data-page="search">
+        <div data-page="CONTRIBUTING">
           
+  <div class="text-block">
+    <h1 id="contributing-to-true">Contributing to True</h1>
+<p>True exists because of your contributions.
+Bug reports and feature requests are welcome,
+but code is even<span class="widont">&nbsp;</span>better!</p>
+<p>In all cases,
+we ask you to follow the
+<a href="http://sass-lang.com/community-guidelines">Sass community<span class="widont">&nbsp;</span>guidelines</a>.</p>
+<h2 id="pull-requests">Pull Requests</h2>
+<p>We use the <code>master</code> branch for production-ready code,
+and side-branches for everything in-progress
+or<span class="widont">&nbsp;</span>up-for-debate.</p>
+<p>When submitting a patch via pull<span class="widont">&nbsp;</span>request:</p>
+<ul>
+<li>Write a clear, descriptive commit<span class="widont">&nbsp;</span>message</li>
+<li>Include any appropriate unit tests,
+and make sure all tests are passing (<code>npm test</code>)</li>
+<li>Add your changes to the <a href="CHANGELOG.md">changelog</a></li>
+<li>Update or write appropriate <a href="http://sassdoc.com/">SassDoc</a>
+inline documentation for your<span class="widont">&nbsp;</span>changes</li>
+<li>Keep it simple: one bug fix or feature per pull<span class="widont">&nbsp;</span>request</li>
+</ul>
+<h2 id="development">Development</h2>
+<p>Set up your dev environment
+with the appropriate<span class="widont">&nbsp;</span>dependencies:</p>
+<pre><code>yarn
+</code></pre>
+<h2 id="committing">Committing</h2>
+<p>Linting, testing, and documentation
+should be done before every<span class="widont">&nbsp;</span>commit:</p>
+<pre><code>npm run commit
+</code></pre>
+<p>They can also be triggered<span class="widont">&nbsp;</span>individually:</p>
+<pre><code># lint
+gulp sasslint
+
+# test with mocha/true
+npm test
+
+# compile docs
+npm run sassdoc
+</code></pre>
+<p>Once you’ve fixed any final errors or typos,
+commit your changes, and submit a pull<span class="widont">&nbsp;</span>request!</p>
+
+  </div>
+
         </div>
       </main>
     </div>
@@ -190,7 +237,5 @@
   <script type="text/javascript" src="assets/webpack/vendor.min.js"></script>
   <script type="text/javascript" src="assets/webpack/app.min.js"></script>
   
-  <script type="text/javascript" src="assets/webpack/search.min.js"></script>
-
 </body>
 </html>

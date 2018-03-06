@@ -560,6 +560,10 @@
 .test-output div ~ p {
   color: green; }
 
+.test-output i:not(.italic) {
+  text-decoration: underline;
+  --custom: val; }
+
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .selector {
@@ -573,6 +577,9 @@
 
 .test-output * + * {
   display: none; }
+
+.test-output i:not(.italic) {
+  text-decoration: underline; }
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */

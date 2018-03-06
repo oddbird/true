@@ -97,7 +97,7 @@
   @include test('missing assert') {
     @include assert-equal(
       _true-validate-output-context('output'),
-      'ERROR [output-context] The `assert()` wrapper is required for `output()`, `expect()`, and `contains()`');
+      'ERROR [output-context] The `assert()` wrapper is required');
   }
 
   @include test('wrong length') {

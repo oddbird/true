@@ -24,8 +24,8 @@
 
   @include test('False is not truthy') {
     @include assert-equal(
-       _true-is-truthy(false),
-        false);
+      _true-is-truthy(false),
+      false);
   }
 
   @include test('Null is not truthy') {
@@ -65,7 +65,7 @@
   @include test('Falsiness') {
     @include assert-false(
       not 'anything',
-        'Negated properties return false.');
+      'Negated properties return false.');
   }
 
   @include test('null') {
@@ -360,12 +360,18 @@
           div ~ p {
             color: green;
           }
+
+          i:not(.italic) {
+            text-decoration: underline;
+            --custom: val;
+          }
         }
 
         @include contains {
           .selector {
             -prop: val;
           }
+
           div {
             max-height: 30px;
           }
@@ -376,6 +382,10 @@
 
           * + * {
             display: none;
+          }
+
+          i:not(.italic) {
+            text-decoration: underline;
           }
         }
       }

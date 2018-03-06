@@ -1,5 +1,6 @@
 {
   "name": "sass-true",
+  "title": "True",
   "version": "3.0.2",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
