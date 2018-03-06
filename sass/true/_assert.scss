@@ -317,6 +317,60 @@
   @include _true-message('  END_EXPECTED  ', 'comments');
 }
 
+// Contains
+// ------
+/// Describe the expected results of the paired `output()` block.
+/// The `contains()` mixin requires a content block,
+/// and should be nested inside the `assert()` mixin,
+/// along with a single `output()` block.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - These three mixins together describe a single
+///   comparison on output CSS.
+///   The compiled CSS-results of the `contains()` mixin
+///   will be compared against the results of the `output()` mixin
+///   to see if all of the `contains` CSS is within the `output` CSS.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
+///
+/// @content Define the expected results of a sibling `output()` mixin
+///
+/// @example scss -
+///   @include test('Sass math compiles before output') {
+///     @include assert {
+///       @include output {
+///         height: 100%;
+///         width: 14em + 2;
+///       }
+///       @include contains {
+///         width: 16em;
+///       }
+///     }
+///   }
+@mixin contains(
+  $selector: true
+) {
+  @include _true-output-context('contains');
+  @include _true-message('  CONTAINED  ', 'comments');
+
+  @if $selector {
+    .test-output {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+
+  @include _true-message('  END_CONTAINED  ', 'comments');
+}
+
 
 // Assert Results
 // --------------

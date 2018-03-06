@@ -2,6 +2,13 @@ True Changelog
 ==============
 
 
+3.1.0 (UNRELEASED)
+------------------
+- NEW: Add `contains()` mixin for more minute output comparisons.
+  Works the same as `expect()`, but doesn't require a complete match.
+- Update docs
+
+
 3.0.2 (10/6/17)
 ---------------
 - Dependency updates

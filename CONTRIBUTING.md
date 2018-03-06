@@ -53,7 +53,7 @@ They can also be triggered individually:
 
 ```
 # lint
-gulp lint
+gulp sasslint
 
 # test with mocha/true
 npm test

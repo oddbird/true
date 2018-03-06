@@ -66,7 +66,7 @@
 
 // valid output context
 @include test-module('true-validate-output-context [function]') {
-  $valid: 'assert' 'expect' 'output';
+  $valid: 'assert' 'expect' 'output' 'contains';
 
   @include test('unknown context name') {
     @include assert-equal(
@@ -97,25 +97,25 @@
   @include test('missing assert') {
     @include assert-equal(
       _true-validate-output-context('output'),
-      'ERROR [output-context] The `assert()` wrapper is required for `output()` and `expect()`');
+      'ERROR [output-context] The `assert()` wrapper is required');
   }
 
   @include test('wrong length') {
-    $_true-output-context: 'assert' 'wtf' 'output' 'expect' !global;
+    $_true-output-context: 'assert' 'wtf' 'output' 'expect' 'contains' !global;
 
     @include assert-equal(
       _true-validate-output-context(null),
-      'ERROR [output-context] Each `assert()` must contain one `output()` and one `expect()`');
+      'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`');
 
     $_true-output-context: () !global;
   }
 
   @include test('missing context') {
-    $_true-output-context: 'assert' 'wtf' 'output' !global;
+    $_true-output-context: 'assert' 'wtf' 'output' 'contains' !global;
 
     @include assert-equal(
       _true-validate-output-context(null),
-      'ERROR [output-context] Each `assert()` must contain one `output()` and one `expect()`');
+      'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`');
 
     $_true-output-context: () !global;
   }

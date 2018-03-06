@@ -6,14 +6,23 @@ herman:
   sass:
     includepaths: ['sass']
     includes: ['true']
+  extraDocs:
+    - name: 'Changelog'
+      path: CHANGELOG.md
+    - name: 'Contributing'
+      path: CONTRIBUTING.md
+    - name: 'BSD3 License'
+      path: LICENSE.txt
 
 groups:
-  api-assert-values: 'Comparing Values'
-  api-assert-output: 'Comparing Output'
-  api-test: 'Describing Tests'
-  api-xreport: 'Reporting Results'
-  private-assert: '_[assertion helpers]'
-  private-context: '_[data helpers]'
-  private-message: '_[reporting helpers]'
-  private-test: '_[test helpers]'
-  private-utils: '_[internal utilities]'
+  Public API:
+    api-test: 'Describing Tests'
+    api-assert-values: 'Comparing Values'
+    api-assert-output: 'Comparing Output'
+    api-xreport: 'Reporting Results'
+  Internal Helpers [Private]:
+    private-utils: 'Utilities'
+    private-context: 'Data Management'
+    private-test: 'Tests'
+    private-assert: 'Assertions'
+    private-message: 'Reporting'
