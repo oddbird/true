@@ -1,7 +1,8 @@
 # True
 
+[![Build Status](https://travis-ci.org/oddbird/true.svg?branch=master)](https://travis-ci.org/oddbird/true)
+[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master)](https://coveralls.io/github/oddbird/true?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
-[![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 True is a unit-testing tool
@@ -36,7 +37,7 @@ In command line:
 
 ```bash
 # npm module
-npm install sass-true
+npm install sass-true node-sass
 ```
 
 Import in your test directory,
@@ -107,7 +108,7 @@ CSS output tests, on the other hand,
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (`git diff` is helpful for noticing changes),
-or you can use out [Mocha JS](https://mochajs.org/) integration.
+or you can use our [Mocha JS](https://mochajs.org/) integration.
 
 Output tests fit the same structure,
 but assertions take a slightly different form,
@@ -148,7 +149,7 @@ when upgrading from an older version of True.
 
 ## Using Mocha (or other JS test runners)
 
-1. Install `true` via npm (`npm install sass-true`).
+1. Install `true` via npm (`npm install sass-true node-sass`).
 
 2. Write some Sass tests in `test/test.scss` (see above).
 
@@ -167,7 +168,8 @@ when upgrading from an older version of True.
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
-The first argument to `runSass` accepts the same options that node-sass'
+The first argument to `runSass` accepts the
+[same options](https://github.com/sass/node-sass/#options) that node-sass'
 `renderSync` function accepts. The only modification `runSass` makes is to add
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.

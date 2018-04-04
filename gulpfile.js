@@ -2,9 +2,10 @@
 
 'use strict';
 
+var beeper = require('beeper');
 var chalk = require('chalk');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
 var sasslint = require('gulp-sass-lint');
 
 var paths = {
@@ -27,15 +28,12 @@ var paths = {
 }.init();
 
 var onError = function (err) {
-  gutil.log(chalk.red(err.message));
-  gutil.beep();
+  log.error(chalk.red(err.message));
+  beeper();
   this.emit('end');
 };
 
-var sasslintTask = function (src, failOnError, log) {
-  if (log) {
-    gutil.log('Running', '\'' + chalk.cyan('sasslint ' + src) + '\'...');
-  }
+var sasslintTask = function (src, failOnError) {
   var stream = gulp.src(src)
     .pipe(sasslint())
     .pipe(sasslint.format())
@@ -47,5 +45,5 @@ var sasslintTask = function (src, failOnError, log) {
 };
 
 gulp.task('sasslint', function () {
-  return sasslintTask(paths.ALL_SASS, true);
+  return sasslintTask(paths.ALL_SASS);
 });

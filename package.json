@@ -20,21 +20,26 @@
   "dependencies": {
     "css": "^2.2.1",
     "css-selector-parser": "^1.1.0",
-    "node-sass": "^4.5.3",
-    "underscore": "^1.8.3"
+    "lodash.find": "^4.6.0",
+    "lodash.foreach": "^4.5.0",
+    "lodash.last": "^3.0.0"
   },
   "devDependencies": {
-    "chai": "^4.0.1",
-    "chalk": "^2.0.0",
-    "gulp": "^3.9.1",
-    "gulp-sass-lint": "^1.3.2",
-    "gulp-util": "^3.0.8",
-    "istanbul": "^0.4.2",
-    "mocha": "^5.0.1",
-    "mocha-istanbul": "^0.3.0",
-    "sassdoc": "^2.3.0",
-    "sassdoc-theme-herman": "^2.0.0",
-    "sassdocify": "^0.3.4"
+    "beeper": "^1.1.1",
+    "chai": "^4.1.2",
+    "chalk": "^2.3.2",
+    "coveralls": "^3.0.0",
+    "fancy-log": "^1.3.2",
+    "gulp": "^4.0.0",
+    "gulp-sass-lint": "^1.3.4",
+    "mocha": "^5.0.5",
+    "node-sass": "^4.8.3",
+    "nyc": "^11.6.0",
+    "sassdoc": "^2.5.0",
+    "sassdoc-theme-herman": "^2.1.0"
+  },
+  "peerDependencies": {
+    "node-sass": "^4.0.0"
   },
   "eyeglass": {
     "needs": "^1.0",
@@ -43,12 +48,12 @@
     "exports": false
   },
   "scripts": {
-    "test": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
-    "debug": "./node_modules/.bin/mocha -R spec debug",
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "debug": "mocha debug",
     "sassdoc": "sassdoc sass/",
-    "compile": "./node_modules/.bin/node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
-    "commit": "npm test; npm run compile; gulp sasslint; npm run sassdoc",
-    "coverage-html": "./node_modules/.bin/istanbul report html"
+    "compile": "node-sass test/scss/test.scss test/css/test.css --include-path ./sass/",
+    "commit": "npm test; npm run compile; gulp sasslint; npm run sassdoc"
   },
   "author": "Miriam Suzanne <miriam@oddbird.net>",
   "contributors": [
