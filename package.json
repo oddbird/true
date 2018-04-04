@@ -17,6 +17,9 @@
     "TDD",
     "eyeglass-module"
   ],
+  "engines": {
+    "node": ">=6"
+  },
   "dependencies": {
     "css": "^2.2.1",
     "css-selector-parser": "^1.1.0",
