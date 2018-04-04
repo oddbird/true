@@ -121,7 +121,6 @@ describe('#parse', function () {
     expect(main.parse(css)).to.deep.equal(expected);
   });
 
-
   it('parses a test following a summary', function () {
     var css = [
       '/* # SUMMARY ---------- */',
@@ -148,7 +147,6 @@ describe('#parse', function () {
 
     expect(main.parse(css)).to.deep.equal(expected);
   });
-
 
   it('parses a nested passing non-output test', function () {
     var css = [
@@ -672,4 +670,161 @@ describe('#parse', function () {
     expect(attempt).to.throw(
       'Line 14, column 1: Unexpected comment "foo"; looking for END_ASSERT');
   });
+
+  describe('#contains', function () {
+    it('parses a passing output test', function () {
+      var css = [
+        '/* # Module: Contains */',
+        '/* Test: CSS output contains */',
+        '/*   ASSERT: Output selector pattern contains input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '',
+        '/*   END_CONTAINED   */',
+        '/* */',
+        '/*   END_ASSERT   */'
+      ].join('\n');
+      var expected = [{
+        module: "Contains",
+        tests: [{
+          test: "CSS output contains",
+          assertions: [{
+            description: "Output selector pattern contains input pattern",
+            assertionType: 'equal',
+            passed: true,
+            output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+            expected: '.test-output {\n  height: 10px;\n}'
+          }],
+        }],
+      }];
+
+      expect(main.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses a passing output test with loud comments', function () {
+      var css = [
+        '/* Some random loud comment */',
+        '/* # Module: Contains */',
+        '/* Test: CSS output contains */',
+        '/*   ASSERT: Output selector pattern contains input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '/* Some loud comment */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINED   */',
+        '/* Some loud comment */',
+        '.test-output {',
+        '  height: 10px; }',
+        '',
+        '/*   END_CONTAINED   */',
+        '/* */',
+        '/*   END_ASSERT   */'
+      ].join('\n');
+      var expected = [{
+        module: "Contains",
+        tests: [{
+          test: "CSS output contains",
+          assertions: [{
+            description: "Output selector pattern contains input pattern",
+            assertionType: 'equal',
+            passed: true,
+            output: '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
+            expected: '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n}'
+          }],
+        }],
+      }];
+
+      expect(main.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses a failing output test', function () {
+      var css = [
+        '/* # Module: Contains */',
+        '/* Test: CSS output contains */',
+        '/*   ASSERT: Output selector pattern contains input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 20px; }',
+        '',
+        '/*   END_CONTAINED   */',
+        '/* */',
+        '/*   END_ASSERT   */'
+      ].join('\n');
+      var expected = [{
+        module: "Contains",
+        tests: [{
+          test: "CSS output contains",
+          assertions: [{
+            description: "Output selector pattern contains input pattern",
+            assertionType: 'equal',
+            passed: false,
+            output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+            expected: '.test-output {\n  height: 20px;\n}'
+          }],
+        }],
+      }];
+
+      expect(main.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses a failing output test (wrong selector)', function () {
+      var css = [
+        '/* # Module: Contains */',
+        '/* Test: CSS output contains */',
+        '/*   ASSERT: Output selector pattern contains input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINED   */',
+        '.other-class {',
+        '  height: 20px; }',
+        '',
+        '/*   END_CONTAINED   */',
+        '/* */',
+        '/*   END_ASSERT   */'
+      ].join('\n');
+      var expected = [{
+        module: "Contains",
+        tests: [{
+          test: "CSS output contains",
+          assertions: [{
+            description: "Output selector pattern contains input pattern",
+            assertionType: 'equal',
+            passed: false,
+            output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+            expected: '.other-class {\n  height: 20px;\n}'
+          }],
+        }],
+      }];
+
+      expect(main.parse(css)).to.deep.equal(expected);
+    });
+  });
 });
+
