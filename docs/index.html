@@ -223,8 +223,7 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 <p><em>True your sweet plugin before you<span class="widont">&nbsp;</span>deploy.</em></p>
 <h2 id="install">Install</h2>
 <p>In command line:</p>
-<pre><code class="lang-bash"># npm module
-npm install sass-true node-sass
+<pre><code class="lang-bash">npm install sass-true
 </code></pre>
 <p>Import in your test directory,
 like any other Sass<span class="widont">&nbsp;</span>file:</p>
@@ -310,14 +309,22 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 <h2 id="using-mocha-or-other-js-test-runners-">Using Mocha (or other JS test<span class="widont">&nbsp;</span>runners)</h2>
 <ol>
 <li>
-<p>Install <code>true</code> via npm (<code>npm install sass-true node-sass</code>).</p>
+<p>Install <code>true</code> via npm:</p>
+<pre><code class="lang-bash">npm install sass-true
+</code></pre>
+</li>
+<li>
+<p>[Optional] Install <code>node-sass</code> (required as a <code>peerDependency</code>),
+if it’s not already installed in your<span class="widont">&nbsp;</span>project:</p>
+<pre><code class="lang-bash">npm install node-sass
+</code></pre>
 </li>
 <li>
 <p>Write some Sass tests in <code>test/test.scss</code> (see above).</p>
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/test_sass.js</code>:</p>
-<pre><code class="lang-javascript">var path = require('path');
+<pre><code class="lang-js">var path = require('path');
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
@@ -350,7 +357,7 @@ argument to <code>runSass</code>, the maximum number of context lines to<span cl
 <pre><code class="lang-bash">npm install grunt-mocha-cli --save-dev
 </code></pre>
 <p>Configure task:</p>
-<pre><code class="lang-javascript">grunt.loadNpmTasks('grunt-mocha');
+<pre><code class="lang-js">grunt.loadNpmTasks('grunt-mocha');
 
 mochacli: {
    all: ['test/test_sass.js']

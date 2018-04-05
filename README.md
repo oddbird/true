@@ -36,8 +36,7 @@ for extra features and improved reporting.
 In command line:
 
 ```bash
-# npm module
-npm install sass-true node-sass
+npm install sass-true
 ```
 
 Import in your test directory,
@@ -149,13 +148,24 @@ when upgrading from an older version of True.
 
 ## Using Mocha (or other JS test runners)
 
-1. Install `true` via npm (`npm install sass-true node-sass`).
+1. Install `true` via npm:
 
-2. Write some Sass tests in `test/test.scss` (see above).
+   ```bash
+   npm install sass-true
+   ```
 
-3. Write a shim JS test file in `test/test_sass.js`:
+2. [Optional] Install `node-sass` (required as a `peerDependency`),
+   if it's not already installed in your project:
 
-   ```javascript
+   ```bash
+   npm install node-sass
+   ```
+
+3. Write some Sass tests in `test/test.scss` (see above).
+
+4. Write a shim JS test file in `test/test_sass.js`:
+
+   ```js
    var path = require('path');
    var sassTrue = require('sass-true');
 
@@ -163,7 +173,7 @@ when upgrading from an older version of True.
    sassTrue.runSass({file: sassFile}, describe, it);
    ```
 
-4. Run Mocha, and see your Sass tests reported in the command line.
+5. Run Mocha, and see your Sass tests reported in the command line.
 
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
@@ -198,7 +208,7 @@ npm install grunt-mocha-cli --save-dev
 
 Configure task:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-mocha');
 
 mochacli: {
