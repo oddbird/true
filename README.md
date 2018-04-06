@@ -80,7 +80,8 @@ and the newer `describe`/`it` for defining the structure:
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 ```
@@ -94,7 +95,8 @@ This is the same as…
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 ```
