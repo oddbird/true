@@ -39,7 +39,7 @@
     "node-sass": "^4.8.3",
     "nyc": "^11.6.0",
     "sassdoc": "^2.5.0",
-    "sassdoc-theme-herman": "^2.1.0"
+    "sassdoc-theme-herman": "^3.0.0"
   },
   "peerDependencies": {
     "node-sass": "^4.0.0"
