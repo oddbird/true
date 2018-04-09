@@ -2,8 +2,8 @@ True Changelog
 ==============
 
 
-Unreleased
-----------
+4.0.0 (04/09/18)
+----------------
 - BREAKING: Move `node-sass` to `peerDependencies`
 - Update dependencies
 - Add JS coverage reporting
