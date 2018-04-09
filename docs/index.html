@@ -192,11 +192,12 @@
     </ul>
   
 
-
-  <div class="text-block">
-    <h1 id="true">True</h1>
-<p><a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/oddbird/true.svg" alt="Greenkeeper badge"></a>
-<a href="https://travis-ci.org/oddbird/true"><img src="https://api.travis-ci.org/oddbird/true.svg" alt="Build Status"></a>
+  
+    <div class="text-block">
+      <h1 id="true">True</h1>
+<p><a href="https://travis-ci.org/oddbird/true"><img src="https://travis-ci.org/oddbird/true.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/oddbird/true?branch=master"><img src="https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/oddbird/true.svg" alt="Greenkeeper badge"></a>
 <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License"></a></p>
 <p>True is a unit-testing tool
 for <a href="http://sass-lang.com">Sass</a> code –
@@ -222,8 +223,7 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 <p><em>True your sweet plugin before you<span class="widont">&nbsp;</span>deploy.</em></p>
 <h2 id="install">Install</h2>
 <p>In command line:</p>
-<pre><code class="lang-bash"># npm module
-npm install sass-true
+<pre><code class="lang-bash">npm install sass-true
 </code></pre>
 <p>Import in your test directory,
 like any other Sass<span class="widont">&nbsp;</span>file:</p>
@@ -254,7 +254,8 @@ and the newer <code>describe</code>/<code>it</code> for defining the<span class=
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 </code></pre>
@@ -265,7 +266,8 @@ and the newer <code>describe</code>/<code>it</code> for defining the<span class=
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 </code></pre>
@@ -276,7 +278,7 @@ can easily be compared and reported during Sass<span class="widont">&nbsp;</span
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (<code>git diff</code> is helpful for noticing changes),
-or you can use out <a href="https://mochajs.org/">Mocha JS</a><span class="widont">&nbsp;</span>integration.</p>
+or you can use our <a href="https://mochajs.org/">Mocha JS</a><span class="widont">&nbsp;</span>integration.</p>
 <p>Output tests fit the same structure,
 but assertions take a slightly different form,
 with an outer <code>assert</code> mixin,
@@ -309,14 +311,22 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 <h2 id="using-mocha-or-other-js-test-runners-">Using Mocha (or other JS test<span class="widont">&nbsp;</span>runners)</h2>
 <ol>
 <li>
-<p>Install <code>true</code> via npm (<code>npm install sass-true</code>).</p>
+<p>Install <code>true</code> via npm:</p>
+<pre><code class="lang-bash">npm install sass-true
+</code></pre>
+</li>
+<li>
+<p>[Optional] Install <code>node-sass</code> (required as a <code>peerDependency</code>),
+if it’s not already installed in your<span class="widont">&nbsp;</span>project:</p>
+<pre><code class="lang-bash">npm install node-sass
+</code></pre>
 </li>
 <li>
 <p>Write some Sass tests in <code>test/test.scss</code> (see above).</p>
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/test_sass.js</code>:</p>
-<pre><code class="lang-javascript">var path = require('path');
+<pre><code class="lang-js">var path = require('path');
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
@@ -329,7 +339,8 @@ sassTrue.runSass({file: sassFile}, describe, it);
 </ol>
 <p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
 want to run<span class="widont">&nbsp;</span>separately.</p>
-<p>The first argument to <code>runSass</code> accepts the same options that node-sass’
+<p>The first argument to <code>runSass</code> accepts the
+<a href="https://github.com/sass/node-sass/#options">same options</a> that node-sass’
 <code>renderSync</code> function accepts. The only modification <code>runSass</code> makes is to add
 True’s sass path to the <code>includePaths</code> option, so <code>@import 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
@@ -348,7 +359,7 @@ argument to <code>runSass</code>, the maximum number of context lines to<span cl
 <pre><code class="lang-bash">npm install grunt-mocha-cli --save-dev
 </code></pre>
 <p>Configure task:</p>
-<pre><code class="lang-javascript">grunt.loadNpmTasks('grunt-mocha');
+<pre><code class="lang-js">grunt.loadNpmTasks('grunt-mocha');
 
 mochacli: {
    all: ['test/test_sass.js']
@@ -372,14 +383,16 @@ configuration for <code>runSass</code>. Something like:</p>
 sassTrue.runSass({ importer, file: sassFile }, describe, it);
 </code></pre>
 
-  </div>
+    </div>
+  
 
         </div>
       </main>
     </div>
   </div>
 
-  <script type="text/javascript" src="assets/webpack/vendor.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/runtime.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/common.min.js"></script>
   <script type="text/javascript" src="assets/webpack/app.min.js"></script>
   
 </body>

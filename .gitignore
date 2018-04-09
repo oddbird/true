@@ -8,4 +8,5 @@ test/.sass-cache/
 *.css.map
 node_modules/
 coverage/
+.nyc_output/
 .pages/

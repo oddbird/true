@@ -2,6 +2,13 @@ True Changelog
 ==============
 
 
+Unreleased
+----------
+- BREAKING: Move `node-sass` to `peerDependencies`
+- Update dependencies
+- Add JS coverage reporting
+
+
 3.1.0 (03/06/18)
 ----------------
 - NEW: Add `contains()` mixin for more minute output comparisons.

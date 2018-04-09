@@ -1,7 +1,8 @@
 # True
 
+[![Build Status](https://travis-ci.org/oddbird/true.svg?branch=master)](https://travis-ci.org/oddbird/true)
+[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master)](https://coveralls.io/github/oddbird/true?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
-[![Build Status](https://api.travis-ci.org/oddbird/true.svg)](https://travis-ci.org/oddbird/true)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 True is a unit-testing tool
@@ -35,7 +36,6 @@ for extra features and improved reporting.
 In command line:
 
 ```bash
-# npm module
 npm install sass-true
 ```
 
@@ -80,7 +80,8 @@ and the newer `describe`/`it` for defining the structure:
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 ```
@@ -94,7 +95,8 @@ This is the same as…
     // Assert the expected results
     @include assert-equal(
       zip(a b c, 1 2 3),
-      (a 1, b 2, c 3));
+      (a 1, b 2, c 3)
+    );
   }
 }
 ```
@@ -107,7 +109,7 @@ CSS output tests, on the other hand,
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (`git diff` is helpful for noticing changes),
-or you can use out [Mocha JS](https://mochajs.org/) integration.
+or you can use our [Mocha JS](https://mochajs.org/) integration.
 
 Output tests fit the same structure,
 but assertions take a slightly different form,
@@ -148,13 +150,24 @@ when upgrading from an older version of True.
 
 ## Using Mocha (or other JS test runners)
 
-1. Install `true` via npm (`npm install sass-true`).
+1. Install `true` via npm:
 
-2. Write some Sass tests in `test/test.scss` (see above).
+   ```bash
+   npm install sass-true
+   ```
 
-3. Write a shim JS test file in `test/test_sass.js`:
+2. [Optional] Install `node-sass` (required as a `peerDependency`),
+   if it's not already installed in your project:
 
-   ```javascript
+   ```bash
+   npm install node-sass
+   ```
+
+3. Write some Sass tests in `test/test.scss` (see above).
+
+4. Write a shim JS test file in `test/test_sass.js`:
+
+   ```js
    var path = require('path');
    var sassTrue = require('sass-true');
 
@@ -162,12 +175,13 @@ when upgrading from an older version of True.
    sassTrue.runSass({file: sassFile}, describe, it);
    ```
 
-4. Run Mocha, and see your Sass tests reported in the command line.
+5. Run Mocha, and see your Sass tests reported in the command line.
 
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
-The first argument to `runSass` accepts the same options that node-sass'
+The first argument to `runSass` accepts the
+[same options](https://github.com/sass/node-sass/#options) that node-sass'
 `renderSync` function accepts. The only modification `runSass` makes is to add
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
@@ -196,7 +210,7 @@ npm install grunt-mocha-cli --save-dev
 
 Configure task:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-mocha');
 
 mochacli: {

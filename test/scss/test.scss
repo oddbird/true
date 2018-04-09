@@ -24,5 +24,3 @@ $_true-error-output-override: true;
 @import 'tests';
 @import 'assert';
 @import 'report';
-
-@include report();

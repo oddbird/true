@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - 6
+  - "node"
+  - "lts/*"
+  - "6"
 before_install: yarn global add greenkeeper-lockfile@1
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
+after_success: npm run coverage
