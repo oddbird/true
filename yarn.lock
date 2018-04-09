@@ -5113,9 +5113,9 @@ sassdoc-theme-default@^2.6.1:
     swig "1.4.0"
     swig-extras "0.0.1"
 
-sassdoc-theme-herman@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-2.1.0.tgz#a72c8ab9c05312a050645325d6b54c4ac7d0e517"
+sassdoc-theme-herman@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/sassdoc-theme-herman/-/sassdoc-theme-herman-3.0.0.tgz#96ae97ec4a25c9be602f3defe0553fc2d2176ed9"
   dependencies:
     bluebird "^3.5.1"
     cheerio "^1.0.0-rc.2"
@@ -5127,7 +5127,6 @@ sassdoc-theme-herman@^2.1.0:
     lunr "^2.1.6"
     markdown-it "^8.4.1"
     markdown-it-named-headers "^0.0.4"
-    node-sass "^4.8.3"
     nunjucks "^2.5.2"
     sassdoc-extras "^2.4.1"
     strip-indent "^2.0.0"
