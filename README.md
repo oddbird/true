@@ -36,7 +36,7 @@ for extra features and improved reporting.
 In command line:
 
 ```bash
-npm install sass-true
+npm install sass-true --save-dev
 ```
 
 Import in your test directory,
@@ -153,14 +153,14 @@ when upgrading from an older version of True.
 1. Install `true` via npm:
 
    ```bash
-   npm install sass-true
+   npm install sass-true --save-dev
    ```
 
 2. [Optional] Install `node-sass` (required as a `peerDependency`),
    if it's not already installed in your project:
 
    ```bash
-   npm install node-sass
+   npm install node-sass --save-dev
    ```
 
 3. Write some Sass tests in `test/test.scss` (see above).
