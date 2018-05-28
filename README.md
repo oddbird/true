@@ -185,10 +185,13 @@ when upgrading from an older version of True.
 4. Write some Sass tests in anywhere in app following `**/*.spec.scss`
 (Recommended).
 
-5. Run Mocha, and see your Sass tests reported in the command line.
+5. Create npm script for running mocha in app.
+```
+"sass-test": "jasmine scss.spec.ts",
+```
 
-You can call `runSass` more than once, if you have multiple Sass test files you
-want to run separately.
+6. Run sass-test npm script, and see your Sass tests reported in the
+command line.
 
 The first argument to `runSass` accepts the
 [same options](https://github.com/sass/node-sass/#options) that node-sass'
