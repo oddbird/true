@@ -162,18 +162,28 @@ when upgrading from an older version of True.
    ```bash
    npm install node-sass --save-dev
    ```
+3. Write a shim JS test file for all sass spec files in `test/scss.spec.js`:
 
-3. Write some Sass tests in `test/test.scss` (see above).
+  ```js
+  const path = require('path')
+  const sassTrue = require('sass-true')
+  const glob = require('glob')
 
-4. Write a shim JS test file in `test/test_sass.js`:
+  describe('Sass', () => {
+    // Find all of the Sass files that end in `*.spec.scss` in any directory in this project.
+    // I use path.resolve because True requires absolute paths to compile test files.
+    const sassTestFiles = glob.sync(path.resolve(__dirname, '**/*.spec.scss'))
 
-   ```js
-   var path = require('path');
-   var sassTrue = require('sass-true');
+    // Run True on every file found with the describe and it methods provided
+    sassTestFiles.forEach(file =>
+      sassTrue.runSass({ file }, describe, it)
+    )
+  })
 
-   var sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({file: sassFile}, describe, it);
-   ```
+  ```   
+
+4. Write some Sass tests in anywhere in app following `**/*.spec.scss`
+(Recommended).
 
 5. Run Mocha, and see your Sass tests reported in the command line.
 
