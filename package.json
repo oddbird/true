@@ -37,7 +37,7 @@
     "gulp-sass-lint": "^1.3.4",
     "mocha": "^5.0.5",
     "node-sass": "^4.8.3",
-    "nyc": "^11.6.0",
+    "nyc": "^12.0.2",
     "sassdoc": "^2.5.0",
     "sassdoc-theme-herman": "^2.1.0"
   },
