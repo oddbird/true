@@ -38,7 +38,7 @@
     "mocha": "^5.0.5",
     "node-sass": "^4.9.4",
     "nyc": "^11.6.0",
-    "sassdoc": "^2.5.0",
+    "sassdoc": "^2.5.1",
     "sassdoc-theme-herman": "^2.1.0"
   },
   "peerDependencies": {

@@ -5219,9 +5219,9 @@ sassdoc-extras@^2.4.0, sassdoc-extras@^2.4.1:
   dependencies:
     marked "^0.3.19"
 
-sassdoc-theme-default@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/sassdoc-theme-default/-/sassdoc-theme-default-2.6.1.tgz#6d4859665a15a8a962fe8063e675a7c86112a608"
+sassdoc-theme-default@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/sassdoc-theme-default/-/sassdoc-theme-default-2.6.2.tgz#b9cacf30c63d035cd385633fda0ab3c424e7eec7"
   dependencies:
     babel-runtime "^6.22.0"
     chroma-js "^1.2.2"
@@ -5258,9 +5258,9 @@ sassdoc-theme-herman@^2.1.0:
     unixify "^1.0.0"
     vinyl-fs "^3.0.0"
 
-sassdoc@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/sassdoc/-/sassdoc-2.5.0.tgz#ee428f764bef3c15c4b84457e3e9162a322cfe00"
+sassdoc@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/sassdoc/-/sassdoc-2.5.1.tgz#ffd06725487c32115404ecd2161d72c38b818363"
   dependencies:
     babel-runtime "^6.26.0"
     chalk "^1.0.0"
@@ -5277,7 +5277,7 @@ sassdoc@^2.5.0:
     rimraf "^2.6.2"
     safe-wipe "0.*"
     sass-convert "^0.5.0"
-    sassdoc-theme-default "^2.6.1"
+    sassdoc-theme-default "^2.6.2"
     scss-comment-parser "^0.8.3"
     strip-indent "^2.0.0"
     through2 "1.1.1"
