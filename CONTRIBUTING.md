@@ -46,7 +46,7 @@ Linting, testing, and documentation
 should be done before every commit:
 
 ```
-npm run commit
+yarn commit
 ```
 
 They can also be triggered individually:
@@ -56,10 +56,10 @@ They can also be triggered individually:
 gulp sasslint
 
 # test with mocha/true
-npm test
+yarn test
 
 # compile docs
-npm run sassdoc
+yarn sassdoc
 ```
 
 Once you've fixed any final errors or typos,
