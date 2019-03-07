@@ -37,9 +37,9 @@
     "gulp-sass-lint": "^1.3.4",
     "mocha": "^5.0.5",
     "node-sass": "^4.9.4",
-    "nyc": "^11.6.0",
+    "nyc": "^13.3.0",
     "sassdoc": "^2.5.1",
-    "sassdoc-theme-herman": "^2.1.0"
+    "sassdoc-theme-herman": "^3.0.2"
   },
   "peerDependencies": {
     "node-sass": "^4.0.0"
