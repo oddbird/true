@@ -2,6 +2,12 @@ True Changelog
 ==============
 
 
+UNRELEASED
+----------
+- Fix deprecated use of `assert.fail` (#138)[https://github.com/oddbird/true/issues/138]
+- Update dependencies
+
+
 4.0.0 (04/09/18)
 ----------------
 - BREAKING: Move `node-sass` to `peerDependencies`
