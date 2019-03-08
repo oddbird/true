@@ -4,7 +4,7 @@ True Changelog
 
 UNRELEASED
 ----------
-- Fix deprecated use of `assert.fail` (#138)[https://github.com/oddbird/true/issues/138]
+- Fix deprecated use of `assert.fail` [#138](https://github.com/oddbird/true/issues/138)
 - Update dependencies
 
 
