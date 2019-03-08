@@ -1,3 +1,4 @@
+var chalk = require('chalk');
 var expect = require('chai').expect;
 var main = require('../lib/main.js');
 var path = require('path');
@@ -12,8 +13,12 @@ describe('#fail', function () {
       output: '2',
       details: 'It really broke.'
     });
+    var expected = 'It broke. ("2" assert-equal "1" -- It really broke.)' +
+      '\n     ' + chalk.green('+ expected ') + chalk.red('- actual') +
+      '\n\n     ' + chalk.red('-2') +
+      '\n     ' + chalk.green('+1\n');
 
-    expect(msg).to.equal('It broke. ("2" assert-equal "1" -- It really broke.)');
+    expect(msg).to.equal(expected);
   });
 });
 
@@ -827,4 +832,3 @@ describe('#parse', function () {
     });
   });
 });
-

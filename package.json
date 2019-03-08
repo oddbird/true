@@ -21,8 +21,8 @@
     "node": ">=6"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "css": "^2.2.1",
-    "css-selector-parser": "^1.1.0",
     "lodash.find": "^4.6.0",
     "lodash.foreach": "^4.5.0",
     "lodash.last": "^3.0.0"
@@ -30,13 +30,12 @@
   "devDependencies": {
     "beeper": "^1.1.1",
     "chai": "^4.1.2",
-    "chalk": "^2.3.2",
-    "coveralls": "^3.0.0",
-    "fancy-log": "^1.3.2",
+    "coveralls": "^3.0.3",
+    "fancy-log": "^1.3.3",
     "gulp": "^4.0.0",
     "gulp-sass-lint": "^1.3.4",
-    "mocha": "^5.0.5",
-    "node-sass": "^4.9.4",
+    "mocha": "^6.0.2",
+    "node-sass": "^4.11.0",
     "nyc": "^13.3.0",
     "sassdoc": "^2.5.1",
     "sassdoc-theme-herman": "^3.0.2"
