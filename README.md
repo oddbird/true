@@ -156,16 +156,27 @@ when upgrading from an older version of True.
    npm install sass-true
    ```
 
-2. [Optional] Install `node-sass` (required as a `peerDependency`),
-   if it's not already installed in your project:
+2. [Optional] Install the SASS implementation matching your project (if not already installed)
+
+   Either `node-sass`:
 
    ```bash
-   npm install node-sass
+   npm install --save-dev node-sass
    ```
+
+   or `sass` (also `dart-sass`)
+
+   ```bash
+   npm install --save-dev sass
+   ```
+
+   > *Note* `sass`/`dart-sass` has [a few differences with `node-sass`](https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass) so make sure you match whichever library is used in your build :)
 
 3. Write some Sass tests in `test/test.scss` (see above).
 
 4. Write a shim JS test file in `test/test_sass.js`:
+
+   **For `node-sass`**:
 
    ```js
    var path = require('path');
@@ -173,6 +184,19 @@ when upgrading from an older version of True.
 
    var sassFile = path.join(__dirname, 'test.scss');
    sassTrue.runSass({file: sassFile}, describe, it);
+   ```
+
+   **For `sass`/`dart-sass`**:
+
+   ```js
+   var path = require('path');
+   var sassTrue = require('sass-true');
+
+   var sassFile = path.join(__dirname, 'test.scss');
+   sassTrue.runSass({
+     file: sassFile,
+     sass = require('sass')
+   }, describe, it);
    ```
 
 5. Run Mocha, and see your Sass tests reported in the command line.
@@ -185,6 +209,8 @@ The first argument to `runSass` accepts the
 `renderSync` function accepts. The only modification `runSass` makes is to add
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
+
+You can also provide a `sass` option to provide a different SASS implementation (for example, the one from `sass` instead of `node-sass`, as above). This option expects an object providing a `renderSync` method with the same signature as `node-sass`'.
 
 Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`

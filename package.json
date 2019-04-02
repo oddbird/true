@@ -37,6 +37,7 @@
     "mocha": "^6.0.2",
     "node-sass": "^4.11.0",
     "nyc": "^13.3.0",
+    "sass": "^1.17.3",
     "sassdoc": "^2.5.1",
     "sassdoc-theme-herman": "^3.0.2"
   },

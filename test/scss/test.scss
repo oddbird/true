@@ -6,6 +6,10 @@
 // Error Override
 $_true-error-output-override: true;
 
+// sass behaves slightly differently than node-sass
+// This flag will help adjust tests when needed
+$_dart-sass: false !default;
+
 // Config
 @import 'utilities';
 @import 'messages';
