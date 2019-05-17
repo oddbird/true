@@ -210,7 +210,7 @@ The first argument to `runSass` accepts the
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
 
-You can also provide a `sass` option to provide a different SASS implementation (for example, the one from `sass` instead of `node-sass`, as above). This option expects an object providing a `renderSync` method with the same signature as `node-sass`'.
+You can also provide a `sass` option to provide a different Sass implementation (for example, the one from `sass` instead of `node-sass`, as above). This option expects an object providing a `renderSync` method with the same signature as `node-sass`'.
 
 Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
