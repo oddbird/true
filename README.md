@@ -156,7 +156,7 @@ when upgrading from an older version of True.
    npm install sass-true
    ```
 
-2. [Optional] Install the SASS implementation matching your project (if not already installed)
+2. [Optional] Install the Sass implementation matching your project (if not already installed)
 
    Either `node-sass`:
 
