@@ -100,9 +100,7 @@
     $message: '- Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values)';
 
     @include assert-equal(
-      // dart-sass has a higher precision so need more than 10 decimals
-      // see: https://github.com/sass/sass/issues/1122
-      _true-edgefail-notes(1/3, 0.33333333333),
+      _true-edgefail-notes(1/3, 0.333333333),
       $message);
   }
 
@@ -132,14 +130,14 @@
     @include assert {
       @include output {
         @include _true-context('assert', '[assert-equal] Test assertion');
-        @include _true-fail-details(1/3, 0.33333333333, not 'terminal');
+        @include _true-fail-details(1/3, 0.333333333, not 'terminal');
         @include _true-context-pop;
       }
 
       @include expect {
         /*   ✖ FAILED: [assert-equal] Test assertion */
-        /*     - Output: [number] #{if($_dart-sass, 0.3333333333,0.33333)} */
-        /*     - Expected: [number] #{if($_dart-sass, 0.3333333333,0.33333)} */
+        /*     - Output: [number] 0.33333 */
+        /*     - Expected: [number] 0.33333 */
         /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
         /*     - Module: fail-details [mixin] */
         /*     - Test: Compiles full failure details */

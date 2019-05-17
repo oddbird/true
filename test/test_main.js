@@ -35,7 +35,7 @@ describe('#runSass', function () {
     ].join('\n');
     var mock = function (name, cb) { cb(); };
     var attempt = function () {
-      main.runSass({data: sass}, mock, mock);
+      main.runSass({ data: sass }, mock, mock);
     };
     expect(attempt).to.throw(
       'This test is meant to fail. ("[bool] false" assert-true "[bool] true")');
@@ -66,6 +66,22 @@ describe('#runSass', function () {
       },
       mock,
       mock);
+  });
+
+  it('can specify sass engine to use', function () {
+    var mock = function (name, cb) { cb(); };
+    var attempt = function () {
+      main.runSass({
+        data: '',
+        sass: {
+          renderSync: function () {
+            throw new Error('Custom sass implementation called')
+          }
+        }
+      }, mock, mock);
+    }
+    expect(attempt).to.throw(
+      'Custom sass implementation called');
   });
 });
 
