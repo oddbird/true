@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/oddbird/true.svg?branch=master)](https://travis-ci.org/oddbird/true)
 [![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master)](https://coveralls.io/github/oddbird/true?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/oddbird/true.svg)](https://greenkeeper.io/)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 True is a unit-testing tool
