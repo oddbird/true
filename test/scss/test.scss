@@ -11,7 +11,9 @@ $_true-error-output-override: true;
 @import 'messages';
 
 // Ignore Non-Test Output
-.not-a-test { break: please-no; }
+.not-a-test {
+  break: please-no;
+}
 
 // Database
 @import 'stats';

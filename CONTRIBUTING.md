@@ -1,5 +1,4 @@
-Contributing to True
-====================
+# Contributing to True
 
 True exists because of your contributions.
 Bug reports and feature requests are welcome,
@@ -9,9 +8,7 @@ In all cases,
 we ask you to follow the
 [Sass community guidelines](http://sass-lang.com/community-guidelines).
 
-
-Pull Requests
--------------
+## Pull Requests
 
 We use the `master` branch for production-ready code,
 and side-branches for everything in-progress
@@ -27,9 +24,7 @@ When submitting a patch via pull request:
   inline documentation for your changes
 - Keep it simple: one bug fix or feature per pull request
 
-
-Development
------------
+## Development
 
 Set up your dev environment
 with the appropriate dependencies:
@@ -38,9 +33,7 @@ with the appropriate dependencies:
 yarn
 ```
 
-
-Committing
-----------
+## Committing
 
 Linting, testing, and documentation
 should be done before every commit:

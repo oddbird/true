@@ -312,25 +312,43 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 <ol>
 <li>
 <p>Install <code>true</code> via npm:</p>
-<pre><code class="lang-bash">npm install sass-true
+<pre><code class="lang-bash">npm install --save-dev sass-true
 </code></pre>
 </li>
 <li>
-<p>[Optional] Install <code>node-sass</code> (required as a <code>peerDependency</code>),
-if it’s not already installed in your<span class="widont">&nbsp;</span>project:</p>
-<pre><code class="lang-bash">npm install node-sass
+<p>[Optional] Install the Sass implementation matching your project
+(if not already<span class="widont">&nbsp;</span>installed).</p>
+<p>Either <code>node-sass</code>:</p>
+<pre><code class="lang-bash">npm install --save-dev node-sass
 </code></pre>
+<p>or <code>sass</code> (also <code>dart-sass</code>):</p>
+<pre><code class="lang-bash">npm install --save-dev sass
+</code></pre>
+<blockquote>
+<p><em>Note</em> <code>sass</code>/<code>dart-sass</code> has <a href="https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass">a few differences from <code>node-sass</code></a>.</p>
+</blockquote>
 </li>
 <li>
 <p>Write some Sass tests in <code>test/test.scss</code> (see above).</p>
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/test_sass.js</code>:</p>
+<p><strong>For <code>node-sass</code></strong>:</p>
 <pre><code class="lang-js">var path = require('path');
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
-sassTrue.runSass({file: sassFile}, describe, it);
+sassTrue.runSass({ file: sassFile }, describe, it);
+</code></pre>
+<p><strong>For <code>sass</code>/<code>dart-sass</code></strong>:</p>
+<pre><code class="lang-js">var path = require('path');
+var sassTrue = require('sass-true');
+
+var sassFile = path.join(__dirname, 'test.scss');
+sassTrue.runSass({
+  file: sassFile,
+  sass: require('sass'),
+}, describe, it);
 </code></pre>
 </li>
 <li>
@@ -344,6 +362,10 @@ want to run<span class="widont">&nbsp;</span>separately.</p>
 <code>renderSync</code> function accepts. The only modification <code>runSass</code> makes is to add
 True’s sass path to the <code>includePaths</code> option, so <code>@import 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
+<p>You can also provide a <code>sass</code> option to provide a different Sass implementation
+(for example, using <code>sass</code>/<code>dart-sass</code> instead of <code>node-sass</code>). This option
+expects an object providing a <code>renderSync</code> method with the same signature as
+<code>node-sass</code>.</p>
 <p>Any other JS test runner with equivalents to Mocha’s <code>describe</code> and <code>it</code> should
 be usable in the same way; just pass your test runner’s <code>describe</code> and <code>it</code>
 equivalents into <code>runSass</code>.</p>

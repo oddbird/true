@@ -19,17 +19,15 @@ for extra features and improved reporting.
 
 1. To make true; shape, adjust, place, etc., exactly or accurately:
 
-  *True the wheels of a bicycle after striking a pothole.*
+   _True the wheels of a bicycle after striking a pothole._
 
-2. To make even, symmetrical, level, etc. (often followed by *up*):
+2. To make even, symmetrical, level, etc. (often followed by _up_):
 
-  *True up the sides of a door.*
+   _True up the sides of a door._
 
-3. To test your Sass code; debug, perfect, etc. (often using *True*):
+3. To test your Sass code; debug, perfect, etc. (often using _True_):
 
-  *True your sweet plugin before you deploy.*
-
-
+   _True your sweet plugin before you deploy._
 
 ## Install
 
@@ -43,7 +41,7 @@ Import in your test directory,
 like any other Sass file:
 
 ```scss
-@import "true";
+@import 'true';
 ```
 
 Depending on your setup,
@@ -51,9 +49,8 @@ you may need to include the full path name:
 
 ```scss
 // This is only an example
-@import "../node_modules/sass-true/sass/true";
+@import '../node_modules/sass-true/sass/true';
 ```
-
 
 ## One Setting
 
@@ -66,7 +63,6 @@ defaults to `true`
 - `false` will turn off all terminal output from Sass,
   though Mocha will continue to use the terminal for reporting.
 
-
 ## Usage
 
 True is based on common JS-testing patterns,
@@ -76,12 +72,8 @@ and the newer `describe`/`it` for defining the structure:
 ```scss
 @include test-module('Zip [function]') {
   @include test('Zips multiple lists into a single multi-dimensional list') {
-
     // Assert the expected results
-    @include assert-equal(
-      zip(a b c, 1 2 3),
-      (a 1, b 2, c 3)
-    );
+    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
   }
 }
 ```
@@ -91,12 +83,8 @@ This is the same as…
 ```scss
 @include describe('Zip [function]') {
   @include it('Zips multiple lists into a single multi-dimensional list') {
-
     // Assert the expected results
-    @include assert-equal(
-      zip(a b c, 1 2 3),
-      (a 1, b 2, c 3)
-    );
+    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
   }
 }
 ```
@@ -147,16 +135,16 @@ for more details.
 See [CHANGELOG.md](https://github.com/oddbird/true/blob/master/CHANGELOG.md)
 when upgrading from an older version of True.
 
-
 ## Using Mocha (or other JS test runners)
 
 1. Install `true` via npm:
 
    ```bash
-   npm install sass-true
+   npm install --save-dev sass-true
    ```
 
-2. [Optional] Install the Sass implementation matching your project (if not already installed)
+2. [Optional] Install the Sass implementation matching your project
+   (if not already installed).
 
    Either `node-sass`:
 
@@ -164,13 +152,13 @@ when upgrading from an older version of True.
    npm install --save-dev node-sass
    ```
 
-   or `sass` (also `dart-sass`)
+   or `sass` (also `dart-sass`):
 
    ```bash
    npm install --save-dev sass
    ```
 
-   > *Note* `sass`/`dart-sass` has [a few differences with `node-sass`](https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass) so make sure you match whichever library is used in your build :)
+   > _Note_ `sass`/`dart-sass` has [a few differences from `node-sass`](https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass).
 
 3. Write some Sass tests in `test/test.scss` (see above).
 
@@ -183,7 +171,7 @@ when upgrading from an older version of True.
    var sassTrue = require('sass-true');
 
    var sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({file: sassFile}, describe, it);
+   sassTrue.runSass({ file: sassFile }, describe, it);
    ```
 
    **For `sass`/`dart-sass`**:
@@ -193,10 +181,14 @@ when upgrading from an older version of True.
    var sassTrue = require('sass-true');
 
    var sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({
-     file: sassFile,
-     sass: require('sass')
-   }, describe, it);
+   sassTrue.runSass(
+     {
+       file: sassFile,
+       sass: require('sass'),
+     },
+     describe,
+     it,
+   );
    ```
 
 5. Run Mocha, and see your Sass tests reported in the command line.
@@ -210,7 +202,10 @@ The first argument to `runSass` accepts the
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
 
-You can also provide a `sass` option to provide a different Sass implementation (for example, the one from `sass` instead of `node-sass`, as above). This option expects an object providing a `renderSync` method with the same signature as `node-sass`'.
+You can also provide a `sass` option to provide a different Sass implementation
+(for example, using `sass`/`dart-sass` instead of `node-sass`). This option
+expects an object providing a `renderSync` method with the same signature as
+`node-sass`.
 
 Any other JS test runner with equivalents to Mocha's `describe` and `it` should
 be usable in the same way; just pass your test runner's `describe` and `it`
@@ -221,7 +216,6 @@ some context lines of CSS as part of the error message. This context will
 likely be helpful in understanding the parse failure. By default it provides up
 to 10 lines of context; if you need more, you can provide a numeric fourth
 argument to `runSass`, the maximum number of context lines to provide.
-
 
 ### …With Grunt…
 
@@ -252,9 +246,9 @@ grunt mochacli
 
 ### Imports without Webpack
 
-If you use Webpack's tilde notation, like `@import
-'~accoutrement-init/sass/init'`, you'll need to tell `runSass` how to handle
-that. That will require writing a custom importer and passing it into the
+If you use Webpack's tilde notation, like
+`@import '~accoutrement-init/sass/init'`, you'll need to tell `runSass` how to
+handle that. That will require writing a custom importer and passing it into the
 configuration for `runSass`. Something like:
 
 ```js

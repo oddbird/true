@@ -3,7 +3,10 @@
 
 @include test-module('Tests') {
   @include test('test [mixin]') {
-    @include assert-equal(_true-context(test), 'test [mixin]',
-      'Changes the current test context');
+    @include assert-equal(
+      _true-context(test),
+      'test [mixin]',
+      'Changes the current test context'
+    );
   }
 }

@@ -1,7 +1,5 @@
 {
   "name": "true",
   "description": "Unit testing for Sass.",
-  "tags": [
-    "unit-test", "test", "sass", "libsass", "TDD"
-  ]
+  "tags": ["unit-test", "test", "sass", "libsass", "TDD"]
 }

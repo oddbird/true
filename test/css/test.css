@@ -11,12 +11,14 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [_true-error test] This is a test error message */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [_true-error test] This is a test error message */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -63,7 +65,8 @@
 /*  */
 /*  */
 .not-a-test {
-  break: please-no; }
+  break: please-no;
+}
 
 /* # Module: Update Stats Count */
 /* ---------------------------- */
@@ -217,12 +220,14 @@
 /*   ASSERT: passing test   */
 /*   OUTPUT   */
 .test-output {
-  /*   ✔ [output] passing test */ }
+  /*   ✔ [output] passing test */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  /*   ✔ [output] passing test */ }
+  /*   ✔ [output] passing test */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -276,7 +281,8 @@
   /*     - Expected: [number] 0.33333 */
   /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
   /*     - Module: fail-details [mixin] */
-  /*     - Test: Compiles full failure details */ }
+  /*     - Test: Compiles full failure details */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -286,7 +292,8 @@
   /*     - Expected: [number] 0.33333 */
   /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
   /*     - Module: fail-details [mixin] */
-  /*     - Test: Compiles full failure details */ }
+  /*     - Test: Compiles full failure details */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -403,13 +410,15 @@
 /*   OUTPUT   */
 .test-output {
   -property1: 0.3;
-  -property2: 0.33333; }
+  -property2: 0.33333;
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
   -property1: 0.3;
-  -property2: 0.33333; }
+  -property2: 0.33333;
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -418,22 +427,30 @@
 /*   ASSERT: Output and expected selector patterns match   */
 /*   OUTPUT   */
 .test-output {
-  -property: value; }
-  @media (min-width: 30em) {
-    .test-output {
-      -prop: val; }
-      .selector {
-        -prop: val; } }
+  -property: value;
+}
+@media (min-width: 30em) {
+  .test-output {
+    -prop: val;
+  }
+  .selector {
+    -prop: val;
+  }
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  -property: value; }
-  @media (min-width: 30em) {
-    .test-output {
-      -prop: val; }
-      .selector {
-        -prop: val; } }
+  -property: value;
+}
+@media (min-width: 30em) {
+  .test-output {
+    -prop: val;
+  }
+  .selector {
+    -prop: val;
+  }
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -445,12 +462,14 @@
 /*   OUTPUT   */
 .test-output {
   height: 10px;
-  width: 20px; }
+  width: 20px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -459,16 +478,20 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  height: 20px; }
-  .test-output .class {
-    height: 10px; }
-  .test-output .other-class {
-    height: 10px; }
+  height: 20px;
+}
+.test-output .class {
+  height: 10px;
+}
+.test-output .other-class {
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .class {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -477,16 +500,20 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  height: 20px; }
-  .test-output .class {
-    height: 10px; }
-    .test-output .class .other-class {
-      height: 10px; }
+  height: 20px;
+}
+.test-output .class {
+  height: 10px;
+}
+.test-output .class .other-class {
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .class .other-class {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -495,23 +522,31 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output .class {
-  height: 20px; }
+  height: 20px;
+}
 
 @media (min-width: 30em) and (min-width: 40em) {
   .test-output .selector {
-    height: 10px; }
+    height: 10px;
+  }
   .test-output .selector2 {
-    height: 10px; } }
+    height: 10px;
+  }
+}
 
 @media (min-width: 30em) {
   .test-output .selector3 {
-    height: 10px; } }
+    height: 10px;
+  }
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 @media (min-width: 30em) and (min-width: 40em) {
   .test-output .selector2 {
-    height: 10px; } }
+    height: 10px;
+  }
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -520,12 +555,14 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .selector {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .selector {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -534,52 +571,66 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output .selector {
-  -prop: val; }
+  -prop: val;
+}
 
 .test-output #id {
-  -prop: value1; }
+  -prop: value1;
+}
 
 .test-output div {
   -prop: value2;
   min-height: 20px;
-  max-height: 30px; }
+  max-height: 30px;
+}
 
-.test-output input[type="text"] {
-  color: rebeccapurple; }
+.test-output input[type='text'] {
+  color: rebeccapurple;
+}
 
 .test-output * + * {
   color: red;
-  display: none; }
+  display: none;
+}
 
 .test-output body > h1 {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .test-output i::before {
-  -prop: value3; }
+  -prop: value3;
+}
 
 .test-output div ~ p {
-  color: green; }
+  color: green;
+}
 
 .test-output i:not(.italic) {
   text-decoration: underline;
-  --custom: val; }
+  --custom: val;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .selector {
-  -prop: val; }
+  -prop: val;
+}
 
 .test-output div {
-  max-height: 30px; }
+  max-height: 30px;
+}
 
 .test-output body > h1 {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .test-output * + * {
-  display: none; }
+  display: none;
+}
 
 .test-output i:not(.italic) {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -590,13 +641,15 @@
 .test-output .selector {
   width: 10px;
   min-height: 5px;
-  max-height: 20px; }
+  max-height: 20px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .selector {
   width: 10px;
-  max-height: 20px; }
+  max-height: 20px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -617,7 +670,8 @@
   /* - 4 Modules */
   /* - 6 Tests */
   /* - 25 Assertions */
-  /* -------------------- */ }
+  /* -------------------- */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -630,7 +684,8 @@
   /* - 4 Modules */
   /* - 6 Tests */
   /* - 25 Assertions */
-  /* -------------------- */ }
+  /* -------------------- */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -648,7 +703,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */ }
+  /* ERROR [report] 1 test failed */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -662,7 +718,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */ }
+  /* ERROR [report] 1 test failed */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -680,7 +737,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */ }
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -694,7 +752,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */ }
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */

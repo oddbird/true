@@ -3,9 +3,7 @@
 
 @include test-module('test-module [mixin]') {
   @include test('Changes the current module context') {
-    @include assert-equal(
-      _true-context('module'),
-      'test-module [mixin]');
+    @include assert-equal(_true-context('module'), 'test-module [mixin]');
   }
 
   @include test-module(Unquoted Module Name) {
@@ -17,8 +15,6 @@
 
 @include describe('Describe/it syntax') {
   @include it('Changes the current module context') {
-    @include assert-equal(
-      _true-context('module'),
-      'Describe/it syntax');
+    @include assert-equal(_true-context('module'), 'Describe/it syntax');
   }
 }
