@@ -70,9 +70,7 @@
   @include test('unknown context name') {
     @include assert-equal(
       _true-validate-output-context('wtf'),
-      'ERROR [output-context] #{' wtf
-        '} is not a valid context for output tests: #{$valid}'
-    );
+      'ERROR [output-context] #{'wtf'} is not a valid context for output tests: #{$valid}');
   }
 
   @include test('duplicate assert') {
