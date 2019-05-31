@@ -2,6 +2,7 @@
 
 ## UNRELEASED
 
+- BREAKING: Drop support for node < 8
 - Add `sass` option to `runSass` for passing a different Sass implementation
   than `node-sass` [#137](https://github.com/oddbird/true/issues/137)
 - Remove `node-sass` from `peerDependencies`
