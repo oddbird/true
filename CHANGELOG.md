@@ -4,6 +4,7 @@ True Changelog
 
 UNRELEASED
 ----------
+- Add `sass` option to `runSass` for passing a different SASS implementation than `node-sass` [#137](https://github.com/oddbird/true/issues/137)
 - Fix deprecated use of `assert.fail` [#138](https://github.com/oddbird/true/issues/138)
 - Update dependencies
 
