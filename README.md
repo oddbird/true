@@ -195,7 +195,7 @@ when upgrading from an older version of True.
    var sassFile = path.join(__dirname, 'test.scss');
    sassTrue.runSass({
      file: sassFile,
-     sass = require('sass')
+     sass: require('sass')
    }, describe, it);
    ```
 
