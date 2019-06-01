@@ -22,12 +22,22 @@
     @include assert-equal(_true-variable-details(1em), '[number] 1em');
   }
 
-  @include test('String') {
+  @include test('Strings get back-ticks') {
     $string: unquote('hello world');
 
     @include assert-equal(
       _true-variable-details($string),
-      '[string] #{$string}'
+      '`[string] #{$string}`'
+    );
+
+    @include assert-equal(
+      _true-variable-details('      '),
+      '`[string]       `'
+    );
+
+    @include assert-unequal(
+      _true-variable-details('  '),
+      '`[string]       `'
     );
   }
 
