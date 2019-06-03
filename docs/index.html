@@ -205,7 +205,8 @@ initially developed for the
 All of the test code is written in pure Sass,
 and can be compiled by any Sass compiler –
 but we also provide integration with
-<a href="https://mochajs.org/">Mocha JS</a>,
+JavaScript test runners
+(e.g. <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>),
 for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 <p><strong>Verb</strong></p>
 <ol>
@@ -240,10 +241,10 @@ you may need to include the full path<span class="widont">&nbsp;</span>name:</p>
 defaults to <code>true</code></p>
 <ul>
 <li><code>true</code> will show detailed information in the terminal
-for debugging failed assertions, or reporting final results.
-This is the default, and best for compiling without<span class="widont">&nbsp;</span>Mocha.</li>
+for debugging failed assertions or reporting final results.
+This is the default, and best for compiling without a JavaScript test<span class="widont">&nbsp;</span>runner.</li>
 <li><code>false</code> will turn off all terminal output from Sass,
-though Mocha will continue to use the terminal for<span class="widont">&nbsp;</span>reporting.</li>
+though Mocha/Jest will continue to use the terminal for<span class="widont">&nbsp;</span>reporting.</li>
 </ul>
 <h2 id="usage">Usage</h2>
 <p>True is based on common JS-testing patterns,
@@ -271,7 +272,8 @@ can easily be compared and reported during Sass<span class="widont">&nbsp;</span
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (<code>git diff</code> is helpful for noticing changes),
-or you can use our <a href="https://mochajs.org/">Mocha JS</a><span class="widont">&nbsp;</span>integration.</p>
+or you can use
+our <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a><span class="widont">&nbsp;</span>integration.</p>
 <p>Output tests fit the same structure,
 but assertions take a slightly different form,
 with an outer <code>assert</code> mixin,
@@ -301,7 +303,7 @@ or in the <code>.sassdoc</code> directory,
 for more details.
 See <a href="https://github.com/oddbird/true/blob/master/CHANGELOG.md">CHANGELOG.md</a>
 when upgrading from an older version of<span class="widont">&nbsp;</span>True.</p>
-<h2 id="using-mocha-or-other-js-test-runners-">Using Mocha (or other JS test<span class="widont">&nbsp;</span>runners)</h2>
+<h2 id="using-mocha-jest-or-other-js-test-runners">Using Mocha, Jest, or other JS test<span class="widont">&nbsp;</span>runners</h2>
 <ol>
 <li>
 <p>Install <code>true</code> via npm:</p>
@@ -331,7 +333,7 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
-sassTrue.runSass({ file: sassFile }, describe, it);
+sassTrue.runSass({ file: sassFile }, { describe, it });
 </code></pre>
 <p><strong>For <code>sass</code>/<code>dart-sass</code></strong>:</p>
 <pre><code class="lang-js">var path = require('path');
@@ -341,15 +343,17 @@ var sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   {
     file: sassFile,
-    sass: require('sass'),
   },
-  describe,
-  it,
+  {
+    sass: require('sass'),
+    describe,
+    it,
+  }
 );
 </code></pre>
 </li>
 <li>
-<p>Run Mocha, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
+<p>Run Mocha/Jest, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
 </li>
 </ol>
 <p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
@@ -359,34 +363,20 @@ want to run<span class="widont">&nbsp;</span>separately.</p>
 <code>renderSync</code> function accepts. The only modification <code>runSass</code> makes is to add
 True’s sass path to the <code>includePaths</code> option, so <code>@import 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
+<p>The second argument is an object with required <code>describe</code> and <code>it</code> options, and
+optional <code>contextLines</code> and <code>sass</code> options.</p>
+<p>Any JS test runner with equivalents to Mocha’s or Jest’s <code>describe</code> and <code>it</code>
+should be usable in the same way: just pass your test runner’s <code>describe</code> and
+<code>it</code> equivalents in the second argument to <code>runSass</code>.</p>
+<p>If True can’t parse the CSS output, it’ll give you some context lines of CSS as
+part of the error message. This context will likely be helpful in understanding
+the parse failure. By default it provides up to 10 lines of context; if you need
+more, you can provide a numeric <code>contextLines</code> option: the maximum number of
+context lines to<span class="widont">&nbsp;</span>provide.</p>
 <p>You can also provide a <code>sass</code> option to provide a different Sass implementation
 (for example, using <code>sass</code>/<code>dart-sass</code> instead of <code>node-sass</code>). This option
 expects an object providing a <code>renderSync</code> method with the same signature as
 <code>node-sass</code>.</p>
-<p>Any other JS test runner with equivalents to Mocha’s <code>describe</code> and <code>it</code> should
-be usable in the same way; just pass your test runner’s <code>describe</code> and <code>it</code>
-equivalents into <code>runSass</code>.</p>
-<p>If True’s Mocha plugin can’t parse the CSS output from True, it’ll give you
-some context lines of CSS as part of the error message. This context will
-likely be helpful in understanding the parse failure. By default it provides up
-to 10 lines of context; if you need more, you can provide a numeric fourth
-argument to <code>runSass</code>, the maximum number of context lines to<span class="widont">&nbsp;</span>provide.</p>
-<h3 id="-with-grunt-">…With Grunt…</h3>
-<p>Run Mocha using the Grunt task supplied by
-<a href="https://github.com/Rowno/grunt-mocha-cli">grunt-mocha-cli</a></p>
-<p>Install <code>grunt-mocha-cli</code>:</p>
-<pre><code class="lang-bash">npm install grunt-mocha-cli --save-dev
-</code></pre>
-<p>Configure task:</p>
-<pre><code class="lang-js">grunt.loadNpmTasks('grunt-mocha');
-
-mochacli: {
-   all: ['test/test_sass.js']
-},
-</code></pre>
-<p>Run tests:</p>
-<pre><code class="lang-bash">grunt mochacli
-</code></pre>
 <h3 id="imports-without-webpack">Imports without Webpack</h3>
 <p>If you use Webpack’s tilde notation, like
 <code>@import '~accoutrement-init/sass/init'</code>, you’ll need to tell <code>runSass</code> how to
@@ -400,7 +390,7 @@ configuration for <code>runSass</code>. Something like:</p>
   return { file: url };
 }
 
-sassTrue.runSass({ importer, file: sassFile }, describe, it);
+sassTrue.runSass({ importer, file: sassFile }, { describe, it });
 </code></pre>
 
     </div>

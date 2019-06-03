@@ -2,7 +2,11 @@
 
 ## UNRELEASED
 
+- BREAKING: Update API for `runSass`, which now accepts two arguments: a
+  `sassOptions` object and a `trueOptions` object.
 - BREAKING: Drop support for node < 8
+- Add docs and testing for usage with Jest
+  [#135](https://github.com/oddbird/true/issues/135)
 - Add `sass` option to `runSass` for passing a different Sass implementation
   than `node-sass` [#137](https://github.com/oddbird/true/issues/137)
 - Remove `node-sass` from `peerDependencies`

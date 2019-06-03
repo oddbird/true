@@ -34,6 +34,7 @@
     "fancy-log": "^1.3.3",
     "gulp": "^4.0.2",
     "gulp-sass-lint": "^1.3.4",
+    "jest": "^24.8.0",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
@@ -47,7 +48,9 @@
     "exports": false
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha",
+    "test": "yarn test:mocha; yarn test:jest",
+    "test:mocha": "nyc --reporter=html --reporter=text mocha",
+    "test:jest": "jest --testRegex test_sass",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "debug": "mocha debug",
     "sassdoc": "sassdoc sass/",
