@@ -170,7 +170,7 @@ when upgrading from an older version of True.
    var sassTrue = require('sass-true');
 
    var sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({ file: sassFile }, describe, it);
+   sassTrue.runSass({ file: sassFile }, { describe, it });
    ```
 
    **For `sass`/`dart-sass`**:
@@ -183,10 +183,12 @@ when upgrading from an older version of True.
    sassTrue.runSass(
      {
        file: sassFile,
-       sass: require('sass'),
      },
-     describe,
-     it,
+     {
+       sass: require('sass'),
+       describe,
+       it,
+     },
    );
    ```
 
@@ -201,20 +203,23 @@ The first argument to `runSass` accepts the
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
 
+The second argument is an object with required `describe` and `it` options, and
+optional `contextLines` and `sass` options.
+
+Any JS test runner with equivalents to Mocha's `describe` and `it` should be
+usable in the same way: just pass your test runner's `describe` and `it`
+equivalents in the second argument to `runSass`.
+
+If True's Mocha plugin can't parse the CSS output from True, it'll give you some
+context lines of CSS as part of the error message. This context will likely be
+helpful in understanding the parse failure. By default it provides up to 10
+lines of context; if you need more, you can provide a numeric `contextLines`
+option: the maximum number of context lines to provide.
+
 You can also provide a `sass` option to provide a different Sass implementation
 (for example, using `sass`/`dart-sass` instead of `node-sass`). This option
 expects an object providing a `renderSync` method with the same signature as
 `node-sass`.
-
-Any other JS test runner with equivalents to Mocha's `describe` and `it` should
-be usable in the same way; just pass your test runner's `describe` and `it`
-equivalents into `runSass`.
-
-If True's Mocha plugin can't parse the CSS output from True, it'll give you
-some context lines of CSS as part of the error message. This context will
-likely be helpful in understanding the parse failure. By default it provides up
-to 10 lines of context; if you need more, you can provide a numeric fourth
-argument to `runSass`, the maximum number of context lines to provide.
 
 ### …With Grunt…
 
@@ -259,5 +264,5 @@ function importer(url, prev, done) {
   return { file: url };
 }
 
-sassTrue.runSass({ importer, file: sassFile }, describe, it);
+sassTrue.runSass({ importer, file: sassFile }, { describe, it });
 ```

@@ -331,7 +331,7 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
-sassTrue.runSass({ file: sassFile }, describe, it);
+sassTrue.runSass({ file: sassFile }, { describe, it });
 </code></pre>
 <p><strong>For <code>sass</code>/<code>dart-sass</code></strong>:</p>
 <pre><code class="lang-js">var path = require('path');
@@ -341,10 +341,12 @@ var sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   {
     file: sassFile,
-    sass: require('sass'),
   },
-  describe,
-  it,
+  {
+    sass: require('sass'),
+    describe,
+    it,
+  },
 );
 </code></pre>
 </li>
@@ -359,18 +361,20 @@ want to run<span class="widont">&nbsp;</span>separately.</p>
 <code>renderSync</code> function accepts. The only modification <code>runSass</code> makes is to add
 True’s sass path to the <code>includePaths</code> option, so <code>@import 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
+<p>The second argument is an object with required <code>describe</code> and <code>it</code> options, and
+optional <code>contextLines</code> and <code>sass</code> options.</p>
+<p>Any JS test runner with equivalents to Mocha’s <code>describe</code> and <code>it</code> should be
+usable in the same way: just pass your test runner’s <code>describe</code> and <code>it</code>
+equivalents in the second argument to <code>runSass</code>.</p>
+<p>If True’s Mocha plugin can’t parse the CSS output from True, it’ll give you some
+context lines of CSS as part of the error message. This context will likely be
+helpful in understanding the parse failure. By default it provides up to 10
+lines of context; if you need more, you can provide a numeric <code>contextLines</code>
+option: the maximum number of context lines to<span class="widont">&nbsp;</span>provide.</p>
 <p>You can also provide a <code>sass</code> option to provide a different Sass implementation
 (for example, using <code>sass</code>/<code>dart-sass</code> instead of <code>node-sass</code>). This option
 expects an object providing a <code>renderSync</code> method with the same signature as
 <code>node-sass</code>.</p>
-<p>Any other JS test runner with equivalents to Mocha’s <code>describe</code> and <code>it</code> should
-be usable in the same way; just pass your test runner’s <code>describe</code> and <code>it</code>
-equivalents into <code>runSass</code>.</p>
-<p>If True’s Mocha plugin can’t parse the CSS output from True, it’ll give you
-some context lines of CSS as part of the error message. This context will
-likely be helpful in understanding the parse failure. By default it provides up
-to 10 lines of context; if you need more, you can provide a numeric fourth
-argument to <code>runSass</code>, the maximum number of context lines to<span class="widont">&nbsp;</span>provide.</p>
 <h3 id="-with-grunt-">…With Grunt…</h3>
 <p>Run Mocha using the Grunt task supplied by
 <a href="https://github.com/Rowno/grunt-mocha-cli">grunt-mocha-cli</a></p>
@@ -400,7 +404,7 @@ configuration for <code>runSass</code>. Something like:</p>
   return { file: url };
 }
 
-sassTrue.runSass({ importer, file: sassFile }, describe, it);
+sassTrue.runSass({ importer, file: sassFile }, { describe, it });
 </code></pre>
 
     </div>

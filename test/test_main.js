@@ -40,10 +40,10 @@ describe('#runSass', function() {
       cb();
     };
     var attempt = function() {
-      main.runSass({ data: sass }, mock, mock);
+      main.runSass({ data: sass }, { describe: mock, it: mock });
     };
     expect(attempt).to.throw(
-      'This test is meant to fail. ("[bool] false" assert-true "[bool] true")',
+      'This test is meant to fail. ("[bool] false" assert-true "[bool] true")'
     );
   });
 
@@ -72,8 +72,10 @@ describe('#runSass', function() {
         data: sass,
         includePaths: [path.join(__dirname, 'scss/includes')],
       },
-      mock,
-      mock,
+      {
+        describe: mock,
+        it: mock,
+      }
     );
   });
 
@@ -85,14 +87,16 @@ describe('#runSass', function() {
       main.runSass(
         {
           data: '',
+        },
+        {
           sass: {
             renderSync: function() {
               throw new Error('Custom sass implementation called');
             },
           },
-        },
-        mock,
-        mock,
+          describe: mock,
+          it: mock,
+        }
       );
     };
     expect(attempt).to.throw('Custom sass implementation called');
@@ -522,7 +526,7 @@ describe('#parse', function() {
 
   it('throws error on unexpected rule type instead of end summary', function() {
     var css = ['/* # SUMMARY ---------- */', '.foo { -prop: value; }'].join(
-      '\n',
+      '\n'
     );
     var attempt = function() {
       main.parse(css);
@@ -535,13 +539,13 @@ describe('#parse', function() {
         '/* # SUMMARY ---------- */',
         '.foo { -prop: value; }',
         '^',
-      ].join('\n'),
+      ].join('\n')
     );
   });
 
   it('accepts a number of context lines to display on error', function() {
     var css = ['/* # SUMMARY ---------- */', '.foo { -prop: value; }'].join(
-      '\n',
+      '\n'
     );
     var attempt = function() {
       main.parse(css, 1);
@@ -553,7 +557,7 @@ describe('#parse', function() {
         '-- Context --',
         '.foo { -prop: value; }',
         '^',
-      ].join('\n'),
+      ].join('\n')
     );
   });
 
@@ -687,7 +691,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 4, column 1: Unexpected rule type "rule"; looking for output/expected',
+      'Line 4, column 1: Unexpected rule type "rule"; looking for output/expected'
     );
   });
 
@@ -703,7 +707,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 4, column 1: Unexpected rule type "rule"; looking for OUTPUT',
+      'Line 4, column 1: Unexpected rule type "rule"; looking for OUTPUT'
     );
   });
 
@@ -719,7 +723,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 4, column 1: Unexpected comment "foo"; looking for OUTPUT',
+      'Line 4, column 1: Unexpected comment "foo"; looking for OUTPUT'
     );
   });
 
@@ -740,7 +744,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 9, column 1: Unexpected rule type "rule"; looking for EXPECTED',
+      'Line 9, column 1: Unexpected rule type "rule"; looking for EXPECTED'
     );
   });
 
@@ -761,7 +765,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 9, column 1: Unexpected comment "foo"; looking for EXPECTED',
+      'Line 9, column 1: Unexpected comment "foo"; looking for EXPECTED'
     );
   });
 
@@ -787,7 +791,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 14, column 1: Unexpected rule type "rule"; looking for END_ASSERT',
+      'Line 14, column 1: Unexpected rule type "rule"; looking for END_ASSERT'
     );
   });
 
@@ -813,7 +817,7 @@ describe('#parse', function() {
     };
 
     expect(attempt).to.throw(
-      'Line 14, column 1: Unexpected comment "foo"; looking for END_ASSERT',
+      'Line 14, column 1: Unexpected comment "foo"; looking for END_ASSERT'
     );
   });
 
