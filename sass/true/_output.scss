@@ -88,8 +88,12 @@
     $type: '#{list-separator($var)}-#{$type}';
   }
 
-  @if ($type == 'string') and ($var != unquote($var)) {
-    $type: 'quoted-#{$type}';
+  @if ($type == 'string') {
+    @if ($var != unquote($var)) {
+      $type: 'quoted-#{$type}';
+    }
+
+    @return '`[#{$type}] #{$inspect}`';
   }
 
   @return '[#{$type}] #{$inspect}';

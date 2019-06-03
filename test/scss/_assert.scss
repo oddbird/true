@@ -84,15 +84,27 @@
     $origin: #246;
     $expected: #356a9f;
 
-    @include assert-equal(lighten($origin, 15%), $expected, $inspect: true);
+    @include assert-equal(
+      lighten($origin, 15%),
+      $expected,
+      $inspect: true
+    );
   }
 
   @include test('Mismatched types with $inspect') {
-    @include assert-unequal(unquote('1rem'), 1rem, 'normally unequal');
-
-    @include assert-equal(unquote('1rem'), 1rem, $inspect: true);
+    @include assert-unequal(
+      unquote('1rem'),
+      1rem,
+      'normally unequal'
+    );
+    @include assert-equal(
+      unquote('1rem'),
+      1rem,
+      $inspect: true
+    );
   }
 }
+
 
 // Assert UnEqual
 @include test-module('Assert UnEqual') {
