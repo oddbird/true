@@ -1,7 +1,8 @@
 var chalk = require('chalk');
 var expect = require('chai').expect;
-var main = require('../lib/main.js');
 var path = require('path');
+
+var main = require('../lib/main.js');
 
 describe('#fail', function() {
   it('formats failure message', function() {

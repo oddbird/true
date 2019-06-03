@@ -11,7 +11,8 @@ initially developed for the
 All of the test code is written in pure Sass,
 and can be compiled by any Sass compiler –
 but we also provide integration with
-[Mocha JS](https://mochajs.org/),
+JavaScript test runners
+(e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
 for extra features and improved reporting.
 
 **Verb**
@@ -57,10 +58,10 @@ you may need to include the full path name:
 defaults to `true`
 
 - `true` will show detailed information in the terminal
-  for debugging failed assertions, or reporting final results.
-  This is the default, and best for compiling without Mocha.
+  for debugging failed assertions or reporting final results.
+  This is the default, and best for compiling without a JavaScript test runner.
 - `false` will turn off all terminal output from Sass,
-  though Mocha will continue to use the terminal for reporting.
+  though Mocha/Jest will continue to use the terminal for reporting.
 
 ## Usage
 
@@ -96,7 +97,8 @@ CSS output tests, on the other hand,
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (`git diff` is helpful for noticing changes),
-or you can use our [Mocha JS](https://mochajs.org/) integration.
+or you can use
+our [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/) integration.
 
 Output tests fit the same structure,
 but assertions take a slightly different form,
@@ -134,7 +136,7 @@ for more details.
 See [CHANGELOG.md](https://github.com/oddbird/true/blob/master/CHANGELOG.md)
 when upgrading from an older version of True.
 
-## Using Mocha (or other JS test runners)
+## Using Mocha, Jest, or other JS test runners
 
 1. Install `true` via npm:
 
@@ -188,11 +190,11 @@ when upgrading from an older version of True.
        sass: require('sass'),
        describe,
        it,
-     },
+     }
    );
    ```
 
-5. Run Mocha, and see your Sass tests reported in the command line.
+5. Run Mocha/Jest, and see your Sass tests reported in the command line.
 
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
@@ -206,47 +208,20 @@ your Sass test file.
 The second argument is an object with required `describe` and `it` options, and
 optional `contextLines` and `sass` options.
 
-Any JS test runner with equivalents to Mocha's `describe` and `it` should be
-usable in the same way: just pass your test runner's `describe` and `it`
-equivalents in the second argument to `runSass`.
+Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
+should be usable in the same way: just pass your test runner's `describe` and
+`it` equivalents in the second argument to `runSass`.
 
-If True's Mocha plugin can't parse the CSS output from True, it'll give you some
-context lines of CSS as part of the error message. This context will likely be
-helpful in understanding the parse failure. By default it provides up to 10
-lines of context; if you need more, you can provide a numeric `contextLines`
-option: the maximum number of context lines to provide.
+If True can't parse the CSS output, it'll give you some context lines of CSS as
+part of the error message. This context will likely be helpful in understanding
+the parse failure. By default it provides up to 10 lines of context; if you need
+more, you can provide a numeric `contextLines` option: the maximum number of
+context lines to provide.
 
 You can also provide a `sass` option to provide a different Sass implementation
 (for example, using `sass`/`dart-sass` instead of `node-sass`). This option
 expects an object providing a `renderSync` method with the same signature as
 `node-sass`.
-
-### …With Grunt…
-
-Run Mocha using the Grunt task supplied by
-[grunt-mocha-cli](https://github.com/Rowno/grunt-mocha-cli)
-
-Install `grunt-mocha-cli`:
-
-```bash
-npm install grunt-mocha-cli --save-dev
-```
-
-Configure task:
-
-```js
-grunt.loadNpmTasks('grunt-mocha');
-
-mochacli: {
-   all: ['test/test_sass.js']
-},
-```
-
-Run tests:
-
-```bash
-grunt mochacli
-```
 
 ### Imports without Webpack
 

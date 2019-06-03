@@ -48,7 +48,7 @@ They can also be triggered individually:
 # lint
 gulp sasslint
 
-# test with mocha/true
+# test with mocha/jest and true
 yarn test
 
 # compile docs
