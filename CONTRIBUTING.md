@@ -18,7 +18,7 @@ When submitting a patch via pull request:
 
 - Write a clear, descriptive commit message
 - Include any appropriate unit tests,
-  and make sure all tests are passing (`npm test`)
+  and make sure all tests are passing (`yarn test`)
 - Add your changes to the [changelog](CHANGELOG.md)
 - Update or write appropriate [SassDoc](http://sassdoc.com/)
   inline documentation for your changes

@@ -233,8 +233,10 @@
 /* Test: Number */
 /*   ✔ [assert-equal] Number */
 /*  */
-/* Test: String */
-/*   ✔ [assert-equal] String */
+/* Test: Strings get back-ticks */
+/*   ✔ [assert-equal] Strings get back-ticks */
+/*   ✔ [assert-equal] Strings get back-ticks */
+/*   ✔ [assert-unequal] Strings get back-ticks */
 /*  */
 /* Test: Color */
 /*   ✔ [assert-equal] Color */

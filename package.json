@@ -1,7 +1,7 @@
 {
   "name": "sass-true",
   "title": "True",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Unit testing for Sass.",
   "homepage": "http://oddbird.net/true",
   "main": "lib/main.js",

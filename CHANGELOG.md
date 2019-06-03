@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 5.0.0 (06/03/19)
 
 - BREAKING: Update API for `runSass`, which now accepts two arguments: a
   `sassOptions` object and a `trueOptions` object.
