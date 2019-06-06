@@ -102,6 +102,34 @@ describe('#runSass', function() {
     };
     expect(attempt).to.throw('Custom sass implementation called');
   });
+
+  it('can specify sass rendering method to use', function() {
+    var sass = [
+      '$blue: #02f;',
+      'parent {',
+      '  child {',
+      '    color: $blue;',
+      '  }',
+      '}',
+    ].join('\n');
+    var mock = function(name, cb) {
+      cb();
+    };
+    var attempt = function() {
+      main.runSass(
+        {
+          data: sass,
+        },
+        {
+          renderMethod: 'render',
+          describe: mock,
+          it: mock,
+        }
+      );
+    };
+  });
+
+
 });
 
 describe('#parse', function() {
