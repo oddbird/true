@@ -1,0 +1,34 @@
+// Errors Test
+// ===============
+
+$not-a-color: #ggg;
+
+@mixin color-mixin($color) {
+  @if (type-of($color) != color) {
+    @error 'Must pass a valid color';
+  }
+
+  .foo {
+    color: $color;
+  }
+}
+
+@include test-module('Assert Error') {
+  @include test('Detects when an error is thrown') {
+    @include assert-error() {
+      @include color-mixin($not-a-color);
+    }
+  }
+
+  @include test('Compares a partial message to the emitted message (case-insensitive)') {
+    @include assert-error('vAliD coLOr') {
+      @include color-mixin($not-a-color);
+    }
+  }
+
+  @include test('Compares the full message to the emitted message (case-insensitive)') {
+    @include assert-error('mUst PasS a vAliD cOloR') {
+      @include color-mixin($not-a-color);
+    }
+  }
+}
