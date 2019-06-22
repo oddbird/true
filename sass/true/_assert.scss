@@ -153,6 +153,31 @@
   @include _true-assert-results($assert, $expected, 'unequal');
 }
 
+// Assert Error
+// ------------
+/// Assert that a mixin or function triggers an `@error`.
+///
+/// @group api-assert-values
+///
+/// @param {string} $message -
+///   Optional message to check against the emitted message.
+///   The emitted message must contain the expected message,
+///   allowing for partial message validation.
+///   This is a case-insensitive check.
+///
+///
+/// @example scss -
+///   @include test('Some mixin does what it is supposed to do') {
+///     @include assert-error('must pass valid params'){
+///       @include some-mixin($bad-params);
+///     }
+///   }
+@mixin assert-error($message: null) {
+  @if (false) {
+    @content;
+  }
+}
+
 
 
 // Assert [output]
@@ -428,4 +453,64 @@
   $truthy: if(($not and $list and $string), true, false);
 
   @return $truthy;
+}
+
+// Execute Error
+// -------------
+/// Executes the `@content` block for an `assert-error` test.
+/// This is used inside a try/catch block in the lib/main.js file.
+///
+/// @access private
+/// @group private-assert
+///
+/// @param {*} $args - Arguments are ignored
+///
+/// @output - None expected - should trigger fatal error in sass compiler
+@mixin _assert-error-execute($args...) {
+  @content;
+}
+
+// Assert Error Success
+// --------------------
+/// This is used when a call to `_assert-error-execute` does indeed throw an
+/// error and the optional message matches what was expected. This is a proxy
+/// to the `assert-true` mixin so as to indicate a successful test.
+///
+/// @access private
+/// @group private-assert
+///
+/// @param {*} $message - The expected message
+///
+/// @output - SEE: assert-true
+@mixin _assert-error-success($message: null) {
+  @if (false) {
+    @content;
+  }
+
+  @include assert-true(true, $message);
+}
+
+// Assert Error Fail
+// -----------------
+/// This is used when a call to `_assert-error-execute` fails in one of two ways:
+///
+/// 1. no error was thrown
+/// 2. the emitted error message does not match what was expected
+///
+/// This is a proxy to the `assert-equal` mixin so as to indicate that
+/// the actual result does not match the expected result.
+///
+/// @access private
+/// @group private-assert
+///
+/// @param {*} $actual - The actual message
+/// @param {*} $message - The expected message
+///
+/// @output - SEE: assert-equal
+@mixin _assert-error-fail($actual, $expected) {
+  @if (false) {
+    @content;
+  }
+
+  @include assert-equal($actual, $expected);
 }
