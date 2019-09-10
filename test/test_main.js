@@ -915,6 +915,50 @@ describe('#parse', function() {
       expect(main.parse(css)).to.deep.equal(expected);
     });
 
+    it('parses a passing output test with curly braces within a content property', function () {
+      var css = [
+        '/* # Module: Contains */',
+        '/* Test: CSS output contains */',
+        '/*   ASSERT: Output selector pattern contains input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  content: \'{ "a": 1, "b": 2 }\';',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  content: \'{ "a": 1, "b": 2 }\'; }',
+        '',
+        '/*   END_CONTAINED   */',
+        '/* */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      var expected = [
+        {
+          module: 'Contains',
+          tests: [
+            {
+              test: 'CSS output contains',
+              assertions: [
+                {
+                  description: 'Output selector pattern contains input pattern',
+                  assertionType: 'equal',
+                  passed: true,
+                  output: '.test-output {\n  content: \'{ "a": 1, "b": 2 }\';\n  height: 10px;\n  width: 20px;\n}',
+                  expected: '.test-output {\n  content: \'{ "a": 1, "b": 2 }\';\n}',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      expect(main.parse(css)).to.deep.equal(expected);
+    });
+
     it('parses a failing output test', function() {
       var css = [
         '/* # Module: Contains */',

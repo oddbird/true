@@ -1,5 +1,9 @@
 # True Changelog
 
+## UNRELEASED
+
+- Support testing `content` properties which include a curly brace.
+
 ## 5.0.0 (06/03/19)
 
 - BREAKING: Update API for `runSass`, which now accepts two arguments: a
