@@ -1,0 +1,118 @@
+// Data Providers
+// =============
+
+// Providers [variable]
+// ------------------
+/// Stores the configured data providers
+/// @access private
+/// @group private-data-provider
+/// @type map
+$_providers: ();
+
+// Data Provider
+// -----------
+/// Configures a data provider.
+/// @access public
+/// @group api-data-provider
+/// @param {string} $name - The name of the provided
+/// @param {list} $data-set - A list of data which a test will iterate upon
+/// @throw When the provider has previously be defined
+/// @example scss -
+///   @include data-provider('maths', (
+///     (1 + 3, 4),
+///     (4 * 5, 20)
+///   ));
+///
+///   @include test('Mathematics') {
+///     @include test-provider('maths') using ($output, $expected) {
+///       @include assert-true($output, $expected);
+///     }
+///   }
+@mixin data-provider (
+  $name,
+  $data-set
+) {
+  @if map-has-key($_providers, $name) {
+    $error: 'This provider has been perviously be defined and cannot be reconfigured.';
+    @include _true-error($error, 'provider');
+  }
+
+  $_providers: map-merge($_providers, ($name: $data-set)) !global;
+}
+
+// Test Provider
+// -----------
+/// Iterates a test over the specified data provider.
+/// @access public
+/// @group api-data-provider
+/// @param {string} $name - The name of the provided
+/// @content Include all the tests & modules that are part of this module,
+///   passing the data set of the specified provider
+/// @throw When the specified data provider has not been defined.
+/// @example scss -
+///   @include data-provider('maths', (
+///     (1 + 3, 4),
+///     (4 * 5, 20)
+///   ));
+///
+///   @include test('Mathematics') {
+///     @include test-provider('maths') using ($output, $expected) {
+///       @include assert-true($output, $expected);
+///     }
+///   }
+@mixin test-provider(
+  $name
+) {
+  $provider: map-get($_providers, $name);
+
+  @if $provider == null {
+    $error: 'No provider for [#{$name}] has been defined.';
+    @include _true-error($error, 'provider');
+  }
+
+  @each $data-set in $provider {
+    @content($data-set...);
+  }
+}
+
+// Describe Each
+// -----------
+/// Describe the unit to be tested and the iterable data set it receives.
+/// This works just like a test module combine with test provider.
+/// @access public
+/// @group api-data-provider
+/// @param {string} $name - module name
+/// @param {string} $data-set - A list of data which a test will iterate upon
+/// @content Include all the tests that are part of this module,
+///   passing the data set of the specified provider
+/// @example scss -
+///   @include data-provider('maths', (
+///     (1 + 3, 4),
+///     (4 * 5, 20)
+///   ));
+///
+///   @include describe('Mathematics') {
+///     @include it('Returns two lists zipped together') {
+///       // Test 1
+///       @include for('maths') using ($output, $expected) {
+///         @include assert-true($output, $expected);
+///       }
+///
+///       // Test 2
+///       @include for((
+///         (1 + 3, 4),
+///         (4 * 5, 20)
+///       )) using ($output, $expected) {
+///         @include assert-true($output, $expected);
+///       }
+///     }
+///   }
+@mixin for(
+  $name, $data-set
+) {
+  $key: unique-id();
+  @include data-provider($key, $data-set);
+  @include test-provider($key) using ($data-set...) {
+    @content($data-set...);
+  }
+}
