@@ -24,7 +24,7 @@ $_providers: ();
 ///   ));
 ///
 ///   @include test('Mathematics') {
-///     @include test-provider('maths') using ($output, $expected) {
+///     @include test-provider('maths') using ($i, $output, $expected) {
 ///       @include assert-true($output, $expected);
 ///     }
 ///   }
@@ -47,7 +47,7 @@ $_providers: ();
 /// @group api-data-provider
 /// @param {string} $name - The name of the provided
 /// @content Include all the tests & modules that are part of this module,
-///   passing the data set of the specified provider
+///   passing the index and data of the current iteration of the specified provider
 /// @throw When the specified data provider has not been defined.
 /// @example scss -
 ///   @include data-provider('maths', (
@@ -55,9 +55,19 @@ $_providers: ();
 ///     (4 * 5, 20)
 ///   ));
 ///
-///   @include test('Mathematics') {
-///     @include test-provider('maths') using ($output, $expected) {
-///       @include assert-true($output, $expected);
+///   @include test-module('Mathematics') {
+///     // Test 1
+///     @include test('Test 1') {
+///       @include test-provider('maths') using ($i, $output, $expected) {
+///         @include assert-true($output, $expected);
+///       }
+///     }
+///
+///     // Test 2
+///     @include test-provider('maths') using ($i, $output, $expected) {
+///       @include test('Test 2 with data set ##{i} [#{$output}]') {
+///         @include assert-true($output, $expected);
+///       }
 ///     }
 ///   }
 @mixin test-provider(
@@ -70,21 +80,20 @@ $_providers: ();
     @include _true-error($error, 'provider');
   }
 
-  @each $data-set in $provider {
-    @content($data-set...);
+  @for $index from 1 through length($provider) {
+    @content($index, nth($provider, $index)...);
   }
 }
 
-// Describe Each
+// For
 // -----------
 /// Describe the unit to be tested and the iterable data set it receives.
 /// This works just like a test module combine with test provider.
 /// @access public
 /// @group api-data-provider
-/// @param {string} $name - module name
-/// @param {string} $data-set - A list of data which a test will iterate upon
+/// @param {string | list} $provider - The name of the provided or a list of data which a test will iterate upon
 /// @content Include all the tests that are part of this module,
-///   passing the data set of the specified provider
+///   passing the index and data of the current iteration of the specified provider
 /// @example scss -
 ///   @include data-provider('maths', (
 ///     (1 + 3, 4),
@@ -92,27 +101,41 @@ $_providers: ();
 ///   ));
 ///
 ///   @include describe('Mathematics') {
-///     @include it('Returns two lists zipped together') {
-///       // Test 1
-///       @include for('maths') using ($output, $expected) {
+///     // Test 1
+///     @include it('Test 1') {
+///       @include for('maths') using ($i, $output, $expected) {
 ///         @include assert-true($output, $expected);
 ///       }
+///     }
 ///
-///       // Test 2
-///       @include for((
-///         (1 + 3, 4),
-///         (4 * 5, 20)
-///       )) using ($output, $expected) {
+///     // Test 2
+///     @include for('maths') using ($i, $output, $expected) {
+///       @include it('Test 2 with data set ##{i} [#{$output}]') {
+///         @include assert-true($output, $expected);
+///       }
+///     }
+///
+///     // Test 3
+///     @include for((
+///       (1 + 3, 4),
+///       (4 * 5, 20)
+///     )) using ($i, $output, $expected) {
+///       @include it('Test 3 with data set ##{i} [#{$output}]') {
 ///         @include assert-true($output, $expected);
 ///       }
 ///     }
 ///   }
 @mixin for(
-  $name, $data-set
+  $provider
 ) {
-  $key: unique-id();
-  @include data-provider($key, $data-set);
-  @include test-provider($key) using ($data-set...) {
-    @content($data-set...);
+  $name: $provider;
+  
+  @if type-of($provider) != 'string' {
+    $name: unique-id();
+    @include data-provider($name, $provider);
+  }
+
+  @include test-provider($name) using ($args...) {
+    @content($args...);
   }
 }
