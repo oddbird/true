@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "utilities";
+
 // Stats Tracking & Reporting
 // ==========================
 
@@ -8,7 +11,7 @@
 /// @access private
 /// @group private-context
 /// @type Map<String: Number>
-$_true-stats: (
+$stats: (
   'modules': 0,
   'tests': 0,
   'assertions': 0
@@ -22,11 +25,11 @@ $_true-stats: (
 /// @param {String} $type - The stats type to add to
 /// @access private
 /// @group private-context
-@mixin _true-update-stats-count(
+@mixin update-stats-count(
   $type
 ) {
   $update: ($type: 1);
-  $_true-stats: _true-map-increment($_true-stats, $update) !global;
+  $stats: utilities.map-increment($stats, $update) !global;
 }
 
 
@@ -38,17 +41,17 @@ $_true-stats: (
 /// @group private-message
 /// @param {Bool} $linebreak [false] -
 ///   Return message either as a single line or in multiple lines
-/// @param {Map} $stats [$_true-stats] -
+/// @param {Map} $stats [$stats] -
 ///   Map that contains the stats counts for modules, tests, and assertions found
 /// @return {String} - Stats count message
-@function _true-stats-message(
+@function stats-message(
   $linebreak: false,
-  $stats: $_true-stats
+  $stats: $stats
 ) {
   // Get Results
-  $modules: map-get($stats, 'modules');
-  $tests: map-get($stats, 'tests');
-  $assertions: map-get($stats, 'assertions');
+  $modules: map.get($stats, 'modules');
+  $tests: map.get($stats, 'tests');
+  $assertions: map.get($stats, 'assertions');
 
   // Pluralize Labels
   $modules-label: if($modules == 1, 'Module', 'Modules');

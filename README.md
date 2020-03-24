@@ -54,7 +54,7 @@ you may need to include the full path name:
 
 ## One Setting
 
-`$true-terminal-output` (boolean),
+`$terminal-output` (boolean),
 defaults to `true`
 
 - `true` will show detailed information in the terminal

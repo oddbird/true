@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "sass:map";
+@use "messages";
+
 // Utilities
 // =========
 
@@ -8,7 +12,7 @@
 /// @access private
 /// @group private-utils
 /// @type bool
-$_true-error-output-override: false !default;
+$error-output-override: false !default;
 
 
 
@@ -21,7 +25,7 @@ $_true-error-output-override: false !default;
 ///   The error to report
 /// @param {string} $source -
 ///   The source of the error
-/// @param {bool} $override [$_true-error-output-override] -
+/// @param {bool} $override [$error-output-override] -
 ///   Optionally override error-output for testing failure-cases
 /// @return {string}
 ///   A message detailing the source and error,
@@ -29,10 +33,10 @@ $_true-error-output-override: false !default;
 /// @throw
 ///   A message detailing the source and error,
 ///   when the `$override` is `false`
-@function _true-error(
+@function error(
   $message,
   $source,
-  $override: $_true-error-output-override
+  $override: $error-output-override
 ) {
   @if $override {
     @return 'ERROR [#{$source}] #{$message}';
@@ -51,7 +55,7 @@ $_true-error-output-override: false !default;
 ///   The error to report
 /// @param {string} $source -
 ///   The source of the error
-/// @param {bool} $override [$_true-error-output-override] -
+/// @param {bool} $override [$error-output-override] -
 ///   Optionally override error-output for testing failure-cases
 /// @output
 ///   A message detailing the source and error,
@@ -59,14 +63,14 @@ $_true-error-output-override: false !default;
 /// @throw
 ///   A message detailing the source and error,
 ///   when the `$override` is `false`
-@mixin _true-error(
+@mixin error(
   $message,
   $source,
-  $override: $_true-error-output-override
+  $override: $error-output-override
 ) {
   @if $override {
     $error: 'ERROR [#{$source}] #{$message}';
-    @include _true-message($error, 'comments');
+    @include messages.message($error, 'comments');
   } @else {
     @error '[#{$source}] #{$message}';
   }
@@ -83,17 +87,17 @@ $_true-error-output-override: false !default;
 /// @param {map} $add -
 ///   Map of values to be added
 /// @return {map}
-@function _true-map-increment(
+@function map-increment(
   $base,
   $add
 ) {
-  @each $key in map-keys($add) {
-    $value: map-get($add, $key);
+  @each $key in map.keys($add) {
+    $value: map.get($add, $key);
 
     @if $value {
-      $base-value: map-get($base, $key);
+      $base-value: map.get($base, $key);
       $new-value: if($base-value, $base-value + $value, $value);
-      $base: map-merge($base, ($key: $new-value));
+      $base: map.merge($base, ($key: $new-value));
     }
   }
 
@@ -112,13 +116,13 @@ $_true-error-output-override: false !default;
 ///   with an optional final argument describing
 ///   the desired list-separator ('space' or 'comma')
 /// @return {list} Joined items in a single list
-@function _true-join-multiple(
+@function join-multiple(
   $lists...
 ) {
-  $return: nth($lists, 1);
-  $type: list-separator($return);
-  $last: nth($lists, -1);
-  $length: length($lists);
+  $return: list.nth($lists, 1);
+  $type: list.separator($return);
+  $last: list.nth($lists, -1);
+  $length: list.length($lists);
 
   @if ($last == 'space') or ($last == 'comma') {
     $length: $length - 1;
@@ -128,11 +132,11 @@ $_true-error-output-override: false !default;
 
   @if ($length < 2) {
     $error: 'Must provide at least 2 lists';
-    @return _true-error($error, '_true-join-multiple');
+    @return error($error, 'join-multiple');
   }
 
   @for $i from 2 through $length {
-    $return: join($return, nth($lists, $i), $type);
+    $return: list.join($return, list.nth($lists, $i), $type);
   }
 
   @return $return;

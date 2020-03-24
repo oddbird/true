@@ -1,26 +1,31 @@
+@use "../../sass/true/assert";
+@use "../../sass/true/messages";
+@use "../../sass/true/modules";
+@use "../../sass/true/tests";
+
 // Message Tests
 // =============
 
-@include test-module('True Message') {
-  @include test('Simple messages') {
-    @include assert('Render as CSS comments') {
-      @include output(false) {
-        @include _true-message('This is a simple message', 'comments');
+@include modules.test-module('True Message') {
+  @include tests.test('Simple messages') {
+    @include assert.assert('Render as CSS comments') {
+      @include assert.output(false) {
+        @include messages.message('This is a simple message', 'comments');
       }
 
-      @include expect(false) {
+      @include assert.expect(false) {
         /* This is a simple message */
       }
     }
   }
 
-  @include test('Multi-line messages') {
-    @include assert('Render as multiple CSS comments') {
-      @include output(false) {
-        @include _true-message('This is a' 'multiline message', 'comments');
+  @include tests.test('Multi-line messages') {
+    @include assert.assert('Render as multiple CSS comments') {
+      @include assert.output(false) {
+        @include messages.message('This is a' 'multiline message', 'comments');
       }
 
-      @include expect(false) {
+      @include assert.expect(false) {
         /* This is a */
         /* multiline message */
       }

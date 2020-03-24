@@ -1,27 +1,34 @@
+@use "sass:list";
+@use "../../sass/true/assert";
+@use "../../sass/true/messages";
+@use "../../sass/true/modules";
+@use "../../sass/true/tests";
+@use "../../sass/true/utilities";
+
 // Utility Tests
 // =============
 
-@include test-module('True Error [function]') {
-  @include test('Allow errors to return without blocking compilation') {
-    @include assert-equal(
-      _true-error('This is a test error message', '_true-error test'),
-      'ERROR [_true-error test] This is a test error message'
+@include modules.test-module('True Error [function]') {
+  @include tests.test('Allow errors to return without blocking compilation') {
+    @include assert.assert-equal(
+      utilities.error('This is a test error message', 'error test'),
+      'ERROR [error test] This is a test error message'
     );
   }
 }
 
-@include test-module('True Error [mixin]') {
-  @include test('Allow errors to output without blocking compilation') {
-    @include assert {
-      @include output {
-        @include _true-error(
+@include modules.test-module('True Error [mixin]') {
+  @include tests.test('Allow errors to output without blocking compilation') {
+    @include assert.assert {
+      @include assert.output {
+        @include utilities.error(
           'This is a test error message',
-          '_true-error test'
+          'error test'
         );
       }
-      @include expect {
-        @include _true-message(
-          'ERROR [_true-error test] This is a test error message',
+      @include assert.expect {
+        @include messages.message(
+          'ERROR [error test] This is a test error message',
           'comments'
         );
       }
@@ -29,8 +36,8 @@
   }
 }
 
-@include test-module('Map Add [function]') {
-  @include test('Returns a map with the sum-values of two numeric maps') {
+@include modules.test-module('Map Add [function]') {
+  @include tests.test('Returns a map with the sum-values of two numeric maps') {
     $base: (
       one: 1,
       two: 1,
@@ -47,11 +54,11 @@
       two: 3,
       three: 0,
     );
-    @include assert-equal(_true-map-increment($base, $add), $expect);
+    @include assert.assert-equal(utilities.map-increment($base, $add), $expect);
   }
 }
 
-@include test-module('Join Multiple [function') {
+@include modules.test-module('Join Multiple [function') {
   $one: ('one', 'two', 'three');
   $two: ('four' 'five' 'six');
   $three: ('seven', 'eight', 'nine');
@@ -67,14 +74,14 @@
     'nine'
   );
 
-  @include test('Combines multiple lists') {
-    @include assert-equal(_true-join-multiple($one, $two, $three), $joined);
+  @include tests.test('Combines multiple lists') {
+    @include assert.assert-equal(utilities.join-multiple($one, $two, $three), $joined);
   }
 
-  @include test('Sets new list-separator') {
-    @include assert-equal(
-      _true-join-multiple($one, $two, $three, 'space'),
-      join((), $joined, 'space')
+  @include tests.test('Sets new list-separator') {
+    @include assert.assert-equal(
+      utilities.join-multiple($one, $two, $three, 'space'),
+      list.join((), $joined, 'space')
     );
   }
 }

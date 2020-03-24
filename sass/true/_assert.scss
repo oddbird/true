@@ -1,3 +1,11 @@
+@use "sass:meta";
+@use "context";
+@use "messages";
+@use "output";
+@use "results";
+@use "settings";
+@use "stats";
+
 // Assert
 // ======
 
@@ -27,11 +35,11 @@
   $assert,
   $description: null
 ) {
-  $default: _true-context('test');
-  $truthy: _true-is-truthy($assert);
+  $default: context.context('test');
+  $truthy: is-truthy($assert);
 
-  @include _true-context('assert', '[assert-true] #{$description or $default}');
-  @include _true-assert-results($truthy, true);
+  @include context.context('assert', '[assert-true] #{$description or $default}');
+  @include assert-results($truthy, true);
 }
 
 
@@ -59,11 +67,11 @@
   $assert,
   $description: null
 ) {
-  $default: _true-context('test');
-  $falsey: not _true-is-truthy($assert);
+  $default: context.context('test');
+  $falsey: not is-truthy($assert);
 
-  @include _true-context('assert', '[assert-false] #{$description or $default}');
-  @include _true-assert-results($falsey, true);
+  @include context.context('assert', '[assert-false] #{$description or $default}');
+  @include assert-results($falsey, true);
 }
 
 
@@ -99,15 +107,15 @@
   $description: null,
   $inspect: false
 ) {
-  $default: _true-context('test');
+  $default: context.context('test');
 
   @if $inspect {
-    $assert: inspect($assert);
-    $expected: inspect($expected);
+    $assert: meta.inspect($assert);
+    $expected: meta.inspect($expected);
   }
 
-  @include _true-context('assert', '[assert-equal] #{$description or $default}');
-  @include _true-assert-results($assert, $expected);
+  @include context.context('assert', '[assert-equal] #{$description or $default}');
+  @include assert-results($assert, $expected);
 }
 
 
@@ -142,15 +150,15 @@
   $description: null,
   $inspect: false
 ) {
-  $default: _true-context('test');
+  $default: context.context('test');
 
   @if $inspect {
-    $assert: inspect($assert);
-    $expected: inspect($expected);
+    $assert: meta.inspect($assert);
+    $expected: meta.inspect($expected);
   }
 
-  @include _true-context('assert', '[assert-unequal] #{$description or $default}');
-  @include _true-assert-results($assert, $expected, 'unequal');
+  @include context.context('assert', '[assert-unequal] #{$description or $default}');
+  @include assert-results($assert, $expected, 'unequal');
 }
 
 
@@ -194,18 +202,18 @@
 @mixin assert(
   $description: null
 ) {
-  $default: _true-context('test');
-  @include _true-output-context('assert');
-  @include _true-context('assert', '[output] #{$description or $default}');
-  @include _true-message('  ASSERT: #{$description}  ', 'comments');
+  $default: context.context('test');
+  @include context.output-context('assert');
+  @include context.context('assert', '[output] #{$description or $default}');
+  @include messages.message('  ASSERT: #{$description}  ', 'comments');
 
   @content;
 
-  @include _true-output-context(null);
-  @include _true-update-test('output-to-css');
-  @include _true-update-stats-count('assertions');
-  @include _true-context-pop;
-  @include _true-message('  END_ASSERT  ', 'comments');
+  @include context.output-context(null);
+  @include results.update-test('output-to-css');
+  @include stats.update-stats-count('assertions');
+  @include context.context-pop;
+  @include messages.message('  END_ASSERT  ', 'comments');
 }
 
 
@@ -249,8 +257,8 @@
 @mixin output(
   $selector: true
 ) {
-  @include _true-output-context('output');
-  @include _true-message('  OUTPUT  ', 'comments');
+  @include context.output-context('output');
+  @include messages.message('  OUTPUT  ', 'comments');
 
   @if $selector {
     .test-output {
@@ -260,7 +268,7 @@
     @content;
   }
 
-  @include _true-message('  END_OUTPUT  ', 'comments');
+  @include messages.message('  END_OUTPUT  ', 'comments');
 }
 
 
@@ -303,8 +311,8 @@
 @mixin expect(
   $selector: true
 ) {
-  @include _true-output-context('expect');
-  @include _true-message('  EXPECTED  ', 'comments');
+  @include context.output-context('expect');
+  @include messages.message('  EXPECTED  ', 'comments');
 
   @if $selector {
     .test-output {
@@ -314,7 +322,7 @@
     @content;
   }
 
-  @include _true-message('  END_EXPECTED  ', 'comments');
+  @include messages.message('  END_EXPECTED  ', 'comments');
 }
 
 // Contains
@@ -357,8 +365,8 @@
 @mixin contains(
   $selector: true
 ) {
-  @include _true-output-context('contains');
-  @include _true-message('  CONTAINED  ', 'comments');
+  @include context.output-context('contains');
+  @include messages.message('  CONTAINED  ', 'comments');
 
   @if $selector {
     .test-output {
@@ -368,7 +376,7 @@
     @content;
   }
 
-  @include _true-message('  END_CONTAINED  ', 'comments');
+  @include messages.message('  END_CONTAINED  ', 'comments');
 }
 
 
@@ -388,23 +396,23 @@
 ///   Set to `true` if the comparison is expected to fail
 ///
 /// @output - Document the passing or failing result of the test
-@mixin _true-assert-results(
+@mixin assert-results(
   $assert,
   $expected,
   $unequal: false,
-  $terminal: $true-terminal-output
+  $terminal: settings.$terminal-output
 ) {
-  $result: _true-get-result($assert, $expected, $unequal);
+  $result: results.get-result($assert, $expected, $unequal);
 
   @if $result == 'pass' {
-    @include _true-pass-details;
+    @include output.pass-details;
   } @else {
-    @include _true-fail-details($assert, $expected, $terminal);
+    @include output.fail-details($assert, $expected, $terminal);
   }
 
-  @include _true-update-test($result);
-  @include _true-update-stats-count('assertions');
-  @include _true-context-pop;
+  @include results.update-test($result);
+  @include stats.update-stats-count('assertions');
+  @include context.context-pop;
 }
 
 
@@ -419,7 +427,7 @@
 /// @param {*} $assert - Value to consider
 ///
 /// @return {bool}
-@function _true-is-truthy(
+@function is-truthy(
   $assert
 ) {
   $not: (not not $assert);

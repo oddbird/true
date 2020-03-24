@@ -1,3 +1,8 @@
+@use "context";
+@use "messages";
+@use "results";
+@use "stats";
+
 // Tests
 // =====
 
@@ -24,9 +29,9 @@
 @mixin test(
   $name
 ) {
-  @include _true-test-start($name);
+  @include test-start($name);
   @content;
-  @include _true-test-stop;
+  @include test-stop;
 }
 
 
@@ -67,11 +72,11 @@
 /// @group private-test
 /// @param {string} $name -
 ///   Describe what is being tested
-@mixin _true-test-start(
+@mixin test-start(
   $name
 ) {
-  @include _true-context('test', $name);
-  @include _true-message('Test: #{$name}', 'comments');
+  @include context.context('test', $name);
+  @include messages.message('Test: #{$name}', 'comments');
 }
 
 
@@ -81,9 +86,9 @@
 /// Test stop helper
 /// @access private
 /// @group private-test
-@mixin _true-test-stop {
-  @include _true-update($_true-test-result);
-  @include _true-update-stats-count('tests');
-  @include _true-context-pop;
-  @include _true-message('', 'comments');
+@mixin test-stop {
+  @include results.update(results.$test-result);
+  @include stats.update-stats-count('tests');
+  @include context.context-pop;
+  @include messages.message('', 'comments');
 }

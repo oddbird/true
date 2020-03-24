@@ -1,29 +1,35 @@
+@use "sass:list";
+@use "../../sass/true/assert";
+@use "../../sass/true/context";
+@use "../../sass/true/modules";
+@use "../../sass/true/tests";
+
 // Settings Tests
 // ==============
 
 // Adding and removing context
-@include test-module('true-context & true-context-pop [mixins]') {
-  @include test('Adds scope and name to context') {
-    @each $entry-scope, $entry-name in $_true-context {
-      @include assert-unequal(
+@include modules.test-module('context & context-pop [mixins]') {
+  @include tests.test('Adds scope and name to context') {
+    @each $entry-scope, $entry-name in context.$context {
+      @include assert.assert-unequal(
         $entry-scope,
         'fake',
         'Confirm that there is currently no "fake" scope'
       );
     }
 
-    @include _true-context('fake', 'this scope is not real');
+    @include context.context('fake', 'this scope is not real');
 
-    @include assert-equal(
-      _true-context('fake'),
+    @include assert.assert-equal(
+      context.context('fake'),
       'this scope is not real',
       'Sets the value of scope "fake" to "this scope is not real"'
     );
 
-    @include _true-context-pop;
+    @include context.context-pop;
 
-    @each $entry-scope, $entry-name in $_true-context {
-      @include assert-unequal(
+    @each $entry-scope, $entry-name in context.$context {
+      @include assert.assert-unequal(
         $entry-scope,
         'fake',
         'Confirm that "fake" scope has been removed'
@@ -33,30 +39,30 @@
 }
 
 // Inspecting context
-@include test-module('true-context & true-context-all [functions]') {
-  @include test('Returns current module context') {
-    @include assert-equal(
-      _true-context('module'),
-      'true-context & true-context-all [functions]'
+@include modules.test-module('context & context-all [functions]') {
+  @include tests.test('Returns current module context') {
+    @include assert.assert-equal(
+      context.context('module'),
+      'context & context-all [functions]'
     );
   }
 
-  @include test('Returns current test context') {
-    @include assert-equal(
-      _true-context('test'),
+  @include tests.test('Returns current test context') {
+    @include assert.assert-equal(
+      context.context('test'),
       'Returns current test context'
     );
   }
 
-  @include test-module('nested') {
-    @include test('Returns the innermost module name') {
-      @include assert-equal(_true-context('module'), 'nested');
+  @include modules.test-module('nested') {
+    @include tests.test('Returns the innermost module name') {
+      @include assert.assert-equal(context.context('module'), 'nested');
     }
 
-    @include test('_true-context-all [function]') {
-      @include assert-equal(
-        _true-context-all('module'),
-        'true-context & true-context-all [functions]' 'nested',
+    @include tests.test('context-all [function]') {
+      @include assert.assert-equal(
+        context.context-all('module'),
+        'context & context-all [functions]' 'nested',
         'Returns the current stack of module names'
       );
     }
@@ -64,91 +70,91 @@
 }
 
 // valid output context
-@include test-module('true-validate-output-context [function]') {
+@include modules.test-module('validate-output-context [function]') {
   $valid: 'assert' 'expect' 'output' 'contains';
 
-  @include test('unknown context name') {
-    @include assert-equal(
-      _true-validate-output-context('wtf'),
+  @include tests.test('unknown context name') {
+    @include assert.assert-equal(
+      context.validate-output-context('wtf'),
       'ERROR [output-context] #{'wtf'} is not a valid context for output tests: #{$valid}');
   }
 
-  @include test('duplicate assert') {
-    $_true-output-context: 'assert' 'output' !global;
+  @include tests.test('duplicate assert') {
+    context.$output-context: 'assert' 'output';
 
-    @include assert-equal(
-      _true-validate-output-context('assert'),
+    @include assert.assert-equal(
+      context.validate-output-context('assert'),
       'ERROR [output-context] The `assert()` mixin can not contain another `assert()`'
     );
 
-    $_true-output-context: () !global;
+    context.$output-context: ();
   }
 
-  @include test('duplicate output/expect') {
-    $_true-output-context: 'assert' 'output' !global;
+  @include tests.test('duplicate output/expect') {
+    context.$output-context: 'assert' 'output';
 
-    @include assert-equal(
-      _true-validate-output-context('output'),
+    @include assert.assert-equal(
+      context.validate-output-context('output'),
       'ERROR [output-context] The `output()` mixin must only be used once per `assert()`'
     );
 
-    $_true-output-context: () !global;
+    context.$output-context: ();
   }
 
-  @include test('missing assert') {
-    @include assert-equal(
-      _true-validate-output-context('output'),
+  @include tests.test('missing assert') {
+    @include assert.assert-equal(
+      context.validate-output-context('output'),
       'ERROR [output-context] The `assert()` wrapper is required'
     );
   }
 
-  @include test('wrong length') {
-    $_true-output-context: 'assert' 'wtf' 'output' 'expect' 'contains' !global;
+  @include tests.test('wrong length') {
+    context.$output-context: 'assert' 'wtf' 'output' 'expect' 'contains';
 
-    @include assert-equal(
-      _true-validate-output-context(null),
+    @include assert.assert-equal(
+      context.validate-output-context(null),
       'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
     );
 
-    $_true-output-context: () !global;
+    context.$output-context: ();
   }
 
-  @include test('missing context') {
-    $_true-output-context: 'assert' 'wtf' 'output' 'contains' !global;
+  @include tests.test('missing context') {
+    context.$output-context: 'assert' 'wtf' 'output' 'contains';
 
-    @include assert-equal(
-      _true-validate-output-context(null),
+    @include assert.assert-equal(
+      context.validate-output-context(null),
       'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
     );
 
-    $_true-output-context: () !global;
+    context.$output-context: ();
   }
 }
 
 // Output context
-@include test-module('true-output-context [mixin]') {
+@include modules.test-module('output-context [mixin]') {
   $empty-list: ();
-  $before: $_true-output-context;
-  @include _true-output-context('assert');
-  $assert: $_true-output-context;
-  @include _true-output-context('expect');
-  $expect: $_true-output-context;
-  @include _true-output-context('output');
-  $output: $_true-output-context;
-  @include _true-output-context(null);
-  $reset: $_true-output-context;
+  $before: context.$output-context;
+  @include context.output-context('assert');
+  $assert: context.$output-context;
+  @include context.output-context('expect');
+  $expect: context.$output-context;
+  @include context.output-context('output');
+  $output: context.$output-context;
+  @include context.output-context(null);
+  $reset: context.$output-context;
 
-  @include test('Appends new context') {
-    @include assert-equal($before, $empty-list, 'Check initial value');
+  @include tests.test('Appends new context') {
+    @include assert.assert-equal($before, $empty-list, 'Check initial value');
 
-    @include assert-equal($assert, join((), 'assert'));
+    @include assert.assert-equal($assert, list.join((), 'assert'));
 
-    @include assert-equal($expect, ('assert' 'expect'));
+    @include assert.assert-equal($expect, ('assert' 'expect'));
 
-    @include assert-equal($output, ('assert' 'expect' 'output'));
+    @include assert.assert-equal($output, ('assert' 'expect' 'output'));
   }
 
-  @include test('Resets context') {
-    @include assert-equal($reset, $before);
+  @include tests.test('Resets context') {
+    @include assert.assert-equal($reset, $before);
   }
 }

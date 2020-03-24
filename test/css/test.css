@@ -11,12 +11,12 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [error test] This is a test error message */ }
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [error test] This is a test error message */ }
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -86,7 +86,7 @@
 /*   ✔ [assert-equal] Linebreaks */
 /*  */
 /*  */
-/* # Module: true-context & true-context-pop [mixins] */
+/* # Module: context & context-pop [mixins] */
 /* -------------------------------------------------- */
 /* Test: Adds scope and name to context */
 /*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
@@ -96,7 +96,7 @@
 /*   ✔ [assert-unequal] Confirm that "fake" scope has been removed */
 /*  */
 /*  */
-/* # Module: true-context & true-context-all [functions] */
+/* # Module: context & context-all [functions] */
 /* ----------------------------------------------------- */
 /* Test: Returns current module context */
 /*   ✔ [assert-equal] Returns current module context */
@@ -104,17 +104,17 @@
 /* Test: Returns current test context */
 /*   ✔ [assert-equal] Returns current test context */
 /*  */
-/* # Module: true-context & true-context-all [functions] :: nested */
+/* # Module: context & context-all [functions] :: nested */
 /* --------------------------------------------------------------- */
 /* Test: Returns the innermost module name */
 /*   ✔ [assert-equal] Returns the innermost module name */
 /*  */
-/* Test: _true-context-all [function] */
+/* Test: context-all [function] */
 /*   ✔ [assert-equal] Returns the current stack of module names */
 /*  */
 /*  */
 /*  */
-/* # Module: true-validate-output-context [function] */
+/* # Module: validate-output-context [function] */
 /* ------------------------------------------------- */
 /* Test: unknown context name */
 /*   ✔ [assert-equal] unknown context name */
@@ -135,7 +135,7 @@
 /*   ✔ [assert-equal] missing context */
 /*  */
 /*  */
-/* # Module: true-output-context [mixin] */
+/* # Module: output-context [mixin] */
 /* ------------------------------------- */
 /* Test: Appends new context */
 /*   ✔ [assert-equal] Check initial value */

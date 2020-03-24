@@ -1,94 +1,100 @@
+@use "sass:map";
+@use "../../sass/true/assert";
+@use "../../sass/true/modules";
+@use "../../sass/true/results";
+@use "../../sass/true/tests";
+
 // Test Results
 // ============
 
-@include test-module('Get Result') {
-  @include test('Equal Pass') {
-    @include assert-equal(_true-get-result(1em, 1em), 'pass');
+@include modules.test-module('Get Result') {
+  @include tests.test('Equal Pass') {
+    @include assert.assert-equal(results.get-result(1em, 1em), 'pass');
   }
 
-  @include test('Equal Fail') {
-    @include assert-equal(_true-get-result(1em, true), 'fail');
+  @include tests.test('Equal Fail') {
+    @include assert.assert-equal(results.get-result(1em, true), 'fail');
   }
 
-  @include test('Unequal pass') {
-    @include assert-equal(_true-get-result(true, 'hello', 'unequal'), 'pass');
+  @include tests.test('Unequal pass') {
+    @include assert.assert-equal(results.get-result(true, 'hello', 'unequal'), 'pass');
   }
 
-  @include test('Unequal fail') {
-    @include assert-equal(
-      _true-get-result('hello', 'hello', 'unequal'),
+  @include tests.test('Unequal fail') {
+    @include assert.assert-equal(
+      results.get-result('hello', 'hello', 'unequal'),
       'fail'
     );
   }
 }
 
-@include test-module('Update Results') {
-  $before: $_true-results;
-  @include _true-update('pass');
-  $actual: $_true-results;
-  $_true-results: $before !global;
+@include modules.test-module('Update Results') {
+  $before: results.$results;
+  @include results.update('pass');
+  $actual: results.$results;
+  results.$results: $before;
 
-  @include test('Add one run') {
-    @include assert-equal(map-get($actual, 'run'), map-get($before, 'run') + 1);
+  @include tests.test('Add one run') {
+    @include assert.assert-equal(map.get($actual, 'run'), map.get($before, 'run') + 1);
   }
 
-  @include test('Add one pass') {
-    @include assert-equal(
-      map-get($actual, 'pass'),
-      map-get($before, 'pass') + 1
+  @include tests.test('Add one pass') {
+    @include assert.assert-equal(
+      map.get($actual, 'pass'),
+      map.get($before, 'pass') + 1
     );
   }
 
-  @include test('Fail counts are left as-is') {
-    @include assert-equal(map-get($actual, 'fail'), map-get($before, 'fail'));
+  @include tests.test('Fail counts are left as-is') {
+    @include assert.assert-equal(map.get($actual, 'fail'), map.get($before, 'fail'));
   }
 
-  @include test('Output counts are left as-is') {
-    @include assert-equal(
-      map-get($actual, 'output-to-css'),
-      map-get($before, 'output-to-css')
+  @include tests.test('Output counts are left as-is') {
+    @include assert.assert-equal(
+      map.get($actual, 'output-to-css'),
+      map.get($before, 'output-to-css')
     );
   }
 }
 
-@include test-module('Update Test') {
-  $before: $_true-test-result;
-  @include _true-update-test('pass');
-  $pass: $_true-test-result;
-  @include _true-update-test('output-to-css');
-  $css: $_true-test-result;
-  @include _true-update-test('pass');
-  $css2: $_true-test-result;
-  @include _true-update-test('fail');
-  $fail: $_true-test-result;
-  @include _true-update-test('pass');
-  @include _true-update-test('output-to-css');
-  $fail2: $_true-test-result;
-  $_true-test-result: $before !global;
+@include modules.test-module('Update Test') {
+  $before: results.$test-result;
+  @include results.update-test('pass');
+  $pass: results.$test-result;
+  @include results.update-test('output-to-css');
+  $css: results.$test-result;
+  @include results.update-test('pass');
+  $css2: results.$test-result;
+  @include results.update-test('fail');
+  $fail: results.$test-result;
+  @include results.update-test('pass');
+  @include results.update-test('output-to-css');
+  $fail2: results.$test-result;
+  results.$test-result: $before;
 
-  @include test('Updates global test-result') {
-    @include assert-equal($before, null, 'confirm the default state');
-    @include assert-equal($pass, 'pass', 'confirm updated test-result');
+  @include tests.test('Updates global test-result') {
+    @include assert.assert-equal($before, null, 'confirm the default state');
+    @include assert.assert-equal($pass, 'pass', 'confirm updated test-result');
   }
 
-  @include test('Output-to-css overrides pass') {
-    @include assert-equal($css, 'output-to-css');
+  @include tests.test('Output-to-css overrides pass') {
+    @include assert.assert-equal($css, 'output-to-css');
   }
 
-  @include test('Pass does not override output-to-css') {
-    @include assert-equal($css, $css2);
+  @include tests.test('Pass does not override output-to-css') {
+    @include assert.assert-equal($css, $css2);
   }
 
-  @include test('Fail overrides everything') {
-    @include assert-equal($fail, 'fail');
+  @include tests.test('Fail overrides everything') {
+    @include assert.assert-equal($fail, 'fail');
   }
 
-  @include test('Nothing overrides fail') {
-    @include assert-equal($fail, $fail2);
+  @include tests.test('Nothing overrides fail') {
+    @include assert.assert-equal($fail, $fail2);
   }
 }
 
-@include test-module('results-message [function]') {
+@include modules.test-module('results-message [function]') {
   $test-map: (
     'run': 10,
     'pass': 6,
@@ -96,45 +102,45 @@
     'output-to-css': 3,
   );
 
-  @include test('Single Line') {
-    @include assert-equal(
-      _true-results-message($results: $test-map),
+  @include tests.test('Single Line') {
+    @include assert.assert-equal(
+      results.results-message($results: $test-map),
       '10 Tests, 6 Passed, 1 Failed, 3 Output to CSS'
     );
   }
 
-  @include test('Linebreaks') {
+  @include tests.test('Linebreaks') {
     $message: ('10 Tests:', '- 6 Passed', '- 1 Failed', '- 3 Output to CSS');
-    @include assert-equal(
-      _true-results-message('linebreaks', $test-map),
+    @include assert.assert-equal(
+      results.results-message('linebreaks', $test-map),
       $message
     );
   }
 
-  $test-map: map-merge(
+  $test-map: map.merge(
     $test-map,
     (
       'output-to-css': 0,
     )
   );
 
-  @include test('No output tests') {
-    @include assert-equal(
-      _true-results-message($results: $test-map),
+  @include tests.test('No output tests') {
+    @include assert.assert-equal(
+      results.results-message($results: $test-map),
       '10 Tests, 6 Passed, 1 Failed'
     );
   }
 
-  $test-map: map-merge(
+  $test-map: map.merge(
     $test-map,
     (
       'run': 1,
     )
   );
 
-  @include test('Single test') {
-    @include assert-equal(
-      _true-results-message($results: $test-map),
+  @include tests.test('Single test') {
+    @include assert.assert-equal(
+      results.results-message($results: $test-map),
       '1 Test, 6 Passed, 1 Failed'
     );
   }

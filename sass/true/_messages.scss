@@ -1,3 +1,4 @@
+@use "sass:list";
 // Messages
 // ========
 
@@ -12,7 +13,7 @@
 ///   Message to output
 /// @param {String} $output [comments] -
 ///   Type of output, either `comments`, `terminal`, `debug` or `warn`
-@mixin _true-message(
+@mixin message(
   $message,
   $output: 'comments',
   $comment-padding: 0
@@ -26,15 +27,15 @@
   }
 
   @each $line in $message {
-    @if index($output, 'comments') { // sass-lint:disable-line no-empty-rulesets
+    @if list.index($output, 'comments') { // sass-lint:disable-line no-empty-rulesets
       /* #{$pad + $line} */ // sass-lint:disable-line no-css-comments
     }
 
-    @if index($output, 'debug') or index($output, 'terminal') {
+    @if list.index($output, 'debug') or list.index($output, 'terminal') {
       @debug $line; // sass-lint:disable-line no-debug
     }
 
-    @if index($output, 'warn') {
+    @if list.index($output, 'warn') {
       @warn $line;
     }
   }

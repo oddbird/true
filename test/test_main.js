@@ -1,6 +1,7 @@
 var chalk = require('chalk');
 var expect = require('chai').expect;
 var path = require('path');
+var dartSass = require('sass');
 
 var main = require('../lib/main.js');
 
@@ -30,10 +31,10 @@ describe('#fail', function() {
 describe('#runSass', function() {
   it('throws AssertionError on failure', function() {
     var sass = [
-      '@import "true";',
-      '@include test-module("Throw an error") {',
-      '  @include test("assertionError") {',
-      '    @include assert-true(false, "This test is meant to fail.");',
+      '@use "true";',
+      '@include true.test-module("Throw an error") {',
+      '  @include true.test("assertionError") {',
+      '    @include true.assert-true(false, "This test is meant to fail.");',
       '  }',
       '}',
     ].join('\n');
@@ -41,7 +42,7 @@ describe('#runSass', function() {
       cb();
     };
     var attempt = function() {
-      main.runSass({ data: sass }, { describe: mock, it: mock });
+      main.runSass({ data: sass }, { sass: dartSass, describe: mock, it: mock });
     };
     expect(attempt).to.throw(
       'This test is meant to fail. ("[bool] false" assert-true "[bool] true")'
@@ -74,6 +75,7 @@ describe('#runSass', function() {
         includePaths: [path.join(__dirname, 'scss/includes')],
       },
       {
+        sass: dartSass,
         describe: mock,
         it: mock,
       }

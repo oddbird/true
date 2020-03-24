@@ -1,28 +1,18 @@
-// True Tests
-// ==========
+@use '../../sass/true' with ($error-output-override: true);
 
-@import '../../sass/true';
+// Database
+@use 'stats';
+@use 'context';
+@use 'results';
+@use 'output';
 
-// Error Override
-$_true-error-output-override: true;
-
-// Config
-@import 'utilities';
-@import 'messages';
+// API
+@use 'modules';
+@use 'tests';
+@use 'assert';
+@use 'report';
 
 // Ignore Non-Test Output
 .not-a-test {
   break: please-no;
 }
-
-// Database
-@import 'stats';
-@import 'context';
-@import 'results';
-@import 'output';
-
-// API
-@import 'modules';
-@import 'tests';
-@import 'assert';
-@import 'report';

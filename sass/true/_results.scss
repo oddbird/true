@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "sass:map";
+@use "utilities";
+
 // Result Tracking
 // ===============
 
@@ -12,7 +16,7 @@
 /// @param {bool} $unequal [false] -
 ///   Set to `true` if the comparison is expected to fail
 /// @return {'pass' | 'fail'}
-@function _true-get-result(
+@function get-result(
   $assert,
   $expected,
   $unequal: false
@@ -31,7 +35,7 @@
 /// @access private
 /// @group private-context
 /// @type Map
-$_true-results: (
+$results: (
   'run': 0,
   'pass': 0,
   'fail': 0,
@@ -45,15 +49,15 @@ $_true-results: (
 /// @access private
 /// @group private-context
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
-@mixin _true-update(
+@mixin update(
   $result
 ) {
   $update: (
     'run': 1,
     $result: 1,
   );
-  $_true-results: _true-map-increment($_true-results, $update) !global;
-  $_true-test-result: null !global;
+  $results: utilities.map-increment($results, $update) !global;
+  $test-result: null !global;
 }
 
 
@@ -64,7 +68,7 @@ $_true-results: (
 /// @access private
 /// @group private-context
 /// @type String
-$_true-test-result: null;
+$test-result: null;
 
 
 // Update Test
@@ -73,13 +77,13 @@ $_true-test-result: null;
 /// @access private
 /// @group private-context
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
-@mixin _true-update-test(
+@mixin update-test(
   $result
 ) {
-  @if ($result == 'fail') or ($_true-test-result == 'fail') {
-    $_true-test-result: 'fail' !global;
-  } @else if ($_true-test-result != 'output-to-css') {
-    $_true-test-result: $result !global;
+  @if ($result == 'fail') or ($test-result == 'fail') {
+    $test-result: 'fail' !global;
+  } @else if ($test-result != 'output-to-css') {
+    $test-result: $result !global;
   }
 }
 
@@ -91,18 +95,18 @@ $_true-test-result: null;
 /// @group private-message
 /// @param {Bool} $linebreak [false] -
 ///   Return message either as a single line or in multiple lines
-/// @param {Map} $results [$_true-results] -
+/// @param {Map} $results [$results] -
 ///   A map of run, pass, fail, and output-to-css results
 /// @return {String} -
 ///   Single or multi-line message for reporting
-@function _true-results-message(
+@function results-message(
   $linebreak: false,
-  $results: $_true-results
+  $results: $results
 ) {
-  $run: map-get($results, 'run');
-  $pass: map-get($results, 'pass');
-  $fail: map-get($results, 'fail');
-  $output-to-css: map-get($results, 'output-to-css');
+  $run: map.get($results, 'run');
+  $pass: map.get($results, 'pass');
+  $fail: map.get($results, 'fail');
+  $output-to-css: map.get($results, 'output-to-css');
 
   $items: if($run == 1, 'Test', 'Tests');
 
@@ -114,7 +118,7 @@ $_true-test-result: null;
   // Linebreaks
   @if $linebreak {
     $message: ('#{$items}:', '- #{$passed}', '- #{$failed}');
-    $message: if($compiled, append($message, '- #{$compiled}'), $message);
+    $message: if($compiled, list.append($message, '- #{$compiled}'), $message);
     @return $message;
   }
 

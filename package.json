@@ -21,7 +21,7 @@
     "node": ">=8"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "css": "^2.2.1",
     "lodash.find": "^4.6.0",
     "lodash.foreach": "^4.5.0",
@@ -30,15 +30,16 @@
   "devDependencies": {
     "beeper": "^2.0.0",
     "chai": "^4.1.2",
-    "coveralls": "^3.0.3",
+    "coveralls": "^3.0.11",
     "fancy-log": "^1.3.3",
     "gulp": "^4.0.2",
     "gulp-sass-lint": "^1.3.4",
-    "jest": "^24.8.0",
-    "mocha": "^6.1.4",
-    "node-sass": "^4.12.0",
-    "nyc": "^14.1.1",
-    "sassdoc": "^2.7.0",
+    "jest": "^25.1.0",
+    "mocha": "^7.1.1",
+    "node-sass": "^4.13.1",
+    "nyc": "^15.0.0",
+    "sass": "^1.26.3",
+    "sassdoc": "^2.7.1",
     "sassdoc-theme-herman": "^3.0.2"
   },
   "eyeglass": {

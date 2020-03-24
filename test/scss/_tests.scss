@@ -1,10 +1,15 @@
+@use "../../sass/true/assert";
+@use "../../sass/true/context";
+@use "../../sass/true/modules";
+@use "../../sass/true/tests";
+
 // Module Tests
 // ============
 
-@include test-module('Tests') {
-  @include test('test [mixin]') {
-    @include assert-equal(
-      _true-context(test),
+@include modules.test-module('Tests') {
+  @include tests.test('test [mixin]') {
+    @include assert.assert-equal(
+      context.context(test),
       'test [mixin]',
       'Changes the current test context'
     );

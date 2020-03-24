@@ -2,18 +2,18 @@
 // =============
 
 // Config
-@import 'true/settings';
-@import 'true/utilities';
-@import 'true/messages';
+@forward 'true/settings';
+@forward 'true/utilities';
+@forward 'true/messages';
 
 // Database
-@import 'true/stats';
-@import 'true/context';
-@import 'true/results';
-@import 'true/output';
+@forward 'true/stats';
+@forward 'true/context';
+@forward 'true/results';
+@forward 'true/output';
 
 // API
-@import 'true/modules';
-@import 'true/tests';
-@import 'true/assert';
-@import 'true/report';
+@forward 'true/modules';
+@forward 'true/tests';
+@forward 'true/assert';
+@forward 'true/report';

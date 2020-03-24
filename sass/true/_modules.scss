@@ -1,3 +1,10 @@
+@use "sass:list";
+@use "sass:meta";
+@use "sass:string";
+@use "context";
+@use "messages";
+@use "stats";
+
 // Test Module
 // ===========
 
@@ -33,9 +40,9 @@
 @mixin test-module(
   $name
 ) {
-  @include _true-module-start($name);
+  @include module-start($name);
   @content;
-  @include _true-module-stop;
+  @include module-stop;
 }
 
 
@@ -81,30 +88,30 @@
 /// @access private
 /// @group private-test
 /// @param {string} $name - module name
-@mixin _true-module-start(
+@mixin module-start(
   $name
 ) {
-  @include _true-context(module, $name);
-  $module-list: _true-context-all('module');
-  $modules: nth($module-list, 1);
+  @include context.context(module, $name);
+  $module-list: context.context-all('module');
+  $modules: list.nth($module-list, 1);
 
-  $length: length($module-list);
+  $length: list.length($module-list);
 
   @if $length > 1 {
     @for $i from 2 through $length {
-      $modules: $modules + ' :: ' + nth($module-list, $i);
+      $modules: $modules + ' :: ' + list.nth($module-list, $i);
     }
   }
 
-  @include _true-message('# Module: #{$modules}', 'comments');
+  @include messages.message('# Module: #{$modules}', 'comments');
 
   $underline: '----------';
 
-  @for $i from 1 through str-length(inspect($modules)) {
+  @for $i from 1 through string.length(meta.inspect($modules)) {
     $underline: '#{$underline}-';
   }
 
-  @include _true-message($underline, 'comments');
+  @include messages.message($underline, 'comments');
 }
 
 
@@ -114,8 +121,8 @@
 /// Module stop helper
 /// @access private
 /// @group private-test
-@mixin _true-module-stop {
-  @include _true-update-stats-count('modules');
-  @include _true-context-pop;
-  @include _true-message('', 'comments');
+@mixin module-stop {
+  @include stats.update-stats-count('modules');
+  @include context.context-pop;
+  @include messages.message('', 'comments');
 }
