@@ -93,7 +93,7 @@
 
   @include messages.message('# Module: #{$modules}', 'comments');
 
-  $underline: '----------';
+  $underline: '--------';
 
   @for $i from 1 through string.length(meta.inspect($modules)) {
     $underline: '#{$underline}-';

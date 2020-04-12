@@ -5,6 +5,7 @@
 - BREAKING: Make [Dart Sass](https://sass-lang.com/dart-sass) the default Sass
   implementation
 - BREAKING: Drop support for node < 10
+- BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
 - Support testing `content` properties which include a curly brace.
 - Update dev dependencies
 

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* # Module: Update Stats Count */
-/* ------------------------------ */
+/* ---------------------------- */
 /* Test: Assertions counts are updated */
 /*   ✔ [assert-equal] Assertions counts are updated */
 /*  */
@@ -12,7 +12,7 @@
 /*  */
 /*  */
 /* # Module: stats-message [function] */
-/* ------------------------------------ */
+/* ---------------------------------- */
 /* Test: Single Line */
 /*   ✔ [assert-equal] Single Line */
 /*  */
@@ -21,7 +21,7 @@
 /*  */
 /*  */
 /* # Module: context & context-pop [mixins] */
-/* ------------------------------------------ */
+/* ---------------------------------------- */
 /* Test: Adds scope and name to context */
 /*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
 /*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
@@ -31,7 +31,7 @@
 /*  */
 /*  */
 /* # Module: context & context-all [functions] */
-/* --------------------------------------------- */
+/* ------------------------------------------- */
 /* Test: Returns current module context */
 /*   ✔ [assert-equal] Returns current module context */
 /*  */
@@ -39,7 +39,7 @@
 /*   ✔ [assert-equal] Returns current test context */
 /*  */
 /* # Module: context & context-all [functions] :: nested */
-/* ------------------------------------------------------- */
+/* ----------------------------------------------------- */
 /* Test: Returns the innermost module name */
 /*   ✔ [assert-equal] Returns the innermost module name */
 /*  */
@@ -49,7 +49,7 @@
 /*  */
 /*  */
 /* # Module: validate-output-context [function] */
-/* ---------------------------------------------- */
+/* -------------------------------------------- */
 /* Test: unknown context name */
 /*   ✔ [assert-equal] unknown context name */
 /*  */
@@ -70,7 +70,7 @@
 /*  */
 /*  */
 /* # Module: output-context [mixin] */
-/* ---------------------------------- */
+/* -------------------------------- */
 /* Test: Appends new context */
 /*   ✔ [assert-equal] Check initial value */
 /*   ✔ [assert-equal] Appends new context */
@@ -82,7 +82,7 @@
 /*  */
 /*  */
 /* # Module: Get Result */
-/* ---------------------- */
+/* -------------------- */
 /* Test: Equal Pass */
 /*   ✔ [assert-equal] Equal Pass */
 /*  */
@@ -97,7 +97,7 @@
 /*  */
 /*  */
 /* # Module: Update Results */
-/* -------------------------- */
+/* ------------------------ */
 /* Test: Add one run */
 /*   ✔ [assert-equal] Add one run */
 /*  */
@@ -112,7 +112,7 @@
 /*  */
 /*  */
 /* # Module: Update Test */
-/* ----------------------- */
+/* --------------------- */
 /* Test: Updates global test-result */
 /*   ✔ [assert-equal] confirm the default state */
 /*   ✔ [assert-equal] confirm updated test-result */
@@ -131,7 +131,7 @@
 /*  */
 /*  */
 /* # Module: results-message [function] */
-/* -------------------------------------- */
+/* ------------------------------------ */
 /* Test: Single Line */
 /*   ✔ [assert-equal] Single Line */
 /*  */
@@ -146,7 +146,7 @@
 /*  */
 /*  */
 /* # Module: pass-details [mixin] */
-/* -------------------------------- */
+/* ------------------------------ */
 /* Test: Properly output a passing assertion result */
 /*   ASSERT: passing test   */
 /*   OUTPUT   */
@@ -165,7 +165,7 @@
 /*  */
 /*  */
 /* # Module: variable-details [function] */
-/* --------------------------------------- */
+/* ------------------------------------- */
 /* Test: Number */
 /*   ✔ [assert-equal] Number */
 /*  */
@@ -180,7 +180,7 @@
 /*  */
 /*  */
 /* # Module: edgefail-notes [function] */
-/* ------------------------------------- */
+/* ----------------------------------- */
 /* Test: Type mismatch */
 /*   ✔ [assert-equal] Type mismatch */
 /*   ✔ [assert-equal] Type mismatch */
@@ -196,7 +196,7 @@
 /*  */
 /*  */
 /* # Module: fail-details [mixin] */
-/* -------------------------------- */
+/* ------------------------------ */
 /* Test: Compiles full failure details */
 /*   ASSERT:    */
 /*   OUTPUT   */
@@ -225,31 +225,31 @@
 /*  */
 /*  */
 /* # Module: test-module [mixin] */
-/* ------------------------------- */
+/* ----------------------------- */
 /* Test: Changes the current module context */
 /*   ✔ [assert-equal] Changes the current module context */
 /*  */
 /* # Module: test-module [mixin] :: Unquoted Module Name */
-/* ------------------------------------------------------- */
+/* ----------------------------------------------------- */
 /* Test: Don’t barf on unquoted names */
 /*   ✔ [assert-true] Please don’t barf on me */
 /*  */
 /*  */
 /*  */
 /* # Module: Describe/it syntax */
-/* ------------------------------ */
+/* ---------------------------- */
 /* Test: Changes the current module context */
 /*   ✔ [assert-equal] Changes the current module context */
 /*  */
 /*  */
 /* # Module: Tests */
-/* ----------------- */
+/* --------------- */
 /* Test: test [mixin] */
 /*   ✔ [assert-equal] Changes the current test context */
 /*  */
 /*  */
 /* # Module: Is Truthy */
-/* --------------------- */
+/* ------------------- */
 /* Test: True is truthy */
 /*   ✔ [assert-equal] True is truthy */
 /*  */
@@ -273,13 +273,13 @@
 /*  */
 /*  */
 /* # Module: Assert True */
-/* ----------------------- */
+/* --------------------- */
 /* Test: Truthiness */
 /*   ✔ [assert-true] Non-false properties return true. */
 /*  */
 /*  */
 /* # Module: Assert False */
-/* ------------------------ */
+/* ---------------------- */
 /* Test: Falsiness */
 /*   ✔ [assert-false] Negated properties return false. */
 /*  */
@@ -294,7 +294,7 @@
 /*  */
 /*  */
 /* # Module: Assert Equal */
-/* ------------------------ */
+/* ---------------------- */
 /* Test: Equality */
 /*   ✔ [assert-equal] 2 - 1 should equal 1. */
 /*  */
@@ -316,7 +316,7 @@
 /*  */
 /*  */
 /* # Module: Assert UnEqual */
-/* -------------------------- */
+/* ------------------------ */
 /* Test: Inequality */
 /*   ✔ [assert-unequal] 3 - 1 is not equal to 3. */
 /*  */
@@ -328,7 +328,7 @@
 /*  */
 /*  */
 /* # Module: Assert(output) */
-/* -------------------------- */
+/* ------------------------ */
 /* Test: CSS output math */
 /*   ASSERT: Output math compares properly   */
 /*   OUTPUT   */
@@ -380,7 +380,7 @@
 /*   END_ASSERT   */
 /*  */
 /* # Module: Assert(output) :: Assert(contains) */
-/* ---------------------------------------------- */
+/* -------------------------------------------- */
 /* Test: Passes if the property in "contains" exists in the "output" and has the same value */
 /*   ASSERT:    */
 /*   OUTPUT   */
@@ -567,7 +567,7 @@
 /*  */
 /*  */
 /* # Module: report [mixin] */
-/* -------------------------- */
+/* ------------------------ */
 /* Test: Output Message */
 /*   ASSERT:    */
 /*   OUTPUT   */
@@ -670,7 +670,7 @@
 /*  */
 /*  */
 /* # Module: report-message [function] */
-/* ------------------------------------- */
+/* ----------------------------------- */
 /* Test: Single Line */
 /*   ✔ [assert-equal] Single Line */
 /*  */

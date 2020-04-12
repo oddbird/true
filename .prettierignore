@@ -12,3 +12,4 @@ env/
 jscache/
 node_modules/
 venv/
+**/*.scss
