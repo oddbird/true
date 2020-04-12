@@ -10,3 +10,6 @@ node_modules/
 coverage/
 .nyc_output/
 .pages/
+.nvmrc
+.yarnrc
+.yarn

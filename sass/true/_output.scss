@@ -8,7 +8,6 @@
 // Test Result Output
 // ==================
 
-
 // Pass Details
 // ------------
 /// Ouptut a success message for passing tests
@@ -21,7 +20,6 @@
   @include messages.message('✔ #{$assertion}', 'comments', 2);
 }
 
-
 // Fail Details
 // ------------
 /// Failure message, with appropriate details
@@ -32,11 +30,7 @@
 /// @param {*} $expected - The expected value
 /// @param {bool} $terminal [$terminal-output] -
 ///   whether to use the terminal as an output stream
-@mixin fail-details(
-  $assert,
-  $expected,
-  $terminal: settings.$terminal-output
-) {
+@mixin fail-details($assert, $expected, $terminal: settings.$terminal-output) {
   $location: if($terminal, ('comments', 'debug'), 'comments');
 
   // Title Messages
@@ -44,13 +38,11 @@
   $title: 'FAILED: #{$assertion}';
   @include messages.message('✖ #{$title}', $location, 2);
 
-
   // Details Message
   $out: variable-details($assert);
   $exp: variable-details($expected);
   $details: ('- Output: #{$out}', '- Expected: #{$exp}');
   @include messages.message($details, $location, 4);
-
 
   // Edge Failure Notes
   @if string.index($assertion, 'assert-equal') {
@@ -60,20 +52,17 @@
     }
   }
 
-
   // Context Message
   $module: context.context('module');
   $test: context.context('test');
   $context: ('- Module: #{$module}', '- Test: #{$test}');
   @include messages.message($context, $location, 4);
 
-
   // Terminal Warning
   @if $terminal {
     @include messages.message($assertion, 'warn');
   }
 }
-
 
 // Variable Details
 // ----------------
@@ -85,15 +74,12 @@
 /// @param {*} $var -
 ///   Pass in asserted and expected values individually
 ///   to retrieve comparable details for both
-@function variable-details(
-  $var
-) {
+@function variable-details($var) {
   $inspect: meta.inspect($var);
   $type: meta.type-of($var);
 
   @return '[#{$type}] #{$inspect}';
 }
-
 
 // EdgeFail Notes
 // --------------
@@ -108,10 +94,7 @@
 /// @param {*} $two - The other calue being compared
 /// @return {null | string} -
 ///   A helpful note related to your edge-case, when appropriate
-@function edgefail-notes(
-  $one,
-  $two
-) {
+@function edgefail-notes($one, $two) {
   $one-type: meta.type-of($one);
   $two-type: meta.type-of($two);
 
@@ -119,18 +102,16 @@
   $pre: '- Details: ';
   $inspect: '(set `$inspect: true` to compare output values)';
 
-
   // List Separators
-  @if ($one-type == 'list') and ($two-type == 'list')  {
+  @if ($one-type == 'list') and ($two-type == 'list') {
     @if (list.join((), $one, comma) == list.join((), $two, comma)) {
       $message: 'list-separators do not match';
       $note: $pre + $message;
     }
   }
 
-
   // String Quotes
-  @if ($one-type == 'string') and ($two-type == 'string')  {
+  @if ($one-type == 'string') and ($two-type == 'string') {
     @if (string.unquote($one) == string.unquote($two)) {
       $message: 'string quotations do not match';
       $note: $pre + $message;

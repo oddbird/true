@@ -46,7 +46,7 @@ They can also be triggered individually:
 
 ```
 # lint
-gulp sasslint
+yarn lint
 
 # test with mocha/jest and true
 yarn test

@@ -147,25 +147,23 @@ when upgrading from an older version of True.
 2. [Optional] Install the Sass implementation matching your project
    (if not already installed).
 
-   Either `node-sass`:
-
-   ```bash
-   npm install --save-dev node-sass
-   ```
-
-   or `sass` (also `dart-sass`):
+   Either `sass` (also `dart-sass`):
 
    ```bash
    npm install --save-dev sass
    ```
 
-   > _Note_ `sass`/`dart-sass` has [a few differences from `node-sass`](https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass).
+   or `node-sass`:
+
+   ```bash
+   npm install --save-dev node-sass
+   ```
 
 3. Write some Sass tests in `test/test.scss` (see above).
 
 4. Write a shim JS test file in `test/test_sass.js`:
 
-   **For `node-sass`**:
+   **For `sass`/`dart-sass`**:
 
    ```js
    var path = require('path');
@@ -175,7 +173,7 @@ when upgrading from an older version of True.
    sassTrue.runSass({ file: sassFile }, { describe, it });
    ```
 
-   **For `sass`/`dart-sass`**:
+   **For `node-sass`**:
 
    ```js
    var path = require('path');
@@ -187,10 +185,10 @@ when upgrading from an older version of True.
        file: sassFile,
      },
      {
-       sass: require('sass'),
+       sass: require('node-sass'),
        describe,
        it,
-     }
+     },
    );
    ```
 
@@ -200,7 +198,7 @@ You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
 The first argument to `runSass` accepts the
-[same options](https://github.com/sass/node-sass/#options) that node-sass'
+[same options](https://sass-lang.com/documentation/js-api#options) that sass'
 `renderSync` function accepts. The only modification `runSass` makes is to add
 True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
@@ -219,9 +217,9 @@ more, you can provide a numeric `contextLines` option: the maximum number of
 context lines to provide.
 
 You can also provide a `sass` option to provide a different Sass implementation
-(for example, using `sass`/`dart-sass` instead of `node-sass`). This option
+(for example, using `node-sass` instead of `sass`/`dart-sass`). This option
 expects an object providing a `renderSync` method with the same signature as
-`node-sass`.
+`sass`.
 
 ### Imports without Webpack
 

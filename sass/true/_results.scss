@@ -5,7 +5,6 @@
 // Result Tracking
 // ===============
 
-
 // Get Result
 // ----------
 /// Compare two values, and return a `pass` or `fail` result.
@@ -16,18 +15,12 @@
 /// @param {bool} $unequal [false] -
 ///   Set to `true` if the comparison is expected to fail
 /// @return {'pass' | 'fail'}
-@function get-result(
-  $assert,
-  $expected,
-  $unequal: false
-) {
+@function get-result($assert, $expected, $unequal: false) {
   $equal: $assert == $expected;
   $pass: if($unequal, not $equal, $equal);
 
   @return if($pass, 'pass', 'fail');
 }
-
-
 
 // Results
 // -------
@@ -42,16 +35,13 @@ $results: (
   'output-to-css': 0,
 );
 
-
 // Update
 // ------
 /// Update global results data
 /// @access private
 /// @group private-context
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
-@mixin update(
-  $result
-) {
+@mixin update($result) {
   $update: (
     'run': 1,
     $result: 1,
@@ -59,8 +49,6 @@ $results: (
   $results: utilities.map-increment($results, $update) !global;
   $test-result: null !global;
 }
-
-
 
 // Test Results
 // ------------
@@ -70,23 +58,19 @@ $results: (
 /// @type String
 $test-result: null;
 
-
 // Update Test
 // -----------
 /// Update test result flag with new data
 /// @access private
 /// @group private-context
 /// @param {'pass' | 'fail' | 'output-to-css'} $result -
-@mixin update-test(
-  $result
-) {
+@mixin update-test($result) {
   @if ($result == 'fail') or ($test-result == 'fail') {
     $test-result: 'fail' !global;
   } @else if ($test-result != 'output-to-css') {
     $test-result: $result !global;
   }
 }
-
 
 // Results Message
 // ---------------
@@ -99,10 +83,7 @@ $test-result: null;
 ///   A map of run, pass, fail, and output-to-css results
 /// @return {String} -
 ///   Single or multi-line message for reporting
-@function results-message(
-  $linebreak: false,
-  $results: $results
-) {
+@function results-message($linebreak: false, $results: $results) {
   $run: map.get($results, 'run');
   $pass: map.get($results, 'pass');
   $fail: map.get($results, 'fail');
@@ -127,4 +108,3 @@ $test-result: null;
   $message: if($compiled, '#{$message}, #{$compiled}', $message);
   @return $message;
 }
-

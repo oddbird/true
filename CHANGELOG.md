@@ -2,7 +2,11 @@
 
 ## UNRELEASED
 
+- BREAKING: Make [Dart Sass](https://sass-lang.com/dart-sass) the default Sass
+  implementation
+- BREAKING: Drop support for node < 10
 - Support testing `content` properties which include a curly brace.
+- Update dev dependencies
 
 ## 5.0.0 (06/03/19)
 

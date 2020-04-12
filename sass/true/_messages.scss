@@ -2,7 +2,6 @@
 // Messages
 // ========
 
-
 // True Message
 // ------------
 /// Output a message to CSS comments,
@@ -13,11 +12,7 @@
 ///   Message to output
 /// @param {String} $output [comments] -
 ///   Type of output, either `comments`, `terminal`, `debug` or `warn`
-@mixin message(
-  $message,
-  $output: 'comments',
-  $comment-padding: 0
-) {
+@mixin message($message, $output: 'comments', $comment-padding: 0) {
   $pad: '';
 
   @if ($comment-padding > 0) {
@@ -27,7 +22,8 @@
   }
 
   @each $line in $message {
-    @if list.index($output, 'comments') { // sass-lint:disable-line no-empty-rulesets
+    @if list.index($output, 'comments') {
+      // sass-lint:disable-line no-empty-rulesets
       /* #{$pad + $line} */ // sass-lint:disable-line no-css-comments
     }
 

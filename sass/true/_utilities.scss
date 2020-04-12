@@ -5,7 +5,6 @@
 // Utilities
 // =========
 
-
 // True Error Output Override
 // --------------------------
 /// Override error-output for the purpose of testing failure-cases
@@ -13,8 +12,6 @@
 /// @group private-utils
 /// @type bool
 $error-output-override: false !default;
-
-
 
 // True Error [function]
 // ---------------------
@@ -33,18 +30,13 @@ $error-output-override: false !default;
 /// @throw
 ///   A message detailing the source and error,
 ///   when the `$override` is `false`
-@function error(
-  $message,
-  $source,
-  $override: $error-output-override
-) {
+@function error($message, $source, $override: $error-output-override) {
   @if $override {
     @return 'ERROR [#{$source}] #{$message}';
   }
 
   @error '[#{$source}] #{$message}';
 }
-
 
 // True Error [mixin]
 // ---------------------
@@ -63,11 +55,7 @@ $error-output-override: false !default;
 /// @throw
 ///   A message detailing the source and error,
 ///   when the `$override` is `false`
-@mixin error(
-  $message,
-  $source,
-  $override: $error-output-override
-) {
+@mixin error($message, $source, $override: $error-output-override) {
   @if $override {
     $error: 'ERROR [#{$source}] #{$message}';
     @include messages.message($error, 'comments');
@@ -75,7 +63,6 @@ $error-output-override: false !default;
     @error '[#{$source}] #{$message}';
   }
 }
-
 
 // Map Increment
 // -------------
@@ -87,23 +74,24 @@ $error-output-override: false !default;
 /// @param {map} $add -
 ///   Map of values to be added
 /// @return {map}
-@function map-increment(
-  $base,
-  $add
-) {
+@function map-increment($base, $add) {
   @each $key in map.keys($add) {
     $value: map.get($add, $key);
 
     @if $value {
       $base-value: map.get($base, $key);
       $new-value: if($base-value, $base-value + $value, $value);
-      $base: map.merge($base, ($key: $new-value));
+      $base: map.merge(
+        $base,
+        (
+          $key: $new-value,
+        )
+      );
     }
   }
 
   @return $base;
 }
-
 
 // Join Multiple
 // -------------
@@ -116,9 +104,7 @@ $error-output-override: false !default;
 ///   with an optional final argument describing
 ///   the desired list-separator ('space' or 'comma')
 /// @return {list} Joined items in a single list
-@function join-multiple(
-  $lists...
-) {
+@function join-multiple($lists...) {
   $return: list.nth($lists, 1);
   $type: list.separator($return);
   $last: list.nth($lists, -1);
@@ -127,7 +113,6 @@ $error-output-override: false !default;
   @if ($last == 'space') or ($last == 'comma') {
     $length: $length - 1;
     $type: $last;
-
   }
 
   @if ($length < 2) {

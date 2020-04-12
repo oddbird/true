@@ -8,8 +8,6 @@
 // Test Module
 // ===========
 
-
-
 // Test Module
 // -----------
 /// Test Modules are optional,
@@ -37,15 +35,11 @@
 ///         (1px solid red, 1px dashed green, 3px solid blue));
 ///     }
 ///   }
-@mixin test-module(
-  $name
-) {
+@mixin test-module($name) {
   @include module-start($name);
   @content;
   @include module-stop;
 }
-
-
 
 // Describe
 // --------
@@ -72,15 +66,11 @@
 ///         (1px solid red, 1px dashed green, 3px solid blue));
 ///     }
 ///   }
-@mixin describe(
-  $name
-) {
+@mixin describe($name) {
   @include test-module($name) {
     @content;
   }
 }
-
-
 
 // Module Start
 // ------------
@@ -88,9 +78,7 @@
 /// @access private
 /// @group private-test
 /// @param {string} $name - module name
-@mixin module-start(
-  $name
-) {
+@mixin module-start($name) {
   @include context.context(module, $name);
   $module-list: context.context-all('module');
   $modules: list.nth($module-list, 1);
@@ -113,8 +101,6 @@
 
   @include messages.message($underline, 'comments');
 }
-
-
 
 // Module Stop
 // -----------

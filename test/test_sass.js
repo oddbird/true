@@ -1,15 +1,10 @@
-var path = require('path');
+/* eslint-env mocha, jest */
 
-var main = require('../lib/main.js');
+'use strict';
 
-var sassFile = path.join(__dirname, 'scss', 'test.scss');
-main.runSass(
-  {
-    file: sassFile,
-  },
-  {
-    sass: require('sass'),
-    describe: describe,
-    it: it,
-  }
-);
+const path = require('path');
+
+const main = require('../lib/main.js');
+
+const sassFile = path.join(__dirname, 'scss', 'test.scss');
+main.runSass({ file: sassFile }, { describe, it });

@@ -1,0 +1,14 @@
+!.*
+.git/
+.nyc_output/
+.vscode/
+.yarn/
+.yarnrc
+ENV/
+coverage/
+dist/
+docs/
+env/
+jscache/
+node_modules/
+venv/

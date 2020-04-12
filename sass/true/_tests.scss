@@ -6,8 +6,6 @@
 // Tests
 // =====
 
-
-
 // Test
 // ----
 /// The `test()` wrapper-mixin groups related assertions,
@@ -26,15 +24,11 @@
 ///       zip(1px 1px 3px, solid dashed solid, red green blue),
 ///       (1px solid red, 1px dashed green, 3px solid blue));
 ///   }
-@mixin test(
-  $name
-) {
+@mixin test($name) {
   @include test-start($name);
   @content;
   @include test-stop;
 }
-
-
 
 // Test
 // ----
@@ -55,15 +49,11 @@
 ///       zip(1px 1px 3px, solid dashed solid, red green blue),
 ///       (1px solid red, 1px dashed green, 3px solid blue));
 ///   }
-@mixin it(
-  $name
-) {
+@mixin it($name) {
   @include test($name) {
     @content;
   }
 }
-
-
 
 // Test Start
 // ----------
@@ -72,14 +62,10 @@
 /// @group private-test
 /// @param {string} $name -
 ///   Describe what is being tested
-@mixin test-start(
-  $name
-) {
+@mixin test-start($name) {
   @include context.context('test', $name);
   @include messages.message('Test: #{$name}', 'comments');
 }
-
-
 
 // Test Stop
 // ---------

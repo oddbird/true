@@ -9,8 +9,6 @@
 // Assert
 // ======
 
-
-
 // Assert True
 // -----------
 /// Assert that a parameter is truthy.
@@ -31,17 +29,16 @@
 ///       'Hello World',
 ///       'You can optionally describe the assertion...');
 ///   }
-@mixin assert-true(
-  $assert,
-  $description: null
-) {
+@mixin assert-true($assert, $description: null) {
   $default: context.context('test');
   $truthy: is-truthy($assert);
 
-  @include context.context('assert', '[assert-true] #{$description or $default}');
+  @include context.context(
+    'assert',
+    '[assert-true] #{$description or $default}'
+  );
   @include assert-results($truthy, true);
 }
-
 
 // Assert False
 // ------------
@@ -63,17 +60,16 @@
 ///       '',
 ///       'You can optionally describe the assertion...');
 ///   }
-@mixin assert-false(
-  $assert,
-  $description: null
-) {
+@mixin assert-false($assert, $description: null) {
   $default: context.context('test');
   $falsey: not is-truthy($assert);
 
-  @include context.context('assert', '[assert-false] #{$description or $default}');
+  @include context.context(
+    'assert',
+    '[assert-false] #{$description or $default}'
+  );
   @include assert-results($falsey, true);
 }
-
 
 // Assert Equal
 // ------------
@@ -101,12 +97,7 @@
 ///       4,
 ///       'You can optionally describe the assertion...');
 ///   }
-@mixin assert-equal(
-  $assert,
-  $expected,
-  $description: null,
-  $inspect: false
-) {
+@mixin assert-equal($assert, $expected, $description: null, $inspect: false) {
   $default: context.context('test');
 
   @if $inspect {
@@ -114,10 +105,12 @@
     $expected: meta.inspect($expected);
   }
 
-  @include context.context('assert', '[assert-equal] #{$description or $default}');
+  @include context.context(
+    'assert',
+    '[assert-equal] #{$description or $default}'
+  );
   @include assert-results($assert, $expected);
 }
-
 
 // Assert UnEqual
 // --------------
@@ -144,12 +137,7 @@
 ///       1em,
 ///       '1em');
 ///   }
-@mixin assert-unequal(
-  $assert,
-  $expected,
-  $description: null,
-  $inspect: false
-) {
+@mixin assert-unequal($assert, $expected, $description: null, $inspect: false) {
   $default: context.context('test');
 
   @if $inspect {
@@ -157,11 +145,12 @@
     $expected: meta.inspect($expected);
   }
 
-  @include context.context('assert', '[assert-unequal] #{$description or $default}');
+  @include context.context(
+    'assert',
+    '[assert-unequal] #{$description or $default}'
+  );
   @include assert-results($assert, $expected, 'unequal');
 }
-
-
 
 // Assert [output]
 // ---------------
@@ -199,9 +188,7 @@
 ///       }
 ///     }
 ///   }
-@mixin assert(
-  $description: null
-) {
+@mixin assert($description: null) {
   $default: context.context('test');
   @include context.output-context('assert');
   @include context.context('assert', '[output] #{$description or $default}');
@@ -215,8 +202,6 @@
   @include context.context-pop;
   @include messages.message('  END_ASSERT  ', 'comments');
 }
-
-
 
 // Output
 // ------
@@ -254,9 +239,7 @@
 ///       }
 ///     }
 ///   }
-@mixin output(
-  $selector: true
-) {
+@mixin output($selector: true) {
   @include context.output-context('output');
   @include messages.message('  OUTPUT  ', 'comments');
 
@@ -270,8 +253,6 @@
 
   @include messages.message('  END_OUTPUT  ', 'comments');
 }
-
-
 
 // Expect
 // ------
@@ -308,9 +289,7 @@
 ///       }
 ///     }
 ///   }
-@mixin expect(
-  $selector: true
-) {
+@mixin expect($selector: true) {
   @include context.output-context('expect');
   @include messages.message('  EXPECTED  ', 'comments');
 
@@ -362,9 +341,7 @@
 ///       }
 ///     }
 ///   }
-@mixin contains(
-  $selector: true
-) {
+@mixin contains($selector: true) {
   @include context.output-context('contains');
   @include messages.message('  CONTAINED  ', 'comments');
 
@@ -378,7 +355,6 @@
 
   @include messages.message('  END_CONTAINED  ', 'comments');
 }
-
 
 // Assert Results
 // --------------
@@ -415,7 +391,6 @@
   @include context.context-pop;
 }
 
-
 // Is Truthy
 // ---------
 /// Check that a value is truthy
@@ -427,9 +402,7 @@
 /// @param {*} $assert - Value to consider
 ///
 /// @return {bool}
-@function is-truthy(
-  $assert
-) {
+@function is-truthy($assert) {
   $not: (not not $assert);
   $list: ($assert != ());
   $string: ($assert != '');
