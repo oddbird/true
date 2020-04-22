@@ -9,7 +9,7 @@ for [Sass](http://sass-lang.com) code –
 initially developed for the
 [Susy layout toolkit](http://susy.oddbird.net).
 All of the test code is written in pure Sass,
-and can be compiled by any Sass compiler –
+and can be compiled by the Dart Sass compiler –
 but we also provide integration with
 JavaScript test runners
 (e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
@@ -49,7 +49,7 @@ you may need to include the full path name:
 
 ```scss
 // This is only an example
-@import '../node_modules/sass-true/sass/true';
+@use '../node_modules/sass-true/sass/true' as *;
 ```
 
 ## One Setting
@@ -144,26 +144,15 @@ when upgrading from an older version of True.
    npm install --save-dev sass-true
    ```
 
-2. [Optional] Install the Sass implementation matching your project
-   (if not already installed).
-
-   Either `sass` (also `dart-sass`):
+2. [Optional] Install `sass` (Dart Sass), if not already installed.
 
    ```bash
    npm install --save-dev sass
    ```
 
-   or `node-sass`:
-
-   ```bash
-   npm install --save-dev node-sass
-   ```
-
 3. Write some Sass tests in `test/test.scss` (see above).
 
 4. Write a shim JS test file in `test/test_sass.js`:
-
-   **For `sass`/`dart-sass`**:
 
    ```js
    var path = require('path');
@@ -171,25 +160,6 @@ when upgrading from an older version of True.
 
    var sassFile = path.join(__dirname, 'test.scss');
    sassTrue.runSass({ file: sassFile }, { describe, it });
-   ```
-
-   **For `node-sass`**:
-
-   ```js
-   var path = require('path');
-   var sassTrue = require('sass-true');
-
-   var sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass(
-     {
-       file: sassFile,
-     },
-     {
-       sass: require('node-sass'),
-       describe,
-       it,
-     },
-   );
    ```
 
 5. Run Mocha/Jest, and see your Sass tests reported in the command line.
@@ -204,7 +174,7 @@ True's sass path to the `includePaths` option, so `@import 'true';` works in
 your Sass test file.
 
 The second argument is an object with required `describe` and `it` options, and
-optional `contextLines` and `sass` options.
+an optional `contextLines` option.
 
 Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
 should be usable in the same way: just pass your test runner's `describe` and
@@ -216,17 +186,12 @@ the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric `contextLines` option: the maximum number of
 context lines to provide.
 
-You can also provide a `sass` option to provide a different Sass implementation
-(for example, using `node-sass` instead of `sass`/`dart-sass`). This option
-expects an object providing a `renderSync` method with the same signature as
-`sass`.
-
 ### Imports without Webpack
 
-If you use Webpack's tilde notation, like
-`@import '~accoutrement-init/sass/init'`, you'll need to tell `runSass` how to
-handle that. That will require writing a custom importer and passing it into the
-configuration for `runSass`. Something like:
+If you use Webpack's tilde notation, like `@import 'accoutrement/sass/tools'`,
+you'll need to tell `runSass` how to handle that. That will require writing a
+custom importer and passing it into the configuration for `runSass`. Something
+like:
 
 ```js
 function importer(url, prev, done) {

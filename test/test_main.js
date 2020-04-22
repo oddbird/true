@@ -80,29 +80,6 @@ describe('#runSass', () => {
       },
     );
   });
-
-  it('can specify sass engine to use', () => {
-    const mock = function (name, cb) {
-      cb();
-    };
-    const attempt = function () {
-      main.runSass(
-        {
-          data: '',
-        },
-        {
-          sass: {
-            renderSync() {
-              throw new Error('Custom sass implementation called');
-            },
-          },
-          describe: mock,
-          it: mock,
-        },
-      );
-    };
-    expect(attempt).to.throw('Custom sass implementation called');
-  });
 });
 
 describe('#parse', () => {
