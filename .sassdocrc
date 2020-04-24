@@ -6,6 +6,7 @@ herman:
   sass:
     includepaths: ['sass']
     includes: ['true']
+    implementation: 'sass'
   extraDocs:
     - name: 'Changelog'
       path: CHANGELOG.md
