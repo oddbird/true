@@ -1,0 +1,148 @@
+@use "sass:meta";
+@use "utils";
+
+// Assert True
+// -----------
+/// Assert that a parameter is truthy.
+/// - Empty lists and strings are excluded from default Sass truthyness.
+/// Assertions are used inside the `test()` mixin
+///
+/// @group api-assert-values
+///
+/// @param {*} $assert -
+///   Asserted value to test
+/// @param {string} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
+///
+/// @example scss -
+///   @include true.test('Non-empty strings are truthy') {
+///     @include true.assert-true(
+///       'Hello World',
+///       'You can optionally describe the assertion...');
+///   }
+/// @example scss -
+///   @include true.it('Non-empty strings are truthy') {
+///     @include true.is-truthy(
+///       'Hello World',
+///       'You can optionally describe the assertion...');
+///   }
+@mixin assert-true($assert, $description: null) {
+  @include utils.setup('assert-true', $description);
+  $truthy: utils.is-truthy($assert);
+  @include utils.result($truthy, true);
+}
+
+/// @alias assert-true
+@mixin is-truthy($assert, $description: null) {
+  @include assert-true($assert, $description);
+}
+
+// Assert False
+// ------------
+/// Assert that a parameter is falsey.
+/// - Empty lists and strings are added to default Sass falseyness.
+/// to define the expected results of the test.
+///
+/// @group api-assert-values
+///
+/// @param {*} $assert -
+///   Asserted value to test
+/// @param {string} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
+///
+/// @example scss -
+///   @include true.test('Empty strings are falsey') {
+///     @include true.assert-false(
+///       '',
+///       'You can optionally describe the assertion...');
+///   }
+@mixin assert-false($assert, $description: null) {
+  @include utils.setup('assert-false', $description);
+  $falsey: not utils.is-truthy($assert);
+  @include utils.result($falsey, true);
+}
+
+/// @alias assert-false
+@mixin is-falsy($assert, $description: null) {
+  @include assert-false($assert, $description);
+}
+
+// Assert Equal
+// ------------
+/// Assert that two parameters are `equal`
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+///
+/// @group api-assert-values
+///
+/// @param {*} $assert -
+///   Asserted value to test
+/// @param {*} $expected -
+///   Expected match
+/// @param {string} $description [null] -
+///   Description of the assertion being tested
+///   (a `null` of `false` value generates a default description)
+/// @param {bool} $inspect [false] -
+///   Optionally compare inspected values
+///   (useful for comparing CSS output rather than Sass values)
+///
+/// @example scss -
+///   @include true.test('Division works as expected in Sass') {
+///     @include true.assert-equal(
+///       8 / 2, 4,
+///       'You can optionally describe the assertion...');
+///   }
+@mixin assert-equal($assert, $expected, $description: null, $inspect: false) {
+  @include utils.setup('assert-equal', $description);
+  @if $inspect {
+    $assert: meta.inspect($assert);
+    $expected: meta.inspect($expected);
+  }
+  @include utils.result($assert, $expected);
+}
+
+/// @alias assert-equal
+@mixin is-equal($assert, $expected, $description: null, $inspect: false) {
+  @include assert-equal($assert, $expected, $description, $inspect);
+}
+
+// Assert UnEqual
+// --------------
+/// Assert that two parameters are `unequal`
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+///
+/// @group api-assert-values
+///
+/// @param {*} $assert -
+///   Asserted value to test
+/// @param {*} $expected -
+///   Expected mismatch
+/// @param {string} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
+/// @param {bool} $inspect [false] -
+///   Optionally compare inspected values
+///   (useful for comparing CSS output rather than Sass values)
+///
+/// @example scss -
+///   @include true.test('Strings and numbers hare not the same') {
+///     @include true.assert-unequal(
+///       1em,
+///       '1em');
+///   }
+@mixin assert-unequal($assert, $expected, $description: null, $inspect: false) {
+  @include utils.setup('assert-unequal', $description);
+  @if $inspect {
+    $assert: meta.inspect($assert);
+    $expected: meta.inspect($expected);
+  }
+  @include utils.result($assert, $expected, 'unequal');
+}
+
+/// @alias assert-unequal
+@mixin not-equal($assert, $expected, $description: null, $inspect: false) {
+  @include assert-unequal($assert, $expected, $description, $inspect);
+}

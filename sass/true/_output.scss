@@ -12,7 +12,7 @@
 // ------------
 /// Ouptut a success message for passing tests
 /// @access private
-/// @group private-assert
+/// @group assert-utils
 /// @output -
 ///   a passing-test comment with the name of the passing assertion
 @mixin pass-details {
@@ -25,7 +25,7 @@
 /// Failure message, with appropriate details
 /// to help you debug various common problems.
 /// @access private
-/// @group private-assert
+/// @group assert-utils
 /// @param {*} $assert - The assertion value
 /// @param {*} $expected - The expected value
 /// @param {bool} $terminal [$terminal-output] -
@@ -70,7 +70,7 @@
 /// for a given variable -
 /// used to provide context in failure reporting
 /// @access private
-/// @group private-assert
+/// @group assert-utils
 /// @param {*} $var -
 ///   Pass in asserted and expected values individually
 ///   to retrieve comparable details for both
@@ -89,7 +89,7 @@
 /// This function looks for those edge-case failures
 /// and adds a clarifying note in the results.
 /// @access private
-/// @group private-assert
+/// @group assert-utils
 /// @param {*} $one - One of the values being compared
 /// @param {*} $two - The other calue being compared
 /// @return {null | string} -

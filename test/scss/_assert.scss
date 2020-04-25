@@ -1,6 +1,7 @@
 @use "sass:color";
 @use "sass:string";
-@use "../../sass/true/assert";
+@use "../../sass/assert";
+@use "../../sass/assert/utils";
 @use "../../sass/true/modules";
 @use "../../sass/true/tests";
 
@@ -10,33 +11,33 @@
 // Is Truthy
 @include modules.test-module('Is Truthy') {
   @include tests.test('True is truthy') {
-    @include assert.assert-equal(assert.is-truthy(true), true);
+    @include assert.assert-equal(utils.is-truthy(true), true);
   }
 
   @include tests.test('String is truthy') {
-    @include assert.assert-equal(assert.is-truthy('string'), true);
+    @include assert.assert-equal(utils.is-truthy('string'), true);
   }
 
   @include tests.test('List is truthy') {
-    @include assert.assert-equal(assert.is-truthy('one' 'two' 'three'), true);
+    @include assert.assert-equal(utils.is-truthy('one' 'two' 'three'), true);
   }
 
   @include tests.test('False is not truthy') {
-    @include assert.assert-equal(assert.is-truthy(false), false);
+    @include assert.assert-equal(utils.is-truthy(false), false);
   }
 
   @include tests.test('Null is not truthy') {
-    @include assert.assert-equal(assert.is-truthy(null), false);
+    @include assert.assert-equal(utils.is-truthy(null), false);
   }
 
   @include tests.test('Empty string is not truthy') {
-    @include assert.assert-equal(assert.is-truthy(''), false);
+    @include assert.assert-equal(utils.is-truthy(''), false);
   }
 
   @include tests.test('Empty list is not truthy') {
     $list: ();
 
-    @include assert.assert-equal(assert.is-truthy($list), false);
+    @include assert.assert-equal(utils.is-truthy($list), false);
   }
 }
 

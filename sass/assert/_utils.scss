@@ -1,0 +1,99 @@
+@use '../true/context';
+@use '../true/messages';
+@use '../true/output';
+@use '../true/results';
+@use '../true/settings';
+@use '../true/stats';
+
+@mixin content(
+  $name,
+  $block,
+  $selector: true,
+  $description: null,
+) {
+  $start: if($description, '#{$block}: #{$description}', $block);
+  @include context.output-context($name);
+  @include messages.message('  #{$start}  ', 'comments');
+  @if $selector {
+    .test-output {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+  @include messages.message('  END_#{$block}  ', 'comments');
+}
+
+@mixin setup(
+  $name,
+  $description: null,
+) {
+  $description: $description or context.context('test');
+  @include context.context(
+    'assert',
+    '[#{$name}] #{$description}'
+  );
+}
+
+@mixin strike(
+  $result,
+  $output: false
+) {
+  @include results.update-test($result);
+  @include stats.update-stats-count('assertions');
+  @include context.context-pop;
+  @if ($output) {
+    @include context.output-context(null);
+  }
+}
+
+// Value Result
+// ------------
+/// Get an official result,
+/// record it in the database and output,
+/// provide details as necessary,
+/// and end the assertion.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {*} $assert - Value to consider
+/// @param {*} $expected - Expected match
+/// @param {bool} $unequal [false] -
+///   Set to `true` if the comparison is expected to fail
+///
+/// @output - Document the passing or failing result of the test
+@mixin result(
+  $assert,
+  $expected,
+  $unequal: false,
+  $terminal: settings.$terminal-output
+) {
+  $result: results.get-result($assert, $expected, $unequal);
+
+  @if $result == 'pass' {
+    @include output.pass-details;
+  } @else {
+    @include output.fail-details($assert, $expected, $terminal);
+  }
+
+  @include strike($result);
+}
+
+// Is Truthy
+// ---------
+/// Check that a value is truthy
+/// (empty lists and strings return false)
+///
+/// @access private
+/// @group assert-utils
+/// @param {*} $assert - Value to consider
+/// @return {bool} -
+@function is-truthy($assert) {
+  $not: (not not $assert);
+  $list: ($assert != ());
+  $string: ($assert != '');
+  $truthy: if(($not and $list and $string), true, false);
+
+  @return $truthy;
+}

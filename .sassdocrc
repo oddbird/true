@@ -25,5 +25,5 @@ groups:
     private-utils: 'Utilities'
     private-context: 'Data Management'
     private-test: 'Tests'
-    private-assert: 'Assertions'
+    assert-utils: 'Assertions'
     private-message: 'Reporting'

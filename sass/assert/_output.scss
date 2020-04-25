@@ -1,0 +1,163 @@
+@use 'utils';
+
+// Assert [output]
+// ---------------
+/// Define a CSS-output assertion.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - The `assert()` mixin is a wrapper,
+///   and should contain one `output()` block and one `expect()` block
+///   as nested contents.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {string} $description [null] -
+///   Description of the assertion being tested.
+///   A `null` of `false` value generates a default description.
+///
+/// @content Use `output()` and `expect()` mixins
+///   to define blocks for comparison
+///
+/// @example scss -
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert('You can also describe the assertion...') {
+///       @include true.output {
+///         width: 14em + 2;
+///       }
+///       @include true.expect {
+///         width: 16em;
+///       }
+///     }
+///   }
+@mixin assert($description: null) {
+  @include utils.setup('output', $description);
+  @include utils.content('assert', 'ASSERT', false, $description) { @content; }
+  @include utils.strike('output-to-css', $output: true);
+}
+
+// Output
+// ------
+/// Describe the test content to be evaluated
+/// against the paired `expect()` block.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - The `output()` mixin requires a content block,
+///   and should be nested inside the `assert()` mixin
+///   along with a single `expect()` block.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
+///
+/// @content Define the test content to be checked
+///
+/// @example scss -
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
+///         width: 14em + 2;
+///       }
+///       @include true.expect {
+///         width: 16em;
+///       }
+///     }
+///   }
+@mixin output($selector: true) {
+  @include utils.content('output', 'OUTPUT', $selector) { @content; }
+}
+
+// Expect
+// ------
+/// Describe the expected results of the paired `output()` block.
+/// The `expect()` mixin requires a content block,
+/// and should be nested inside the `assert()` mixin,
+/// along with a single `output()` block.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - These three mixins together describe a single
+///   `assert-equal` comparison on output CSS.
+///   The compiled CSS-results of the `output()` mixin
+///   will be compared against the results of the `expect()` mixin.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
+///
+/// @content Define the expected results of a sibling `output()` mixin
+///
+/// @example scss -
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
+///         width: 14em + 2;
+///       }
+///       @include true.expect {
+///         width: 16em;
+///       }
+///     }
+///   }
+@mixin expect($selector: true) {
+  @include utils.content('expect', 'EXPECTED', $selector) { @content; }
+}
+
+// Contains
+// ------
+/// Describe the expected results of the paired `output()` block.
+/// The `contains()` mixin requires a content block,
+/// and should be nested inside the `assert()` mixin,
+/// along with a single `output()` block.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - These three mixins together describe a single
+///   comparison on output CSS.
+///   The compiled CSS-results of the `contains()` mixin
+///   will be compared against the results of the `output()` mixin
+///   to see if all of the `contains` CSS is within the `output` CSS.
+/// - When using Mocha integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block,
+///   so you can test property-value output directly.
+///
+/// @content Define the expected results of a sibling `output()` mixin
+///
+/// @example scss -
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
+///         height: 100%;
+///         width: 14em + 2;
+///       }
+///       @include true.contains {
+///         width: 16em;
+///       }
+///     }
+///   }
+@mixin contains($selector: true) {
+  @include utils.content('contains', 'CONTAINED', $selector) { @content; }
+}

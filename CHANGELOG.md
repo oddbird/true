@@ -164,5 +164,5 @@
 
 - `assert-true()`, `assert-false()`, `assert-equal()`, and `assert-unequal()`.
 - `pass()` and `fail()` for tracking and reporting individual results.
-- `start-test-module()` and `report-test-results()` for module results.
+- `start-test-module()` and `report-test-result()` for module results.
 - Includes tests of the testing tools!
