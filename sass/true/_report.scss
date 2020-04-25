@@ -22,9 +22,9 @@
 ///   A map of run, pass, fail, and output-to-css results
 /// @param {map} $stats [$stats] -
 ///   A map of module, test, and assertion statistics
-/// @example scss
-///   $terminal-output: false;
-///   @include report;
+/// @example scss -
+///   true.$terminal-output: false;
+///   @include true.report;
 @mixin report(
   $terminal: settings.$terminal-output,
   $fail-on-error: false,

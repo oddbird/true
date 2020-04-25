@@ -15,13 +15,14 @@
 /// @param {string} $name -
 ///   Describe what is being tested
 /// @content Include any assertions that are part of this test
-/// @example scss
-///   @include test('Returns lists zipped together') {
-///     @include assert-equal(
-///       zip(a b c, 1 2 3),
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.test('Returns lists zipped together') {
+///     @include true.assert-equal(
+///       list.zip(a b c, 1 2 3),
 ///       (a 1, b 2, c 3));
-///     @include assert-equal(
-///       zip(1px 1px 3px, solid dashed solid, red green blue),
+///     @include true.assert-equal(
+///       list.zip(1px 1px 3px, solid dashed solid, red green blue),
 ///       (1px solid red, 1px dashed green, 3px solid blue));
 ///   }
 @mixin test($name) {
@@ -40,13 +41,14 @@
 /// @param {string} $name -
 ///   Describe the behavior being tested
 /// @content Include any assertions that are part of testing this behavior
-/// @example scss
-///   @include it('Returns lists zipped together') {
-///     @include assert-equal(
-///       zip(a b c, 1 2 3),
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.it('Returns lists zipped together') {
+///     @include true.assert-equal(
+///       list.zip(a b c, 1 2 3),
 ///       (a 1, b 2, c 3));
-///     @include assert-equal(
-///       zip(1px 1px 3px, solid dashed solid, red green blue),
+///     @include true.assert-equal(
+///       list.zip(1px 1px 3px, solid dashed solid, red green blue),
 ///       (1px solid red, 1px dashed green, 3px solid blue));
 ///   }
 @mixin it($name) {

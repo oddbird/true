@@ -18,20 +18,21 @@
 /// @group api-test
 /// @param {string} $name - module name
 /// @content Include all the tests & modules that are part of this module
-/// @example scss
+/// @example scss -
+///   @use 'sass:list';
 ///   // Module Group
-///   @include test-module('zip [function]') {
+///   @include true.test-module('zip [function]') {
 ///     // Test 1
-///     @include test('Returns two lists zipped together') {
-///       @include assert-equal(
-///         zip(a b c, 1 2 3),
+///     @include true.test('Returns two lists zipped together') {
+///       @include true.assert-equal(
+///         list.zip(a b c, 1 2 3),
 ///         (a 1, b 2, c 3));
 ///     }
 ///
 ///     // Test 2
-///     @include test('Returns three zipped lists') {
-///       @include assert-equal(
-///         zip(1px 1px 3px, solid dashed solid, red green blue),
+///     @include true.test('Returns three zipped lists') {
+///       @include true.assert-equal(
+///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
 ///         (1px solid red, 1px dashed green, 3px solid blue));
 ///     }
 ///   }
@@ -50,19 +51,20 @@
 /// @group api-test
 /// @param {string} $name - module name
 /// @content Include all the tests that are part of this module
-/// @example scss
-///   @include describe('zip [function]') {
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.describe('zip [function]') {
 ///     // Test 1
-///     @include it('Returns two lists zipped together') {
-///       @include assert-equal(
-///         zip(a b c, 1 2 3),
+///     @include true.it('Returns two lists zipped together') {
+///       @include true.assert-equal(
+///         list.zip(a b c, 1 2 3),
 ///         (a 1, b 2, c 3));
 ///     }
 ///
 ///     // Test 2
-///     @include it('Returns three zipped lists') {
-///       @include assert-equal(
-///         zip(1px 1px 3px, solid dashed solid, red green blue),
+///     @include true.it('Returns three zipped lists') {
+///       @include true.assert-equal(
+///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
 ///         (1px solid red, 1px dashed green, 3px solid blue));
 ///     }
 ///   }

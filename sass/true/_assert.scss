@@ -24,8 +24,8 @@
 ///   A `null` of `false` value generates a default description.
 ///
 /// @example scss -
-///   @include test('Non-empty strings are truthy') {
-///     @include assert-true(
+///   @include true.test('Non-empty strings are truthy') {
+///     @include true.assert-true(
 ///       'Hello World',
 ///       'You can optionally describe the assertion...');
 ///   }
@@ -55,8 +55,8 @@
 ///   A `null` of `false` value generates a default description.
 ///
 /// @example scss -
-///   @include test('Empty strings are falsey') {
-///     @include assert-false(
+///   @include true.test('Empty strings are falsey') {
+///     @include true.assert-false(
 ///       '',
 ///       'You can optionally describe the assertion...');
 ///   }
@@ -91,10 +91,9 @@
 ///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
-///   @include test('Division works as expected in Sass') {
-///     @include assert-equal(
-///       8 / 2,
-///       4,
+///   @include true.test('Division works as expected in Sass') {
+///     @include true.assert-equal(
+///       8 / 2, 4,
 ///       'You can optionally describe the assertion...');
 ///   }
 @mixin assert-equal($assert, $expected, $description: null, $inspect: false) {
@@ -132,8 +131,8 @@
 ///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
-///   @include test('Strings and numbers hare not the same') {
-///     @include assert-unequal(
+///   @include true.test('Strings and numbers hare not the same') {
+///     @include true.assert-unequal(
 ///       1em,
 ///       '1em');
 ///   }
@@ -178,12 +177,12 @@
 ///   to define blocks for comparison
 ///
 /// @example scss -
-///   @include test('Sass math compiles before output') {
-///     @include assert('You can also describe the assertion...') {
-///       @include output {
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert('You can also describe the assertion...') {
+///       @include true.output {
 ///         width: 14em + 2;
 ///       }
-///       @include expect {
+///       @include true.expect {
 ///         width: 16em;
 ///       }
 ///     }
@@ -229,12 +228,12 @@
 /// @content Define the test content to be checked
 ///
 /// @example scss -
-///   @include test('Sass math compiles before output') {
-///     @include assert {
-///       @include output {
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
 ///         width: 14em + 2;
 ///       }
-///       @include expect {
+///       @include true.expect {
 ///         width: 16em;
 ///       }
 ///     }
@@ -279,12 +278,12 @@
 /// @content Define the expected results of a sibling `output()` mixin
 ///
 /// @example scss -
-///   @include test('Sass math compiles before output') {
-///     @include assert {
-///       @include output {
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
 ///         width: 14em + 2;
 ///       }
-///       @include expect {
+///       @include true.expect {
 ///         width: 16em;
 ///       }
 ///     }
@@ -330,13 +329,13 @@
 /// @content Define the expected results of a sibling `output()` mixin
 ///
 /// @example scss -
-///   @include test('Sass math compiles before output') {
-///     @include assert {
-///       @include output {
+///   @include true.test('Sass math compiles before output') {
+///     @include true.assert {
+///       @include true.output {
 ///         height: 100%;
 ///         width: 14em + 2;
 ///       }
-///       @include contains {
+///       @include true.contains {
 ///         width: 16em;
 ///       }
 ///     }

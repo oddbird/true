@@ -5,7 +5,7 @@ src: sass/
 herman:
   sass:
     includepaths: ['sass']
-    includes: ['true']
+    use: ['true']
     implementation: 'sass'
   extraDocs:
     - name: 'Changelog'

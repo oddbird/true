@@ -396,12 +396,12 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Sass math compiles before output&#39;) {
-  @include assert(&#39;You can also describe the assertion...&#39;) {
-    @include output {
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert(&#39;You can also describe the assertion...&#39;) {
+    @include true.output {
       width: 14em + 2;
     }
-    @include expect {
+    @include true.expect {
       width: 16em;
     }
   }
@@ -749,12 +749,12 @@ so you can test property-value output<span class="widont">&nbsp;</span>directly.
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Sass math compiles before output&#39;) {
-  @include assert {
-    @include output {
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
       width: 14em + 2;
     }
-    @include expect {
+    @include true.expect {
       width: 16em;
     }
   }
@@ -1044,12 +1044,12 @@ so you can test property-value output<span class="widont">&nbsp;</span>directly.
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Sass math compiles before output&#39;) {
-  @include assert {
-    @include output {
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
       width: 14em + 2;
     }
-    @include expect {
+    @include true.expect {
       width: 16em;
     }
   }
@@ -1340,13 +1340,13 @@ so you can test property-value output<span class="widont">&nbsp;</span>directly.
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Sass math compiles before output&#39;) {
-  @include assert {
-    @include output {
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
       height: 100%;
       width: 14em + 2;
     }
-    @include contains {
+    @include true.contains {
       width: 16em;
     }
   }

@@ -391,8 +391,8 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Non-empty strings are truthy&#39;) {
-  @include assert-true(
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Non-empty strings are truthy&#39;) {
+  @include true.assert-true(
     &#39;Hello World&#39;,
     &#39;You can optionally describe the assertion...&#39;);
 }</code></pre>
@@ -792,8 +792,8 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Empty strings are falsey&#39;) {
-  @include assert-false(
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Empty strings are falsey&#39;) {
+  @include true.assert-false(
     &#39;&#39;,
     &#39;You can optionally describe the assertion...&#39;);
 }</code></pre>
@@ -1246,10 +1246,9 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Division works as expected in Sass&#39;) {
-  @include assert-equal(
-    8 / 2,
-    4,
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Division works as expected in Sass&#39;) {
+  @include true.assert-equal(
+    8 / 2, 4,
     &#39;You can optionally describe the assertion...&#39;);
 }</code></pre>
     </div>
@@ -1666,8 +1665,8 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Strings and numbers hare not the same&#39;) {
-  @include assert-unequal(
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Strings and numbers hare not the same&#39;) {
+  @include true.assert-unequal(
     1em,
     &#39;1em&#39;);
 }</code></pre>

@@ -396,19 +396,20 @@ Modules can be nested for additional<span class="widont">&nbsp;</span>organizati
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">// Module Group
-@include test-module(&#39;zip [function]&#39;) {
+      <pre class="hljs-pre"><code class="lang-scss">@use &#39;sass:list&#39;;
+// Module Group
+@include true.test-module(&#39;zip [function]&#39;) {
   // Test 1
-  @include test(&#39;Returns two lists zipped together&#39;) {
-    @include assert-equal(
-      zip(a b c, 1 2 3),
+  @include true.test(&#39;Returns two lists zipped together&#39;) {
+    @include true.assert-equal(
+      list.zip(a b c, 1 2 3),
       (a 1, b 2, c 3));
   }
 
   // Test 2
-  @include test(&#39;Returns three zipped lists&#39;) {
-    @include assert-equal(
-      zip(1px 1px 3px, solid dashed solid, red green blue),
+  @include true.test(&#39;Returns three zipped lists&#39;) {
+    @include true.assert-equal(
+      list.zip(1px 1px 3px, solid dashed solid, red green blue),
       (1px solid red, 1px dashed green, 3px solid blue));
   }
 }</code></pre>
@@ -825,12 +826,13 @@ Tests should always contain one or more<span class="widont">&nbsp;</span>asserti
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">@include test(&#39;Returns lists zipped together&#39;) {
-  @include assert-equal(
-    zip(a b c, 1 2 3),
+      <pre class="hljs-pre"><code class="lang-scss">@use &#39;sass:list&#39;;
+@include true.test(&#39;Returns lists zipped together&#39;) {
+  @include true.assert-equal(
+    list.zip(a b c, 1 2 3),
     (a 1, b 2, c 3));
-  @include assert-equal(
-    zip(1px 1px 3px, solid dashed solid, red green blue),
+  @include true.assert-equal(
+    list.zip(1px 1px 3px, solid dashed solid, red green blue),
     (1px solid red, 1px dashed green, 3px solid blue));
 }</code></pre>
     </div>
