@@ -41,7 +41,7 @@ Import in your test directory,
 like any other Sass file:
 
 ```scss
-@import 'true';
+@use 'true' as *;
 ```
 
 Depending on your setup,
@@ -170,7 +170,7 @@ want to run separately.
 The first argument to `runSass` accepts the
 [same options](https://sass-lang.com/documentation/js-api#options) that sass'
 `renderSync` function accepts. The only modification `runSass` makes is to add
-True's sass path to the `includePaths` option, so `@import 'true';` works in
+True's sass path to the `includePaths` option, so `@use 'true';` works in
 your Sass test file.
 
 The second argument is an object with required `describe` and `it` options, and
@@ -188,7 +188,7 @@ context lines to provide.
 
 ### Imports without Webpack
 
-If you use Webpack's tilde notation, like `@import 'accoutrement/sass/tools'`,
+If you use Webpack's tilde notation, like `@use 'accoutrement/sass/tools'`,
 you'll need to tell `runSass` how to handle that. That will require writing a
 custom importer and passing it into the configuration for `runSass`. Something
 like:

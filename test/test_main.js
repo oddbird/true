@@ -51,8 +51,8 @@ describe('#runSass', () => {
 
   it('can specify includePaths', () => {
     const sass = [
-      '@import "include";',
-      '@import "true";',
+      '@use "true" as *;',
+      '@use "include" as *;',
       '@include test-module("Module") {',
       '  @include test("Test") {',
       '    @include assert("Assertion") {',
