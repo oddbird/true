@@ -1,0 +1,31 @@
+@use '../../../index' as *;
+@use '../../../sass/config/messages';
+@use '../../../sass/config/throw';
+
+@include describe('True Error [function]') {
+  @include it('Allow errors to return without blocking compilation') {
+    @include assert-equal(
+      throw.error('This is a test error message', 'error test'),
+      'ERROR [error test] This is a test error message'
+    );
+  }
+}
+
+@include describe('True Error [mixin]') {
+  @include it('Allow errors to output without blocking compilation') {
+    @include assert {
+      @include output {
+        @include throw.error(
+          'This is a test error message',
+          'error test'
+        );
+      }
+      @include expect {
+        @include messages.message(
+          'ERROR [error test] This is a test error message',
+          'comments'
+        );
+      }
+    }
+  }
+}

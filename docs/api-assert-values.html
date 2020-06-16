@@ -132,7 +132,7 @@
   
   
     <li class="nav-item">
-      <a href="private-assert.html" data-nav="is-not-active">Assertions</a>
+      <a href="assert-utils.html" data-nav="is-not-active">Assertions</a>
     </li>
   
   
@@ -222,6 +222,19 @@
     </h2>
 
     
+  
+    
+    
+    
+
+    <p class="alias">
+      aliased as
+
+      
+        <span class="alias-title">is-truthy()</span>
+        
+      
+    </p>
   
 
 
@@ -355,7 +368,7 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
     <div data-item-section="examples">
       <h3 class="item-subtitle">
-        <span class="item-subtitle-main">Example</span>
+        <span class="item-subtitle-main">Examples</span>
       </h3>
 
       
@@ -430,6 +443,77 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   </div>
 
       
+        
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  <div class="example">
+    <div class="example-code">
+      
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">@include true.it(&#39;Non-empty strings are truthy&#39;) {
+  @include true.is-truthy(
+    &#39;Hello World&#39;,
+    &#39;You can optionally describe the assertion...&#39;);
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">@charset &quot;UTF-8&quot;;
+/* Test: Non-empty strings are truthy */
+/*   ✔ [assert-true] You can optionally describe the assertion... */
+/*  */</code></pre>
+    </div>
+  
+
+    </div>
+
+    
+  </div>
+
+      
     </div>
   
 
@@ -438,7 +522,8 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   
   
   
-    
+    <div class="requires-wrapper">
+      
     
   <div data-item-section="requires">
     
@@ -470,14 +555,62 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   
   <div class="param-list">
     <h4 class="param-title">
+      <span class="item-type">@function</span>
+      
+        <a href="
+  assert-utils.html#function--is-truthy" class="item-name">is-truthy()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+    
+  </div>
+
+  
+      
+  
+    
+  <div data-item-section="used-by">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Used By</span>
+        
+      </h3>
+    
+
+    
+      
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
       <span class="item-type">@mixin</span>
       
-        <a href="
-  private-assert.html#mixin--assert-results" class="item-name">assert-results()</a>
+        <span class="item-name">is-truthy()</span>
       
       
       
-      <span class="item-note">[private]</span>
+      
     </h4>
 
     
@@ -486,89 +619,12 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
         
       
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-context.html#function--context" class="item-name">context()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-assert.html#function--is-truthy" class="item-name">is-truthy()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-        
-        
-        
-
-        
-      
     
   </div>
 
   
-    
-  
 
+    </div>
   
 
   
@@ -623,6 +679,19 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
     </h2>
 
     
+  
+    
+    
+    
+
+    <p class="alias">
+      aliased as
+
+      
+        <span class="alias-title">is-falsy()</span>
+        
+      
+    </p>
   
 
 
@@ -839,7 +908,8 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   
   
   
-    
+    <div class="requires-wrapper">
+      
     
   <div data-item-section="requires">
     
@@ -871,14 +941,62 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   
   <div class="param-list">
     <h4 class="param-title">
+      <span class="item-type">@function</span>
+      
+        <a href="
+  assert-utils.html#function--is-truthy" class="item-name">is-truthy()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+    
+  </div>
+
+  
+      
+  
+    
+  <div data-item-section="used-by">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Used By</span>
+        
+      </h3>
+    
+
+    
+      
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
       <span class="item-type">@mixin</span>
       
-        <a href="
-  private-assert.html#mixin--assert-results" class="item-name">assert-results()</a>
+        <span class="item-name">is-falsy()</span>
       
       
       
-      <span class="item-note">[private]</span>
+      
     </h4>
 
     
@@ -887,89 +1005,12 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
         
       
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-context.html#function--context" class="item-name">context()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-assert.html#function--is-truthy" class="item-name">is-truthy()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-        
-        
-        
-
-        
-      
     
   </div>
 
   
-    
-  
 
+    </div>
   
 
   
@@ -1024,6 +1065,19 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
     </h2>
 
     
+  
+    
+    
+    
+
+    <p class="alias">
+      aliased as
+
+      
+        <span class="alias-title">is-equal()</span>
+        
+      
+    </p>
   
 
 
@@ -1295,10 +1349,12 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
   
     
     
-  <div data-item-section="requires">
+  
+    
+  <div data-item-section="used-by">
     
       <h3 class="item-subtitle">
-        <span class="item-subtitle-main">Requires</span>
+        <span class="item-subtitle-main">Used By</span>
         
       </h3>
     
@@ -1307,14 +1363,10 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
       
       
         
-        
-        
 
         
           
           
-  
-  
   
   
   
@@ -1327,12 +1379,11 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
     <h4 class="param-title">
       <span class="item-type">@mixin</span>
       
-        <a href="
-  private-assert.html#mixin--assert-results" class="item-name">assert-results()</a>
+        <span class="item-name">is-equal()</span>
       
       
       
-      <span class="item-note">[private]</span>
+      
     </h4>
 
     
@@ -1341,52 +1392,9 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
 
         
       
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-context.html#function--context" class="item-name">context()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
     
   </div>
 
-
-        
-      
-        
-        
-        
-
-        
-      
-    
-  </div>
-
-  
-    
   
 
   
@@ -1443,6 +1451,19 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
     </h2>
 
     
+  
+    
+    
+    
+
+    <p class="alias">
+      aliased as
+
+      
+        <span class="alias-title">not-equal()</span>
+        
+      
+    </p>
   
 
 
@@ -1714,10 +1735,12 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
   
     
     
-  <div data-item-section="requires">
+  
+    
+  <div data-item-section="used-by">
     
       <h3 class="item-subtitle">
-        <span class="item-subtitle-main">Requires</span>
+        <span class="item-subtitle-main">Used By</span>
         
       </h3>
     
@@ -1726,14 +1749,10 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
       
       
         
-        
-        
 
         
           
           
-  
-  
   
   
   
@@ -1746,12 +1765,11 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
     <h4 class="param-title">
       <span class="item-type">@mixin</span>
       
-        <a href="
-  private-assert.html#mixin--assert-results" class="item-name">assert-results()</a>
+        <span class="item-name">not-equal()</span>
       
       
       
-      <span class="item-note">[private]</span>
+      
     </h4>
 
     
@@ -1760,52 +1778,9 @@ A <code>null</code> of <code>false</code> value generates a default<span class="
 
         
       
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@function</span>
-      
-        <a href="
-  private-context.html#function--context" class="item-name">context()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
     
   </div>
 
-
-        
-      
-        
-        
-        
-
-        
-      
-    
-  </div>
-
-  
-    
   
 
   

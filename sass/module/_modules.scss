@@ -1,0 +1,67 @@
+@use 'utils';
+
+// Test Module
+// -----------
+/// Test Modules are optional,
+/// and can be used to group tests and other modules
+/// for organizational purposes.
+/// Modules can be nested for additional organization.
+/// @access public
+/// @group api-test
+/// @param {string} $name - module name
+/// @content Include all the tests & modules that are part of this module
+/// @example scss -
+///   @use 'sass:list';
+///   // Module Group
+///   @include true.test-module('zip [function]') {
+///     // Test 1
+///     @include true.test('Returns two lists zipped together') {
+///       @include true.assert-equal(
+///         list.zip(a b c, 1 2 3),
+///         (a 1, b 2, c 3));
+///     }
+///
+///     // Test 2
+///     @include true.test('Returns three zipped lists') {
+///       @include true.assert-equal(
+///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
+///         (1px solid red, 1px dashed green, 3px solid blue));
+///     }
+///   }
+@mixin test-module($name) {
+  @include utils.module-start($name);
+  @content;
+  @include utils.module-stop;
+}
+
+// Describe
+// --------
+/// Describe the unit to be tested.
+/// This works just like a test module,
+/// allowing you to group one or more related tests.
+/// @alias test-module
+/// @group api-test
+/// @param {string} $name - module name
+/// @content Include all the tests that are part of this module
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.describe('zip [function]') {
+///     // Test 1
+///     @include true.it('Returns two lists zipped together') {
+///       @include true.assert-equal(
+///         list.zip(a b c, 1 2 3),
+///         (a 1, b 2, c 3));
+///     }
+///
+///     // Test 2
+///     @include true.it('Returns three zipped lists') {
+///       @include true.assert-equal(
+///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
+///         (1px solid red, 1px dashed green, 3px solid blue));
+///     }
+///   }
+@mixin describe($name) {
+  @include test-module($name) {
+    @content;
+  }
+}

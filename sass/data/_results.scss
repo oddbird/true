@@ -1,9 +1,6 @@
-@use "sass:list";
-@use "sass:map";
-@use "utilities";
-
-// Result Tracking
-// ===============
+@use 'sass:list';
+@use 'sass:map';
+@use 'utilities';
 
 // Get Result
 // ----------
@@ -14,7 +11,7 @@
 /// @param {*} $expected - Expected match
 /// @param {bool} $unequal [false] -
 ///   Set to `true` if the comparison is expected to fail
-/// @return {'pass' | 'fail'}
+/// @return {'pass' | 'fail'} The result of a test
 @function get-result($assert, $expected, $unequal: false) {
   $equal: $assert == $expected;
   $pass: if($unequal, not $equal, $equal);

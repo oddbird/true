@@ -1,0 +1,65 @@
+@use 'sass:list';
+@use 'sass:map';
+
+// Map Increment
+// -------------
+/// Add map values together
+/// @access private
+/// @group private-utils
+/// @param {map} $base -
+///   Initial map to add values to
+/// @param {map} $add -
+///   Map of values to be added
+/// @return {map} Map of values after incrementing
+@function map-increment($base, $add) {
+  @each $key in map.keys($add) {
+    $value: map.get($add, $key);
+
+    @if $value {
+      $base-value: map.get($base, $key);
+      $new-value: if($base-value, $base-value + $value, $value);
+      $base: map.merge(
+        $base,
+        (
+          $key: $new-value,
+        )
+      );
+    }
+  }
+
+  @return $base;
+}
+
+// Join Multiple
+// -------------
+/// Extends the Sass `join()` function
+/// to accept and combine any number of lists
+/// @access private
+/// @group private-utils
+/// @param {list | 'space' | 'comma'} $lists... -
+///   Any number of lists to be joined,
+///   with an optional final argument describing
+///   the desired list-separator ('space' or 'comma')
+/// @return {list} Joined items in a single list
+@function join-multiple($lists...) {
+  $return: list.nth($lists, 1);
+  $type: list.separator($return);
+  $last: list.nth($lists, -1);
+  $length: list.length($lists);
+
+  @if ($last == 'space') or ($last == 'comma') {
+    $length: $length - 1;
+    $type: $last;
+  }
+
+  @if ($length < 2) {
+    $error: 'Must provide at least 2 lists';
+    @return error($error, 'join-multiple');
+  }
+
+  @for $i from 2 through $length {
+    $return: list.join($return, list.nth($lists, $i), $type);
+  }
+
+  @return $return;
+}

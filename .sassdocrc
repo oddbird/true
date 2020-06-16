@@ -20,7 +20,7 @@ groups:
     api-test: 'Describing Tests'
     api-assert-values: 'Comparing Values'
     api-assert-output: 'Comparing Output'
-    api-xreport: 'Reporting Results'
+    api-report: 'Reporting Results'
   Internal Helpers [Private]:
     private-utils: 'Utilities'
     private-context: 'Data Management'

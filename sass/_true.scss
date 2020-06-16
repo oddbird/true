@@ -1,13 +1,11 @@
 // Susy partials
 // =============
 
-// Config
-@forward 'true/settings';
-@forward 'true/utilities';
-@forward 'true/messages';
+// config
+@forward 'config/settings';
 
-// API
-@forward 'true/modules';
-@forward 'true/tests';
+// api
+@forward 'module';
+@forward 'test';
 @forward 'assert';
-@forward 'true/report';
+@forward 'report';

@@ -1,0 +1,35 @@
+@use '../../../index' as *;
+@use '../../../sass/assert/utils';
+
+// Is Truthy
+@include describe('Is Truthy') {
+  @include it('True is truthy') {
+    @include assert-equal(utils.is-truthy(true), true);
+  }
+
+  @include it('String is truthy') {
+    @include assert-equal(utils.is-truthy('string'), true);
+  }
+
+  @include it('List is truthy') {
+    @include assert-equal(utils.is-truthy('one' 'two' 'three'), true);
+  }
+
+  @include it('False is not truthy') {
+    @include assert-equal(utils.is-truthy(false), false);
+  }
+
+  @include it('Null is not truthy') {
+    @include assert-equal(utils.is-truthy(null), false);
+  }
+
+  @include it('Empty string is not truthy') {
+    @include assert-equal(utils.is-truthy(''), false);
+  }
+
+  @include it('Empty list is not truthy') {
+    $list: ();
+
+    @include assert-equal(utils.is-truthy($list), false);
+  }
+}

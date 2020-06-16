@@ -1,10 +1,9 @@
-@use "sass:map";
-@use "../../sass/assert";
-@use "../../sass/true/messages";
-@use "../../sass/true/modules";
-@use "../../sass/true/report";
-@use "../../sass/true/tests";
-@use "../../sass/true/utilities";
+@use '../../index' as *;
+@use '../../sass/report/utils';
+@use '../../sass/report';
+@use '../../sass/config';
+@use '../../sass/data';
+@use 'sass:map';
 
 // Report Tests
 // ============
@@ -29,38 +28,38 @@ $single-results: '6 Tests, 5 Passed, 1 Failed';
 $multi-results: ('6 Tests:', '- 5 Passed', '- 1 Failed');
 
 $single: ($single-results, $single-stats);
-$multi: utilities.join-multiple(
+$multi: data.join-multiple(
   '# SUMMARY ----------',
   $multi-results,
   $multi-stats,
   '--------------------'
 );
 
-@include modules.test-module('report [mixin]') {
-  @include tests.test('Output Message') {
-    @include assert.assert {
-      @include assert.output {
+@include describe('report [mixin]') {
+  @include it('Output Message') {
+    @include assert {
+      @include output {
         @include report.report(false, false, $fake-results, $fake-stats);
       }
-      @include assert.expect {
-        @include messages.message($multi, 'comments');
+      @include expect {
+        @include config.message($multi, 'comments');
       }
     }
   }
 
-  @include tests.test('Fail on Error') {
-    @include assert.assert {
-      @include assert.output {
+  @include it('Fail on Error') {
+    @include assert {
+      @include output {
         @include report.report(false, 'fail on error', $fake-results, $fake-stats);
       }
-      @include assert.expect {
-        @include messages.message($multi, 'comments');
-        @include utilities.error('1 test failed', 'report');
+      @include expect {
+        @include config.message($multi, 'comments');
+        @include config.error('1 test failed', 'report');
       }
     }
   }
 
-  @include tests.test('Bad results') {
+  @include it('Bad results') {
     $bad-results: map.merge(
       $fake-results,
       (
@@ -68,20 +67,20 @@ $multi: utilities.join-multiple(
       )
     );
     $bad-lines: ('6 Tests:', '- 4 Passed', '- 1 Failed');
-    $bad: utilities.join-multiple(
+    $bad: data.join-multiple(
       '# SUMMARY ----------',
       $bad-lines,
       $multi-stats,
       '--------------------'
     );
 
-    @include assert.assert {
-      @include assert.output {
+    @include assert {
+      @include output {
         @include report.report(false, false, $bad-results, $fake-stats);
       }
-      @include assert.expect {
-        @include messages.message($bad, 'comments');
-        @include utilities.error(
+      @include expect {
+        @include config.message($bad, 'comments');
+        @include config.error(
           'The results don’t add up. Are all your tests properly structured?',
           'report'
         );
@@ -90,17 +89,17 @@ $multi: utilities.join-multiple(
   }
 }
 
-@include modules.test-module('report-message [function]') {
-  @include tests.test('Single Line') {
-    @include assert.assert-equal(
-      report.report-message(not 'linebreaks', $fake-results, $fake-stats),
+@include describe('report-message [function]') {
+  @include it('Single Line') {
+    @include assert-equal(
+      utils.report-message(not 'linebreaks', $fake-results, $fake-stats),
       $single
     );
   }
 
-  @include tests.test('Linebreaks') {
-    @include assert.assert-equal(
-      report.report-message('linebreaks', $fake-results, $fake-stats),
+  @include it('Linebreaks') {
+    @include assert-equal(
+      utils.report-message('linebreaks', $fake-results, $fake-stats),
       $multi
     );
   }

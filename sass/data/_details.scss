@@ -1,9 +1,8 @@
-@use "sass:list";
-@use "sass:meta";
-@use "sass:string";
-@use "context";
-@use "messages";
-@use "settings";
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../config';
+@use 'context' as data;
 
 // Test Result Output
 // ==================
@@ -16,8 +15,8 @@
 /// @output -
 ///   a passing-test comment with the name of the passing assertion
 @mixin pass-details {
-  $assertion: context.context('assert');
-  @include messages.message('✔ #{$assertion}', 'comments', 2);
+  $assertion: data.context('assert');
+  @include config.message('✔ #{$assertion}', 'comments', 2);
 }
 
 // Fail Details
@@ -30,37 +29,37 @@
 /// @param {*} $expected - The expected value
 /// @param {bool} $terminal [$terminal-output] -
 ///   whether to use the terminal as an output stream
-@mixin fail-details($assert, $expected, $terminal: settings.$terminal-output) {
+@mixin fail-details($assert, $expected, $terminal: config.$terminal-output) {
   $location: if($terminal, ('comments', 'debug'), 'comments');
 
   // Title Messages
-  $assertion: context.context('assert');
+  $assertion: data.context('assert');
   $title: 'FAILED: #{$assertion}';
-  @include messages.message('✖ #{$title}', $location, 2);
+  @include config.message('✖ #{$title}', $location, 2);
 
   // Details Message
   $out: variable-details($assert);
   $exp: variable-details($expected);
   $details: ('- Output: #{$out}', '- Expected: #{$exp}');
-  @include messages.message($details, $location, 4);
+  @include config.message($details, $location, 4);
 
   // Edge Failure Notes
   @if string.index($assertion, 'assert-equal') {
     $notes: edgefail-notes($assert, $expected);
     @if $notes {
-      @include messages.message($notes, $location, 4);
+      @include config.message($notes, $location, 4);
     }
   }
 
   // Context Message
-  $module: context.context('module');
-  $test: context.context('test');
+  $module: data.context('module');
+  $test: data.context('test');
   $context: ('- Module: #{$module}', '- Test: #{$test}');
-  @include messages.message($context, $location, 4);
+  @include config.message($context, $location, 4);
 
   // Terminal Warning
   @if $terminal {
-    @include messages.message($assertion, 'warn');
+    @include config.message($assertion, 'warn');
   }
 }
 

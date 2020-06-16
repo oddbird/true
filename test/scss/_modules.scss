@@ -1,25 +1,20 @@
-@use "../../sass/assert";
-@use "../../sass/true/context";
-@use "../../sass/true/modules";
-@use "../../sass/true/tests";
+@use '../../index' as *;
+@use '../../sass/data/context';
 
-// Module Tests
-// ============
-
-@include modules.test-module('test-module [mixin]') {
-  @include tests.test('Changes the current module context') {
-    @include assert.assert-equal(context.context('module'), 'test-module [mixin]');
+@include test-module('test-module [mixin]') {
+  @include test('Changes the current module context') {
+    @include assert-equal(context.context('module'), 'test-module [mixin]');
   }
 
-  @include modules.test-module(Unquoted Module Name) {
-    @include tests.test(Don’t barf on unquoted names) {
-      @include assert.assert-true(true, Please don’t barf on me);
+  @include test-module(Nested & Unquoted Module Name) {
+    @include test(Don’t barf on unquoted names) {
+      @include assert-true(true, Please don’t barf on me);
     }
   }
 }
 
-@include modules.describe('Describe/it syntax') {
-  @include tests.it('Changes the current module context') {
-    @include assert.assert-equal(context.context('module'), 'Describe/it syntax');
+@include describe('Describe/it syntax') {
+  @include it('Changes the current module context') {
+    @include assert-equal(context.context('module'), 'Describe/it syntax');
   }
 }

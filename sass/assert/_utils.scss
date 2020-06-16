@@ -1,9 +1,5 @@
-@use '../true/context';
-@use '../true/messages';
-@use '../true/output';
-@use '../true/results';
-@use '../true/settings';
-@use '../true/stats';
+@use '../config';
+@use '../data';
 
 @mixin content(
   $name,
@@ -12,8 +8,8 @@
   $description: null,
 ) {
   $start: if($description, '#{$block}: #{$description}', $block);
-  @include context.output-context($name);
-  @include messages.message('  #{$start}  ', 'comments');
+  @include data.output-context($name);
+  @include config.message('  #{$start}  ', 'comments');
   @if $selector {
     .test-output {
       @content;
@@ -21,15 +17,15 @@
   } @else {
     @content;
   }
-  @include messages.message('  END_#{$block}  ', 'comments');
+  @include config.message('  END_#{$block}  ', 'comments');
 }
 
 @mixin setup(
   $name,
   $description: null,
 ) {
-  $description: $description or context.context('test');
-  @include context.context(
+  $description: $description or data.context('test');
+  @include data.context(
     'assert',
     '[#{$name}] #{$description}'
   );
@@ -39,11 +35,11 @@
   $result,
   $output: false
 ) {
-  @include results.update-test($result);
-  @include stats.update-stats-count('assertions');
-  @include context.context-pop;
+  @include data.update-test($result);
+  @include data.update-stats-count('assertions');
+  @include data.context-pop;
   @if ($output) {
-    @include context.output-context(null);
+    @include data.output-context(null);
   }
 }
 
@@ -67,14 +63,14 @@
   $assert,
   $expected,
   $unequal: false,
-  $terminal: settings.$terminal-output
+  $terminal: config.$terminal-output
 ) {
-  $result: results.get-result($assert, $expected, $unequal);
+  $result: data.get-result($assert, $expected, $unequal);
 
   @if $result == 'pass' {
-    @include output.pass-details;
+    @include data.pass-details;
   } @else {
-    @include output.fail-details($assert, $expected, $terminal);
+    @include data.fail-details($assert, $expected, $terminal);
   }
 
   @include strike($result);

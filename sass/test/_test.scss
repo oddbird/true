@@ -1,10 +1,4 @@
-@use "context";
-@use "messages";
-@use "results";
-@use "stats";
-
-// Tests
-// =====
+@use 'utils';
 
 // Test
 // ----
@@ -26,9 +20,9 @@
 ///       (1px solid red, 1px dashed green, 3px solid blue));
 ///   }
 @mixin test($name) {
-  @include test-start($name);
+  @include utils.test-start($name);
   @content;
-  @include test-stop;
+  @include utils.test-stop;
 }
 
 // Test
@@ -55,28 +49,4 @@
   @include test($name) {
     @content;
   }
-}
-
-// Test Start
-// ----------
-/// Test start helper
-/// @access private
-/// @group private-test
-/// @param {string} $name -
-///   Describe what is being tested
-@mixin test-start($name) {
-  @include context.context('test', $name);
-  @include messages.message('Test: #{$name}', 'comments');
-}
-
-// Test Stop
-// ---------
-/// Test stop helper
-/// @access private
-/// @group private-test
-@mixin test-stop {
-  @include results.update(results.$test-result);
-  @include stats.update-stats-count('tests');
-  @include context.context-pop;
-  @include messages.message('', 'comments');
 }

@@ -1,17 +1,12 @@
-@use "sass:list";
-@use "../../sass/assert";
-@use "../../sass/true/context";
-@use "../../sass/true/modules";
-@use "../../sass/true/tests";
-
-// Settings Tests
-// ==============
+@use '../../../index' as *;
+@use '../../../sass/data/context';
+@use 'sass:list';
 
 // Adding and removing context
-@include modules.test-module('context & context-pop [mixins]') {
-  @include tests.test('Adds scope and name to context') {
+@include describe('context & context-pop [mixins]') {
+  @include it('Adds scope and name to context') {
     @each $entry-scope, $entry-name in context.$context {
-      @include assert.assert-unequal(
+      @include assert-unequal(
         $entry-scope,
         'fake',
         'Confirm that there is currently no "fake" scope'
@@ -20,7 +15,7 @@
 
     @include context.context('fake', 'this scope is not real');
 
-    @include assert.assert-equal(
+    @include assert-equal(
       context.context('fake'),
       'this scope is not real',
       'Sets the value of scope "fake" to "this scope is not real"'
@@ -29,7 +24,7 @@
     @include context.context-pop;
 
     @each $entry-scope, $entry-name in context.$context {
-      @include assert.assert-unequal(
+      @include assert-unequal(
         $entry-scope,
         'fake',
         'Confirm that "fake" scope has been removed'
@@ -39,28 +34,28 @@
 }
 
 // Inspecting context
-@include modules.test-module('context & context-all [functions]') {
-  @include tests.test('Returns current module context') {
-    @include assert.assert-equal(
+@include describe('context & context-all [functions]') {
+  @include it('Returns current module context') {
+    @include assert-equal(
       context.context('module'),
       'context & context-all [functions]'
     );
   }
 
-  @include tests.test('Returns current test context') {
-    @include assert.assert-equal(
+  @include it('Returns current test context') {
+    @include assert-equal(
       context.context('test'),
       'Returns current test context'
     );
   }
 
-  @include modules.test-module('nested') {
-    @include tests.test('Returns the innermost module name') {
-      @include assert.assert-equal(context.context('module'), 'nested');
+  @include describe('nested') {
+    @include it('Returns the innermost module name') {
+      @include assert-equal(context.context('module'), 'nested');
     }
 
-    @include tests.test('context-all [function]') {
-      @include assert.assert-equal(
+    @include it('context-all [function]') {
+      @include assert-equal(
         context.context-all('module'),
         'context & context-all [functions]' 'nested',
         'Returns the current stack of module names'
@@ -70,19 +65,19 @@
 }
 
 // valid output context
-@include modules.test-module('validate-output-context [function]') {
+@include describe('validate-output-context [function]') {
   $valid: 'assert' 'expect' 'output' 'contains';
 
-  @include tests.test('unknown context name') {
-    @include assert.assert-equal(
+  @include it('unknown context name') {
+    @include assert-equal(
       context.validate-output-context('wtf'),
       'ERROR [output-context] #{'wtf'} is not a valid context for output tests: #{$valid}');
   }
 
-  @include tests.test('duplicate assert') {
+  @include it('duplicate assert') {
     context.$output-context: 'assert' 'output';
 
-    @include assert.assert-equal(
+    @include assert-equal(
       context.validate-output-context('assert'),
       'ERROR [output-context] The `assert()` mixin can not contain another `assert()`'
     );
@@ -90,10 +85,10 @@
     context.$output-context: ();
   }
 
-  @include tests.test('duplicate output/expect') {
+  @include it('duplicate output/expect') {
     context.$output-context: 'assert' 'output';
 
-    @include assert.assert-equal(
+    @include assert-equal(
       context.validate-output-context('output'),
       'ERROR [output-context] The `output()` mixin must only be used once per `assert()`'
     );
@@ -101,17 +96,17 @@
     context.$output-context: ();
   }
 
-  @include tests.test('missing assert') {
-    @include assert.assert-equal(
+  @include it('missing assert') {
+    @include assert-equal(
       context.validate-output-context('output'),
       'ERROR [output-context] The `assert()` wrapper is required'
     );
   }
 
-  @include tests.test('wrong length') {
+  @include it('wrong length') {
     context.$output-context: 'assert' 'wtf' 'output' 'expect' 'contains';
 
-    @include assert.assert-equal(
+    @include assert-equal(
       context.validate-output-context(null),
       'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
     );
@@ -119,10 +114,10 @@
     context.$output-context: ();
   }
 
-  @include tests.test('missing context') {
+  @include it('missing context') {
     context.$output-context: 'assert' 'wtf' 'output' 'contains';
 
-    @include assert.assert-equal(
+    @include assert-equal(
       context.validate-output-context(null),
       'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
     );
@@ -132,7 +127,7 @@
 }
 
 // Output context
-@include modules.test-module('output-context [mixin]') {
+@include describe('output-context [mixin]') {
   $empty-list: ();
   $before: context.$output-context;
   @include context.output-context('assert');
@@ -144,17 +139,17 @@
   @include context.output-context(null);
   $reset: context.$output-context;
 
-  @include tests.test('Appends new context') {
-    @include assert.assert-equal($before, $empty-list, 'Check initial value');
+  @include it('Appends new context') {
+    @include assert-equal($before, $empty-list, 'Check initial value');
 
-    @include assert.assert-equal($assert, list.join((), 'assert'));
+    @include assert-equal($assert, list.join((), 'assert'));
 
-    @include assert.assert-equal($expect, ('assert' 'expect'));
+    @include assert-equal($expect, ('assert' 'expect'));
 
-    @include assert.assert-equal($output, ('assert' 'expect' 'output'));
+    @include assert-equal($output, ('assert' 'expect' 'output'));
   }
 
-  @include tests.test('Resets context') {
-    @include assert.assert-equal($reset, $before);
+  @include it('Resets context') {
+    @include assert-equal($reset, $before);
   }
 }

@@ -1,12 +1,8 @@
-@use "sass:list";
-@use "sass:meta";
-@use "sass:string";
-@use "context";
-@use "messages";
-@use "stats";
-
-// Test Module
-// ===========
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../config';
+@use '../data';
 
 // Test Module
 // -----------
@@ -81,8 +77,8 @@
 /// @group private-test
 /// @param {string} $name - module name
 @mixin module-start($name) {
-  @include context.context(module, $name);
-  $module-list: context.context-all('module');
+  @include data.context(module, $name);
+  $module-list: data.context-all('module');
   $modules: list.nth($module-list, 1);
 
   $length: list.length($module-list);
@@ -93,7 +89,7 @@
     }
   }
 
-  @include messages.message('# Module: #{$modules}', 'comments');
+  @include config.message('# Module: #{$modules}', 'comments');
 
   $underline: '--------';
 
@@ -101,7 +97,7 @@
     $underline: '#{$underline}-';
   }
 
-  @include messages.message($underline, 'comments');
+  @include config.message($underline, 'comments');
 }
 
 // Module Stop
@@ -110,7 +106,7 @@
 /// @access private
 /// @group private-test
 @mixin module-stop {
-  @include stats.update-stats-count('modules');
-  @include context.context-pop;
-  @include messages.message('', 'comments');
+  @include data.update-stats-count('modules');
+  @include data.context-pop;
+  @include config.message('', 'comments');
 }
