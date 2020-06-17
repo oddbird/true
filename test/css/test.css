@@ -607,6 +607,145 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: test-module [mixin] */
+/* ----------------------------- */
+/* Test: Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
+/*  */
+/* # Module: test-module [mixin] :: Nested Unquoted Module Name */
+/* ------------------------------------------------------------ */
+/* Test: Don’t barf on unquoted names */
+/*   ✔ [assert-true] Please don’t barf on me */
+/*  */
+/*  */
+/*  */
+/* # Module: Describe/it syntax */
+/* ---------------------------- */
+/* Test: Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
+/*  */
+/*  */
+/* # Module: Tests */
+/* --------------- */
+/* Test: test [mixin] */
+/*   ✔ [assert-equal] Changes the current test context */
+/*  */
+/* Test: it [mixin] */
+/*   ✔ [assert-equal] Changes the current test context */
+/*  */
+/*  */
+/* # Module: report [mixin] */
+/* ------------------------ */
+/* Test: Output Message */
+/*   ASSERT   */
+/*   OUTPUT   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 5 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 5 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Fail on Error */
+/*   ASSERT   */
+/*   OUTPUT   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 5 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+  /* ERROR [report] 1 test failed */
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 5 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+  /* ERROR [report] 1 test failed */
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Bad results */
+/*   ASSERT   */
+/*   OUTPUT   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 4 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /* # SUMMARY ---------- */
+  /* 6 Tests: */
+  /* - 4 Passed */
+  /* - 1 Failed */
+  /* Stats: */
+  /* - 4 Modules */
+  /* - 6 Tests */
+  /* - 25 Assertions */
+  /* -------------------- */
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # Module: report-message [function] */
+/* ----------------------------------- */
+/* Test: Single Line */
+/*   ✔ [assert-equal] Single Line */
+/*  */
+/* Test: Linebreaks */
+/*   ✔ [assert-equal] Linebreaks */
+/*  */
+/*  */
 .not-a-test {
   break: please-no;
 }
