@@ -5,9 +5,9 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 True is a unit-testing tool
-for [Sass](http://sass-lang.com) code –
+for [Sass](https://sass-lang.com/) code –
 initially developed for the
-[Susy layout toolkit](http://susy.oddbird.net).
+[Susy layout toolkit](https://www.oddbird.net/susy/).
 All of the test code is written in pure Sass,
 and can be compiled by the Dart Sass compiler –
 but we also provide integration with
@@ -130,7 +130,7 @@ after the tests have completed:
 @include report;
 ```
 
-See the [full documentation online](http://oddbird.net/true)
+See the [full documentation online](https://www.oddbird.net/true/)
 or in the `.sassdoc` directory,
 for more details.
 See [CHANGELOG.md](https://github.com/oddbird/true/blob/master/CHANGELOG.md)

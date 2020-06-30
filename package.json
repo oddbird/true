@@ -3,7 +3,7 @@
   "title": "True",
   "version": "5.0.0",
   "description": "Unit testing for Sass.",
-  "homepage": "http://oddbird.net/true",
+  "homepage": "https://www.oddbird.net/true/",
   "main": "lib/main.js",
   "repository": {
     "type": "git",

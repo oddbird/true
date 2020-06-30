@@ -6,7 +6,7 @@ but code is even better!
 
 In all cases,
 we ask you to follow the
-[Sass community guidelines](http://sass-lang.com/community-guidelines).
+[Sass community guidelines](https://sass-lang.com/community-guidelines).
 
 ## Pull Requests
 
