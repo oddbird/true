@@ -1,5 +1,5 @@
 @use '../../sass/config' as init with (
-  $error-output-override: true,
+  $catch-errors: true,
   $terminal-output: false,
 );
 @use '../../sass/true';

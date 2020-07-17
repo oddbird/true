@@ -1,11 +1,15 @@
 // True Settings
 // =============
 
+/// # Optional Configuration
+/// @group api-settings
+
 // Terminal Output
 // ---------------
-/// While Mocha always reports to the terminal,
+/// While JS test-runners will always report to the terminal,
 /// this setting allows you to get terminal reports
-/// even when compiling True manually with Sass.
-/// @group api-report
+/// even when compiling True manually in Sass.
+/// @since v6.0 – Renamed from `$true-terminal-output`
+/// @group api-settings
 /// @type bool
 $terminal-output: true !default;

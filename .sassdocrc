@@ -2,6 +2,9 @@ theme: herman
 dest: docs/
 src: sass/
 
+display:
+  access: public
+
 herman:
   sass:
     implementation: sass
@@ -16,14 +19,11 @@ herman:
       path: LICENSE.txt
 
 groups:
-  Public API:
+  Structure:
+    api-settings: 'Optional Configuration'
     api-test: 'Describing Tests'
-    api-assert-values: 'Comparing Values'
-    api-assert-output: 'Comparing Output'
     api-report: 'Reporting Results'
-  Internal Helpers [Private]:
-    private-utils: 'Utilities'
-    private-context: 'Data Management'
-    private-test: 'Tests'
-    assert-utils: 'Assertions'
-    private-message: 'Reporting'
+  Assertions:
+    api-assert-values: 'Testing Return Values'
+    api-assert-output: 'Testing CSS Output'
+    api-errors: 'Catching & Testing Errors'

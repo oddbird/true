@@ -87,22 +87,17 @@
     <div class="nav-subsection">
       <ul>
             <li class="nav-subsection">
-              <h3 class="nav-title">Public API</h3>
+              <h3 class="nav-title">Structure</h3>
               <ul>
                 
   
     <li class="nav-item">
+      <a href="api-settings.html" data-nav="is-not-active">Optional Configuration</a>
+    </li>
+  
+  
+    <li class="nav-item">
       <a href="api-test.html" data-nav="is-not-active">Describing Tests</a>
-    </li>
-  
-  
-    <li class="nav-item">
-      <a href="api-assert-values.html" data-nav="is-not-active">Comparing Values</a>
-    </li>
-  
-  
-    <li class="nav-item">
-      <a href="api-assert-output.html" data-nav="is-not-active">Comparing Output</a>
     </li>
   
   
@@ -112,32 +107,22 @@
   </ul>
             </li>
             <li class="nav-subsection">
-              <h3 class="nav-title">Internal Helpers [Private]</h3>
+              <h3 class="nav-title">Assertions</h3>
               <ul>
                 
   
     <li class="nav-item">
-      <a href="private-utils.html" data-nav="is-not-active">Utilities</a>
+      <a href="api-assert-values.html" data-nav="is-not-active">Testing Return<span class="widont">&nbsp;</span>Values</a>
     </li>
   
   
     <li class="nav-item">
-      <a href="private-context.html" data-nav="is-not-active">Data Management</a>
+      <a href="api-assert-output.html" data-nav="is-not-active">Testing CSS<span class="widont">&nbsp;</span>Output</a>
     </li>
   
   
     <li class="nav-item">
-      <a href="private-test.html" data-nav="is-not-active">Tests</a>
-    </li>
-  
-  
-    <li class="nav-item">
-      <a href="assert-utils.html" data-nav="is-not-active">Assertions</a>
-    </li>
-  
-  
-    <li class="nav-item">
-      <a href="private-message.html" data-nav="is-not-active">Reporting</a>
+      <a href="api-errors.html" data-nav="is-not-active">Catching &amp; Testing<span class="widont">&nbsp;</span>Errors</a>
     </li>
   </ul>
             </li></ul>
@@ -195,70 +180,17 @@
 
 
 
-<section class="item" id="variable--terminal-output">
+<section class="item" >
   
     
   
   
-
-  
-  
-  
-  
-
-  <div data-item-section="header">
-    <h2 class="item-title">
-      
-        <span class="item-type"></span>
-      
-
-      
-        <a href="#variable--terminal-output" class="item-name">$terminal-output</a>
-      
-
-      
-        <span class="value-type">(bool)</span>
-      
-
-      
-    </h2>
-
-    
-  
-
-
-    
-    
-    
-  
-    <div class="code-block">
-      
-        <div class="code-header">
-          <span class="code-language">
-            scss
-          </span>
-
-          
-        </div>
-      
-
-      
-      
-      <pre class="hljs-pre"><code class="lang-scss">$terminal-output: true !default;</code></pre>
-    </div>
-  
-
-    
-  
-  
   
   
 
   
-    <div class="text-block">
-      <p>While Mocha always reports to the terminal,
-this setting allows you to get terminal reports
-even when compiling True manually with<span class="widont">&nbsp;</span>Sass.</p>
+    <div data-item-section="prose" class="text-block">
+      <h1 id="reporting-results">Reporting Results</h1>
 
       
   
@@ -271,8 +203,6 @@ even when compiling True manually with<span class="widont">&nbsp;</span>Sass.</p
 
     </div>
   
-
-  </div>
 
   
 
@@ -654,8 +584,7 @@ and (optionally) the command<span class="widont">&nbsp;</span>line</p>
     <h4 class="param-title">
       <span class="item-type">@function</span>
       
-        <a href="
-  private-message.html#function--report-message" class="item-name">report-message()</a>
+        <span class="item-name">report-message()</span>
       
       
       
@@ -696,11 +625,11 @@ and (optionally) the command<span class="widont">&nbsp;</span>line</p>
       <span class="item-type">@function</span>
       
         <a href="
-  private-utils.html#function--error" class="item-name">error()</a>
+  api-errors.html#function--error" class="item-name">error()</a>
       
       
       
-      <span class="item-note">[private]</span>
+      
     </h4>
 
     
@@ -736,8 +665,7 @@ and (optionally) the command<span class="widont">&nbsp;</span>line</p>
     <h4 class="param-title">
       
       
-        <a href="
-  private-context.html#variable--results" class="item-name">$results</a>
+        <span class="item-name">$results</span>
       
       
       <span class="value-type">(Map)</span>
@@ -789,8 +717,7 @@ and (optionally) the command<span class="widont">&nbsp;</span>line</p>
     <h4 class="param-title">
       
       
-        <a href="
-  private-utils.html#variable--output" class="item-name">$output</a>
+        <span class="item-name">$output</span>
       
       
       <span class="value-type">(bool)</span>
@@ -836,8 +763,7 @@ and (optionally) the command<span class="widont">&nbsp;</span>line</p>
     <h4 class="param-title">
       
       
-        <a href="
-  private-context.html#variable--stats" class="item-name">$stats</a>
+        <span class="item-name">$stats</span>
       
       
       <span class="value-type">(Map&lt;String: Number&gt;)</span>

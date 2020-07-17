@@ -36,13 +36,15 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  /* ERROR [error test] This is a test error message */
+  /* ERROR [error test]: */
+  /*   This is a test error message */
 }
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  /* ERROR [error test] This is a test error message */
+  /* ERROR [error test]: */
+  /*   This is a test error message */
 }
 
 /*   END_EXPECTED   */
@@ -732,7 +734,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */
+  /* ERROR [report]: */
+  /*   1 test failed */
 }
 
 /*   END_OUTPUT   */
@@ -747,7 +750,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */
+  /* ERROR [report]: */
+  /*   1 test failed */
 }
 
 /*   END_EXPECTED   */
@@ -766,7 +770,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+  /* ERROR [report]: */
+  /*   The results don’t add up. Are all your tests properly structured? */
 }
 
 /*   END_OUTPUT   */
@@ -781,7 +786,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+  /* ERROR [report]: */
+  /*   The results don’t add up. Are all your tests properly structured? */
 }
 
 /*   END_EXPECTED   */
