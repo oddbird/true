@@ -1,0 +1,52 @@
+@use 'utils';
+
+// Test
+// ----
+/// The `test()` wrapper-mixin groups related assertions,
+/// to describe the behavior they are testing.
+/// Tests should always contain one or more assertions.
+/// @group api-test
+/// @param {string} $name -
+///   Describe what is being tested
+/// @content Include any assertions that are part of this test
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.test('Returns lists zipped together') {
+///     @include true.assert-equal(
+///       list.zip(a b c, 1 2 3),
+///       (a 1, b 2, c 3));
+///     @include true.assert-equal(
+///       list.zip(1px 1px 3px, solid dashed solid, red green blue),
+///       (1px solid red, 1px dashed green, 3px solid blue));
+///   }
+@mixin test($name) {
+  @include utils.test-start($name);
+  @content;
+  @include utils.test-stop;
+}
+
+// Test
+// ----
+/// Describe the behavior being tested.
+/// This works just like `test()`,
+/// providing a wrapper for one or more assertions.
+/// @alias test
+/// @group api-test
+/// @param {string} $name -
+///   Describe the behavior being tested
+/// @content Include any assertions that are part of testing this behavior
+/// @example scss -
+///   @use 'sass:list';
+///   @include true.it('Returns lists zipped together') {
+///     @include true.assert-equal(
+///       list.zip(a b c, 1 2 3),
+///       (a 1, b 2, c 3));
+///     @include true.assert-equal(
+///       list.zip(1px 1px 3px, solid dashed solid, red green blue),
+///       (1px solid red, 1px dashed green, 3px solid blue));
+///   }
+@mixin it($name) {
+  @include test($name) {
+    @content;
+  }
+}

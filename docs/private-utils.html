@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-herman="root">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@
 
   
 </head>
-<body>
+<body data-herman="body">
   <svg xmlns="http://www.w3.org/2000/svg" hidden>
   <symbol id="icon-logo" viewBox="0 0 16 16">
     <path d="M.2 8L0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8zM13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7L13 10z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6v-.7z"/>
@@ -107,7 +107,7 @@
   
   
     <li class="nav-item">
-      <a href="api-xreport.html" data-nav="is-not-active">Reporting Results</a>
+      <a href="api-report.html" data-nav="is-not-active">Reporting Results</a>
     </li>
   </ul>
             </li>
@@ -132,7 +132,7 @@
   
   
     <li class="nav-item">
-      <a href="private-assert.html" data-nav="is-not-active">Assertions</a>
+      <a href="assert-utils.html" data-nav="is-not-active">Assertions</a>
     </li>
   
   
@@ -195,7 +195,7 @@
 
 
 
-<section class="item" id="variable--_true-error-output-override">
+<section class="item" id="variable--output">
   
     
   
@@ -213,7 +213,7 @@
       
 
       
-        <a href="#variable--_true-error-output-override" class="item-name">$_true-error-output-override</a>
+        <a href="#variable--output" class="item-name">$output</a>
       
 
       
@@ -246,7 +246,361 @@
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">$_true-error-output-override: false !default;</code></pre>
+      <pre class="hljs-pre"><code class="lang-scss">$output: (
+  &#39;assert&#39;: &#39;ASSERT&#39;,
+  &#39;output&#39;: &#39;OUTPUT&#39;,
+  &#39;expect&#39;: &#39;EXPECTED&#39;,
+  &#39;contains&#39;: &#39;CONTAINED&#39;,
+);</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+    <div class="text-block">
+      <p>Internal mapping of valid contexts,
+with their expected comment-block<span class="widont">&nbsp;</span>output.</p>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+    
+  <div data-item-section="used-by">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Used By</span>
+        
+      </h3>
+    
+
+    
+      
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  api-assert-output.html#mixin--assert" class="item-name">assert()</a>
+      
+      
+      
+      
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  api-report.html#mixin--report" class="item-name">report()</a>
+      
+      
+      
+      
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  assert-utils.html#mixin--content" class="item-name">content()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  assert-utils.html#mixin--strike" class="item-name">strike()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@function</span>
+      
+        <a href="
+  private-context.html#function--validate-output-context" class="item-name">validate-output-context()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  private-message.html#mixin--message" class="item-name">message()</a>
+      
+      
+      
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+      
+        
+
+        
+      
+        
+
+        
+      
+    
+  </div>
+
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="variable--error-output-override">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#variable--error-output-override" class="item-name">$error-output-override</a>
+      
+
+      
+        <span class="value-type">(bool)</span>
+      
+
+      
+        <span class="item-note">[private]</span>
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">$error-output-override: false !default;</code></pre>
     </div>
   
 
@@ -325,7 +679,7 @@
 
 
 
-<section class="item" id="function--_true-error">
+<section class="item" id="function--error">
   
     
   
@@ -343,7 +697,7 @@
       
 
       
-        <a href="#function--_true-error" class="item-name">_true-error()</a>
+        <a href="#function--error" class="item-name">error()</a>
       
 
       
@@ -468,7 +822,7 @@
       
         <span class="item-name">$override:</span>
       
-      <span class="item-value">$_true-error-output-override</span>
+      <span class="item-value">$error-output-override</span>
       <span class="value-type">(bool)</span>
       
     </h4>
@@ -588,10 +942,45 @@ when the <code>$override</code> is <code>true</code></p>
   
   <div class="param-list">
     <h4 class="param-title">
+      <span class="item-type">@mixin</span>
+      
+        <a href="
+  api-report.html#mixin--report" class="item-name">report()</a>
+      
+      
+      
+      
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+        
+
+        
+      
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
       <span class="item-type">@function</span>
       
         <a href="
-  private-context.html#function--_true-validate-output-context" class="item-name">_true-validate-output-context()</a>
+  private-context.html#function--validate-output-context" class="item-name">validate-output-context()</a>
       
       
       
@@ -638,7 +1027,7 @@ when the <code>$override</code> is <code>true</code></p>
       <span class="item-type">@function</span>
       
         <a href="
-  private-utils.html#function--_true-join-multiple" class="item-name">_true-join-multiple()</a>
+  private-utils.html#function--join-multiple" class="item-name">join-multiple()</a>
       
       
       
@@ -683,7 +1072,7 @@ when the <code>$override</code> is <code>true</code></p>
 
 
 
-<section class="item" id="mixin--_true-error">
+<section class="item" id="mixin--error">
   
     
   
@@ -701,7 +1090,7 @@ when the <code>$override</code> is <code>true</code></p>
       
 
       
-        <a href="#mixin--_true-error" class="item-name">_true-error()</a>
+        <a href="#mixin--error" class="item-name">error()</a>
       
 
       
@@ -826,7 +1215,7 @@ when the <code>$override</code> is <code>true</code></p>
       
         <span class="item-name">$override:</span>
       
-      <span class="item-value">$_true-error-output-override</span>
+      <span class="item-value">$error-output-override</span>
       <span class="value-type">(bool)</span>
       
     </h4>
@@ -916,114 +1305,10 @@ when the <code>$override</code> is <code>true</code></p>
   
   
   
-    <div class="requires-wrapper">
-      
     
-  <div data-item-section="requires">
     
-      <h3 class="item-subtitle">
-        <span class="item-subtitle-main">Requires</span>
-        
-      </h3>
-    
-
-    
-      
-      
-        
-        
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-  
   
 
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@mixin</span>
-      
-        <a href="
-  private-message.html#mixin--_true-message" class="item-name">_true-message()</a>
-      
-      
-      
-      <span class="item-note">[private]</span>
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-    
-  </div>
-
-  
-      
-  
-    
-  <div data-item-section="used-by">
-    
-      <h3 class="item-subtitle">
-        <span class="item-subtitle-main">Used By</span>
-        
-      </h3>
-    
-
-    
-      
-      
-        
-
-        
-          
-          
-  
-  
-  
-  
-  
-  
-
-  
-  <div class="param-list">
-    <h4 class="param-title">
-      <span class="item-type">@mixin</span>
-      
-        <a href="
-  api-xreport.html#mixin--report" class="item-name">report()</a>
-      
-      
-      
-      
-    </h4>
-
-    
-  </div>
-
-
-        
-      
-        
-
-        
-      
-    
-  </div>
-
-  
-
-    </div>
   
 
   
@@ -1051,7 +1336,7 @@ when the <code>$override</code> is <code>true</code></p>
 
 
 
-<section class="item" id="function--_true-map-increment">
+<section class="item" id="function--map-increment">
   
     
   
@@ -1069,7 +1354,7 @@ when the <code>$override</code> is <code>true</code></p>
       
 
       
-        <a href="#function--_true-map-increment" class="item-name">_true-map-increment()</a>
+        <a href="#function--map-increment" class="item-name">map-increment()</a>
       
 
       
@@ -1202,6 +1487,12 @@ when the <code>$override</code> is <code>true</code></p>
     </h4>
 
     
+      
+      <div class="param-details text-block">
+        <p>Map of values after<span class="widont">&nbsp;</span>incrementing</p>
+
+      </div>
+    
   </div>
 
   
@@ -1259,7 +1550,7 @@ when the <code>$override</code> is <code>true</code></p>
       <span class="item-type">@mixin</span>
       
         <a href="
-  private-context.html#mixin--_true-update" class="item-name">_true-update()</a>
+  private-context.html#mixin--update" class="item-name">update()</a>
       
       
       
@@ -1290,7 +1581,7 @@ when the <code>$override</code> is <code>true</code></p>
       <span class="item-type">@mixin</span>
       
         <a href="
-  private-context.html#mixin--_true-update-stats-count" class="item-name">_true-update-stats-count()</a>
+  private-context.html#mixin--update-stats-count" class="item-name">update-stats-count()</a>
       
       
       
@@ -1335,7 +1626,7 @@ when the <code>$override</code> is <code>true</code></p>
 
 
 
-<section class="item" id="function--_true-join-multiple">
+<section class="item" id="function--join-multiple">
   
     
   
@@ -1353,7 +1644,7 @@ when the <code>$override</code> is <code>true</code></p>
       
 
       
-        <a href="#function--_true-join-multiple" class="item-name">_true-join-multiple()</a>
+        <a href="#function--join-multiple" class="item-name">join-multiple()</a>
       
 
       
@@ -1528,7 +1819,7 @@ the desired list-separator (‘space’ or<span class="widont">&nbsp;</span>‘c
       <span class="item-type">@function</span>
       
         <a href="
-  private-utils.html#function--_true-error" class="item-name">_true-error()</a>
+  private-utils.html#function--error" class="item-name">error()</a>
       
       
       
@@ -1577,7 +1868,7 @@ the desired list-separator (‘space’ or<span class="widont">&nbsp;</span>‘c
       <span class="item-type">@function</span>
       
         <a href="
-  private-message.html#function--_true-report-message" class="item-name">_true-report-message()</a>
+  private-message.html#function--report-message" class="item-name">report-message()</a>
       
       
       

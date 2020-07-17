@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '../config';
+@use '../data';
+
+// Report Message
+// --------------
+/// Report results summary to CSS
+/// and (optionally) the command line
+/// @access private
+/// @group private-message
+/// @param {bool} $linebreak [false] -
+///   Return single-line config for results/stats,
+///   or optionally break into multi-line lists.
+/// @param {map} $results [$results] -
+///   A map of run, pass, fail, and output-to-css results
+/// @param {map} $stats [$stats] -
+///   A map of module, test, and assertion-counts in your project
+@function report-message(
+  $linebreak: false,
+  $results: data.$results,
+  $stats: data.$stats
+) {
+  @if $linebreak {
+    @return data.join-multiple(
+      '# SUMMARY ----------',
+      data.results-message('linebreak', $results),
+      data.stats-message('linebreak', $stats),
+      '--------------------'
+    );
+  }
+
+  $report: (
+    data.results-message(null, $results),
+    data.stats-message(null, $stats)
+  );
+
+  @return $report;
+}

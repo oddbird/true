@@ -1,0 +1,142 @@
+@use '../../../index' as *;
+@use '../../../sass/data/results';
+@use 'sass:map';
+
+@include describe('Get Result') {
+  @include it('Equal Pass') {
+    @include assert-equal(results.get-result(1em, 1em), 'pass');
+  }
+
+  @include it('Equal Fail') {
+    @include assert-equal(results.get-result(1em, true), 'fail');
+  }
+
+  @include it('Unequal pass') {
+    @include assert-equal(results.get-result(true, 'hello', 'unequal'), 'pass');
+  }
+
+  @include it('Unequal fail') {
+    @include assert-equal(
+      results.get-result('hello', 'hello', 'unequal'),
+      'fail'
+    );
+  }
+}
+
+@include describe('Update Results') {
+  $before: results.$results;
+  @include results.update('pass');
+  $actual: results.$results;
+  results.$results: $before;
+
+  @include it('Add one run') {
+    @include assert-equal(map.get($actual, 'run'), map.get($before, 'run') + 1);
+  }
+
+  @include it('Add one pass') {
+    @include assert-equal(
+      map.get($actual, 'pass'),
+      map.get($before, 'pass') + 1
+    );
+  }
+
+  @include it('Fail counts are left as-is') {
+    @include assert-equal(map.get($actual, 'fail'), map.get($before, 'fail'));
+  }
+
+  @include it('Output counts are left as-is') {
+    @include assert-equal(
+      map.get($actual, 'output-to-css'),
+      map.get($before, 'output-to-css')
+    );
+  }
+}
+
+@include describe('Update Test') {
+  $before: results.$test-result;
+  @include results.update-test('pass');
+  $pass: results.$test-result;
+  @include results.update-test('output-to-css');
+  $css: results.$test-result;
+  @include results.update-test('pass');
+  $css2: results.$test-result;
+  @include results.update-test('fail');
+  $fail: results.$test-result;
+  @include results.update-test('pass');
+  @include results.update-test('output-to-css');
+  $fail2: results.$test-result;
+  results.$test-result: $before;
+
+  @include it('Updates global test-result') {
+    @include assert-equal($before, null, 'confirm the default state');
+    @include assert-equal($pass, 'pass', 'confirm updated test-result');
+  }
+
+  @include it('Output-to-css overrides pass') {
+    @include assert-equal($css, 'output-to-css');
+  }
+
+  @include it('Pass does not override output-to-css') {
+    @include assert-equal($css, $css2);
+  }
+
+  @include it('Fail overrides everything') {
+    @include assert-equal($fail, 'fail');
+  }
+
+  @include it('Nothing overrides fail') {
+    @include assert-equal($fail, $fail2);
+  }
+}
+
+@include describe('Results Message') {
+  $test-map: (
+    'run': 10,
+    'pass': 6,
+    'fail': 1,
+    'output-to-css': 3,
+  );
+
+  @include it('Single Line') {
+    @include assert-equal(
+      results.results-message($results: $test-map),
+      '10 Tests, 6 Passed, 1 Failed, 3 Output to CSS'
+    );
+  }
+
+  @include it('Linebreaks') {
+    $message: ('10 Tests:', '- 6 Passed', '- 1 Failed', '- 3 Output to CSS');
+    @include assert-equal(
+      results.results-message('linebreaks', $test-map),
+      $message
+    );
+  }
+
+  $test-map: map.merge(
+    $test-map,
+    (
+      'output-to-css': 0,
+    )
+  );
+
+  @include it('No output tests') {
+    @include assert-equal(
+      results.results-message($results: $test-map),
+      '10 Tests, 6 Passed, 1 Failed'
+    );
+  }
+
+  $test-map: map.merge(
+    $test-map,
+    (
+      'run': 1,
+    )
+  );
+
+  @include it('Single test') {
+    @include assert-equal(
+      results.results-message($results: $test-map),
+      '1 Test, 6 Passed, 1 Failed'
+    );
+  }
+}

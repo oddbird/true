@@ -1,0 +1,106 @@
+@use '../../../index' as *;
+@use 'sass:color';
+@use 'sass:string';
+
+// Assert True
+@include describe('Assert True') {
+  @include it('Non-false properties return true') {
+    @include assert-true('this string');
+  }
+
+  @include it('Supports is-truthy alias') {
+    @include is-truthy(5);
+  }
+}
+
+// Assert False
+@include describe('Assert False') {
+  @include it('Falsiness') {
+    @include assert-false(not 'anything', 'Negated properties return false.');
+  }
+
+  @include it('null') {
+    @include assert-false(null, 'Null properties return false.');
+  }
+
+  @include it('Empty string') {
+    @include assert-false('', 'Empty string return false.');
+  }
+
+  @include it('empty list') {
+    $empty: ();
+
+    @include assert-false($empty, 'Empty lists return false.');
+  }
+
+  @include it('Supports is-falsy alias') {
+    @include is-falsy(());
+  }
+}
+
+// Assert Equal
+@include describe('Assert Equal') {
+  @include it('Equality') {
+    @include assert-equal(2 - 1, 1, '2 - 1 should equal 1.');
+  }
+
+  @include it('Empty description') {
+    @include assert-equal(1, 1);
+  }
+
+  @include it('Adding floats') {
+    @include assert-equal(0.1 + 0.2, 0.3, $inspect: true);
+  }
+
+  @include it('Rounded numbers with $inspect') {
+    @include assert-equal(1/3, 0.3333333333, $inspect: true);
+  }
+
+  @include it('Rounded colors with $inspect') {
+    $origin: #246;
+    $expected: #356a9f;
+
+    @include assert-equal(
+      color.adjust($origin, $lightness: 15%),
+      $expected,
+      $inspect: true
+    );
+  }
+
+  @include it('Mismatched types with $inspect') {
+    @include assert-unequal(
+      string.unquote('1rem'),
+      1rem,
+      'normally unequal'
+    );
+    @include assert-equal(
+      string.unquote('1rem'),
+      1rem,
+      $inspect: true
+    );
+  }
+
+  @include it('Supports is-equal alias') {
+    @include is-equal(5, 10 / 2);
+  }
+}
+
+
+// Assert UnEqual
+@include describe('Assert UnEqual') {
+  @include it('Inequality') {
+    @include assert-unequal(3 - 1, 3, '3 - 1 is not equal to 3.');
+  }
+
+  @include it('Mismatched types') {
+    @include assert-unequal(string.unquote('1rem'), 1rem);
+  }
+
+  @include it('Mismatched units no longer needs $inspect') {
+    @include assert-unequal(1, 1rem);
+  }
+
+  @include it('Supports not-equal alias') {
+    @include not-equal(5, 10 * 2);
+  }
+}

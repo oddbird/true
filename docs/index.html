@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-herman="root">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@
 
   
 </head>
-<body>
+<body data-herman="body">
   <svg xmlns="http://www.w3.org/2000/svg" hidden>
   <symbol id="icon-logo" viewBox="0 0 16 16">
     <path d="M.2 8L0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8zM13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7L13 10z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6v-.7z"/>
@@ -107,7 +107,7 @@
   
   
     <li class="nav-item">
-      <a href="api-xreport.html" data-nav="is-not-active">Reporting Results</a>
+      <a href="api-report.html" data-nav="is-not-active">Reporting Results</a>
     </li>
   </ul>
             </li>
@@ -132,7 +132,7 @@
   
   
     <li class="nav-item">
-      <a href="private-assert.html" data-nav="is-not-active">Assertions</a>
+      <a href="assert-utils.html" data-nav="is-not-active">Assertions</a>
     </li>
   
   
@@ -181,7 +181,7 @@
     <ul class="project-links">
       
         <li class="project-link-item">
-          <a href="http://oddbird.net/true" class="project-link">View Project</a>
+          <a href="https://www.oddbird.net/true/" class="project-link">View Project</a>
         </li>
       
       
@@ -199,11 +199,11 @@
 <a href="https://coveralls.io/github/oddbird/true?branch=master"><img src="https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License"></a></p>
 <p>True is a unit-testing tool
-for <a href="http://sass-lang.com">Sass</a> code –
+for <a href="https://sass-lang.com/">Sass</a> code –
 initially developed for the
-<a href="http://susy.oddbird.net">Susy layout toolkit</a>.
+<a href="https://www.oddbird.net/susy/">Susy layout toolkit</a>.
 All of the test code is written in pure Sass,
-and can be compiled by any Sass compiler –
+and can be compiled by the Dart Sass compiler –
 but we also provide integration with
 JavaScript test runners
 (e.g. <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>),
@@ -229,15 +229,15 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 </code></pre>
 <p>Import in your test directory,
 like any other Sass<span class="widont">&nbsp;</span>file:</p>
-<pre><code class="lang-scss">@import 'true';
+<pre><code class="lang-scss">@use 'true' as *;
 </code></pre>
 <p>Depending on your setup,
 you may need to include the full path<span class="widont">&nbsp;</span>name:</p>
 <pre><code class="lang-scss">// This is only an example
-@import '../node_modules/sass-true/sass/true';
+@use '../node_modules/sass-true/sass/true' as *;
 </code></pre>
 <h2 id="one-setting">One Setting</h2>
-<p><code>$true-terminal-output</code> (boolean),
+<p><code>$terminal-output</code> (boolean),
 defaults to <code>true</code></p>
 <ul>
 <li><code>true</code> will show detailed information in the terminal
@@ -298,7 +298,7 @@ in CSS and/or the command line,
 after the tests have<span class="widont">&nbsp;</span>completed:</p>
 <pre><code class="lang-scss">@include report;
 </code></pre>
-<p>See the <a href="http://oddbird.net/true">full documentation online</a>
+<p>See the <a href="https://www.oddbird.net/true/">full documentation online</a>
 or in the <code>.sassdoc</code> directory,
 for more details.
 See <a href="https://github.com/oddbird/true/blob/master/CHANGELOG.md">CHANGELOG.md</a>
@@ -311,60 +311,42 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 </code></pre>
 </li>
 <li>
-<p>[Optional] Install the Sass implementation matching your project
-(if not already<span class="widont">&nbsp;</span>installed).</p>
-<p>Either <code>node-sass</code>:</p>
-<pre><code class="lang-bash">npm install --save-dev node-sass
-</code></pre>
-<p>or <code>sass</code> (also <code>dart-sass</code>):</p>
+<p>[Optional] Install <code>sass</code> (Dart Sass), if not already<span class="widont">&nbsp;</span>installed.</p>
 <pre><code class="lang-bash">npm install --save-dev sass
 </code></pre>
-<blockquote>
-<p><em>Note</em> <code>sass</code>/<code>dart-sass</code> has <a href="https://github.com/sass/dart-sass/#behavioral-differences-from-ruby-sass">a few differences from <code>node-sass</code></a>.</p>
-</blockquote>
 </li>
 <li>
 <p>Write some Sass tests in <code>test/test.scss</code> (see above).</p>
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/test_sass.js</code>:</p>
-<p><strong>For <code>node-sass</code></strong>:</p>
 <pre><code class="lang-js">var path = require('path');
 var sassTrue = require('sass-true');
 
 var sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass({ file: sassFile }, { describe, it });
 </code></pre>
-<p><strong>For <code>sass</code>/<code>dart-sass</code></strong>:</p>
-<pre><code class="lang-js">var path = require('path');
-var sassTrue = require('sass-true');
-
-var sassFile = path.join(__dirname, 'test.scss');
-sassTrue.runSass(
-  {
-    file: sassFile,
-  },
-  {
-    sass: require('sass'),
-    describe,
-    it,
-  }
-);
-</code></pre>
 </li>
 <li>
 <p>Run Mocha/Jest, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
 </li>
 </ol>
+<p><strong>Note:</strong> Jest defaults to running tests in a browser-like environment (jsdom).
+When using with True, set the
+<a href="https://jestjs.io/docs/en/configuration#testenvironment-string">testEnvironment</a>
+to<span class="widont">&nbsp;</span>“node”.</p>
+<p><strong>Note:</strong> Jest does not watch for changes in Sass files by default. To use
+<code>jest --watch</code> with True, add “scss” to your
+<a href="https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring">moduleFileExtensions</a><span class="widont">&nbsp;</span>setting.</p>
 <p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
 want to run<span class="widont">&nbsp;</span>separately.</p>
 <p>The first argument to <code>runSass</code> accepts the
-<a href="https://github.com/sass/node-sass/#options">same options</a> that node-sass’
+<a href="https://sass-lang.com/documentation/js-api#options">same options</a> that sass’
 <code>renderSync</code> function accepts. The only modification <code>runSass</code> makes is to add
-True’s sass path to the <code>includePaths</code> option, so <code>@import 'true';</code> works in
+True’s sass path to the <code>includePaths</code> option, so <code>@use 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
 <p>The second argument is an object with required <code>describe</code> and <code>it</code> options, and
-optional <code>contextLines</code> and <code>sass</code> options.</p>
+an optional <code>contextLines</code> option.</p>
 <p>Any JS test runner with equivalents to Mocha’s or Jest’s <code>describe</code> and <code>it</code>
 should be usable in the same way: just pass your test runner’s <code>describe</code> and
 <code>it</code> equivalents in the second argument to <code>runSass</code>.</p>
@@ -373,15 +355,11 @@ part of the error message. This context will likely be helpful in understanding
 the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric <code>contextLines</code> option: the maximum number of
 context lines to<span class="widont">&nbsp;</span>provide.</p>
-<p>You can also provide a <code>sass</code> option to provide a different Sass implementation
-(for example, using <code>sass</code>/<code>dart-sass</code> instead of <code>node-sass</code>). This option
-expects an object providing a <code>renderSync</code> method with the same signature as
-<code>node-sass</code>.</p>
 <h3 id="imports-without-webpack">Imports without Webpack</h3>
-<p>If you use Webpack’s tilde notation, like
-<code>@import '~accoutrement-init/sass/init'</code>, you’ll need to tell <code>runSass</code> how to
-handle that. That will require writing a custom importer and passing it into the
-configuration for <code>runSass</code>. Something like:</p>
+<p>If you use Webpack’s tilde notation, like <code>@use '~accoutrement/sass/tools'</code>,
+you’ll need to tell <code>runSass</code> how to handle that. That will require writing a
+custom importer and passing it into the configuration for <code>runSass</code>. Something
+like:</p>
 <pre><code class="lang-js">function importer(url, prev, done) {
   if (url[0] === '~') {
     url = path.resolve('node_modules', url.substr(1));

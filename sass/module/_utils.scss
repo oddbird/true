@@ -1,0 +1,70 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../config';
+@use '../data';
+
+// Module Start
+// ------------
+/// Module start helper
+/// @access private
+/// @group private-test
+/// @param {string} $name - module name
+@mixin module-start($name) {
+  @include data.context('module', $name);
+  $modules: module-title();
+  @include config.message($modules, 'comments');
+  @include config.message(underline($modules), 'comments');
+}
+
+// Module Title
+// ------------
+/// Generate a title based on current nested module context
+/// @access private
+/// @group private-test
+/// @return {string} - Concatenated names of current modules
+@function module-title() {
+  $module-list: data.context-all('module');
+  $modules: list.nth($module-list, 1);
+
+  $length: list.length($module-list);
+
+  @if $length > 1 {
+    @for $i from 2 through $length {
+      $modules: $modules + ' :: ' + list.nth($module-list, $i);
+    }
+  }
+
+  @return '# Module: #{$modules}';
+}
+
+// Underline
+// ---------
+/// Generate a title based on current nested module context
+/// @access private
+/// @group private-test
+/// @param {string} $string
+/// @return {string} - Underline dashes of the same length as string param
+@function underline(
+  $string
+) {
+  $underline: '';
+  $string: if(meta.type-of($string) == 'string', $string, '#{$string}');
+
+  @for $i from 1 through string.length($string) {
+    $underline: '#{$underline}-';
+  }
+
+  @return $underline;
+}
+
+// Module Stop
+// -----------
+/// Module stop helper
+/// @access private
+/// @group private-test
+@mixin module-stop {
+  @include data.update-stats-count('modules');
+  @include data.context-pop;
+  @include config.message('', 'comments');
+}

@@ -1,0 +1,60 @@
+@use 'messages';
+
+// True Error Output Override
+// --------------------------
+/// Override error-output for the purpose of testing failure-cases
+/// @access private
+/// @group private-utils
+/// @type bool
+$error-output-override: false !default;
+
+// True Error [function]
+// ---------------------
+/// Optionally override error-output for testing failure-cases
+/// @access private
+/// @group private-utils
+/// @param {string} $message -
+///   The error to report
+/// @param {string} $source -
+///   The source of the error
+/// @param {bool} $override [$error-output-override] -
+///   Optionally override error-output for testing failure-cases
+/// @return {string}
+///   A message detailing the source and error,
+///   when the `$override` is `true`
+/// @throw
+///   A message detailing the source and error,
+///   when the `$override` is `false`
+@function error($message, $source, $override: $error-output-override) {
+  @if $override {
+    @return 'ERROR [#{$source}] #{$message}';
+  }
+
+  @error '[#{$source}] #{$message}';
+}
+
+// True Error [mixin]
+// ---------------------
+/// Optionally override error-output for testing failure-cases
+/// @access private
+/// @group private-utils
+/// @param {string} $message -
+///   The error to report
+/// @param {string} $source -
+///   The source of the error
+/// @param {bool} $override [$error-output-override] -
+///   Optionally override error-output for testing failure-cases
+/// @output
+///   A message detailing the source and error,
+///   when the `$override` is `true`
+/// @throw
+///   A message detailing the source and error,
+///   when the `$override` is `false`
+@mixin error($message, $source, $override: $error-output-override) {
+  @if $override {
+    $error: 'ERROR [#{$source}] #{$message}';
+    @include messages.message($error, 'comments');
+  } @else {
+    @error '[#{$source}] #{$message}';
+  }
+}

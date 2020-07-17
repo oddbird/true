@@ -1,0 +1,147 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../config';
+@use 'context' as data;
+
+// Test Result Output
+// ==================
+
+// Pass Details
+// ------------
+/// Ouptut a success message for passing tests
+/// @access private
+/// @group assert-utils
+/// @output -
+///   a passing-test comment with the name of the passing assertion
+@mixin pass-details {
+  $assertion: data.context('assert');
+  @include config.message('✔ #{$assertion}', 'comments', 2);
+}
+
+// Fail Details
+// ------------
+/// Failure message, with appropriate details
+/// to help you debug various common problems.
+/// @access private
+/// @group assert-utils
+/// @param {*} $assert - The assertion value
+/// @param {*} $expected - The expected value
+/// @param {bool} $terminal [$terminal-output] -
+///   whether to use the terminal as an output stream
+@mixin fail-details($assert, $expected, $terminal: config.$terminal-output) {
+  $location: if($terminal, ('comments', 'debug'), 'comments');
+
+  // Title Messages
+  $assertion: data.context('assert');
+  $title: 'FAILED: #{$assertion}';
+  @include config.message('✖ #{$title}', $location, 2);
+
+  // Details Message
+  $out: variable-details($assert);
+  $exp: variable-details($expected);
+  $details: ('- Output: #{$out}', '- Expected: #{$exp}');
+  @include config.message($details, $location, 4);
+
+  // Edge Failure Notes
+  @if string.index($assertion, 'assert-equal') {
+    $notes: edgefail-notes($assert, $expected);
+    @if $notes {
+      @include config.message($notes, $location, 4);
+    }
+  }
+
+  // Context Message
+  $module: data.context('module');
+  $test: data.context('test');
+  $context: ('- Module: #{$module}', '- Test: #{$test}');
+  @include config.message($context, $location, 4);
+
+  // Terminal Warning
+  @if $terminal {
+    @include config.message($assertion, 'warn');
+  }
+}
+
+// Variable Details
+// ----------------
+/// Provide the details (type, list-separator, quotation)
+/// for a given variable -
+/// used to provide context in failure reporting
+/// @access private
+/// @group assert-utils
+/// @param {*} $var -
+///   Pass in asserted and expected values individually
+///   to retrieve comparable details for both
+@function variable-details($var) {
+  $inspect: meta.inspect($var);
+  $type: meta.type-of($var);
+
+  @return '[#{$type}] #{$inspect}';
+}
+
+// EdgeFail Notes
+// --------------
+/// There are some common test failures that can be confusing,
+/// where results look identical in the output,
+/// but represent different values internally.
+/// This function looks for those edge-case failures
+/// and adds a clarifying note in the results.
+/// @access private
+/// @group assert-utils
+/// @param {*} $one - One of the values being compared
+/// @param {*} $two - The other calue being compared
+/// @return {null | string} -
+///   A helpful note related to your edge-case, when appropriate
+@function edgefail-notes($one, $two) {
+  $one-type: meta.type-of($one);
+  $two-type: meta.type-of($two);
+
+  $note: null;
+  $pre: '- Details: ';
+  $inspect: '(set `$inspect: true` to compare output values)';
+
+  // List Separators
+  @if ($one-type == 'list') and ($two-type == 'list') {
+    @if (list.join((), $one, comma) == list.join((), $two, comma)) {
+      $message: 'list-separators do not match';
+      $note: $pre + $message;
+    }
+  }
+
+  // String Quotes
+  @if ($one-type == 'string') and ($two-type == 'string') {
+    @if (string.unquote($one) == string.unquote($two)) {
+      $message: 'string quotations do not match';
+      $note: $pre + $message;
+    }
+  }
+
+  $one: if(($one-type == 'string'), string.unquote($one), $one);
+  $two: if(($two-type == 'string'), string.unquote($two), $two);
+
+  @if (meta.inspect($one) == meta.inspect($two)) {
+    // Type
+    @if ($one-type != $two-type) {
+      $message: 'variable types do not match';
+      $note: $pre + $message + ' ' + $inspect;
+    }
+
+    // Rounding
+    $number: ($one-type == 'number') and ($two-type == 'number');
+    $color: ($one-type == 'color') and ($two-type == 'color');
+
+    @if ($number or $color) {
+      $type: if($number, 'numbers', 'colors');
+      $message: '#{$type} may need to be rounded before comparison';
+      $note: $pre + $message + ' ' + $inspect;
+    }
+
+    // Catch-All (I think this may not be currently possible)
+    @if (not $note) {
+      $note: $pre + $inspect;
+    }
+  }
+
+  @return $note;
+}

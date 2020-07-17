@@ -1,0 +1,154 @@
+@use '../../../index' as *;
+@use '../../../sass/config/terms';
+@use '../../../sass/data/context';
+@use 'sass:list';
+@use 'sass:map';
+
+// Adding and removing context
+@include describe('Context [mixin] & Context-Pop') {
+  @include it('Adds scope and name to context') {
+    @each $entry-scope, $entry-name in context.$context {
+      @include assert-unequal(
+        $entry-scope,
+        'fake',
+        'Confirm that there is currently no "fake" scope'
+      );
+    }
+
+    @include context.context('fake', 'this scope is not real');
+
+    @include assert-equal(
+      context.context('fake'),
+      'this scope is not real',
+      'Sets the value of scope "fake" to "this scope is not real"'
+    );
+
+    @include context.context-pop;
+
+    @each $entry-scope, $entry-name in context.$context {
+      @include assert-unequal(
+        $entry-scope,
+        'fake',
+        'Confirm that "fake" scope has been removed'
+      );
+    }
+  }
+}
+
+@include describe('Output Context') {
+  $empty-list: ();
+  $before: context.$output-context;
+  @include context.output-context('assert');
+  $assert: context.$output-context;
+  @include context.output-context('expect');
+  $expect: context.$output-context;
+  @include context.output-context('output');
+  $output: context.$output-context;
+  @include context.output-context(null);
+  $reset: context.$output-context;
+
+  @include it('Appends new context') {
+    @include assert-equal($before, $empty-list, 'Check initial value');
+    @include assert-equal($assert, list.join((), 'assert'));
+    @include assert-equal($expect, ('assert' 'expect'));
+    @include assert-equal($output, ('assert' 'expect' 'output'));
+  }
+
+  @include it('Resets context') {
+    @include assert-equal($reset, $before);
+  }
+}
+
+// valid output context
+@include describe('Validate Output Context') {
+  $valid: map.keys(terms.$output);
+
+  @include it('unknown context name') {
+    @include assert-equal(
+      context.validate-output-context('wtf'),
+      'ERROR [output-context] #{'wtf'} is not a valid context for output tests: #{$valid}');
+  }
+
+  @include it('duplicate assert') {
+    context.$output-context: 'assert' 'output';
+
+    @include assert-equal(
+      context.validate-output-context('assert'),
+      'ERROR [output-context] The `assert()` mixin can not contain another `assert()`'
+    );
+
+    context.$output-context: ();
+  }
+
+  @include it('duplicate output/expect') {
+    context.$output-context: 'assert' 'output';
+
+    @include assert-equal(
+      context.validate-output-context('output'),
+      'ERROR [output-context] The `output()` mixin must only be used once per `assert()`'
+    );
+
+    context.$output-context: ();
+  }
+
+  @include it('missing assert') {
+    @include assert-equal(
+      context.validate-output-context('output'),
+      'ERROR [output-context] The `assert()` wrapper is required'
+    );
+  }
+
+  @include it('wrong length') {
+    context.$output-context: 'assert' 'wtf' 'output' 'expect' 'contains';
+
+    @include assert-equal(
+      context.validate-output-context(null),
+      'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
+    );
+
+    context.$output-context: ();
+  }
+
+  @include it('missing context') {
+    context.$output-context: 'assert' 'wtf' 'output' 'contains';
+
+    @include assert-equal(
+      context.validate-output-context(null),
+      'ERROR [output-context] Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
+    );
+
+    context.$output-context: ();
+  }
+}
+
+// Inspecting context
+@include describe('Context [function] & Context All') {
+  @include it('Returns current module context') {
+    @include assert-equal(
+      context.context('module'),
+      'Context [function] & Context All'
+    );
+  }
+
+  @include it('Returns current test context') {
+    @include assert-equal(
+      context.context('test'),
+      'Returns current test context'
+    );
+  }
+
+  @include describe('Context [Nested]') {
+    @include it('Returns the innermost module name') {
+      @include assert-equal(context.context('module'), 'Context [Nested]');
+    }
+  }
+
+  @include describe('Context All [Nested]') {
+      @include it('Returns the current stack of module names') {
+      @include assert-equal(
+        context.context-all('module'),
+        'Context [function] & Context All' 'Context All [Nested]'
+      );
+    }
+  }
+}

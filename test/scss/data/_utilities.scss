@@ -1,0 +1,53 @@
+@use '../../../index' as *;
+@use '../../../sass/data/utilities';
+@use 'sass:list';
+
+@include describe('Map Increment') {
+  @include it('Returns a map with the sum-values of two numeric maps') {
+    $base: (
+      one: 1,
+      two: 1,
+      three: 1,
+    );
+    $add: (
+      one: 1,
+      two: 2,
+      three: -1,
+    );
+
+    $expect: (
+      one: 2,
+      two: 3,
+      three: 0,
+    );
+    @include assert-equal(utilities.map-increment($base, $add), $expect);
+  }
+}
+
+@include describe('Join Multiple') {
+  $one: ('one', 'two', 'three');
+  $two: ('four' 'five' 'six');
+  $three: ('seven', 'eight', 'nine');
+  $joined: (
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine'
+  );
+
+  @include it('Combines multiple lists') {
+    @include assert-equal(utilities.join-multiple($one, $two, $three), $joined);
+  }
+
+  @include it('Sets new list-separator') {
+    @include assert-equal(
+      utilities.join-multiple($one, $two, $three, 'space'),
+      list.join((), $joined, 'space')
+    );
+  }
+}

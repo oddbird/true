@@ -1,11 +1,12 @@
-theme: 'herman'
+theme: herman
 dest: docs/
 src: sass/
 
 herman:
   sass:
+    implementation: sass
     includepaths: ['sass']
-    includes: ['true']
+    use: ['true']
   extraDocs:
     - name: 'Changelog'
       path: CHANGELOG.md
@@ -19,10 +20,10 @@ groups:
     api-test: 'Describing Tests'
     api-assert-values: 'Comparing Values'
     api-assert-output: 'Comparing Output'
-    api-xreport: 'Reporting Results'
+    api-report: 'Reporting Results'
   Internal Helpers [Private]:
     private-utils: 'Utilities'
     private-context: 'Data Management'
     private-test: 'Tests'
-    private-assert: 'Assertions'
+    assert-utils: 'Assertions'
     private-message: 'Reporting'

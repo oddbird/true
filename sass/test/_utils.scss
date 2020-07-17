@@ -1,0 +1,27 @@
+@use '../config';
+@use '../data';
+
+
+// Test Start
+// ----------
+/// Test start helper
+/// @access private
+/// @group private-test
+/// @param {string} $name -
+///   Describe what is being tested
+@mixin test-start($name) {
+  @include data.context('test', $name);
+  @include config.message('Test: #{$name}', 'comments');
+}
+
+// Test Stop
+// ---------
+/// Test stop helper
+/// @access private
+/// @group private-test
+@mixin test-stop {
+  @include data.update(data.$test-result);
+  @include data.update-stats-count('tests');
+  @include data.context-pop;
+  @include config.message('', 'comments');
+}

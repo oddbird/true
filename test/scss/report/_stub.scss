@@ -1,0 +1,28 @@
+@use '../../../sass/data';
+
+$fake-stats: (
+  'modules': 4,
+  'tests': 6,
+  'assertions': 25,
+);
+
+$single-stats: '4 Modules, 6 Tests, 25 Assertions';
+$multi-stats: ('Stats:', '- 4 Modules', '- 6 Tests', '- 25 Assertions');
+
+$fake-results: (
+  'run': 6,
+  'pass': 5,
+  'fail': 1,
+  'output-to-css': 0,
+);
+
+$single-results: '6 Tests, 5 Passed, 1 Failed';
+$multi-results: ('6 Tests:', '- 5 Passed', '- 1 Failed');
+
+$single: ($single-results, $single-stats);
+$multi: data.join-multiple(
+  '# SUMMARY ----------',
+  $multi-results,
+  $multi-stats,
+  '--------------------'
+);

@@ -1,0 +1,51 @@
+@use '../../../index' as *;
+@use '../../../sass/data/stats';
+@use 'sass:map';
+
+@include describe('Update Stats Count') {
+  $before: stats.$stats;
+  @include stats.update-stats-count('assertions');
+  $actual: stats.$stats;
+  stats.$stats: $before;
+
+  @include it('Assertions counts are updated') {
+    @include assert-equal(
+      map.get($actual, 'assertions'),
+      map.get($before, 'assertions') + 1
+    );
+  }
+
+  @include it('Modules counts are left as-is') {
+    @include assert-equal(
+      map.get($actual, 'modules'),
+      map.get($before, 'modules')
+    );
+  }
+
+  @include it('Tests counts are left as-is') {
+    @include assert-equal(map.get($actual, 'tests'), map.get($before, 'tests'));
+  }
+}
+
+@include describe('Stats Message') {
+  $test-map: (
+    'modules': 4,
+    'tests': 6,
+    'assertions': 25,
+  );
+
+  @include it('Single Line') {
+    @include assert-equal(
+      stats.stats-message($stats: $test-map),
+      '4 Modules, 6 Tests, 25 Assertions'
+    );
+  }
+
+  @include it('Linebreaks') {
+    $message: ('Stats:', '- 4 Modules', '- 6 Tests', '- 25 Assertions');
+    @include assert-equal(
+      stats.stats-message('linebreaks', $test-map),
+      $message
+    );
+  }
+}

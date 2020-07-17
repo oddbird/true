@@ -1,0 +1,20 @@
+@use '../../../index' as *;
+@use '../../../sass/data/context';
+
+@include test-module('Test Module') {
+  @include test('Changes the current module context') {
+    @include assert-equal(context.context('module'), 'Test Module');
+  }
+
+  @include test-module(Nested & Unquoted Module Name) {
+    @include test(Don’t barf on unquoted names) {
+      @include assert-true(true, Please don’t barf on me);
+    }
+  }
+}
+
+@include describe('Describe') {
+  @include it('Changes the current module context') {
+    @include assert-equal(context.context('module'), 'Describe');
+  }
+}

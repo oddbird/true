@@ -1,0 +1,57 @@
+@use '../../../index' as *;
+@use '../../../sass/assert/utils';
+@use '../../../sass/data';
+@use 'sass:list';
+
+// I'm not sure how to write tests for several of the wrapper mixins:
+// - content() doesn't allow generating a "fake" context for testing…
+// - strike() might be possible, but contains very little internal logic…
+// - result() contains strike() which would cause difficult side-effects
+
+@include describe('Setup') {
+  @include it('Updates context based on current assertions') {
+    $initial: data.$context;
+    $name: 'fake';
+    $description: 'this is not a real assertion';
+
+    @include utils.setup($name, $description);
+
+    $test: data.$context;
+    $expect: list.append($initial, ('assert', '[#{$name}] #{$description}'));
+    data.$context: $initial;
+
+    @include assert-equal($test, $expect);
+  }
+}
+
+@include describe('Is Truthy') {
+  @include it('True is truthy') {
+    @include assert-equal(utils.is-truthy(true), true);
+  }
+
+  @include it('String is truthy') {
+    @include assert-equal(utils.is-truthy('string'), true);
+  }
+
+  @include it('List is truthy') {
+    @include assert-equal(utils.is-truthy('one' 'two' 'three'), true);
+  }
+
+  @include it('False is not truthy') {
+    @include assert-equal(utils.is-truthy(false), false);
+  }
+
+  @include it('Null is not truthy') {
+    @include assert-equal(utils.is-truthy(null), false);
+  }
+
+  @include it('Empty string is not truthy') {
+    @include assert-equal(utils.is-truthy(''), false);
+  }
+
+  @include it('Empty list is not truthy') {
+    $list: ();
+
+    @include assert-equal(utils.is-truthy($list), false);
+  }
+}

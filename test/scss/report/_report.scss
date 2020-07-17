@@ -1,0 +1,63 @@
+@use 'stub' as *;
+@use '../../../index' as *;
+@use '../../../sass/report';
+@use '../../../sass/config';
+@use '../../../sass/data';
+@use 'sass:map';
+
+// Report Tests
+// ============
+
+@include describe('Report') {
+  @include it('Output Message') {
+    @include assert {
+      @include output {
+        @include report.report(false, false, $fake-results, $fake-stats);
+      }
+      @include expect {
+        @include config.message($multi, 'comments');
+      }
+    }
+  }
+
+  @include it('Fail on Error') {
+    @include assert {
+      @include output {
+        @include report.report(false, 'fail on error', $fake-results, $fake-stats);
+      }
+      @include expect {
+        @include config.message($multi, 'comments');
+        @include config.error('1 test failed', 'report');
+      }
+    }
+  }
+
+  @include it('Bad results') {
+    $bad-results: map.merge(
+      $fake-results,
+      (
+        'pass': 4,
+      )
+    );
+    $bad-lines: ('6 Tests:', '- 4 Passed', '- 1 Failed');
+    $bad: data.join-multiple(
+      '# SUMMARY ----------',
+      $bad-lines,
+      $multi-stats,
+      '--------------------'
+    );
+
+    @include assert {
+      @include output {
+        @include report.report(false, false, $bad-results, $fake-stats);
+      }
+      @include expect {
+        @include config.message($bad, 'comments');
+        @include config.error(
+          'The results don’t add up. Are all your tests properly structured?',
+          'report'
+        );
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@use '../../../index' as *;
+@use '../../../sass/module/utils';
+@use 'sass:string';
+
+@include describe('Module Title') {
+  @include it('Returns the current module name, prefixed') {
+    @include assert-equal(
+      utils.module-title(),
+      '# Module: Module Title'
+    )
+  }
+
+  @include describe('Module Title [Nested]') {
+    @include it('Returns a concatenated title of current modules') {
+      @include assert-equal(
+        utils.module-title(),
+        '# Module: Module Title :: Module Title [Nested]'
+      )
+    }
+  }
+}
+
+@include describe('Underline') {
+  @include it('Returns a string of dashes, the same length as the input') {
+    $quote: "As long as my people don't have their rights across America, there's no reason for celebration.";
+    $cite: 'Marsha P. Johnson';
+
+    @include assert-equal(
+      string.length($quote),
+      string.length(utils.underline($quote))
+    );
+
+    $under-cite: utils.underline($cite);
+
+    @include assert-equal(
+      string.length($cite),
+      string.length($under-cite)
+    );
+
+    @for $i from 1 through string.length($under-cite) {
+      @include assert-equal('-', string.slice($under-cite, $i, $i));
+    }
+  }
+}

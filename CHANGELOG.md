@@ -2,7 +2,14 @@
 
 ## UNRELEASED
 
+- BREAKING: Switch to [Dart Sass](https://sass-lang.com/dart-sass) with [Sass
+  module system](https://sass-lang.com/blog/the-module-system-is-launched),
+  dropping support for [Node Sass](https://github.com/sass/node-sass) entirely
+  and removing `sass` option for `runSass`.
+- BREAKING: Drop support for node < 10
+- BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
 - Support testing `content` properties which include a curly brace.
+- Update dependencies
 
 ## 5.0.0 (06/03/19)
 
@@ -157,5 +164,5 @@
 
 - `assert-true()`, `assert-false()`, `assert-equal()`, and `assert-unequal()`.
 - `pass()` and `fail()` for tracking and reporting individual results.
-- `start-test-module()` and `report-test-results()` for module results.
+- `start-test-module()` and `report-test-result()` for module results.
 - Includes tests of the testing tools!

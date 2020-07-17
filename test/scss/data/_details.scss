@@ -1,0 +1,127 @@
+@use '../../../index' as *;
+@use '../../../sass/data/context';
+@use '../../../sass/data/details';
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+
+// Pass Details
+@include describe('Pass Details') {
+  @include it('Properly output a passing assertion result') {
+    @include assert('passing test') {
+      @include output {
+        @include details.pass-details;
+      }
+
+      @include expect {
+        /*   ✔ [output] passing test */
+      }
+    }
+  }
+}
+
+// Fail Details
+@include describe('Fail Details') {
+  @include it('Compiles full failure details') {
+    @include assert {
+      @include output(false) {
+        @include context.context('assert', '[assert-equal] Test Assertion');
+        @include details.fail-details(1/3, 0.3333333333, not 'terminal');
+        @include context.context-pop;
+      }
+
+      @include expect(false) {
+        /*   ✖ FAILED: [assert-equal] Test Assertion */
+        /*     - Output: [number] 0.3333333333 */
+        /*     - Expected: [number] 0.3333333333 */
+        /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+        /*     - Module: Fail Details */
+        /*     - Test: Compiles full failure details */
+      }
+    }
+  }
+}
+
+// Variable Details
+@include describe('Variable Details') {
+  @include it('Number') {
+    @include assert-equal(details.variable-details(1em), '[number] 1em');
+  }
+
+  @include it('Color') {
+    @include assert-equal(details.variable-details(#ccc), '[color] #ccc');
+  }
+
+  @include it('Map') {
+    $map: (
+      'key': 'value',
+    );
+
+    @include assert-equal(
+      details.variable-details($map),
+      '[map] ("key": "value")'
+    );
+  }
+
+  @include it('Bracketed List') {
+    $list: ['one' 'two'];
+
+    @include assert-equal(
+      details.variable-details($list),
+      '[list] ["one" "two"]'
+    );
+  }
+}
+
+// EdgeFail Notes
+@include describe('Edgefail Notes') {
+  @include it('Type mismatch') {
+    $message: '- Details: variable types do not match (set `$inspect: true` to compare output values)';
+
+    @include assert-equal(details.edgefail-notes(1em, '1em'), $message);
+
+    $list: ('one', 'two');
+    $string: meta.inspect($list);
+
+    @include assert-equal(details.edgefail-notes($list, $string), $message);
+  }
+
+  $string-one: string.unquote('hello world');
+  $string-two: string.quote('hello world');
+
+  @if ($string-one != $string-two) {
+    @include it('String quotes') {
+      $message: '- Details: string quotations do not match';
+
+      @include assert-equal(
+        details.edgefail-notes($string-one, $string-two),
+        $message
+      );
+    }
+  }
+
+  @include it('Number Rounding') {
+    $message: '- Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values)';
+
+    @include assert-equal(details.edgefail-notes(1/3, 0.3333333333), $message);
+  }
+
+  @include it('Color rounding') {
+    $message: '- Details: colors may need to be rounded before comparison (set `$inspect: true` to compare output values)';
+
+    @include assert-equal(
+      details.edgefail-notes(color.adjust(#246, $lightness: 15%), #356a9f),
+      $message
+    );
+  }
+
+  @include it('List Separators') {
+    $message: '- Details: list-separators do not match';
+
+    $space: list.join((), 'one', space);
+    $comma: list.join((), 'one', comma);
+
+    @include assert-equal(details.edgefail-notes($space, $comma), $message);
+  }
+}

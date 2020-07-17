@@ -1,4 +1,4 @@
-Copyright (c) 2015, Miriam Eric Suzanne
+Copyright (c) 2015–2020, Miriam Suzanne.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

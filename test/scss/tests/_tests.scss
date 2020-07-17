@@ -1,0 +1,20 @@
+@use '../../../index' as *;
+@use '../../../sass/data/context';
+
+@include describe('Tests') {
+  @include test('Test') {
+    @include assert-equal(
+      context.context(test),
+      'Test',
+      'Changes the current test context'
+    );
+  }
+
+  @include it('It [alias]') {
+    @include assert-equal(
+      context.context(test),
+      'It [alias]',
+      'Changes the current test context'
+    );
+  }
+}

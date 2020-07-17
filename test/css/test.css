@@ -1,4 +1,29 @@
 @charset "UTF-8";
+/* # Module: Message */
+/* ----------------- */
+/* Test: Renders messages as CSS comments */
+/*   ASSERT:    */
+/*   OUTPUT   */
+/* This is a simple message */
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+/* This is a simple message */
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Renders lists as multiple CSS comments */
+/*   ASSERT:    */
+/*   OUTPUT   */
+/* This is a */
+/* multiline message */
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+/* This is a */
+/* multiline message */
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
 /* # Module: True Error [function] */
 /* ------------------------------- */
 /* Test: Allow errors to return without blocking compilation */
@@ -11,25 +36,27 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [error test] This is a test error message */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  /* ERROR [_true-error test] This is a test error message */ }
+  /* ERROR [error test] This is a test error message */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: Map Add [function] */
-/* ---------------------------- */
+/* # Module: Map Increment */
+/* ----------------------- */
 /* Test: Returns a map with the sum-values of two numeric maps */
 /*   ✔ [assert-equal] Returns a map with the sum-values of two numeric maps */
 /*  */
 /*  */
-/* # Module: Join Multiple [function */
-/* --------------------------------- */
+/* # Module: Join Multiple */
+/* ----------------------- */
 /* Test: Combines multiple lists */
 /*   ✔ [assert-equal] Combines multiple lists */
 /*  */
@@ -37,57 +64,8 @@
 /*   ✔ [assert-equal] Sets new list-separator */
 /*  */
 /*  */
-/* # Module: True Message */
-/* ---------------------- */
-/* Test: Simple messages */
-/*   ASSERT: Render as CSS comments   */
-/*   OUTPUT   */
-/* This is a simple message */
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-/* This is a simple message */
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/* Test: Multi-line messages */
-/*   ASSERT: Render as multiple CSS comments   */
-/*   OUTPUT   */
-/* This is a */
-/* multiline message */
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-/* This is a */
-/* multiline message */
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/*  */
-.not-a-test {
-  break: please-no; }
-
-/* # Module: Update Stats Count */
-/* ---------------------------- */
-/* Test: Assertions counts are updated */
-/*   ✔ [assert-equal] Assertions counts are updated */
-/*  */
-/* Test: Modules counts are left as-is */
-/*   ✔ [assert-equal] Modules counts are left as-is */
-/*  */
-/* Test: Tests counts are left as-is */
-/*   ✔ [assert-equal] Tests counts are left as-is */
-/*  */
-/*  */
-/* # Module: stats-message [function] */
-/* ---------------------------------- */
-/* Test: Single Line */
-/*   ✔ [assert-equal] Single Line */
-/*  */
-/* Test: Linebreaks */
-/*   ✔ [assert-equal] Linebreaks */
-/*  */
-/*  */
-/* # Module: true-context & true-context-pop [mixins] */
-/* -------------------------------------------------- */
+/* # Module: Context [mixin] & Context-Pop */
+/* --------------------------------------- */
 /* Test: Adds scope and name to context */
 /*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
 /*   ✔ [assert-unequal] Confirm that there is currently no "fake" scope */
@@ -96,26 +74,20 @@
 /*   ✔ [assert-unequal] Confirm that "fake" scope has been removed */
 /*  */
 /*  */
-/* # Module: true-context & true-context-all [functions] */
-/* ----------------------------------------------------- */
-/* Test: Returns current module context */
-/*   ✔ [assert-equal] Returns current module context */
+/* # Module: Output Context */
+/* ------------------------ */
+/* Test: Appends new context */
+/*   ✔ [assert-equal] Check initial value */
+/*   ✔ [assert-equal] Appends new context */
+/*   ✔ [assert-equal] Appends new context */
+/*   ✔ [assert-equal] Appends new context */
 /*  */
-/* Test: Returns current test context */
-/*   ✔ [assert-equal] Returns current test context */
-/*  */
-/* # Module: true-context & true-context-all [functions] :: nested */
-/* --------------------------------------------------------------- */
-/* Test: Returns the innermost module name */
-/*   ✔ [assert-equal] Returns the innermost module name */
-/*  */
-/* Test: _true-context-all [function] */
-/*   ✔ [assert-equal] Returns the current stack of module names */
+/* Test: Resets context */
+/*   ✔ [assert-equal] Resets context */
 /*  */
 /*  */
-/*  */
-/* # Module: true-validate-output-context [function] */
-/* ------------------------------------------------- */
+/* # Module: Validate Output Context */
+/* --------------------------------- */
 /* Test: unknown context name */
 /*   ✔ [assert-equal] unknown context name */
 /*  */
@@ -135,16 +107,98 @@
 /*   ✔ [assert-equal] missing context */
 /*  */
 /*  */
-/* # Module: true-output-context [mixin] */
-/* ------------------------------------- */
-/* Test: Appends new context */
-/*   ✔ [assert-equal] Check initial value */
-/*   ✔ [assert-equal] Appends new context */
-/*   ✔ [assert-equal] Appends new context */
-/*   ✔ [assert-equal] Appends new context */
+/* # Module: Context [function] & Context All */
+/* ------------------------------------------ */
+/* Test: Returns current module context */
+/*   ✔ [assert-equal] Returns current module context */
 /*  */
-/* Test: Resets context */
-/*   ✔ [assert-equal] Resets context */
+/* Test: Returns current test context */
+/*   ✔ [assert-equal] Returns current test context */
+/*  */
+/* # Module: Context [function] & Context All :: Context [Nested] */
+/* -------------------------------------------------------------- */
+/* Test: Returns the innermost module name */
+/*   ✔ [assert-equal] Returns the innermost module name */
+/*  */
+/*  */
+/* # Module: Context [function] & Context All :: Context All [Nested] */
+/* ------------------------------------------------------------------ */
+/* Test: Returns the current stack of module names */
+/*   ✔ [assert-equal] Returns the current stack of module names */
+/*  */
+/*  */
+/*  */
+/* # Module: Pass Details */
+/* ---------------------- */
+/* Test: Properly output a passing assertion result */
+/*   ASSERT: passing test   */
+/*   OUTPUT   */
+.test-output {
+  /*   ✔ [output] passing test */
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  /*   ✔ [output] passing test */
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # Module: Fail Details */
+/* ---------------------- */
+/* Test: Compiles full failure details */
+/*   ASSERT:    */
+/*   OUTPUT   */
+/*   ✖ FAILED: [assert-equal] Test Assertion */
+/*     - Output: [number] 0.3333333333 */
+/*     - Expected: [number] 0.3333333333 */
+/*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+/*     - Module: Fail Details */
+/*     - Test: Compiles full failure details */
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+/*   ✖ FAILED: [assert-equal] Test Assertion */
+/*     - Output: [number] 0.3333333333 */
+/*     - Expected: [number] 0.3333333333 */
+/*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+/*     - Module: Fail Details */
+/*     - Test: Compiles full failure details */
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */
+/*  */
+/* # Module: Variable Details */
+/* -------------------------- */
+/* Test: Number */
+/*   ✔ [assert-equal] Number */
+/*  */
+/* Test: Color */
+/*   ✔ [assert-equal] Color */
+/*  */
+/* Test: Map */
+/*   ✔ [assert-equal] Map */
+/*  */
+/* Test: Bracketed List */
+/*   ✔ [assert-equal] Bracketed List */
+/*  */
+/*  */
+/* # Module: Edgefail Notes */
+/* ------------------------ */
+/* Test: Type mismatch */
+/*   ✔ [assert-equal] Type mismatch */
+/*   ✔ [assert-equal] Type mismatch */
+/*  */
+/* Test: Number Rounding */
+/*   ✔ [assert-equal] Number Rounding */
+/*  */
+/* Test: Color rounding */
+/*   ✔ [assert-equal] Color rounding */
+/*  */
+/* Test: List Separators */
+/*   ✔ [assert-equal] List Separators */
 /*  */
 /*  */
 /* # Module: Get Result */
@@ -196,8 +250,8 @@
 /*   ✔ [assert-equal] Nothing overrides fail */
 /*  */
 /*  */
-/* # Module: results-message [function] */
-/* ------------------------------------ */
+/* # Module: Results Message */
+/* ------------------------- */
 /* Test: Single Line */
 /*   ✔ [assert-equal] Single Line */
 /*  */
@@ -211,111 +265,31 @@
 /*   ✔ [assert-equal] Single test */
 /*  */
 /*  */
-/* # Module: pass-details [mixin] */
-/* ------------------------------ */
-/* Test: Properly output a passing assertion result */
-/*   ASSERT: passing test   */
-/*   OUTPUT   */
-.test-output {
-  /*   ✔ [output] passing test */ }
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /*   ✔ [output] passing test */ }
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/*  */
-/* # Module: variable-details [function] */
-/* ------------------------------------- */
-/* Test: Number */
-/*   ✔ [assert-equal] Number */
-/*  */
-/* Test: Strings get back-ticks */
-/*   ✔ [assert-equal] Strings get back-ticks */
-/*   ✔ [assert-equal] Strings get back-ticks */
-/*   ✔ [assert-unequal] Strings get back-ticks */
-/*  */
-/* Test: Color */
-/*   ✔ [assert-equal] Color */
-/*  */
-/* Test: Map */
-/*   ✔ [assert-equal] Map */
-/*  */
-/* Test: Comma List */
-/*   ✔ [assert-equal] Comma List */
-/*  */
-/* Test: Space List */
-/*   ✔ [assert-equal] Space List */
-/*  */
-/*  */
-/* # Module: edgefail-notes [function] */
-/* ----------------------------------- */
-/* Test: Type mismatch */
-/*   ✔ [assert-equal] Type mismatch */
-/*   ✔ [assert-equal] Type mismatch */
-/*  */
-/* Test: Number rounding */
-/*   ✔ [assert-equal] Number rounding */
-/*  */
-/* Test: Color rounding */
-/*   ✔ [assert-equal] Color rounding */
-/*  */
-/* Test: List Separators */
-/*   ✔ [assert-equal] List Separators */
-/*  */
-/*  */
-/* # Module: fail-details [mixin] */
-/* ------------------------------ */
-/* Test: Compiles full failure details */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /*   ✖ FAILED: [assert-equal] Test assertion */
-  /*     - Output: [number] 0.33333 */
-  /*     - Expected: [number] 0.33333 */
-  /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
-  /*     - Module: fail-details [mixin] */
-  /*     - Test: Compiles full failure details */ }
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /*   ✖ FAILED: [assert-equal] Test assertion */
-  /*     - Output: [number] 0.33333 */
-  /*     - Expected: [number] 0.33333 */
-  /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
-  /*     - Module: fail-details [mixin] */
-  /*     - Test: Compiles full failure details */ }
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/*  */
-/* # Module: test-module [mixin] */
-/* ----------------------------- */
-/* Test: Changes the current module context */
-/*   ✔ [assert-equal] Changes the current module context */
-/*  */
-/* # Module: test-module [mixin] :: Unquoted Module Name */
-/* ----------------------------------------------------- */
-/* Test: Don’t barf on unquoted names */
-/*   ✔ [assert-true] Please don’t barf on me */
-/*  */
-/*  */
-/*  */
-/* # Module: Describe/it syntax */
+/* # Module: Update Stats Count */
 /* ---------------------------- */
-/* Test: Changes the current module context */
-/*   ✔ [assert-equal] Changes the current module context */
+/* Test: Assertions counts are updated */
+/*   ✔ [assert-equal] Assertions counts are updated */
+/*  */
+/* Test: Modules counts are left as-is */
+/*   ✔ [assert-equal] Modules counts are left as-is */
+/*  */
+/* Test: Tests counts are left as-is */
+/*   ✔ [assert-equal] Tests counts are left as-is */
 /*  */
 /*  */
-/* # Module: Tests */
+/* # Module: Stats Message */
+/* ----------------------- */
+/* Test: Single Line */
+/*   ✔ [assert-equal] Single Line */
+/*  */
+/* Test: Linebreaks */
+/*   ✔ [assert-equal] Linebreaks */
+/*  */
+/*  */
+/* # Module: Setup */
 /* --------------- */
-/* Test: test [mixin] */
-/*   ✔ [assert-equal] Changes the current test context */
+/* Test: Updates context based on current assertions */
+/*   ✔ [assert-equal] Updates context based on current assertions */
 /*  */
 /*  */
 /* # Module: Is Truthy */
@@ -344,8 +318,11 @@
 /*  */
 /* # Module: Assert True */
 /* --------------------- */
-/* Test: Truthiness */
-/*   ✔ [assert-true] Non-false properties return true. */
+/* Test: Non-false properties return true */
+/*   ✔ [assert-true] Non-false properties return true */
+/*  */
+/* Test: Supports is-truthy alias */
+/*   ✔ [assert-true] Supports is-truthy alias */
 /*  */
 /*  */
 /* # Module: Assert False */
@@ -361,6 +338,9 @@
 /*  */
 /* Test: empty list */
 /*   ✔ [assert-false] Empty lists return false. */
+/*  */
+/* Test: Supports is-falsy alias */
+/*   ✔ [assert-false] Supports is-falsy alias */
 /*  */
 /*  */
 /* # Module: Assert Equal */
@@ -384,6 +364,9 @@
 /*   ✔ [assert-unequal] normally unequal */
 /*   ✔ [assert-equal] Mismatched types with $inspect */
 /*  */
+/* Test: Supports is-equal alias */
+/*   ✔ [assert-equal] Supports is-equal alias */
+/*  */
 /*  */
 /* # Module: Assert UnEqual */
 /* ------------------------ */
@@ -393,84 +376,103 @@
 /* Test: Mismatched types */
 /*   ✔ [assert-unequal] Mismatched types */
 /*  */
-/* Test: Mismatched units with $inspect */
-/*   ✔ [assert-equal] normally equal */
-/*   ✔ [assert-unequal] Mismatched units with $inspect */
+/* Test: Mismatched units no longer needs $inspect */
+/*   ✔ [assert-unequal] Mismatched units no longer needs $inspect */
+/*  */
+/* Test: Supports not-equal alias */
+/*   ✔ [assert-unequal] Supports not-equal alias */
 /*  */
 /*  */
-/* # Module: Assert(output) */
-/* ------------------------ */
-/* Test: CSS output math */
-/*   ASSERT: Output math compares properly   */
+/* # Module: Output Expect */
+/* ----------------------- */
+/* Test: Compares math output properly */
+/*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
   -property1: 0.3;
-  -property2: 0.33333; }
+  -property2: 0.3333333333;
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
   -property1: 0.3;
-  -property2: 0.33333; }
+  -property2: 0.3333333333;
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
-/* Test: output/expect [mixins] */
-/*   ASSERT: Output and expected selector patterns match   */
+/* Test: Matches output and expected selector patterns */
+/*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  -property: value; }
-  @media (min-width: 30em) {
-    .test-output {
-      -prop: val; }
-      .selector {
-        -prop: val; } }
+  -property: value;
+}
+@media (min-width: 30em) {
+  .test-output {
+    -prop: val;
+  }
+  .selector {
+    -prop: val;
+  }
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 .test-output {
-  -property: value; }
-  @media (min-width: 30em) {
-    .test-output {
-      -prop: val; }
-      .selector {
-        -prop: val; } }
+  -property: value;
+}
+@media (min-width: 30em) {
+  .test-output {
+    -prop: val;
+  }
+  .selector {
+    -prop: val;
+  }
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
-/* # Module: Assert(output) :: Assert(contains) */
-/* -------------------------------------------- */
-/* Test: Passes if the property in "contains" exists in the "output" and has the same value */
+/*  */
+/* # Module: Output Contains */
+/* ------------------------- */
+/* Test: Contains sub-string */
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
   height: 10px;
-  width: 20px; }
+  width: 20px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
 /*  */
-/* Test: Passes if the property and its value in class in "contains" exists in the same class in "output" */
+/* Test: Contains nested selector block */
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  height: 20px; }
-  .test-output .class {
-    height: 10px; }
-  .test-output .other-class {
-    height: 10px; }
+  height: 20px;
+}
+.test-output .class {
+  height: 10px;
+}
+.test-output .other-class {
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .class {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -479,16 +481,20 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output {
-  height: 20px; }
-  .test-output .class {
-    height: 10px; }
-    .test-output .class .other-class {
-      height: 10px; }
+  height: 20px;
+}
+.test-output .class {
+  height: 10px;
+}
+.test-output .class .other-class {
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .class .other-class {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -497,23 +503,29 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output .class {
-  height: 20px; }
-
+  height: 20px;
+}
 @media (min-width: 30em) and (min-width: 40em) {
   .test-output .selector {
-    height: 10px; }
+    height: 10px;
+  }
   .test-output .selector2 {
-    height: 10px; } }
-
+    height: 10px;
+  }
+}
 @media (min-width: 30em) {
   .test-output .selector3 {
-    height: 10px; } }
+    height: 10px;
+  }
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 @media (min-width: 30em) and (min-width: 40em) {
   .test-output .selector2 {
-    height: 10px; } }
+    height: 10px;
+  }
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -522,12 +534,14 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .selector {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .selector {
-  height: 10px; }
+  height: 10px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -536,52 +550,54 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 .test-output .selector {
-  -prop: val; }
-
+  -prop: val;
+}
 .test-output #id {
-  -prop: value1; }
-
+  -prop: value1;
+}
 .test-output div {
   -prop: value2;
   min-height: 20px;
-  max-height: 30px; }
-
-.test-output input[type='text'] {
-  color: rebeccapurple; }
-
+  max-height: 30px;
+}
+.test-output input[type=text] {
+  color: rebeccapurple;
+}
 .test-output * + * {
   color: red;
-  display: none; }
-
+  display: none;
+}
 .test-output body > h1 {
-  font-weight: bold; }
-
+  font-weight: bold;
+}
 .test-output i::before {
-  -prop: value3; }
-
+  -prop: value3;
+}
 .test-output div ~ p {
-  color: green; }
-
+  color: green;
+}
 .test-output i:not(.italic) {
   text-decoration: underline;
-  --custom: val; }
+  --custom: val;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .selector {
-  -prop: val; }
-
+  -prop: val;
+}
 .test-output div {
-  max-height: 30px; }
-
+  max-height: 30px;
+}
 .test-output body > h1 {
-  font-weight: bold; }
-
+  font-weight: bold;
+}
 .test-output * + * {
-  display: none; }
-
+  display: none;
+}
 .test-output i:not(.italic) {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
@@ -592,21 +608,85 @@
 .test-output .selector {
   width: 10px;
   min-height: 5px;
-  max-height: 20px; }
+  max-height: 20px;
+}
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
 .test-output .selector {
   width: 10px;
-  max-height: 20px; }
+  max-height: 20px;
+}
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: Module Title */
+/* ---------------------- */
+/* Test: Returns the current module name, prefixed */
+/*   ✔ [assert-equal] Returns the current module name, prefixed */
 /*  */
-/* # Module: report [mixin] */
-/* ------------------------ */
+/* # Module: Module Title :: Module Title [Nested] */
+/* ----------------------------------------------- */
+/* Test: Returns a concatenated title of current modules */
+/*   ✔ [assert-equal] Returns a concatenated title of current modules */
+/*  */
+/*  */
+/*  */
+/* # Module: Underline */
+/* ------------------- */
+/* Test: Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*   ✔ [assert-equal] Returns a string of dashes, the same length as the input */
+/*  */
+/*  */
+/* # Module: Test Module */
+/* --------------------- */
+/* Test: Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
+/*  */
+/* # Module: Test Module :: Nested Unquoted Module Name */
+/* ---------------------------------------------------- */
+/* Test: Don’t barf on unquoted names */
+/*   ✔ [assert-true] Please don’t barf on me */
+/*  */
+/*  */
+/*  */
+/* # Module: Describe */
+/* ------------------ */
+/* Test: Changes the current module context */
+/*   ✔ [assert-equal] Changes the current module context */
+/*  */
+/*  */
+/* # Module: Tests */
+/* --------------- */
+/* Test: Test */
+/*   ✔ [assert-equal] Changes the current test context */
+/*  */
+/* Test: It [alias] */
+/*   ✔ [assert-equal] Changes the current test context */
+/*  */
+/*  */
+/* # Module: Report */
+/* ---------------- */
 /* Test: Output Message */
 /*   ASSERT:    */
 /*   OUTPUT   */
@@ -619,7 +699,8 @@
   /* - 4 Modules */
   /* - 6 Tests */
   /* - 25 Assertions */
-  /* -------------------- */ }
+  /* -------------------- */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -632,7 +713,8 @@
   /* - 4 Modules */
   /* - 6 Tests */
   /* - 25 Assertions */
-  /* -------------------- */ }
+  /* -------------------- */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -650,7 +732,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */ }
+  /* ERROR [report] 1 test failed */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -664,7 +747,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] 1 test failed */ }
+  /* ERROR [report] 1 test failed */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
@@ -682,7 +766,8 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */ }
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
 
 /*   END_OUTPUT   */
 /*   EXPECTED   */
@@ -696,14 +781,15 @@
   /* - 6 Tests */
   /* - 25 Assertions */
   /* -------------------- */
-  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */ }
+  /* ERROR [report] The results don’t add up. Are all your tests properly structured? */
+}
 
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: report-message [function] */
-/* ----------------------------------- */
+/* # Module: Report Message */
+/* ------------------------ */
 /* Test: Single Line */
 /*   ✔ [assert-equal] Single Line */
 /*  */
@@ -711,3 +797,19 @@
 /*   ✔ [assert-equal] Linebreaks */
 /*  */
 /*  */
+.not-a-test {
+  break: please-no;
+}
+
+/* # SUMMARY ---------- */
+/* 100 Tests: */
+/* - 83 Passed */
+/* - 0 Failed */
+/* - 17 Output to CSS */
+/* Stats: */
+/* - 38 Modules */
+/* - 100 Tests */
+/* - 128 Assertions */
+/* -------------------- */
+
+/*# sourceMappingURL=test.css.map */

@@ -1,0 +1,140 @@
+@use '../config';
+@use '../data';
+@use 'sass:map';
+
+// Content
+// -------
+/// Wrap output assertions with the proper
+/// CSS comments & selectors.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
+///
+/// @output - Content wrapped in appropriate comments & optional selector
+@mixin content(
+  $type,
+  $selector: true,
+  $description: null,
+) {
+  @include data.output-context($type);
+  $block: map.get(config.$output, $type);
+  $start: if(
+    $description or ($block == 'ASSERT'),
+    '#{$block}: #{$description}',
+    $block
+  );
+  @include config.message('  #{$start}  ', 'comments');
+  @if $selector {
+    .test-output {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+  @include config.message('  END_#{$block}  ', 'comments');
+}
+
+// Setup
+// -----
+/// Setup the proper context for value assertions before testing
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
+@mixin setup(
+  $name,
+  $description: null,
+) {
+  $description: $description or data.context('test');
+  @include data.context(
+    'assert',
+    '[#{$name}] #{$description}'
+  );
+}
+
+// Strike
+// ------
+/// Report assertion results to the current test,
+/// update assertion stats,
+/// and remove current assertion from context.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
+@mixin strike(
+  $result,
+  $output: false
+) {
+  @include data.update-test($result);
+  @include data.update-stats-count('assertions');
+  @include data.context-pop;
+  @if ($output) {
+    @include data.output-context(null);
+  }
+}
+
+// Value Result
+// ------------
+/// Get an official result,
+/// record it in the database and output,
+/// provide details as necessary,
+/// and end the assertion.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {*} $assert - Value to consider
+/// @param {*} $expected - Expected match
+/// @param {bool} $unequal [false] -
+///   Set to `true` if the comparison is expected to fail
+///
+/// @output - Document the passing or failing result of the test
+@mixin result(
+  $assert,
+  $expected,
+  $unequal: false,
+  $terminal: config.$terminal-output
+) {
+  $result: data.get-result($assert, $expected, $unequal);
+
+  @if $result == 'pass' {
+    @include data.pass-details;
+  } @else {
+    @include data.fail-details($assert, $expected, $terminal);
+  }
+
+  @include strike($result);
+}
+
+// Is Truthy
+// ---------
+/// Check that a value is truthy
+/// (empty lists and strings return false)
+///
+/// @access private
+/// @group assert-utils
+/// @param {*} $assert - Value to consider
+/// @return {bool} -
+@function is-truthy($assert) {
+  $not: (not not $assert);
+  $list: ($assert != ());
+  $string: ($assert != '');
+  $truthy: if(($not and $list and $string), true, false);
+
+  @return $truthy;
+}
