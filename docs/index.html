@@ -356,7 +356,7 @@ the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric <code>contextLines</code> option: the maximum number of
 context lines to<span class="widont">&nbsp;</span>provide.</p>
 <h3 id="imports-without-webpack">Imports without Webpack</h3>
-<p>If you use Webpack’s tilde notation, like <code>@use 'accoutrement/sass/tools'</code>,
+<p>If you use Webpack’s tilde notation, like <code>@use '~accoutrement/sass/tools'</code>,
 you’ll need to tell <code>runSass</code> how to handle that. That will require writing a
 custom importer and passing it into the configuration for <code>runSass</code>. Something
 like:</p>

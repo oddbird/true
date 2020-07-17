@@ -198,7 +198,7 @@ context lines to provide.
 
 ### Imports without Webpack
 
-If you use Webpack's tilde notation, like `@use 'accoutrement/sass/tools'`,
+If you use Webpack's tilde notation, like `@use '~accoutrement/sass/tools'`,
 you'll need to tell `runSass` how to handle that. That will require writing a
 custom importer and passing it into the configuration for `runSass`. Something
 like:
