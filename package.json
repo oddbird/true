@@ -22,31 +22,32 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "css": "^2.2.1",
-    "lodash.find": "^4.6.0",
-    "lodash.foreach": "^4.5.0",
-    "lodash.last": "^3.0.0"
+    "css": "^3.0.0",
+    "lodash": "^4.17.19"
+  },
+  "peerDependencies": {
+    "sass": ">=1.23.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "coveralls": "^3.1.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "jest": "^26.0.1",
+    "jest": "^26.1.0",
     "mocha": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
-    "sass": "^1.26.8",
+    "sass": "^1.26.10",
     "sassdoc": "^2.7.2",
     "sassdoc-theme-herman": "^3.2.0",
     "stylelint": "^13.6.1",
-    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-prettier": "^1.1.2",
-    "stylelint-scss": "^3.17.2"
+    "stylelint-scss": "^3.18.0"
   },
   "eyeglass": {
     "needs": "^1.0",

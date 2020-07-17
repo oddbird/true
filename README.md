@@ -164,6 +164,16 @@ when upgrading from an older version of True.
 
 5. Run Mocha/Jest, and see your Sass tests reported in the command line.
 
+> _Note_ Jest defaults to running tests in a browser-like environment (jsdom).
+> When using with True, set the
+> [testEnvironment](https://jestjs.io/docs/en/configuration#testenvironment-string)
+> to "node".
+
+> _Note_ Jest does not watch for changes in Sass files by default. To use
+> `jest --watch` with True, add "scss" to your
+> [moduleFileExtensions](https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring)
+> setting.
+
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 

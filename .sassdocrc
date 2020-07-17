@@ -1,4 +1,4 @@
-theme: ../herman/
+theme: herman
 dest: docs/
 src: sass/
 

@@ -331,6 +331,17 @@ sassTrue.runSass({ file: sassFile }, { describe, it });
 <p>Run Mocha/Jest, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
 </li>
 </ol>
+<blockquote>
+<p><em>Note</em> Jest defaults to running tests in a browser-like environment (jsdom).
+When using with True, set the
+<a href="https://jestjs.io/docs/en/configuration#testenvironment-string">testEnvironment</a>
+to<span class="widont">&nbsp;</span>“node”.</p>
+</blockquote>
+<blockquote>
+<p><em>Note</em> Jest does not watch for changes in Sass files by default. To use
+<code>jest --watch</code> with True, add “scss” to your
+<a href="https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring">moduleFileExtensions</a><span class="widont">&nbsp;</span>setting.</p>
+</blockquote>
 <p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
 want to run<span class="widont">&nbsp;</span>separately.</p>
 <p>The first argument to <code>runSass</code> accepts the

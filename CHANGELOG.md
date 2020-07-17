@@ -9,7 +9,7 @@
 - BREAKING: Drop support for node < 10
 - BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
 - Support testing `content` properties which include a curly brace.
-- Update dev dependencies
+- Update dependencies
 
 ## 5.0.0 (06/03/19)
 
