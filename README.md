@@ -1,7 +1,7 @@
 # True
 
-[![Build Status](https://travis-ci.org/oddbird/true.svg?branch=master)](https://travis-ci.org/oddbird/true)
-[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=master)](https://coveralls.io/github/oddbird/true?branch=master)
+[![Build Status](https://travis-ci.org/oddbird/true.svg?branch=main)](https://travis-ci.org/oddbird/true)
+[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main)](https://coveralls.io/github/oddbird/true?branch=main)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 True is a unit-testing tool
@@ -133,7 +133,7 @@ after the tests have completed:
 See the [full documentation online](https://www.oddbird.net/true/)
 or in the `.sassdoc` directory,
 for more details.
-See [CHANGELOG.md](https://github.com/oddbird/true/blob/master/CHANGELOG.md)
+See [CHANGELOG.md](https://github.com/oddbird/true/blob/main/CHANGELOG.md)
 when upgrading from an older version of True.
 
 ## Using Mocha, Jest, or other JS test runners

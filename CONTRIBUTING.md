@@ -10,7 +10,7 @@ we ask you to follow the
 
 ## Pull Requests
 
-We use the `master` branch for production-ready code,
+We use the `main` branch for production-ready code,
 and side-branches for everything in-progress
 or up-for-debate.
 
@@ -20,7 +20,7 @@ When submitting a patch via pull request:
 - Include any appropriate unit tests,
   and make sure all tests are passing (`yarn test`)
 - Add your changes to the
-  [changelog](https://github.com/oddbird/true/blob/master/CHANGELOG.md)
+  [changelog](https://github.com/oddbird/true/blob/main/CHANGELOG.md)
 - Update or write appropriate [SassDoc](http://sassdoc.com/)
   inline documentation for your changes
 - Keep it simple: one bug fix or feature per pull request
