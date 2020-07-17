@@ -1,9 +1,11 @@
 @use '../../../index' as *;
+@use '../../../sass/config/terms';
 @use '../../../sass/data/context';
 @use 'sass:list';
+@use 'sass:map';
 
 // Adding and removing context
-@include describe('context & context-pop [mixins]') {
+@include describe('Context [mixin] & Context-Pop') {
   @include it('Adds scope and name to context') {
     @each $entry-scope, $entry-name in context.$context {
       @include assert-unequal(
@@ -33,40 +35,33 @@
   }
 }
 
-// Inspecting context
-@include describe('context & context-all [functions]') {
-  @include it('Returns current module context') {
-    @include assert-equal(
-      context.context('module'),
-      'context & context-all [functions]'
-    );
+@include describe('Output Context') {
+  $empty-list: ();
+  $before: context.$output-context;
+  @include context.output-context('assert');
+  $assert: context.$output-context;
+  @include context.output-context('expect');
+  $expect: context.$output-context;
+  @include context.output-context('output');
+  $output: context.$output-context;
+  @include context.output-context(null);
+  $reset: context.$output-context;
+
+  @include it('Appends new context') {
+    @include assert-equal($before, $empty-list, 'Check initial value');
+    @include assert-equal($assert, list.join((), 'assert'));
+    @include assert-equal($expect, ('assert' 'expect'));
+    @include assert-equal($output, ('assert' 'expect' 'output'));
   }
 
-  @include it('Returns current test context') {
-    @include assert-equal(
-      context.context('test'),
-      'Returns current test context'
-    );
-  }
-
-  @include describe('nested') {
-    @include it('Returns the innermost module name') {
-      @include assert-equal(context.context('module'), 'nested');
-    }
-
-    @include it('context-all [function]') {
-      @include assert-equal(
-        context.context-all('module'),
-        'context & context-all [functions]' 'nested',
-        'Returns the current stack of module names'
-      );
-    }
+  @include it('Resets context') {
+    @include assert-equal($reset, $before);
   }
 }
 
 // valid output context
-@include describe('validate-output-context [function]') {
-  $valid: 'assert' 'expect' 'output' 'contains';
+@include describe('Validate Output Context') {
+  $valid: map.keys(terms.$output);
 
   @include it('unknown context name') {
     @include assert-equal(
@@ -126,30 +121,34 @@
   }
 }
 
-// Output context
-@include describe('output-context [mixin]') {
-  $empty-list: ();
-  $before: context.$output-context;
-  @include context.output-context('assert');
-  $assert: context.$output-context;
-  @include context.output-context('expect');
-  $expect: context.$output-context;
-  @include context.output-context('output');
-  $output: context.$output-context;
-  @include context.output-context(null);
-  $reset: context.$output-context;
-
-  @include it('Appends new context') {
-    @include assert-equal($before, $empty-list, 'Check initial value');
-
-    @include assert-equal($assert, list.join((), 'assert'));
-
-    @include assert-equal($expect, ('assert' 'expect'));
-
-    @include assert-equal($output, ('assert' 'expect' 'output'));
+// Inspecting context
+@include describe('Context [function] & Context All') {
+  @include it('Returns current module context') {
+    @include assert-equal(
+      context.context('module'),
+      'Context [function] & Context All'
+    );
   }
 
-  @include it('Resets context') {
-    @include assert-equal($reset, $before);
+  @include it('Returns current test context') {
+    @include assert-equal(
+      context.context('test'),
+      'Returns current test context'
+    );
+  }
+
+  @include describe('Context [Nested]') {
+    @include it('Returns the innermost module name') {
+      @include assert-equal(context.context('module'), 'Context [Nested]');
+    }
+  }
+
+  @include describe('Context All [Nested]') {
+      @include it('Returns the current stack of module names') {
+      @include assert-equal(
+        context.context-all('module'),
+        'Context [function] & Context All' 'Context All [Nested]'
+      );
+    }
   }
 }

@@ -1,12 +1,12 @@
-theme: 'herman'
+theme: ../herman/
 dest: docs/
 src: sass/
 
 herman:
   sass:
+    implementation: sass
     includepaths: ['sass']
     use: ['true']
-    implementation: 'sass'
   extraDocs:
     - name: 'Changelog'
       path: CHANGELOG.md

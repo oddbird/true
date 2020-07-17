@@ -7,7 +7,7 @@
 @use 'sass:string';
 
 // Pass Details
-@include describe('pass-details [mixin]') {
+@include describe('Pass Details') {
   @include it('Properly output a passing assertion result') {
     @include assert('passing test') {
       @include output {
@@ -21,8 +21,30 @@
   }
 }
 
+// Fail Details
+@include describe('Fail Details') {
+  @include it('Compiles full failure details') {
+    @include assert {
+      @include output(false) {
+        @include context.context('assert', '[assert-equal] Test Assertion');
+        @include details.fail-details(1/3, 0.3333333333, not 'terminal');
+        @include context.context-pop;
+      }
+
+      @include expect(false) {
+        /*   ✖ FAILED: [assert-equal] Test Assertion */
+        /*     - Output: [number] 0.3333333333 */
+        /*     - Expected: [number] 0.3333333333 */
+        /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+        /*     - Module: Fail Details */
+        /*     - Test: Compiles full failure details */
+      }
+    }
+  }
+}
+
 // Variable Details
-@include describe('variable-details [function]') {
+@include describe('Variable Details') {
   @include it('Number') {
     @include assert-equal(details.variable-details(1em), '[number] 1em');
   }
@@ -53,7 +75,7 @@
 }
 
 // EdgeFail Notes
-@include describe('edgefail-notes [function]') {
+@include describe('Edgefail Notes') {
   @include it('Type mismatch') {
     $message: '- Details: variable types do not match (set `$inspect: true` to compare output values)';
 
@@ -79,7 +101,7 @@
     }
   }
 
-  @include it('Number rounding') {
+  @include it('Number Rounding') {
     $message: '- Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values)';
 
     @include assert-equal(details.edgefail-notes(1/3, 0.3333333333), $message);
@@ -101,27 +123,5 @@
     $comma: list.join((), 'one', comma);
 
     @include assert-equal(details.edgefail-notes($space, $comma), $message);
-  }
-}
-
-// Fail Details
-@include describe('fail-details [mixin]') {
-  @include it('Compiles full failure details') {
-    @include assert {
-      @include output {
-        @include context.context('assert', '[assert-equal] Test assertion');
-        @include details.fail-details(1/3, 0.3333333333, not 'terminal');
-        @include context.context-pop;
-      }
-
-      @include expect {
-        /*   ✖ FAILED: [assert-equal] Test assertion */
-        /*     - Output: [number] 0.3333333333 */
-        /*     - Expected: [number] 0.3333333333 */
-        /*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
-        /*     - Module: fail-details [mixin] */
-        /*     - Test: Compiles full failure details */
-      }
-    }
   }
 }

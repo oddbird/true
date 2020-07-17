@@ -1,4 +1,6 @@
 @use 'sass:list';
+@use 'sass:map';
+@use '../config/terms';
 @use '../config/throw';
 
 // Context [variable]
@@ -60,8 +62,6 @@ $output-context: ();
 /// @param {list} $context [$output-context] -
 ///   The current output context
 @mixin output-context($new, $context: $output-context) {
-  $valid: 'assert' 'expect' 'output' 'contains';
-
   $output-context: validate-output-context($new, $context) !global;
 }
 
@@ -83,7 +83,7 @@ $output-context: ();
 /// @throw When `assert()` is missing before `expect`, `output`, or `contains`
 /// @throw When context is missing before a reset
 @function validate-output-context($new, $context: $output-context) {
-  $valid: 'assert' 'expect' 'output' 'contains';
+  $valid: map.keys(terms.$output);
 
   @if $new and not (list.index($valid, $new)) {
     $error: '#{$new} is not a valid context for output tests: #{$valid}';
@@ -124,10 +124,10 @@ $output-context: ();
 // Context [function]
 // ------------------
 /// Get information on current context for a given scope
-/// @access private
 /// @group private-context
 /// @param {string} $scope
 /// @return {string}
+/// @access private
 @function context($scope) {
   $value: null;
 
@@ -143,10 +143,10 @@ $output-context: ();
 // Context All [function]
 // ----------------------
 /// Get list of context names for a given scope
-/// @access private
 /// @group private-context
 /// @param {string} $scope
 /// @return {list}
+/// @access private
 @function context-all($scope) {
   $list: ();
 

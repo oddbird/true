@@ -2,7 +2,7 @@
 @use '../../../sass/data/utilities';
 @use 'sass:list';
 
-@include describe('Map Add [function]') {
+@include describe('Map Increment') {
   @include it('Returns a map with the sum-values of two numeric maps') {
     $base: (
       one: 1,
@@ -24,7 +24,7 @@
   }
 }
 
-@include describe('Join Multiple [function]') {
+@include describe('Join Multiple') {
   $one: ('one', 'two', 'three');
   $two: ('four' 'five' 'six');
   $three: ('seven', 'eight', 'nine');

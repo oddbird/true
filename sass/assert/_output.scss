@@ -38,7 +38,7 @@
 ///   }
 @mixin assert($description: null) {
   @include utils.setup('output', $description);
-  @include utils.content('assert', 'ASSERT', false, $description) { @content; }
+  @include utils.content('assert', false, $description) { @content; }
   @include utils.strike('output-to-css', $output: true);
 }
 
@@ -79,7 +79,7 @@
 ///     }
 ///   }
 @mixin output($selector: true) {
-  @include utils.content('output', 'OUTPUT', $selector) { @content; }
+  @include utils.content('output', $selector) { @content; }
 }
 
 // Expect
@@ -118,7 +118,7 @@
 ///     }
 ///   }
 @mixin expect($selector: true) {
-  @include utils.content('expect', 'EXPECTED', $selector) { @content; }
+  @include utils.content('expect', $selector) { @content; }
 }
 
 // Contains
@@ -159,5 +159,5 @@
 ///     }
 ///   }
 @mixin contains($selector: true) {
-  @include utils.content('contains', 'CONTAINED', $selector) { @content; }
+  @include utils.content('contains', $selector) { @content; }
 }

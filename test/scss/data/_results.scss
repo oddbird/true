@@ -89,7 +89,7 @@
   }
 }
 
-@include describe('results-message [function]') {
+@include describe('Results Message') {
   $test-map: (
     'run': 10,
     'pass': 6,

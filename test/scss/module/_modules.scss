@@ -1,9 +1,9 @@
-@use '../../index' as *;
-@use '../../sass/data/context';
+@use '../../../index' as *;
+@use '../../../sass/data/context';
 
-@include test-module('test-module [mixin]') {
+@include test-module('Test Module') {
   @include test('Changes the current module context') {
-    @include assert-equal(context.context('module'), 'test-module [mixin]');
+    @include assert-equal(context.context('module'), 'Test Module');
   }
 
   @include test-module(Nested & Unquoted Module Name) {
@@ -13,8 +13,8 @@
   }
 }
 
-@include describe('Describe/it syntax') {
+@include describe('Describe') {
   @include it('Changes the current module context') {
-    @include assert-equal(context.context('module'), 'Describe/it syntax');
+    @include assert-equal(context.context('module'), 'Describe');
   }
 }

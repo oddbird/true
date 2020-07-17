@@ -4,8 +4,12 @@
 
 // Assert True
 @include describe('Assert True') {
-  @include it('Truthiness') {
-    @include assert-true('this string', 'Non-false properties return true.');
+  @include it('Non-false properties return true') {
+    @include assert-true('this string');
+  }
+
+  @include it('Supports is-truthy alias') {
+    @include is-truthy(5);
   }
 }
 
@@ -27,6 +31,10 @@
     $empty: ();
 
     @include assert-false($empty, 'Empty lists return false.');
+  }
+
+  @include it('Supports is-falsy alias') {
+    @include is-falsy(());
   }
 }
 
@@ -71,6 +79,10 @@
       $inspect: true
     );
   }
+
+  @include it('Supports is-equal alias') {
+    @include is-equal(5, 10 / 2);
+  }
 }
 
 
@@ -86,5 +98,9 @@
 
   @include it('Mismatched units no longer needs $inspect') {
     @include assert-unequal(1, 1rem);
+  }
+
+  @include it('Supports not-equal alias') {
+    @include not-equal(5, 10 * 2);
   }
 }

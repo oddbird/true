@@ -1,7 +1,29 @@
 @use '../../../index' as *;
 @use '../../../sass/assert/utils';
+@use '../../../sass/data';
+@use 'sass:list';
 
-// Is Truthy
+// I'm not sure how to write tests for several of the wrapper mixins:
+// - content() doesn't allow generating a "fake" context for testing…
+// - strike() might be possible, but contatins very little internal logic…
+// - result() contains strike() which would cause difficult side-effects
+
+@include describe('Setup') {
+  @include it('Updates context based on current assertions') {
+    $initial: data.$context;
+    $name: 'fake';
+    $description: 'this is not a real assertion';
+
+    @include utils.setup($name, $description);
+
+    $test: data.$context;
+    $expect: list.append($initial, ('assert', '[#{$name}] #{$description}'));
+    data.$context: $initial;
+
+    @include assert-equal($test, $expect);
+  }
+}
+
 @include describe('Is Truthy') {
   @include it('True is truthy') {
     @include assert-equal(utils.is-truthy(true), true);

@@ -27,7 +27,7 @@
   }
 }
 
-@include describe('stats-message [function]') {
+@include describe('Stats Message') {
   $test-map: (
     'modules': 4,
     'tests': 6,

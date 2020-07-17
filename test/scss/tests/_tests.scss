@@ -1,19 +1,19 @@
-@use '../../index' as *;
-@use '../../sass/data/context';
+@use '../../../index' as *;
+@use '../../../sass/data/context';
 
-@include test-module('Tests') {
-  @include test('test [mixin]') {
+@include describe('Tests') {
+  @include test('Test') {
     @include assert-equal(
       context.context(test),
-      'test [mixin]',
+      'Test',
       'Changes the current test context'
     );
   }
 
-  @include it('it [mixin]') {
+  @include it('It [alias]') {
     @include assert-equal(
       context.context(test),
-      'it [mixin]',
+      'It [alias]',
       'Changes the current test context'
     );
   }

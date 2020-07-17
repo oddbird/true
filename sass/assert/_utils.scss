@@ -1,14 +1,35 @@
 @use '../config';
 @use '../data';
+@use 'sass:map';
 
+// Content
+// -------
+/// Wrap output assertions with the proper
+/// CSS comments & selectors.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {bool} $selector [true] -
+///   Optionally wrap the contents in a `.test-output` selector block
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
+///
+/// @output - Content wrapped in appropriate comments & optional selector
 @mixin content(
-  $name,
-  $block,
+  $type,
   $selector: true,
   $description: null,
 ) {
-  $start: if($description, '#{$block}: #{$description}', $block);
-  @include data.output-context($name);
+  @include data.output-context($type);
+  $block: map.get(config.$output, $type);
+  $start: if(
+    $description or ($block == 'ASSERT'),
+    '#{$block}: #{$description}',
+    $block
+  );
   @include config.message('  #{$start}  ', 'comments');
   @if $selector {
     .test-output {
@@ -20,6 +41,17 @@
   @include config.message('  END_#{$block}  ', 'comments');
 }
 
+// Setup
+// -----
+/// Setup the proper context for value assertions before testing
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
 @mixin setup(
   $name,
   $description: null,
@@ -31,6 +63,19 @@
   );
 }
 
+// Strike
+// ------
+/// Report assertion results to the current test,
+/// update assertion stats,
+/// and remove current assertion from context.
+///
+/// @access private
+/// @group assert-utils
+///
+/// @param {string} $type -
+///   The type of content being output (eg `assert`/`expect`)
+/// @param {string} $description [null] -
+///   Optional description of the assertion being tested.
 @mixin strike(
   $result,
   $output: false

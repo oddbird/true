@@ -1,0 +1,11 @@
+/// Internal mapping of valid contexts,
+/// with their expected comment-block output.
+/// @access private
+/// @group private-utils
+/// @type bool
+$output: (
+  'assert': 'ASSERT',
+  'output': 'OUTPUT',
+  'expect': 'EXPECTED',
+  'contains': 'CONTAINED',
+);

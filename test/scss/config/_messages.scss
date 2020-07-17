@@ -1,9 +1,9 @@
 @use '../../../index' as *;
 @use '../../../sass/config/messages';
 
-@include describe('True Message') {
-  @include it('Simple messages') {
-    @include assert('Render as CSS comments') {
+@include describe('Message') {
+  @include it('Renders messages as CSS comments') {
+    @include assert() {
       @include output(false) {
         @include messages.message('This is a simple message', 'comments');
       }
@@ -14,8 +14,8 @@
     }
   }
 
-  @include it('Multi-line messages') {
-    @include assert('Render as multiple CSS comments') {
+  @include it('Renders lists as multiple CSS comments') {
+    @include assert() {
       @include output(false) {
         @include messages.message('This is a' 'multiline message', 'comments');
       }

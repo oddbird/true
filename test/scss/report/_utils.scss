@@ -1,0 +1,19 @@
+@use 'stub' as *;
+@use '../../../index' as *;
+@use '../../../sass/report/utils';
+
+@include describe('Report Message') {
+  @include it('Single Line') {
+    @include assert-equal(
+      utils.report-message(not 'linebreaks', $fake-results, $fake-stats),
+      $single
+    );
+  }
+
+  @include it('Linebreaks') {
+    @include assert-equal(
+      utils.report-message('linebreaks', $fake-results, $fake-stats),
+      $multi
+    );
+  }
+}

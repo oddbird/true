@@ -4,72 +4,6 @@
 @use '../config';
 @use '../data';
 
-// Test Module
-// -----------
-/// Test Modules are optional,
-/// and can be used to group tests and other modules
-/// for organizational purposes.
-/// Modules can be nested for additional organization.
-/// @access public
-/// @group api-test
-/// @param {string} $name - module name
-/// @content Include all the tests & modules that are part of this module
-/// @example scss -
-///   @use 'sass:list';
-///   // Module Group
-///   @include true.test-module('zip [function]') {
-///     // Test 1
-///     @include true.test('Returns two lists zipped together') {
-///       @include true.assert-equal(
-///         list.zip(a b c, 1 2 3),
-///         (a 1, b 2, c 3));
-///     }
-///
-///     // Test 2
-///     @include true.test('Returns three zipped lists') {
-///       @include true.assert-equal(
-///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
-///         (1px solid red, 1px dashed green, 3px solid blue));
-///     }
-///   }
-@mixin test-module($name) {
-  @include module-start($name);
-  @content;
-  @include module-stop;
-}
-
-// Describe
-// --------
-/// Describe the unit to be tested.
-/// This works just like a test module,
-/// allowing you to group one or more related tests.
-/// @alias test-module
-/// @group api-test
-/// @param {string} $name - module name
-/// @content Include all the tests that are part of this module
-/// @example scss -
-///   @use 'sass:list';
-///   @include true.describe('zip [function]') {
-///     // Test 1
-///     @include true.it('Returns two lists zipped together') {
-///       @include true.assert-equal(
-///         list.zip(a b c, 1 2 3),
-///         (a 1, b 2, c 3));
-///     }
-///
-///     // Test 2
-///     @include true.it('Returns three zipped lists') {
-///       @include true.assert-equal(
-///         list.zip(1px 1px 3px, solid dashed solid, red green blue),
-///         (1px solid red, 1px dashed green, 3px solid blue));
-///     }
-///   }
-@mixin describe($name) {
-  @include test-module($name) {
-    @content;
-  }
-}
-
 // Module Start
 // ------------
 /// Module start helper
@@ -77,7 +11,19 @@
 /// @group private-test
 /// @param {string} $name - module name
 @mixin module-start($name) {
-  @include data.context(module, $name);
+  @include data.context('module', $name);
+  $modules: module-title();
+  @include config.message($modules, 'comments');
+  @include config.message(underline($modules), 'comments');
+}
+
+// Module Title
+// ------------
+/// Generate a title based on current nested module context
+/// @access private
+/// @group private-test
+/// @return {string} - Concatenated names of current modules
+@function module-title() {
   $module-list: data.context-all('module');
   $modules: list.nth($module-list, 1);
 
@@ -89,15 +35,27 @@
     }
   }
 
-  @include config.message('# Module: #{$modules}', 'comments');
+  @return '# Module: #{$modules}';
+}
 
-  $underline: '--------';
+// Underline
+// ---------
+/// Generate a title based on current nested module context
+/// @access private
+/// @group private-test
+/// @param {string} $string
+/// @return {string} - Underline dashes of the same length as string param
+@function underline(
+  $string
+) {
+  $underline: '';
+  $string: if(meta.type-of($string) == 'string', $string, '#{$string}');
 
-  @for $i from 1 through string.length(meta.inspect($modules)) {
+  @for $i from 1 through string.length($string) {
     $underline: '#{$underline}-';
   }
 
-  @include config.message($underline, 'comments');
+  @return $underline;
 }
 
 // Module Stop

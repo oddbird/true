@@ -1,9 +1,13 @@
-@use '../../sass/config' as true with ($error-output-override: true);
+@use '../../sass/config' as init with (
+  $error-output-override: true,
+  $terminal-output: false,
+);
+@use '../../sass/true';
 
 @use 'config';
 @use 'data';
 @use 'assert';
-@use 'modules';
+@use 'module';
 @use 'tests';
 @use 'report';
 
@@ -11,3 +15,5 @@
 .not-a-test {
   break: please-no;
 }
+
+@include true.report;
