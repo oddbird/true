@@ -39,7 +39,7 @@ $catch-errors: false !default;
 /// @group api-errors
 /// @since v6.0
 /// @param {string} $message -
-///   The error messsage to report
+///   The error message to report
 /// @param {string} $source [null] -
 ///   The source of the error, for additional context
 /// @param {bool | 'warn'} $catch [$catch-errors] -

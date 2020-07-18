@@ -15,7 +15,7 @@
 ///   `assert-equal` comparison on output CSS.
 ///   The compiled CSS-results of the `output()` mixin
 ///   will be compared against the results of the `expect()` mixin.
-/// - When using Mocha integration, the output comparison is automated –
+/// - When using Mocha/Jest integration, the output comparison is automated –
 ///   otherwise you will have to compare the output manually.
 ///   Using `git diff` is a great way to watch for changes in output.
 ///
@@ -58,7 +58,7 @@
 ///   `assert-equal` comparison on output CSS.
 ///   The compiled CSS-results of the `output()` mixin
 ///   will be compared against the results of the `expect()` mixin.
-/// - When using Mocha integration, the output comparison is automated –
+/// - When using Mocha/Jest integration, the output comparison is automated –
 ///   otherwise you will have to compare the output manually.
 ///   Using `git diff` is a great way to watch for changes in output.
 ///
@@ -97,7 +97,7 @@
 ///   `assert-equal` comparison on output CSS.
 ///   The compiled CSS-results of the `output()` mixin
 ///   will be compared against the results of the `expect()` mixin.
-/// - When using Mocha integration, the output comparison is automated –
+/// - When using Mocha/Jest integration, the output comparison is automated –
 ///   otherwise you will have to compare the output manually.
 ///   Using `git diff` is a great way to watch for changes in output.
 ///
@@ -137,7 +137,7 @@
 ///   The compiled CSS-results of the `contains()` mixin
 ///   will be compared against the results of the `output()` mixin
 ///   to see if all of the `contains` CSS is within the `output` CSS.
-/// - When using Mocha integration, the output comparison is automated –
+/// - When using Mocha/Jest integration, the output comparison is automated –
 ///   otherwise you will have to compare the output manually.
 ///   Using `git diff` is a great way to watch for changes in output.
 ///
