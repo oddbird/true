@@ -8,8 +8,8 @@ True is a unit-testing tool
 for [Sass](https://sass-lang.com/) code –
 initially developed for the
 [Susy layout toolkit](https://www.oddbird.net/susy/).
-All of the test code is written in pure Sass,
-and can be compiled by the Dart Sass compiler –
+All of the test code is written in plain Sass,
+and can be compiled using Dart Sass –
 but we also provide integration with
 JavaScript test runners
 (e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),

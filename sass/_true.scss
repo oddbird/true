@@ -1,8 +1,6 @@
-// Susy partials
-// =============
-
 // config
 @forward 'config/settings';
+@forward 'config/throw';
 
 // api
 @forward 'module';

@@ -8,7 +8,10 @@
   and removing `sass` option for `runSass`.
 - BREAKING: Drop support for node < 10
 - BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
-- Support testing `content` properties which include a curly brace.
+- FEATURE: New `_throw.scss` module provides:
+  - `error()` function & mixin for establishing "catchable" errors
+  - global `$catch-errors` toggles how `error()` output is handled
+- FEATURE: Support testing `content` properties which include a curly brace.
 - Update dependencies
 
 ## 5.0.0 (06/03/19)

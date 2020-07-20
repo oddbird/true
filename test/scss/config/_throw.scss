@@ -6,7 +6,7 @@
   @include it('Allow errors to return without blocking compilation') {
     @include assert-equal(
       throw.error('This is a test error message', 'error test'),
-      'ERROR [error test] This is a test error message'
+      'ERROR [error test]: This is a test error message'
     );
   }
 }
@@ -22,7 +22,8 @@
       }
       @include expect {
         @include messages.message(
-          'ERROR [error test] This is a test error message',
+          'ERROR [error test]:'
+          '  This is a test error message',
           'comments'
         );
       }

@@ -1,60 +1,121 @@
 @use 'messages';
 
-// True Error Output Override
-// --------------------------
-/// Override error-output for the purpose of testing failure-cases
-/// @access private
-/// @group private-utils
-/// @type bool
-$error-output-override: false !default;
+/// # Catching & Testing Errors
+/// Sass doesn't (yet) provide a way to catch errors,
+/// but we provide a workaround that works for many use-cases
+/// (especially unit-testing error states).
+/// @group api-errors
+/// @since v6.0
 
-// True Error [function]
-// ---------------------
-/// Optionally override error-output for testing failure-cases
-/// @access private
-/// @group private-utils
-/// @param {string} $message -
-///   The error to report
-/// @param {string} $source -
-///   The source of the error
-/// @param {bool} $override [$error-output-override] -
-///   Optionally override error-output for testing failure-cases
-/// @return {string}
-///   A message detailing the source and error,
-///   when the `$override` is `true`
-/// @throw
-///   A message detailing the source and error,
-///   when the `$override` is `false`
-@function error($message, $source, $override: $error-output-override) {
-  @if $override {
-    @return 'ERROR [#{$source}] #{$message}';
-  }
+/// By default, the `error()` function and mixin
+/// will simply pass details along to the built-in Sass `@error` declaration.
+/// This setting allows you to avoid throwing errors that stop compilation,
+/// and return them as values (for functions)
+/// or output CSS comments (for mixins) instead.
+///
+/// Any "true" value will catch errors,
+/// but a value of `warn` will also show warnings in the command-line output.
+/// @since v6.0
+/// @access public
+/// @group api-settings
+/// @type bool | 'warn'
+/// @see {function} error
+$catch-errors: false !default;
 
-  @error '[#{$source}] #{$message}';
+// Format an error prefix, with source if available
+@function _prefix(
+  $source
+) {
+  @return if($source, 'ERROR [#{$source}]:', 'ERROR:');
 }
 
-// True Error [mixin]
-// ---------------------
-/// Optionally override error-output for testing failure-cases
-/// @access private
-/// @group private-utils
+/// Use in place of `@error` statements inside functions.
+/// When the `$catch` parameter
+/// (or global `$catch-errors` setting) is set,
+/// the function will return errors without stopping compilation.
+/// This can be used to test errors as return values with True,
+/// or to "catch" errors and handle them in different ways.
+/// @access public
+/// @group api-errors
+/// @since v6.0
 /// @param {string} $message -
-///   The error to report
-/// @param {string} $source -
-///   The source of the error
-/// @param {bool} $override [$error-output-override] -
-///   Optionally override error-output for testing failure-cases
-/// @output
+///   The error message to report
+/// @param {string} $source [null] -
+///   The source of the error, for additional context
+/// @param {bool | 'warn'} $catch [$catch-errors] -
+///   Optionally catch errors,
+///   and return them as values without stopping compilation
+/// @return {string}
 ///   A message detailing the source and error,
-///   when the `$override` is `true`
+///   when `$catch` is true
 /// @throw
 ///   A message detailing the source and error,
-///   when the `$override` is `false`
-@mixin error($message, $source, $override: $error-output-override) {
-  @if $override {
-    $error: 'ERROR [#{$source}] #{$message}';
-    @include messages.message($error, 'comments');
+///   when `$catch` is false
+/// @example scss
+///   @use 'throw';
+///   @use 'sass:meta';
+///
+///   @function add($a, $b) {
+///     @if (meta.type-of($a) != 'number') or (meta.type-of($b) != 'number') {
+///       @return throw.error(
+///         $message: '$a and $b must both be numbers',
+///         $source: 'add()',
+///         $catch: true
+///       );
+///     }
+///     @return $a + $b;
+///   }
+///
+///   .demo { width: add(3em, 'hello'); }
+@function error($message, $source: null, $catch: $catch-errors) {
+  @if $catch {
+    @if ($catch == 'warn') { @warn $message; }
+    @return '#{_prefix($source)} #{$message}';
+  }
+
+  @error $message;
+}
+
+/// Use in place of `@error` statements inside mixins
+/// or other control structures with CSS output (not functions).
+/// When the `$catch` parameter
+/// (or global `$catch-errors` setting) is set,
+/// the function will output errors as comments without stopping compilation.
+/// This can be used to test errors as return values with True,
+/// or to "catch" errors and handle them in different ways.
+/// @access public
+/// @group api-errors
+/// @since v6.0
+/// @param {string | list} $message -
+///   The error message to report
+/// @param {string} $source [null] -
+///   The source of the error, for additional context
+/// @param {bool | 'warn'} $catch [$catch-errors] -
+///   Optionally catch errors,
+///   and output them as CSS comments without stopping compilation
+/// @output
+///   A message detailing the source and error,
+///   when `$catch` is true
+/// @throw
+///   A message detailing the source and error,
+///   when `$catch` is false
+/// @example scss
+///   @use 'throw';
+///   $run: 5; $total: 6;
+///
+///   @if ($run != $total) {
+///     @include throw.error(
+///       $message: 'The results don’t add up.',
+///       $source: 'report',
+///       $catch: true
+///     );
+///   }
+@mixin error($message, $source: null, $catch: $catch-errors) {
+  @if $catch {
+    @if ($catch == 'warn') { @warn $message; }
+    @include messages.message(_prefix($source), 'comments');
+    @include messages.message($message, 'comments', $comment-padding: 2);
   } @else {
-    @error '[#{$source}] #{$message}';
+    @error $message;
   }
 }
