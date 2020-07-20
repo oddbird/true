@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">5.0.0</span>
+          <span class="project-version">6.0.0</span>
         
       </div>
     </header>
@@ -218,8 +218,8 @@ like any other Sass<span class="widont">&nbsp;</span>file:</p>
 </code></pre>
 <p>Depending on your setup,
 you may need to include the full path<span class="widont">&nbsp;</span>name:</p>
-<pre><code class="lang-scss">// This is only an example
-@use '../node_modules/sass-true/sass/true' as *;
+<pre><code class="lang-scss">// This is only an example, your path may be different
+@use '../node_modules/sass-true' as *;
 </code></pre>
 <h2 id="one-setting">One Setting</h2>
 <p><code>$terminal-output</code> (boolean),
@@ -231,6 +231,12 @@ This is the default, and best for compiling without a JavaScript test<span class
 <li><code>false</code> will turn off all terminal output from Sass,
 though Mocha/Jest will continue to use the terminal for<span class="widont">&nbsp;</span>reporting.</li>
 </ul>
+<p>If you are still using <code>@import</code> rather than <code>@use</code>,
+there is an import path available -
+which retains the legacy prefixed <code>$true-terminal-output</code> variable name:</p>
+<pre><code class="lang-scss">// Your path may be different
+@import '../node_modules/sass-true/sass/true';
+</code></pre>
 <h2 id="usage">Usage</h2>
 <p>True is based on common JS-testing patterns,
 allowing both a <code>test-module</code>/<code>test</code> syntax,

@@ -48,8 +48,8 @@ Depending on your setup,
 you may need to include the full path name:
 
 ```scss
-// This is only an example
-@use '../node_modules/sass-true/sass/true' as *;
+// This is only an example, your path may be different
+@use '../node_modules/sass-true' as *;
 ```
 
 ## One Setting
@@ -62,6 +62,15 @@ defaults to `true`
   This is the default, and best for compiling without a JavaScript test runner.
 - `false` will turn off all terminal output from Sass,
   though Mocha/Jest will continue to use the terminal for reporting.
+
+If you are still using `@import` rather than `@use`,
+there is an import path available -
+which retains the legacy prefixed `$true-terminal-output` variable name:
+
+```scss
+// Your path may be different
+@import '../node_modules/sass-true/sass/true';
+```
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 6.0.0 (07/20/20)
 
 - BREAKING: Switch to [Dart Sass](https://sass-lang.com/dart-sass) with [Sass
   module system](https://sass-lang.com/blog/the-module-system-is-launched),
@@ -8,7 +8,13 @@
   and removing `sass` option for `runSass`.
 - BREAKING: Drop support for node < 10
 - BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
-- FEATURE: New `_throw.scss` module provides:
+  when importing as a module (with `@use`).
+  Projects not using Sass modules can still
+  `@import '<path>/sass-true/sass/true'`
+  and access the setting as `$true-terminal-output`
+- FEATURE: Added `_index.scss` at the project root,
+  for simpler import path: `@use '<path>/sass-true'`
+- FEATURE: New `sass/_throw.scss` module provides:
   - `error()` function & mixin for establishing "catchable" errors
   - global `$catch-errors` toggles how `error()` output is handled
 - FEATURE: Support testing `content` properties which include a curly brace.

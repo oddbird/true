@@ -1,0 +1,9 @@
+// config
+@forward 'config/settings' as true-*;
+@forward 'config/throw';
+
+// api
+@forward 'module';
+@forward 'test';
+@forward 'assert';
+@forward 'report';
