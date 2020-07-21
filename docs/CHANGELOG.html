@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">5.0.0</span>
+          <span class="project-version">6.0.0</span>
         
       </div>
     </header>
@@ -169,15 +169,21 @@
           
   <div class="text-block">
     <h1 id="true-changelog">True Changelog</h1>
-<h2 id="unreleased">UNRELEASED</h2>
+<h2 id="6-0-0-07-20-20-">6.0.0 (07/20/20)</h2>
 <ul>
 <li>BREAKING: Switch to <a href="https://sass-lang.com/dart-sass">Dart Sass</a> with <a href="https://sass-lang.com/blog/the-module-system-is-launched">Sass
 module system</a>,
 dropping support for <a href="https://github.com/sass/node-sass">Node Sass</a> entirely
 and removing <code>sass</code> option for <code>runSass</code>.</li>
 <li>BREAKING: Drop support for node &lt;<span class="widont">&nbsp;</span>10</li>
-<li>BREAKING: Rename <code>$true-terminal-output</code> setting to <code>$terminal-output</code></li>
-<li>FEATURE: New <code>_throw.scss</code> module provides:
+<li>BREAKING: Rename <code>$true-terminal-output</code> setting to <code>$terminal-output</code>
+when importing as a module (with <code>@use</code>).
+Projects not using Sass modules can still
+<code>@import '&lt;path&gt;/sass-true/sass/true'</code>
+and access the setting as <code>$true-terminal-output</code></li>
+<li>FEATURE: Added <code>_index.scss</code> at the project root,
+for simpler import path: <code>@use '&lt;path&gt;/sass-true'</code></li>
+<li>FEATURE: New <code>sass/_throw.scss</code> module provides:
 <ul>
 <li><code>error()</code> function &amp; mixin for establishing “catchable”<span class="widont">&nbsp;</span>errors</li>
 <li>global <code>$catch-errors</code> toggles how <code>error()</code> output is<span class="widont">&nbsp;</span>handled</li>
