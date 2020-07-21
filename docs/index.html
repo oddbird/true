@@ -337,7 +337,7 @@ want to run<span class="widont">&nbsp;</span>separately.</p>
 True’s sass path to the <code>includePaths</code> option, so <code>@use 'true';</code> works in
 your Sass test<span class="widont">&nbsp;</span>file.</p>
 <p>The second argument is an object with required <code>describe</code> and <code>it</code> options, and
-an optional <code>contextLines</code> option.</p>
+optional <code>contextLines</code> and <code>sass</code> options.</p>
 <p>Any JS test runner with equivalents to Mocha’s or Jest’s <code>describe</code> and <code>it</code>
 should be usable in the same way: just pass your test runner’s <code>describe</code> and
 <code>it</code> equivalents in the second argument to <code>runSass</code>.</p>
@@ -346,6 +346,11 @@ part of the error message. This context will likely be helpful in understanding
 the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric <code>contextLines</code> option: the maximum number of
 context lines to<span class="widont">&nbsp;</span>provide.</p>
+<p>You can also provide a <code>sass</code> option to provide a different Sass implementation.
+This option expects an implementation providing a <code>renderSync</code> method with the
+<a href="https://sass-lang.com/documentation/js-api#rendersync">same signature</a> as Dart
+Sass, and support for the
+<a href="https://sass-lang.com/blog/the-module-system-is-launched">Sass module<span class="widont">&nbsp;</span>system</a>.</p>
 <h3 id="imports-without-webpack">Imports without Webpack</h3>
 <p>If you use Webpack’s tilde notation, like <code>@use '~accoutrement/sass/tools'</code>,
 you’ll need to tell <code>runSass</code> how to handle that. That will require writing a
