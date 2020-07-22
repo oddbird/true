@@ -25,9 +25,6 @@
     "css": "^3.0.0",
     "lodash": "^4.17.19"
   },
-  "peerDependencies": {
-    "sass": ">=1.23.0"
-  },
   "devDependencies": {
     "chai": "^4.1.2",
     "coveralls": "^3.1.0",

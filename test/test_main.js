@@ -69,16 +69,42 @@ describe('#runSass', () => {
     const mock = function (name, cb) {
       cb();
     };
-    main.runSass(
-      {
-        data: sass,
-        includePaths: [path.join(__dirname, 'scss/includes')],
-      },
-      {
-        describe: mock,
-        it: mock,
-      },
-    );
+    const attempt = function () {
+      main.runSass(
+        {
+          data: sass,
+          includePaths: [path.join(__dirname, 'scss/includes')],
+        },
+        {
+          describe: mock,
+          it: mock,
+        },
+      );
+    };
+    expect(attempt).not.to.throw();
+  });
+
+  it('can specify sass engine to use', () => {
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      main.runSass(
+        {
+          data: '',
+        },
+        {
+          sass: {
+            renderSync() {
+              throw new Error('Custom sass implementation called');
+            },
+          },
+          describe: mock,
+          it: mock,
+        },
+      );
+    };
+    expect(attempt).to.throw('Custom sass implementation called');
   });
 });
 

@@ -4,8 +4,7 @@
 
 - BREAKING: Switch to [Dart Sass](https://sass-lang.com/dart-sass) with [Sass
   module system](https://sass-lang.com/blog/the-module-system-is-launched),
-  dropping support for [Node Sass](https://github.com/sass/node-sass) entirely
-  and removing `sass` option for `runSass`.
+  dropping support for [Node Sass](https://github.com/sass/node-sass).
 - BREAKING: Drop support for node < 10
 - BREAKING: Rename `$true-terminal-output` setting to `$terminal-output`
   when importing as a module (with `@use`).

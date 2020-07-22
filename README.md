@@ -193,7 +193,7 @@ True's sass path to the `includePaths` option, so `@use 'true';` works in
 your Sass test file.
 
 The second argument is an object with required `describe` and `it` options, and
-an optional `contextLines` option.
+optional `contextLines` and `sass` options.
 
 Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
 should be usable in the same way: just pass your test runner's `describe` and
@@ -204,6 +204,12 @@ part of the error message. This context will likely be helpful in understanding
 the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric `contextLines` option: the maximum number of
 context lines to provide.
+
+You can also provide a `sass` option to provide a different Sass implementation.
+This option expects an implementation providing a `renderSync` method with the
+[same signature](https://sass-lang.com/documentation/js-api#rendersync) as Dart
+Sass, and support for the
+[Sass module system](https://sass-lang.com/blog/the-module-system-is-launched).
 
 ### Imports without Webpack
 
