@@ -1,6 +1,6 @@
 # True Changelog
 
-## 6.0.0 (07/21/20)
+## 6.0.0 (07/22/20)
 
 - BREAKING: Switch to [Dart Sass](https://sass-lang.com/dart-sass) with [Sass
   module system](https://sass-lang.com/blog/the-module-system-is-launched),
