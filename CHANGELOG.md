@@ -1,5 +1,9 @@
 # True Changelog
 
+## UNRELEASED
+
+- Remove eyeglass specific-version requirement.
+
 ## 6.0.0 (07/22/20)
 
 - BREAKING: Switch to [Dart Sass](https://sass-lang.com/dart-sass) with [Sass

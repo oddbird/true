@@ -47,7 +47,7 @@
     "stylelint-scss": "^3.18.0"
   },
   "eyeglass": {
-    "needs": "^1.0",
+    "needs": "*",
     "name": "true",
     "sassDir": "./sass/",
     "exports": false
