@@ -33,7 +33,7 @@ It will soon be
 so we've decided to move forward
 with the latest Sass features,
 and **no longer support Node Sass
-in any new (4.0+) releases**._
+in any new (6.0+) releases**._
 
 ## Install
 
