@@ -83,6 +83,24 @@ $catch-errors: false !default;
 /// the function will output errors as comments without stopping compilation.
 /// This can be used to test errors as return values with True,
 /// or to "catch" errors and handle them in different ways.
+///
+/// Since True results rely on completing compilation,
+/// we do not have a way to "error out" of the code being tested.
+/// If there is code that needs to be skipped after an error,
+/// we recommend using explicit Sass conditional (if/else) statements
+/// to avoid compounding the problem:
+///
+/// ```scss
+///  @mixin width ($length) {
+///    @if (meta.type-of($length) != number) {
+///      @include true.error("$length must be a number", "width", true);
+///    @else {
+///      // The @else block hides any remaining output
+///      width: $length;
+///    }
+///  }
+/// ```
+///
 /// @access public
 /// @group api-errors
 /// @since v6.0
