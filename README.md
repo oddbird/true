@@ -25,7 +25,7 @@ JavaScript test runners
 (e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
 for extra features and improved reporting.
 
-*Note that **Node Sass**
+_Note that **Node Sass**
 is several years behind **Dart Sass**
 and the official Sass specification.
 It will soon be
@@ -33,7 +33,7 @@ It will soon be
 so we've decided to move forward
 with the latest Sass features,
 and **no longer support Node Sass
-in any new (4.0+) releases**.*
+in any new (4.0+) releases**._
 
 ## Install
 
