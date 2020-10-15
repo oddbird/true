@@ -4,19 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main)](https://coveralls.io/github/oddbird/true?branch=main)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-True is a unit-testing tool
-for [Sass](https://sass-lang.com/) code –
-initially developed for the
-[Susy layout toolkit](https://www.oddbird.net/susy/).
-All of the test code is written in plain Sass,
-and can be compiled using Dart Sass –
-but we also provide integration with
-JavaScript test runners
-(e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
-for extra features and improved reporting.
-
-**Verb**
-
 1. To make true; shape, adjust, place, etc., exactly or accurately:
 
    _True the wheels of a bicycle after striking a pothole._
@@ -28,6 +15,25 @@ for extra features and improved reporting.
 3. To test your Sass code; debug, perfect, etc. (often using _True_):
 
    _True your sweet plugin before you deploy._
+
+True is a unit-testing tool
+for [Sass](https://sass-lang.com/) code.
+All of the tests are written in plain Sass,
+and can be compiled using Dart Sass –
+but we also provide integration with
+JavaScript test runners
+(e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
+for extra features and improved reporting.
+
+_Note that **Node Sass**
+is several years behind **Dart Sass**
+and the official Sass specification.
+It will soon be
+[deprecated entirely](https://github.com/sass/node-sass/issues/2952),
+so we've decided to move forward
+with the latest Sass features,
+and **no longer support Node Sass
+in any new (4.0+) releases**._
 
 ## Install
 
