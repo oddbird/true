@@ -183,17 +183,6 @@
 <p><a href="https://travis-ci.org/oddbird/true"><img src="https://travis-ci.org/oddbird/true.svg?branch=main" alt="Build Status"></a>
 <a href="https://coveralls.io/github/oddbird/true?branch=main"><img src="https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main" alt="Coverage Status"></a>
 <a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License"></a></p>
-<p>True is a unit-testing tool
-for <a href="https://sass-lang.com/">Sass</a> code –
-initially developed for the
-<a href="https://www.oddbird.net/susy/">Susy layout toolkit</a>.
-All of the test code is written in plain Sass,
-and can be compiled using Dart Sass –
-but we also provide integration with
-JavaScript test runners
-(e.g. <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>),
-for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
-<p><strong>Verb</strong></p>
 <ol>
 <li>
 <p>To make true; shape, adjust, place, etc., exactly or<span class="widont">&nbsp;</span>accurately:</p>
@@ -208,6 +197,23 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 <p><em>True your sweet plugin before you<span class="widont">&nbsp;</span>deploy.</em></p>
 </li>
 </ol>
+<p>True is a unit-testing tool
+for <a href="https://sass-lang.com/">Sass</a> code.
+All of the tests are written in plain Sass,
+and can be compiled using Dart Sass –
+but we also provide integration with
+JavaScript test runners
+(e.g. <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>),
+for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
+<p><em>Note that <strong>Node Sass</strong>
+is several years behind <strong>Dart Sass</strong>
+and the official Sass specification.
+It will soon be
+<a href="https://github.com/sass/node-sass/issues/2952">deprecated entirely</a>,
+so we’ve decided to move forward
+with the latest Sass features,
+and <strong>no longer support Node Sass
+in any new (4.0+)<span class="widont">&nbsp;</span>releases</strong>.</em></p>
 <h2 id="install">Install</h2>
 <p>In command line:</p>
 <pre><code class="lang-bash">npm install sass-true
