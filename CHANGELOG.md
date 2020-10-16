@@ -1,6 +1,6 @@
 # True Changelog
 
-## 6.0.1 (10/15/20)
+## 6.0.1 (10/16/20)
 
 - Remove eyeglass specific-version requirement.
 - Update documentation
