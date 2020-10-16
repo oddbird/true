@@ -1,8 +1,9 @@
 # True Changelog
 
-## UNRELEASED
+## 6.0.1 (10/16/20)
 
 - Remove eyeglass specific-version requirement.
+- Update documentation
 
 ## 6.0.0 (07/22/20)
 
