@@ -4,7 +4,7 @@
   "version": "6.0.1",
   "description": "Unit testing for Sass.",
   "homepage": "https://www.oddbird.net/true/",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/oddbird/true.git"
@@ -26,6 +26,12 @@
     "lodash": "^4.17.19"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/css": "0.0.33",
+    "@types/node": "^16.11.11",
+    "@types/sass": "^1.43.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.1.2",
     "coveralls": "^3.1.0",
     "eslint": "^7.5.0",
@@ -44,7 +50,8 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-prettier": "^1.1.2",
-    "stylelint-scss": "^3.18.0"
+    "stylelint-scss": "^3.18.0",
+    "typescript": "^4.4.4"
   },
   "eyeglass": {
     "needs": "*",
@@ -53,12 +60,13 @@
     "exports": false
   },
   "scripts": {
+    "build": "tsc",
     "test": "yarn test:mocha; yarn test:jest",
     "test:mocha": "nyc --reporter=html --reporter=text mocha",
     "test:jest": "jest --testRegex test_ --env=node",
     "prettier:js": "prettier --write '**/*.js'",
     "prettier:other": "prettier --write '**/*.{json,md,yml}'",
-    "eslint": "eslint lib test --fix",
+    "eslint": "eslint src test --fix",
     "lint": "run-p lint:js lint:sass prettier:other",
     "lint:js": "run-s prettier:js eslint",
     "lint:sass": "stylelint '**/*.scss' --fix",

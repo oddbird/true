@@ -1,7 +1,5 @@
 /* eslint-env mocha, jest */
 
-'use strict';
-
 const path = require('path');
 
 const chalk = require('chalk');

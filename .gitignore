@@ -14,3 +14,4 @@ node_modules/
 pkg/*
 test/.sass-cache/
 true-*.gem
+.idea
