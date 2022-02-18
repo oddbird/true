@@ -5,7 +5,7 @@
 const path = require('path');
 
 const expect = require('chai').expect;
-const chalk = require('chalk');
+const { diffStringsUnified } = require('jest-diff');
 
 const main = require('../lib/main.js');
 
@@ -18,11 +18,10 @@ describe('#fail', () => {
       output: '2',
       details: 'It really broke.',
     });
-    const expected = `${'It broke. ("2" assert-equal "1" -- It really broke.)\n     '}${chalk.green(
-      '+ expected ',
-    )}${chalk.red('- actual')}\n\n     ${chalk.red('-2')}\n     ${chalk.green(
-      '+1\n',
-    )}`;
+    const expected = `${'It broke. [type: assert-equal] -- It really broke.\n\n'}${diffStringsUnified(
+      '1',
+      '2',
+    )}\n`;
 
     expect(msg).to.equal(expected);
   });
@@ -44,9 +43,7 @@ describe('#runSass', () => {
     const attempt = function () {
       main.runSass({ data: sass }, { describe: mock, it: mock });
     };
-    expect(attempt).to.throw(
-      'This test is meant to fail. ("[bool] false" assert-true "[bool] true")',
-    );
+    expect(attempt).to.throw('This test is meant to fail. [type: assert-true]');
   });
 
   it('can specify includePaths', () => {
@@ -853,7 +850,7 @@ describe('#parse', () => {
               assertions: [
                 {
                   description: 'Output selector pattern contains input pattern',
-                  assertionType: 'equal',
+                  assertionType: 'contains',
                   passed: true,
                   output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
                   expected: '.test-output {\n  height: 10px;\n}',
@@ -900,7 +897,7 @@ describe('#parse', () => {
               assertions: [
                 {
                   description: 'Output selector pattern contains input pattern',
-                  assertionType: 'equal',
+                  assertionType: 'contains',
                   passed: true,
                   output:
                     '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
@@ -946,7 +943,7 @@ describe('#parse', () => {
               assertions: [
                 {
                   description: 'Output selector pattern contains input pattern',
-                  assertionType: 'equal',
+                  assertionType: 'contains',
                   passed: true,
                   output:
                     '.test-output {\n  content: \'{ "a": 1, "b": 2 }\';\n  height: 10px;\n  width: 20px;\n}',
@@ -992,7 +989,7 @@ describe('#parse', () => {
               assertions: [
                 {
                   description: 'Output selector pattern contains input pattern',
-                  assertionType: 'equal',
+                  assertionType: 'contains',
                   passed: false,
                   output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
                   expected: '.test-output {\n  height: 20px;\n}',
@@ -1036,7 +1033,7 @@ describe('#parse', () => {
               assertions: [
                 {
                   description: 'Output selector pattern contains input pattern',
-                  assertionType: 'equal',
+                  assertionType: 'contains',
                   passed: false,
                   output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
                   expected: '.other-class {\n  height: 20px;\n}',

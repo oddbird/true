@@ -1,5 +1,13 @@
 # True Changelog
 
+## UNRELEASED
+
+- FEATURE: Clearer formatting of failing test diffs
+  [#210](https://github.com/oddbird/true/issues/210)
+- INTERNAL: Limit files included in npm package
+  [#189](https://github.com/oddbird/true/issues/189)
+- INTERNAL: Update dependencies
+
 ## 6.0.1 (10/16/20)
 
 - Remove eyeglass specific-version requirement.
