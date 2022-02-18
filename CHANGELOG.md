@@ -2,8 +2,10 @@
 
 ## UNRELEASED
 
-- Clearer formatting of failing test diffs
+- FEATURE: Clearer formatting of failing test diffs
   [#210](https://github.com/oddbird/true/issues/210)
+- INTERNAL: Limit files included in npm package
+  [#189](https://github.com/oddbird/true/issues/189)
 
 ## 6.0.1 (10/16/20)
 
