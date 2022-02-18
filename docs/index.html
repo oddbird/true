@@ -317,10 +317,10 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/test_sass.js</code>:</p>
-<pre><code class="lang-js">var path = require('path');
-var sassTrue = require('sass-true');
+<pre><code class="lang-js">const path = require('path');
+const sassTrue = require('sass-true');
 
-var sassFile = path.join(__dirname, 'test.scss');
+const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass({ file: sassFile }, { describe, it });
 </code></pre>
 </li>

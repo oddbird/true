@@ -4,8 +4,8 @@
 
 const path = require('path');
 
-const chalk = require('chalk');
 const expect = require('chai').expect;
+const chalk = require('chalk');
 
 const main = require('../lib/main.js');
 

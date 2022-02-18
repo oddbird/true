@@ -170,10 +170,10 @@ when upgrading from an older version of True.
 4. Write a shim JS test file in `test/test_sass.js`:
 
    ```js
-   var path = require('path');
-   var sassTrue = require('sass-true');
+   const path = require('path');
+   const sassTrue = require('sass-true');
 
-   var sassFile = path.join(__dirname, 'test.scss');
+   const sassFile = path.join(__dirname, 'test.scss');
    sassTrue.runSass({ file: sassFile }, { describe, it });
    ```
 
