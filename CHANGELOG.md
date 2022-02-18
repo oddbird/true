@@ -7,6 +7,7 @@
 - INTERNAL: Limit files included in npm package
   [#189](https://github.com/oddbird/true/issues/189)
 - INTERNAL: Update dependencies
+- BREAKING: Drop support for node < 12
 
 ## 6.0.1 (10/16/20)
 
