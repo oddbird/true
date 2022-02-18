@@ -131,7 +131,7 @@
 ///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
-///   @include true.test('Strings and numbers hare not the same') {
+///   @include true.test('Strings and numbers are not the same') {
 ///     @include true.assert-unequal(
 ///       1em,
 ///       '1em');

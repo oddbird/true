@@ -1,5 +1,10 @@
 # True Changelog
 
+## UNRELEASED
+
+- Clearer formatting of failing test diffs
+  [#210](https://github.com/oddbird/true/issues/210)
+
 ## 6.0.1 (10/16/20)
 
 - Remove eyeglass specific-version requirement.
