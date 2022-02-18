@@ -85,9 +85,7 @@ $test-result: null;
   $pass: map.get($results, 'pass');
   $fail: map.get($results, 'fail');
   $output-to-css: map.get($results, 'output-to-css');
-
   $items: if($run == 1, 'Test', 'Tests');
-
   $items: '#{$run} #{$items}';
   $passed: '#{$pass} Passed';
   $failed: '#{$fail} Failed';

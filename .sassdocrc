@@ -7,8 +7,7 @@ display:
 
 herman:
   sass:
-    implementation: sass
-    includepaths: ['sass']
+    includePaths: ['sass']
     use: ['true']
   extraDocs:
     - name: 'Changelog'

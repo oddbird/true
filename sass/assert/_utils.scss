@@ -24,6 +24,7 @@
   $description: null,
 ) {
   @include data.output-context($type);
+
   $block: map.get(config.$output, $type);
   $start: if(
     $description or ($block == 'ASSERT'),

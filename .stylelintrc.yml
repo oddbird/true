@@ -1,11 +1,10 @@
-# See https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md
+# See https://stylelint.io/user-guide/rules/list
 # Also https://github.com/kristerkari/stylelint-scss#list-of-rules
 
 extends:
-  - stylelint-config-recommended
+  - stylelint-config-standard-scss
   - stylelint-prettier/recommended
 plugins:
-  - stylelint-scss
   - stylelint-prettier
 
 ignoreFiles:
@@ -13,24 +12,49 @@ ignoreFiles:
   - 'test/**/*.*'
 
 rules:
-  prettier/prettier: true
-
-  at-rule-no-unknown: null
-  scss/at-rule-no-unknown: true
+  # Default rules:
+  #   - https://github.com/stylelint-scss/stylelint-config-standard-scss/blob/main/index.js
+  #   - https://github.com/stylelint-scss/stylelint-config-recommended-scss/blob/master/index.js
+  #   - https://github.com/stylelint/stylelint-config-standard/blob/main/index.js
+  #   - https://github.com/stylelint/stylelint-config-recommended/blob/main/index.js
+  #   - https://github.com/prettier/stylelint-config-prettier/blob/master/src/index.js
 
   # possible errors (these are all on by default)
   no-descending-specificity: null
 
   # limit language features
-  at-rule-no-vendor-prefix: true
+  color-function-notation: null
   color-named: always-where-possible
-  declaration-block-no-redundant-longhand-properties: true
-  declaration-block-single-line-max-declarations: 1
+  custom-property-pattern: null
   declaration-no-important: true
   function-url-no-scheme-relative: true
-  media-feature-name-no-vendor-prefix: true
-  property-no-vendor-prefix: true
-  selector-max-empty-lines: 0
-  selector-no-vendor-prefix: true
-  shorthand-property-no-redundant-values: true
-  value-no-vendor-prefix: true
+  number-max-precision: null
+  selector-class-pattern: null
+
+  # Sass
+  scss/at-function-pattern:
+    - '^([_|-]*[a-z][a-z0-9]*)(-[a-z0-9]+)*-*$'
+    - message: 'Expected function to be kebab-case'
+  scss/at-mixin-pattern:
+    - '^([_|-]*[a-z][a-z0-9]*)(-[a-z0-9]+)*-*$'
+    - message: 'Expected mixin to be kebab-case'
+  scss/at-rule-conditional-no-parentheses: null
+  scss/dollar-variable-pattern:
+    - '^([_|-]*[a-z][a-z0-9]*)(-[a-z0-9]+)*-*$'
+    - message: 'Expected variable to be kebab-case'
+
+  # Disable for Prettier
+  scss/at-else-closing-brace-newline-after: null
+  scss/at-else-closing-brace-space-after: null
+  scss/at-else-empty-line-before: null
+  scss/at-else-if-parentheses-space-before: null
+  scss/at-function-parentheses-space-before: null
+  scss/at-if-closing-brace-newline-after: null
+  scss/at-if-closing-brace-space-after: null
+  scss/at-mixin-parentheses-space-before: null
+  scss/dollar-variable-colon-newline-after: null
+  scss/dollar-variable-colon-space-after: null
+  scss/dollar-variable-colon-space-before: null
+  scss/operator-no-newline-after: null
+  scss/operator-no-newline-before: null
+  scss/operator-no-unspaced: null

@@ -12,6 +12,7 @@
 /// @param {string} $name - module name
 @mixin module-start($name) {
   @include data.context('module', $name);
+
   $modules: module-title();
   @include config.message($modules, 'comments');
   @include config.message(underline($modules), 'comments');
@@ -26,7 +27,6 @@
 @function module-title() {
   $module-list: data.context-all('module');
   $modules: list.nth($module-list, 1);
-
   $length: list.length($module-list);
 
   @if $length > 1 {

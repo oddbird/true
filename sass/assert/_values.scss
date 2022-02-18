@@ -32,6 +32,7 @@
 ///   }
 @mixin assert-true($assert, $description: null) {
   @include utils.setup('assert-true', $description);
+
   $truthy: utils.is-truthy($assert);
   @include utils.result($truthy, true);
 }
@@ -63,6 +64,7 @@
 ///   }
 @mixin assert-false($assert, $description: null) {
   @include utils.setup('assert-false', $description);
+
   $falsey: not utils.is-truthy($assert);
   @include utils.result($falsey, true);
 }
@@ -92,9 +94,10 @@
 ///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
+///   @use 'sass:math';
 ///   @include true.test('Division works as expected in Sass') {
 ///     @include true.assert-equal(
-///       8 / 2, 4,
+///       math.div(8, 2), 4,
 ///       'You can optionally describe the assertion...');
 ///   }
 @mixin assert-equal($assert, $expected, $description: null, $inspect: false) {

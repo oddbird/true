@@ -30,14 +30,12 @@
   $stats: data.$stats
 ) {
   $fail: map.get($results, 'fail');
-
   $run: map.get($results, 'run');
   $pass: map.get($results, 'pass');
   $fail: map.get($results, 'fail');
   $output: map.get($results, 'output-to-css');
   $total: $pass + $fail + $output;
   $tests: map.get($stats, 'tests');
-
   $comment: utils.report-message('linebreak', $results, $stats);
   @include config.message($comment, 'comments');
 
