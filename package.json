@@ -79,5 +79,14 @@
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/oddbird/true/issues"
-  }
+  },
+  "files": [
+    "lib/**/*",
+    "sass/**/*",
+    "_index.scss",
+    "docs/",
+    "CHANGELOG.md",
+    "LICENSE.txt",
+    "README.md"
+  ]
 }
