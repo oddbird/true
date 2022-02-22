@@ -1,8 +1,9 @@
 # https://eslint.org/docs/rules/
 
 root: true
+parser: '@typescript-eslint/parser'
 parserOptions:
-  sourceType: script
+  sourceType: module
   ecmaVersion: 2018
 env:
   es6: true
@@ -10,10 +11,16 @@ env:
 plugins:
   - prettier
   - import
+  - simple-import-sort
+  - '@typescript-eslint'
 extends:
   - eslint:recommended
   - plugin:import/recommended
   - plugin:prettier/recommended
+  - plugin:@typescript-eslint/recommended
+settings:
+  import/resolver:
+    typescript: {}
 rules:
   # Prettier
   prettier/prettier:
@@ -21,12 +28,16 @@ rules:
     - singleQuote: true
       trailingComma: all
 
+  # TypeScript
+  '@typescript-eslint/explicit-module-boundary-types': 0
+  '@typescript-eslint/no-empty-function': 0
+  '@typescript-eslint/no-explicit-any': 0
+  '@typescript-eslint/no-use-before-define': 2
+
   # Import
-  import/order:
-    - 1
-    - newlines-between: always
-      alphabetize:
-        order: 'asc'
+  simple-import-sort/imports: 1
+  import/order: 0
+  import/no-duplicates: 0
   import/named: 1
 
   # Possible Errors
