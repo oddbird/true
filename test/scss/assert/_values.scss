@@ -1,6 +1,7 @@
 @use '../../../index' as *;
 @use 'sass:color';
 @use 'sass:string';
+@use 'sass:math';
 
 // Assert True
 @include describe('Assert True') {
@@ -53,7 +54,7 @@
   }
 
   @include it('Rounded numbers with $inspect') {
-    @include assert-equal(1/3, 0.3333333333, $inspect: true);
+    @include assert-equal(math.div(1, 3), 0.3333333333, $inspect: true);
   }
 
   @include it('Rounded colors with $inspect') {
@@ -81,7 +82,7 @@
   }
 
   @include it('Supports is-equal alias') {
-    @include is-equal(5, 10 / 2);
+    @include is-equal(5, math.div(10, 2));
   }
 }
 

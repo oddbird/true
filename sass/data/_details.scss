@@ -96,7 +96,6 @@
 @function edgefail-notes($one, $two) {
   $one-type: meta.type-of($one);
   $two-type: meta.type-of($two);
-
   $note: null;
   $pre: '- Details: ';
   $inspect: '(set `$inspect: true` to compare output values)';

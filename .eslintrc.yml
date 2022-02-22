@@ -25,6 +25,8 @@ rules:
   import/order:
     - 1
     - newlines-between: always
+      alphabetize:
+        order: 'asc'
   import/named: 1
 
   # Possible Errors
@@ -62,7 +64,7 @@ rules:
   no-new-func: 2
   no-new-wrappers: 2
   no-octal-escape: 2
-  no-param-reassign: 1
+  no-param-reassign: 2
   no-proto: 2
   no-return-assign: 2
   no-return-await: 2

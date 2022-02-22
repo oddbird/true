@@ -1,6 +1,6 @@
 # True
 
-[![Build Status](https://travis-ci.org/oddbird/true.svg?branch=main)](https://travis-ci.org/oddbird/true)
+[![Build Status](https://app.travis-ci.com/oddbird/true.svg?branch=main)](https://app.travis-ci.com/github/oddbird/true)
 [![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main)](https://coveralls.io/github/oddbird/true?branch=main)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
@@ -170,10 +170,10 @@ when upgrading from an older version of True.
 4. Write a shim JS test file in `test/test_sass.js`:
 
    ```js
-   var path = require('path');
-   var sassTrue = require('sass-true');
+   const path = require('path');
+   const sassTrue = require('sass-true');
 
-   var sassFile = path.join(__dirname, 'test.scss');
+   const sassFile = path.join(__dirname, 'test.scss');
    sassTrue.runSass({ file: sassFile }, { describe, it });
    ```
 
