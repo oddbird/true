@@ -1,4 +1,3 @@
-/* eslint-env jest */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 

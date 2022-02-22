@@ -1,4 +1,3 @@
-/* eslint-env jest */
 /* eslint-disable global-require */
 
 import { diffStringsUnified } from 'jest-diff';

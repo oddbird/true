@@ -187,7 +187,8 @@ to "node".~~
 **Update:** Since Jest v27, `testEnvironment` defaults to "node" and no changes
 are needed.
 
-**Note:** Jest does not watch for changes in Sass files by default. To use `jest --watch` with True, add "scss" to your
+**Note:** Jest does not watch for changes in Sass files by default. To use
+`jest --watch` with True, add "scss" to your
 [moduleFileExtensions](https://jestjs.io/docs/configuration#modulefileextensions-arraystring)
 setting.
 
