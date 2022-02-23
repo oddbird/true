@@ -62,7 +62,7 @@
     "lint": "run-p lint:js lint:sass prettier:other",
     "lint:js": "run-s prettier:js eslint",
     "lint:sass": "stylelint '**/*.scss' --fix",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov > coverage/lcov.info",
     "debug": "mocha inspect",
     "sassdoc": "sassdoc sass/",
     "compile": "sass test/scss/test.scss test/css/test.css --load-path ./sass/",

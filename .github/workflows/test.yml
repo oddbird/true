@@ -16,10 +16,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-          cache: npm
-      - run: npm install
-      - run: npm test
-      - uses: codecov/codecov-action@v2
+          cache: yarn
+      - run: yarn install
+      - run: yarn test
+      - run: yarn coverage
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
     name: Lint
@@ -29,6 +32,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-          cache: npm
-      - run: npm install
-      - run: npm run lint
+          cache: yarn
+      - run: yarn install
+      - run: yarn lint
