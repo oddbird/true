@@ -9,7 +9,6 @@
 - INTERNAL: Convert JS to TypeScript and bundle type definitions
 - INTERNAL: Drop internal testing with Mocha
 - INTERNAL: Update dependencies
-- BREAKING: Drop support for node < 12
 
 ## 6.0.1 (10/16/20)
 
