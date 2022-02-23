@@ -6,7 +6,6 @@ import * as css from 'css';
 import { diffStringsUnified } from 'jest-diff';
 import { find, forEach, last, startsWith } from 'lodash';
 import * as path from 'path';
-import type { LegacyOptions } from 'sass';
 
 import * as constants from './constants';
 import {
@@ -58,10 +57,7 @@ export type Rule = css.Comment | css.Rule | css.AtRule;
 
 export type Parser = (rule: Rule, ctx: Context) => Parser;
 
-export const runSass = function (
-  sassOptions: LegacyOptions<'sync'>,
-  trueOptions: TrueOptions,
-) {
+export const runSass = function (sassOptions: any, trueOptions: TrueOptions) {
   const sassOpts = Object.assign({}, sassOptions);
   const trueOpts = Object.assign({}, trueOptions);
   const sassPath = path.join(__dirname, '..', 'sass');

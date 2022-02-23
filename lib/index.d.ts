@@ -1,5 +1,4 @@
 import * as css from 'css';
-import type { LegacyOptions } from 'sass';
 export interface TrueOptions {
     describe: (description: string, fn: () => void) => void;
     it: (description: string, fn: () => void) => void;
@@ -34,6 +33,6 @@ export declare type Context = {
 };
 export declare type Rule = css.Comment | css.Rule | css.AtRule;
 export declare type Parser = (rule: Rule, ctx: Context) => Parser;
-export declare const runSass: (sassOptions: LegacyOptions<'sync'>, trueOptions: TrueOptions) => void;
+export declare const runSass: (sassOptions: any, trueOptions: TrueOptions) => void;
 export declare const formatFailureMessage: (assertion: Assertion) => string;
 export declare const parse: (rawCss: Readonly<string>, ctxLines?: number | undefined) => Module[];
