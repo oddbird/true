@@ -2,7 +2,7 @@ import * as css from 'css';
 export interface TrueOptions {
     describe: (description: string, fn: () => void) => void;
     it: (description: string, fn: () => void) => void;
-    sass?: typeof import('sass');
+    sass?: any;
     contextLines?: number;
 }
 export interface Assertion {
