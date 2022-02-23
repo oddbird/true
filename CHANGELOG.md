@@ -7,6 +7,9 @@
 - INTERNAL: Limit files included in npm package
   [#189](https://github.com/oddbird/true/issues/189)
 - INTERNAL: Convert JS to TypeScript and bundle type definitions
+  [#212](https://github.com/oddbird/true/issues/212) --
+  thanks to @robertmaier for the initial PR
+  [#206](https://github.com/oddbird/true/pull/206)
 - INTERNAL: Drop internal testing with Mocha
 - INTERNAL: Update dependencies
 
