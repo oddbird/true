@@ -57,7 +57,7 @@
     "compile:js": "tsc",
     "compile": "run-p compile:js compile:sass",
     "commit": "run-s lint test compile:sass sassdoc",
-    "prepack": "commit"
+    "prepack": "yarn run commit"
   },
   "dependencies": {
     "@types/css": "^0.0.33",
