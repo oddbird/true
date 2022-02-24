@@ -43,7 +43,10 @@ describe('#runSass', () => {
       cb();
     };
     const attempt = function () {
-      sassTrue.runSass({ describe: mock, it: mock, string: true }, sass);
+      sassTrue.runSass(
+        { describe: mock, it: mock, sourceType: 'string' },
+        sass,
+      );
     };
     expect(attempt).toThrow('This test is meant to fail. [type: assert-true]');
   });
@@ -73,7 +76,7 @@ describe('#runSass', () => {
         {
           describe: mock,
           it: mock,
-          string: true,
+          sourceType: 'string',
         },
         sass,
         {

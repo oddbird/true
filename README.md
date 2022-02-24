@@ -23,22 +23,12 @@ JavaScript test runners
 (e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
 for extra features and improved reporting.
 
-_Note that **Node Sass**
-is several years behind **Dart Sass**
-and the official Sass specification.
-It will soon be
-[deprecated entirely](https://github.com/sass/node-sass/issues/2952),
-so we've decided to move forward
-with the latest Sass features,
-and **no longer support Node Sass
-in any new (6.0+) releases**._
-
 ## Install
 
 In command line:
 
 ```bash
-npm install sass-true
+npm install --save-dev sass-true
 ```
 
 Import in your test directory,
@@ -143,8 +133,7 @@ after the tests have completed:
 @include report;
 ```
 
-See the [full documentation online](https://www.oddbird.net/true/)
-or in the `.sassdoc` directory,
+See the [full documentation online](https://www.oddbird.net/true/docs/)
 for more details.
 See [CHANGELOG.md](https://github.com/oddbird/true/blob/main/CHANGELOG.md)
 when upgrading from an older version of True.
@@ -172,18 +161,10 @@ when upgrading from an older version of True.
    const sassTrue = require('sass-true');
 
    const sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({ file: sassFile }, { describe, it });
+   sassTrue.runSass({ describe, it }, sassFile);
    ```
 
 5. Run Mocha/Jest, and see your Sass tests reported in the command line.
-
-~~**Note:** Jest defaults to running tests in a browser-like environment
-(jsdom). When using with True, set the
-[testEnvironment](https://jestjs.io/docs/26.x/configuration#testenvironment-string)
-to "node".~~
-
-**Update:** Since Jest v27, `testEnvironment` defaults to "node" and no changes
-are needed.
 
 **Note:** Jest does not watch for changes in Sass files by default. To use
 `jest --watch` with True, add "scss" to your
@@ -193,18 +174,12 @@ setting.
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
-The first argument to `runSass` accepts the
-[same options](https://sass-lang.com/documentation/js-api/interfaces/LegacySharedOptions)
-that sass' `renderSync` function accepts. The only modification `runSass` makes
-is to add True's sass path to the `includePaths` option, so `@use 'true';` works
-in your Sass test file.
-
-The second argument is an object with required `describe` and `it` options, and
-optional `contextLines` and `sass` options.
+The first argument is an object with required `describe` and `it` options, and
+optional `contextLines` and `sourceType` options.
 
 Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
 should be usable in the same way: just pass your test runner's `describe` and
-`it` equivalents in the second argument to `runSass`.
+`it` equivalents in the first argument to `runSass`.
 
 If True can't parse the CSS output, it'll give you some context lines of CSS as
 part of the error message. This context will likely be helpful in understanding
@@ -212,27 +187,27 @@ the parse failure. By default it provides up to 10 lines of context; if you need
 more, you can provide a numeric `contextLines` option: the maximum number of
 context lines to provide.
 
-You can also provide a `sass` option to provide a different Sass implementation.
-This option expects an implementation providing a `renderSync` method with the
-[same signature](https://sass-lang.com/documentation/js-api/modules#renderSync) as Dart
-Sass, and support for the
-[Sass module system](https://sass-lang.com/blog/the-module-system-is-launched).
+The second argument is a string representing either the path to a source Sass
+file (passed through to Sass'
+[`compile`](https://sass-lang.com/documentation/js-api/modules#compile)
+function), or a string of source Sass (passed through to Sass'
+[`compileString`](https://sass-lang.com/documentation/js-api/modules#compileString)
+function). By default it is expected to be a path, and `sass.compile` is used --
+to pass in a source string (and use `sass.compileString`), add `sourceType: 'string'` to your options passed in as the first argument to `runSass`.
 
-### Imports without Webpack
+The third (optional) argument to `runSass` accepts the [same
+options](https://sass-lang.com/documentation/js-api/interfaces/Options) that
+Sass' `compile` or `compileString` expect, and these are passed directly through
+to Sass. The only modification `runSass` makes is to add True's sass path to the
+`loadPaths` option, so `@use 'true';` works in your Sass test file.
+
+### Custom Importers
 
 If you use Webpack's tilde notation, like `@use '~accoutrement/sass/tools'`,
 you'll need to tell `runSass` how to handle that. That will require writing a
-custom importer and passing it into the configuration for `runSass`. Something
-like:
+[custom importer](https://sass-lang.com/documentation/js-api/interfaces/Importer)
+and passing it into the configuration for `runSass`:
 
 ```js
-function importer(url, prev, done) {
-  if (url[0] === '~') {
-    url = path.resolve('node_modules', url.substr(1));
-  }
-
-  return { file: url };
-}
-
-sassTrue.runSass({ importer, file: sassFile }, { describe, it });
+sassTrue.runSass({ describe, it }, sassFile, { importers: [myCustomImporter] });
 ```

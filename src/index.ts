@@ -21,7 +21,7 @@ import {
 export interface TrueOptions {
   describe: (description: string, fn: () => void) => void;
   it: (description: string, fn: () => void) => void;
-  string?: boolean;
+  sourceType?: 'path' | 'string';
   contextLines?: number;
 }
 
@@ -73,7 +73,7 @@ export const runSass = function (
     sassOpts.loadPaths = [sassPath];
   }
 
-  const compiler = trueOpts.string ? compileString : compile;
+  const compiler = trueOpts.sourceType === 'string' ? compileString : compile;
   const parsedCss = compiler(src, sassOpts).css;
   const modules = parse(parsedCss, trueOpts.contextLines);
 
