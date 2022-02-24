@@ -1,7 +1,5 @@
 # True
 
-[![Build Status](https://app.travis-ci.com/oddbird/true.svg?branch=main)](https://app.travis-ci.com/github/oddbird/true)
-[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main)](https://coveralls.io/github/oddbird/true?branch=main)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 1. To make true; shape, adjust, place, etc., exactly or accurately:

@@ -11,6 +11,7 @@
   thanks to [@robertmaier](https://github.com/robertmaier) for the initial PR
   [#206](https://github.com/oddbird/true/pull/206)
 - INTERNAL: Drop internal testing with Mocha
+- INTERNAL: Switch from Travis CI to GitHub Actions for CI
 - INTERNAL: Update dependencies
 
 ## 6.0.1 (10/16/20)
