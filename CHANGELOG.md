@@ -10,6 +10,7 @@
   [#212](https://github.com/oddbird/true/issues/212) --
   thanks to [@robertmaier](https://github.com/robertmaier) for the initial PR
   [#206](https://github.com/oddbird/true/pull/206)
+- INTERNAL: Remove documentation static-site from True repository
 - INTERNAL: Drop internal testing with Mocha
 - INTERNAL: Switch from Travis CI to GitHub Actions for CI
 - INTERNAL: Update dependencies
