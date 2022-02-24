@@ -5,7 +5,7 @@ on:
 
 jobs:
   test:
-    name: Test
+    name: Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
