@@ -11,4 +11,4 @@ let runSass = runSassSrc;
 if (process.env.USE_BUILT) {
   runSass = require('../lib').runSass;
 }
-runSass({ file: sassFile }, { describe, it });
+runSass({ describe, it }, sassFile);

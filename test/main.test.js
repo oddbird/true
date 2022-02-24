@@ -43,12 +43,12 @@ describe('#runSass', () => {
       cb();
     };
     const attempt = function () {
-      sassTrue.runSass({ data: sass }, { describe: mock, it: mock });
+      sassTrue.runSass({ describe: mock, it: mock, string: true }, sass);
     };
     expect(attempt).toThrow('This test is meant to fail. [type: assert-true]');
   });
 
-  it('can specify includePaths', () => {
+  it('can specify loadPaths', () => {
     const sass = [
       '@use "true" as *;',
       '@use "include" as *;',
@@ -71,39 +71,17 @@ describe('#runSass', () => {
     const attempt = function () {
       sassTrue.runSass(
         {
-          data: sass,
-          includePaths: [path.join(__dirname, 'scss/includes')],
-        },
-        {
           describe: mock,
           it: mock,
+          string: true,
+        },
+        sass,
+        {
+          loadPaths: [path.join(__dirname, 'scss/includes')],
         },
       );
     };
     expect(attempt).not.toThrow();
-  });
-
-  it('can specify sass engine to use', () => {
-    const mock = function (name, cb) {
-      cb();
-    };
-    const attempt = function () {
-      sassTrue.runSass(
-        {
-          data: '',
-        },
-        {
-          sass: {
-            renderSync() {
-              throw new Error('Custom sass implementation called');
-            },
-          },
-          describe: mock,
-          it: mock,
-        },
-      );
-    };
-    expect(attempt).toThrow('Custom sass implementation called');
   });
 });
 

@@ -6,6 +6,8 @@ import * as css from 'css';
 import { diffStringsUnified } from 'jest-diff';
 import { find, forEach, last, startsWith } from 'lodash';
 import * as path from 'path';
+import type { Options, StringOptions } from 'sass';
+import { compile, compileString } from 'sass';
 
 import * as constants from './constants';
 import {
@@ -19,7 +21,7 @@ import {
 export interface TrueOptions {
   describe: (description: string, fn: () => void) => void;
   it: (description: string, fn: () => void) => void;
-  sass?: any;
+  string?: boolean;
   contextLines?: number;
 }
 
@@ -57,28 +59,22 @@ export type Rule = css.Comment | css.Rule | css.AtRule;
 
 export type Parser = (rule: Rule, ctx: Context) => Parser;
 
-export const runSass = function (sassOptions: any, trueOptions: TrueOptions) {
-  const sassOpts = Object.assign({}, sassOptions);
+export const runSass = function (
+  trueOptions: TrueOptions,
+  src: string,
+  sassOptions?: Options<'sync'> | StringOptions<'sync'>,
+) {
   const trueOpts = Object.assign({}, trueOptions);
+  const sassOpts = Object.assign({}, sassOptions);
   const sassPath = path.join(__dirname, '..', 'sass');
-  if (sassOpts.includePaths) {
-    sassOpts.includePaths.push(sassPath);
+  if (sassOpts.loadPaths) {
+    sassOpts.loadPaths.push(sassPath);
   } else {
-    sassOpts.includePaths = [sassPath];
+    sassOpts.loadPaths = [sassPath];
   }
-  let sass: TrueOptions['sass'];
-  if (trueOpts.sass) {
-    sass = trueOpts.sass;
-  } else {
-    // eslint-disable-next-line global-require
-    sass = require('sass');
-  }
-  /* istanbul ignore if */
-  if (!sass) {
-    throw new Error('No Sass implementation found.');
-  }
-  // eslint-disable-next-line no-sync
-  const parsedCss = sass.renderSync(sassOpts).css.toString();
+
+  const compiler = trueOpts.string ? compileString : compile;
+  const parsedCss = compiler(src, sassOpts).css;
   const modules = parse(parsedCss, trueOpts.contextLines);
 
   forEach(modules, (module) => {

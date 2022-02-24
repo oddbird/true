@@ -1,5 +1,13 @@
 # True Changelog
 
+## UNRELEASED
+
+- BREAKING: Upgrade to newer Sass API
+  - Add True `sourceType` option (`path` [default] or `string`)
+- BREAKING: Require `sass` as a peer-dependency,
+  removing True `sass` option
+- BREAKING: Drop support for node < 12
+
 ## 6.1.0-beta.1 (02/24/22)
 
 - FEATURE: Clearer formatting of failing test diffs
