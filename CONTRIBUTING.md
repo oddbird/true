@@ -36,7 +36,7 @@ yarn
 
 ## Committing
 
-Linting, testing, and documentation
+Linting and testing
 should be done before every commit:
 
 ```
@@ -52,8 +52,8 @@ yarn lint
 # test with mocha/jest and true
 yarn test
 
-# compile docs
-yarn sassdoc
+# compile sass tests
+yarn build:sass
 ```
 
 Once you've fixed any final errors or typos,

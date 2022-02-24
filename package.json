@@ -46,7 +46,7 @@
   "scripts": {
     "test:src": "jest",
     "test:lib": "USE_BUILT=true jest --coverage=false",
-    "test": "run-s compile:js test:src test:lib",
+    "test": "run-s build:js test:src test:lib",
     "prettier:js": "prettier --write '**/*.js'",
     "prettier:other": "prettier --write '**/*.{json,md,yml}'",
     "eslint": "yarn eslint:ci --fix",
@@ -56,11 +56,12 @@
     "lint:sass": "yarn lint:sass:ci --fix",
     "lint:sass:ci": "stylelint '**/*.scss'",
     "lint:ci": "run-p eslint:ci lint:sass:ci",
-    "sassdoc": "sassdoc sass/",
-    "compile:sass": "sass test/scss/test.scss test/css/test.css --load-path ./sass/",
-    "compile:js": "tsc",
-    "compile": "run-p compile:js compile:sass",
-    "release": "run-s lint test compile:sass sassdoc",
+    "docs": "sassdoc sass/",
+    "build:sass": "sass test/scss/test.scss test/css/test.css --load-path ./sass/",
+    "build:js": "tsc",
+    "build": "run-p build:js build:sass",
+    "commit": "run-s lint test build:sass",
+    "release": "run-s commit docs",
     "prepack": "yarn run release"
   },
   "dependencies": {
