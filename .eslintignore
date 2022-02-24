@@ -10,5 +10,6 @@ dist/
 docs/
 env/
 jscache/
+lib/
 node_modules/
 venv/

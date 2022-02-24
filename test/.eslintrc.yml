@@ -1,0 +1,9 @@
+# https://eslint.org/docs/rules/
+
+env:
+  jest: true
+plugins:
+  - jest
+extends:
+  - plugin:jest/recommended
+  - plugin:jest/style

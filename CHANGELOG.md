@@ -6,8 +6,14 @@
   [#210](https://github.com/oddbird/true/issues/210)
 - INTERNAL: Limit files included in npm package
   [#189](https://github.com/oddbird/true/issues/189)
+- INTERNAL: Convert JS to TypeScript and bundle type definitions
+  [#212](https://github.com/oddbird/true/issues/212) --
+  thanks to [@robertmaier](https://github.com/robertmaier) for the initial PR
+  [#206](https://github.com/oddbird/true/pull/206)
+- INTERNAL: Remove documentation static-site from True repository
+- INTERNAL: Use Jest for internal testing (replaces Mocha)
+- INTERNAL: Switch from Travis CI to GitHub Actions for CI
 - INTERNAL: Update dependencies
-- BREAKING: Drop support for node < 12
 
 ## 6.0.1 (10/16/20)
 

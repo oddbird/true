@@ -1,7 +1,5 @@
 # True
 
-[![Build Status](https://app.travis-ci.com/oddbird/true.svg?branch=main)](https://app.travis-ci.com/github/oddbird/true)
-[![Coverage Status](https://coveralls.io/repos/github/oddbird/true/badge.svg?branch=main)](https://coveralls.io/github/oddbird/true?branch=main)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 1. To make true; shape, adjust, place, etc., exactly or accurately:
@@ -112,8 +110,8 @@ CSS output tests, on the other hand,
 have to be compared after compilation is complete.
 You can do that by hand if you want
 (`git diff` is helpful for noticing changes),
-or you can use
-our [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/) integration.
+or you can use a test runner
+such as [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/).
 
 Output tests fit the same structure,
 but assertions take a slightly different form,
@@ -167,7 +165,7 @@ when upgrading from an older version of True.
 
 3. Write some Sass tests in `test/test.scss` (see above).
 
-4. Write a shim JS test file in `test/test_sass.js`:
+4. Write a shim JS test file in `test/sass.test.js`:
 
    ```js
    const path = require('path');
@@ -179,24 +177,27 @@ when upgrading from an older version of True.
 
 5. Run Mocha/Jest, and see your Sass tests reported in the command line.
 
-**Note:** Jest defaults to running tests in a browser-like environment (jsdom).
-When using with True, set the
-[testEnvironment](https://jestjs.io/docs/en/configuration#testenvironment-string)
-to "node".
+~~**Note:** Jest defaults to running tests in a browser-like environment
+(jsdom). When using with True, set the
+[testEnvironment](https://jestjs.io/docs/26.x/configuration#testenvironment-string)
+to "node".~~
+
+**Update:** Since Jest v27, `testEnvironment` defaults to "node" and no changes
+are needed.
 
 **Note:** Jest does not watch for changes in Sass files by default. To use
 `jest --watch` with True, add "scss" to your
-[moduleFileExtensions](https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring)
+[moduleFileExtensions](https://jestjs.io/docs/configuration#modulefileextensions-arraystring)
 setting.
 
 You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
 The first argument to `runSass` accepts the
-[same options](https://sass-lang.com/documentation/js-api#options) that sass'
-`renderSync` function accepts. The only modification `runSass` makes is to add
-True's sass path to the `includePaths` option, so `@use 'true';` works in
-your Sass test file.
+[same options](https://sass-lang.com/documentation/js-api/interfaces/LegacySharedOptions)
+that sass' `renderSync` function accepts. The only modification `runSass` makes
+is to add True's sass path to the `includePaths` option, so `@use 'true';` works
+in your Sass test file.
 
 The second argument is an object with required `describe` and `it` options, and
 optional `contextLines` and `sass` options.
@@ -213,7 +214,7 @@ context lines to provide.
 
 You can also provide a `sass` option to provide a different Sass implementation.
 This option expects an implementation providing a `renderSync` method with the
-[same signature](https://sass-lang.com/documentation/js-api#rendersync) as Dart
+[same signature](https://sass-lang.com/documentation/js-api/modules#renderSync) as Dart
 Sass, and support for the
 [Sass module system](https://sass-lang.com/blog/the-module-system-is-launched).
 

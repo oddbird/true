@@ -10,6 +10,8 @@
 .yarnrc
 Gemfile.lock
 coverage/
+docs/
+lib/
 node_modules/
 pkg/*
 test/.sass-cache/
