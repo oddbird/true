@@ -49,7 +49,7 @@ They can also be triggered individually:
 # lint
 yarn lint
 
-# test with mocha/jest and true
+# test with jest and true
 yarn test
 
 # compile sass tests
