@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 6.1.0-beta.1 (02/24/22)
 
 - FEATURE: Clearer formatting of failing test diffs
   [#210](https://github.com/oddbird/true/issues/210)
