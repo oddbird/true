@@ -2,8 +2,10 @@
 
 env:
   jest: true
-plugins:
-  - jest
-extends:
-  - plugin:jest/recommended
-  - plugin:jest/style
+  mocha: true
+rules:
+  # Import
+  simple-import-sort/imports: 0
+  import/order:
+    - 1
+    - newlines-between: always

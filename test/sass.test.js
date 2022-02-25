@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
-import * as path from 'path';
-
-import { runSass as runSassSrc } from '../src';
+const path = require('path');
 
 const sassFile = path.join(__dirname, 'scss', 'test.scss');
-let runSass = runSassSrc;
+let runSass;
 // eslint-disable-next-line no-process-env
 if (process.env.USE_BUILT) {
   runSass = require('../lib').runSass;
+} else {
+  runSass = require('../src').runSass;
 }
 runSass({ describe, it }, sassFile);

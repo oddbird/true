@@ -7,6 +7,7 @@
 - BREAKING: Require `sass` as a peer-dependency,
   removing True `sass` option
 - BREAKING: Drop support for node < 12
+- INTERNAL: Use both Jest and Mocha for internal testing
 
 ## 6.1.0-beta.1 (02/24/22)
 

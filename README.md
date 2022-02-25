@@ -205,9 +205,28 @@ to Sass. The only modification `runSass` makes is to add True's sass path to the
 
 If you use Webpack's tilde notation, like `@use '~accoutrement/sass/tools'`,
 you'll need to tell `runSass` how to handle that. That will require writing a
-[custom importer](https://sass-lang.com/documentation/js-api/interfaces/Importer)
+[custom importer](https://sass-lang.com/documentation/js-api/interfaces/FileImporter)
 and passing it into the configuration for `runSass`:
 
 ```js
-sassTrue.runSass({ describe, it }, sassFile, { importers: [myCustomImporter] });
+const path = require('path');
+const { pathToFileURL } = require('url');
+
+const sassTrue = require('sass-true');
+
+const importers = [
+  {
+    findFileUrl(url) {
+      if (!url.startsWith('~')) {
+        return null;
+      }
+      return new URL(
+        pathToFileURL(path.resolve('node_modules', url.substring(1))),
+      );
+    },
+  },
+];
+
+const sassFile = path.join(__dirname, 'test.scss');
+sassTrue.runSass({ describe, it }, sassFile, { importers });
 ```
