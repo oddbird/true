@@ -2,12 +2,74 @@
 
 ## UNRELEASED
 
-- BREAKING: Upgrade to newer Sass API
+- BREAKING: Upgrade to newer [Sass API](https://sass-lang.com/documentation/js-api)
   - Add True `sourceType` option (`path` [default] or `string`)
-- BREAKING: Require `sass` as a peer-dependency,
-  removing True `sass` option
+  - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
+    path (or string), 3) optional Sass options
+- BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
 - BREAKING: Drop support for node < 12
 - INTERNAL: Use both Jest and Mocha for internal testing
+
+### Migrating from v6
+
+- `runSass` arguments have changed:
+
+v6:
+
+```js
+const path = require('path');
+const sass = require('node-sass');
+const sassTrue = require('sass-true');
+
+const sassFile = path.join(__dirname, 'test.scss');
+sassTrue.runSass(
+  // Sass options [required]
+  { file: sassFile, outputStyle: 'compressed' },
+  // True options [required]
+  { describe, it, sass },
+);
+
+const sassString = `
+h1 {
+  font-size: 40px;
+}`;
+sassTrue.runSass(
+  // Sass options [required]
+  { data: sassString, outputStyle: 'compressed' },
+  // True options [required]
+  { describe, it, sass },
+);
+```
+
+v7:
+
+```js
+const path = require('path');
+const sassTrue = require('sass-true');
+
+const sassFile = path.join(__dirname, 'test.scss');
+sassTrue.runSass(
+  // True options [required]
+  { describe, it },
+  // Sass source (path) [required]
+  sassFile,
+  // Sass options [optional]
+  { style: 'compressed' },
+);
+
+const sassString = `
+h1 {
+  font-size: 40px;
+}`;
+sassTrue.runSass(
+  // True options [required]
+  { describe, it, sourceType: 'string' },
+  // Sass source (string) [required]
+  sassString,
+  // Sass options [optional]
+  { style: 'compressed' },
+);
+```
 
 ## 6.1.0-beta.1 (02/24/22)
 
