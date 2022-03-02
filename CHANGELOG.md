@@ -1,5 +1,9 @@
 # True Changelog
 
+## 6.1.0 (03/02/22)
+
+- No changes since v6.1.0-beta.1
+
 ## 6.1.0-beta.1 (02/24/22)
 
 - FEATURE: Clearer formatting of failing test diffs
