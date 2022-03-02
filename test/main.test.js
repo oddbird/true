@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
-import { diffStringsUnified } from 'jest-diff';
-import * as path from 'path';
+const path = require('path');
 
-import * as sassTrueSrc from '../src';
+const { expect } = require('chai');
+const { diffStringsUnified } = require('jest-diff');
 
-let sassTrue = sassTrueSrc;
+let sassTrue;
 // eslint-disable-next-line no-process-env
 if (process.env.USE_BUILT) {
   sassTrue = require('../lib');
+} else {
+  sassTrue = require('../src');
 }
 
 describe('#fail', () => {
@@ -25,7 +28,7 @@ describe('#fail', () => {
       '2',
     )}\n`;
 
-    expect(msg).toEqual(expected);
+    expect(msg).to.equal(expected);
   });
 });
 
@@ -43,12 +46,15 @@ describe('#runSass', () => {
       cb();
     };
     const attempt = function () {
-      sassTrue.runSass({ data: sass }, { describe: mock, it: mock });
+      sassTrue.runSass(
+        { describe: mock, it: mock, sourceType: 'string' },
+        sass,
+      );
     };
-    expect(attempt).toThrow('This test is meant to fail. [type: assert-true]');
+    expect(attempt).to.throw('This test is meant to fail. [type: assert-true]');
   });
 
-  it('can specify includePaths', () => {
+  it('can specify loadPaths', () => {
     const sass = [
       '@use "true" as *;',
       '@use "include" as *;',
@@ -71,39 +77,17 @@ describe('#runSass', () => {
     const attempt = function () {
       sassTrue.runSass(
         {
-          data: sass,
-          includePaths: [path.join(__dirname, 'scss/includes')],
-        },
-        {
           describe: mock,
           it: mock,
+          sourceType: 'string',
+        },
+        sass,
+        {
+          loadPaths: [path.join(__dirname, 'scss/includes')],
         },
       );
     };
-    expect(attempt).not.toThrow();
-  });
-
-  it('can specify sass engine to use', () => {
-    const mock = function (name, cb) {
-      cb();
-    };
-    const attempt = function () {
-      sassTrue.runSass(
-        {
-          data: '',
-        },
-        {
-          sass: {
-            renderSync() {
-              throw new Error('Custom sass implementation called');
-            },
-          },
-          describe: mock,
-          it: mock,
-        },
-      );
-    };
-    expect(attempt).toThrow('Custom sass implementation called');
+    expect(attempt).not.to.throw();
   });
 });
 
@@ -132,7 +116,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('ignores a summary', () => {
@@ -146,7 +130,7 @@ describe('#parse', () => {
     ].join('\n');
     const expected = [];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a passing non-output test sans description', () => {
@@ -173,7 +157,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a test following a summary', () => {
@@ -206,7 +190,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a nested passing non-output test', () => {
@@ -238,7 +222,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a failing non-output test', () => {
@@ -272,7 +256,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a failing non-output test with no failure details', () => {
@@ -305,7 +289,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a passing output test', () => {
@@ -348,7 +332,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a passing output test with loud comments', () => {
@@ -396,7 +380,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses a failing output test', () => {
@@ -436,7 +420,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('respects declaration order in output tests', () => {
@@ -481,7 +465,7 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('parses tests of comment output', () => {
@@ -519,13 +503,13 @@ describe('#parse', () => {
       },
     ];
 
-    expect(sassTrue.parse(css)).toEqual(expected);
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
   it('ignores unexpected rule types', () => {
     const css = '.foo { -prop: value; }';
 
-    expect(sassTrue.parse(css)).toEqual([]);
+    expect(sassTrue.parse(css)).to.deep.equal([]);
   });
 
   it('throws error on unexpected rule type instead of end summary', () => {
@@ -536,7 +520,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       [
         'Line 2, column 1: Unexpected rule type "rule"; looking for end summary.',
         '-- Context --',
@@ -555,7 +539,7 @@ describe('#parse', () => {
       sassTrue.parse(css, 1);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       [
         'Line 2, column 1: Unexpected rule type "rule"; looking for end summary.',
         '-- Context --',
@@ -568,7 +552,7 @@ describe('#parse', () => {
   it('handles a blank comment before module header', () => {
     const css = ['/*  */', '/* # Module: M */'].join('\n');
 
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [],
@@ -579,7 +563,7 @@ describe('#parse', () => {
   it('ignores unexpected rule type instead of test', () => {
     const css = ['/* # Module: M */', '.foo { -prop: value; }'].join('\n');
 
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [],
@@ -590,7 +574,7 @@ describe('#parse', () => {
   it('handles a blank comment before test header', () => {
     const css = ['/* # Module: M */', '/*  */', '/* Test: T */'].join('\n');
 
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [
@@ -610,7 +594,7 @@ describe('#parse', () => {
       '.foo { -prop: value; }',
     ].join('\n');
 
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [
@@ -631,7 +615,7 @@ describe('#parse', () => {
       '/*   ✔ Does the thing right */',
     ].join('\n');
 
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [
@@ -657,7 +641,7 @@ describe('#parse', () => {
       '/*     - foobar */',
       '/* # Module: M2 */',
     ].join('\n');
-    expect(sassTrue.parse(css)).toEqual([
+    expect(sassTrue.parse(css)).to.deep.equal([
       {
         module: 'M',
         tests: [
@@ -691,7 +675,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 4, column 1: Unexpected rule type "rule"; looking for output/expected',
     );
   });
@@ -707,7 +691,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 4, column 1: Unexpected rule type "rule"; looking for OUTPUT',
     );
   });
@@ -723,7 +707,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 4, column 1: Unexpected comment "foo"; looking for OUTPUT',
     );
   });
@@ -744,7 +728,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 9, column 1: Unexpected rule type "rule"; looking for EXPECTED',
     );
   });
@@ -765,7 +749,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 9, column 1: Unexpected comment "foo"; looking for EXPECTED',
     );
   });
@@ -791,7 +775,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 14, column 1: Unexpected rule type "rule"; looking for END_ASSERT',
     );
   });
@@ -817,7 +801,7 @@ describe('#parse', () => {
       sassTrue.parse(css);
     };
 
-    expect(attempt).toThrow(
+    expect(attempt).to.throw(
       'Line 14, column 1: Unexpected comment "foo"; looking for END_ASSERT',
     );
   });
@@ -863,7 +847,7 @@ describe('#parse', () => {
         },
       ];
 
-      expect(sassTrue.parse(css)).toEqual(expected);
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
 
     it('parses a passing output test with loud comments', () => {
@@ -912,7 +896,7 @@ describe('#parse', () => {
         },
       ];
 
-      expect(sassTrue.parse(css)).toEqual(expected);
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
 
     it('parses a passing output test with curly braces within a content property', () => {
@@ -958,7 +942,7 @@ describe('#parse', () => {
         },
       ];
 
-      expect(sassTrue.parse(css)).toEqual(expected);
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
 
     it('parses a failing output test', () => {
@@ -1002,7 +986,7 @@ describe('#parse', () => {
         },
       ];
 
-      expect(sassTrue.parse(css)).toEqual(expected);
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
 
     it('parses a failing output test (wrong selector)', () => {
@@ -1046,7 +1030,7 @@ describe('#parse', () => {
         },
       ];
 
-      expect(sassTrue.parse(css)).toEqual(expected);
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
   });
 });
