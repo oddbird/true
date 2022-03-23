@@ -79,7 +79,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/lodash": "^4.14.178",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
+    "@typescript-eslint/parser": "^5.13.0",
     "babel-jest": "^27.5.1",
     "chai": "^4.3.6",
     "eslint": "^8.9.0",
