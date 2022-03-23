@@ -100,7 +100,7 @@
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard-scss": "^3.0.0",
     "stylelint-prettier": "^2.0.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.2"
   },
   "eyeglass": {
     "needs": "*",
