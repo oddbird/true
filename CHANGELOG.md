@@ -7,8 +7,9 @@
   - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
     path (or string), 3) optional Sass options
 - BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
-- BREAKING: Drop support for node < 12
+- BREAKING: Drop support for node < 14.15.0
 - INTERNAL: Use both Jest and Mocha for internal testing
+- INTERNAL: Update dependencies
 
 ### Migrating from v6
 
