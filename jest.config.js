@@ -139,7 +139,10 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+  // Workaround for:
+  // - https://github.com/facebook/jest/issues/2549
+  // - https://github.com/sass/dart-sass/issues/1692
+  testEnvironment: 'jest-environment-node-single-context',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
