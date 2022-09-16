@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 7.0.0-beta.0 (09/16/22)
 
 - BREAKING: Upgrade to newer [Sass API](https://sass-lang.com/documentation/js-api)
   - Add True `sourceType` option (`path` [default] or `string`)
