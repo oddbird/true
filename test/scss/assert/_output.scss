@@ -258,6 +258,7 @@
 
       @include contains {
         .selector {
+          width: 10px;
           min-height: 5px;
         }
       }

@@ -12,6 +12,8 @@
     path (or string), 3) optional Sass options
 - BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
 - BREAKING: Drop support for node < 14.15.0
+- FEATURE: Check for contains across multiple block with matching styles.
+  [#243](https://github.com/oddbird/true/pull/243)
 - INTERNAL: Use both Jest and Mocha for internal testing
 - INTERNAL: Update dependencies
 

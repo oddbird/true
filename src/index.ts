@@ -232,7 +232,7 @@ const contains = function (output: string, expected: string) {
       // This is the assertion itself!
       return expectedProperties.every((property) =>
         matchingOutputBlocks.some((outputBlock) =>
-          outputBlock.output.includes(property)
+          outputBlock.output.includes(property),
         ),
       );
     }
