@@ -219,10 +219,10 @@ const contains = function (output: string, expected: string) {
   const expectedBlocks = createSelectorsRulesPairs(expected);
 
   const results = expectedBlocks.map((block) => {
-    const outputBlock = outputBlocks.find(
+    const matchingOutputBlocks = outputBlocks.filter(
       (element) => element.selector === block.selector,
     );
-    if (outputBlock) {
+    if (matchingOutputBlocks.length) {
       // Turns a css string into an array of property-value pairs.
       const expectedProperties = block.output
         .split(';')
@@ -231,7 +231,9 @@ const contains = function (output: string, expected: string) {
 
       // This is the assertion itself!
       return expectedProperties.every((property) =>
-        outputBlock.output.includes(property),
+        matchingOutputBlocks.some((outputBlock) =>
+          outputBlock.output.includes(property)
+        ),
       );
     }
     return false;

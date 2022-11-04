@@ -243,4 +243,24 @@
       }
     }
   }
+
+  @include it('Can assert with multiple identical selector') {
+    @include assert {
+      @include output {
+        .selector {
+          width: 10px;
+        }
+        .selector {
+          min-height: 5px;
+          max-height: 20px;
+        }
+      }
+
+      @include contains {
+        .selector {
+          width: 10px;
+        }
+      }
+    }
+  }
 }
