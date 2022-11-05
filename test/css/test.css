@@ -623,6 +623,27 @@
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
 /*  */
+/* Test: Can assert with multiple matching selector */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .selector {
+  width: 10px;
+}
+.test-output .selector {
+  min-height: 5px;
+  max-height: 20px;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .selector {
+  width: 10px;
+  min-height: 5px;
+}
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
 /*  */
 /* # Module: Module Title */
 /* ---------------------- */
@@ -814,14 +835,14 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 101 Tests: */
+/* 102 Tests: */
 /* - 84 Passed */
 /* - 0 Failed */
-/* - 17 Output to CSS */
+/* - 18 Output to CSS */
 /* Stats: */
 /* - 39 Modules */
-/* - 101 Tests */
-/* - 129 Assertions */
+/* - 102 Tests */
+/* - 130 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
