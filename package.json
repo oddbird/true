@@ -35,7 +35,6 @@
     "lib/**/*",
     "sass/**/*",
     "_index.scss",
-    "docs/",
     "CHANGELOG.md",
     "LICENSE.txt",
     "README.md"
