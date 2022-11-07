@@ -1,0 +1,1492 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-herman="root">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <title>Testing CSS Output | True Documentation</title>
+
+  <link href="assets/img/favicon.ico" rel="shortcut icon">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/webpack/app_styles.min.css" />
+
+  
+
+  
+</head>
+<body data-herman="body">
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+  <symbol id="icon-logo" viewBox="0 0 16 16">
+    <path d="M.2 8 0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8zM13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7L13 10z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6v-.7z"/>
+  </symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 28">
+    <path d="M24 21v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1V5c0-.547.453-1 1-1h22c.547 0 1 .453 1 1z"/>
+  </symbol>
+</svg>
+
+  <div data-region="app">
+    <header data-region="banner">
+      
+  <button data-nav-toggle data-toggle="button" aria-controls="nav" aria-pressed="false" type="button" data-toggle-synced="false">
+    
+  <svg data-icon="menu" data-icon-size="nav-icon" ><title>menu</title><use xlink:href="#icon-menu" />
+  </svg>
+
+  </button>
+
+
+      <div class="project-title">
+        <a href="index.html" rel="home" class="project-name">True</a>
+        
+          <span class="project-version">6.1.0</span>
+        
+      </div>
+    </header>
+
+    <div data-region="container">
+      
+  <nav data-region="nav" data-toggle="target" id="nav" data-target-id="nav" aria-expanded="false" data-auto-closing="false" data-auto-closing-on-any-click="false">
+    <form action="search.html">
+      <input type="text" name="q" placeholder="Search…" required minlength="3">
+    </form>
+
+    <div class="nav-subsection">
+      <h3 class="nav-home">
+        
+        <a href="index.html" data-nav="is-not-active">True</a>
+      </h3>
+
+      
+      
+        <ul>
+          
+            
+            <li class="nav-item">
+              <a href="CHANGELOG.html" data-nav="is-not-active">Changelog</a>
+            </li>
+          
+            
+            <li class="nav-item">
+              <a href="CONTRIBUTING.html" data-nav="is-not-active">Contributing</a>
+            </li>
+          
+            
+            <li class="nav-item">
+              <a href="LICENSE.html" data-nav="is-not-active">BSD3 License</a>
+            </li>
+          
+        </ul>
+      
+    </div>
+
+    
+    <div class="nav-subsection">
+      <ul>
+            <li class="nav-subsection">
+              <h3 class="nav-title">Structure</h3>
+              <ul>
+                
+  
+    <li class="nav-item">
+      <a href="api-settings.html" data-nav="is-not-active">Optional Configuration</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="api-test.html" data-nav="is-not-active">Describing Tests</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="api-report.html" data-nav="is-not-active">Reporting Results</a>
+    </li>
+  </ul>
+            </li>
+            <li class="nav-subsection">
+              <h3 class="nav-title">Assertions</h3>
+              <ul>
+                
+  
+    <li class="nav-item">
+      <a href="api-assert-values.html" data-nav="is-not-active">Testing Return<span class="widont">&nbsp;</span>Values</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="api-assert-output.html" data-nav="is-active">Testing CSS<span class="widont">&nbsp;</span>Output</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="api-errors.html" data-nav="is-not-active">Catching &amp; Testing<span class="widont">&nbsp;</span>Errors</a>
+    </li>
+  </ul>
+            </li></ul>
+    </div>
+
+    
+    
+
+    
+      <aside class="footer-credit">
+        <a href="https://www.oddbird.net/herman/" class="footer-icon">
+          
+  <svg data-icon="logo" data-icon-size="footer-logo" ><use xlink:href="#icon-logo" />
+  </svg>
+
+        </a>
+        <span>
+          Documented with
+          <a href="https://www.oddbird.net/herman/" class="footer-link">
+            Herman
+          </a>
+        </span>
+        <span>
+          by
+          <a href="https://www.oddbird.net/" class="footer-link">
+            OddBird
+          </a>
+        </span>
+      </aside>
+    
+  </nav>
+
+
+      <main data-region="main">
+        
+  <nav class="breadcrumb">
+    
+    <a href="index.html" >True</a> »
+    <strong>Testing CSS Output</strong>
+  </nav>
+
+
+        <div data-page="api-assert-output">
+          
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" >
+  
+    
+  
+  
+  
+  
+
+  
+    <div data-item-section="prose" class="text-block">
+      <h1 id="testing-css-output">Testing CSS Output</h1>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="mixin--assert">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type">@mixin</span>
+      
+
+      
+        <a href="#mixin--assert" class="item-name">assert()</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+  
+  
+  
+  
+
+  
+    <div class="text-block">
+      <p>Define a CSS-output assertion.
+Assertions are used inside the <code>test()</code> mixin
+to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
+<ul>
+<li>The <code>assert()</code> mixin is a wrapper,
+and should contain one <code>output()</code> block and one <code>expect()</code> block
+as nested<span class="widont">&nbsp;</span>contents.</li>
+<li>These three mixins together describe a single
+<code>assert-equal</code> comparison on output CSS.
+The compiled CSS-results of the <code>output()</code> mixin
+will be compared against the results of the <code>expect()</code> mixin.</li>
+<li>When using Mocha/Jest integration, the output comparison is automated –
+otherwise you will have to compare the output manually.
+Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
+</ul>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    
+  <div data-item-section="parameter">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Parameters</span>
+        
+      </h3>
+    
+
+    
+      
+        
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">$description:</span>
+      
+      <span class="item-value">null</span>
+      <span class="value-type">(string)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Description of the assertion being tested.
+A <code>null</code> of <code>false</code> value generates a default<span class="widont">&nbsp;</span>description.</p>
+
+      </div>
+    
+  </div>
+
+
+      
+
+      
+  
+    
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">@content</span>
+      
+      
+      <span class="value-type">(code<span class="widont">&nbsp;</span>block)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Use `output()` and `expect()` mixins
+  to define blocks for<span class="widont">&nbsp;</span>comparison</p>
+      </div>
+    
+  </div>
+
+  
+
+      
+  
+
+      
+  
+
+      
+  
+
+    
+  </div>
+
+  
+
+
+  
+  
+    
+
+    <div data-item-section="examples">
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Example</span>
+      </h3>
+
+      
+        
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  <div class="example">
+    <div class="example-code">
+      
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert(&#39;You can also describe the assertion...&#39;) {
+    @include true.output {
+      width: 14em + 2;
+    }
+    @include true.expect {
+      width: 16em;
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">/* Test: Sass math compiles before output */
+/*   ASSERT: You can also describe the assertion...   */
+/*   OUTPUT   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */</code></pre>
+    </div>
+  
+
+    </div>
+
+    
+  </div>
+
+      
+    </div>
+  
+
+
+  
+  
+  
+  
+    
+    
+  <div data-item-section="requires">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Requires</span>
+        
+      </h3>
+    
+
+    
+      
+      
+        
+        
+        
+
+        
+          
+          
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">$output</span>
+      
+      
+      <span class="value-type">(bool)</span>
+      <span class="item-note">[private]</span>
+    </h4>
+
+    
+  </div>
+
+
+        
+      
+    
+  </div>
+
+  
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="mixin--output">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type">@mixin</span>
+      
+
+      
+        <a href="#mixin--output" class="item-name">output()</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+  
+  
+  
+  
+
+  
+    <div class="text-block">
+      <p>Describe the test content to be evaluated
+against the paired <code>expect()</code> block.
+Assertions are used inside the <code>test()</code> mixin
+to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
+<ul>
+<li>The <code>output()</code> mixin requires a content block,
+and should be nested inside the <code>assert()</code> mixin
+along with a single <code>expect()</code> block.</li>
+<li>These three mixins together describe a single
+<code>assert-equal</code> comparison on output CSS.
+The compiled CSS-results of the <code>output()</code> mixin
+will be compared against the results of the <code>expect()</code> mixin.</li>
+<li>When using Mocha/Jest integration, the output comparison is automated –
+otherwise you will have to compare the output manually.
+Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
+</ul>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    
+  <div data-item-section="parameter">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Parameters</span>
+        
+      </h3>
+    
+
+    
+      
+        
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">$selector:</span>
+      
+      <span class="item-value">true</span>
+      <span class="value-type">(bool)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Optionally wrap the contents in a <code>.test-output</code> selector block,
+so you can test property-value output<span class="widont">&nbsp;</span>directly.</p>
+
+      </div>
+    
+  </div>
+
+
+      
+
+      
+  
+    
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">@content</span>
+      
+      
+      <span class="value-type">(code<span class="widont">&nbsp;</span>block)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Define the test content to be<span class="widont">&nbsp;</span>checked</p>
+      </div>
+    
+  </div>
+
+  
+
+      
+  
+
+      
+  
+
+      
+  
+
+    
+  </div>
+
+  
+
+
+  
+  
+    
+
+    <div data-item-section="examples">
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Example</span>
+      </h3>
+
+      
+        
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  <div class="example">
+    <div class="example-code">
+      
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
+      width: 14em + 2;
+    }
+    @include true.expect {
+      width: 16em;
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">/* Test: Sass math compiles before output */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */</code></pre>
+    </div>
+  
+
+    </div>
+
+    
+  </div>
+
+      
+    </div>
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="mixin--expect">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type">@mixin</span>
+      
+
+      
+        <a href="#mixin--expect" class="item-name">expect()</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+  
+  
+  
+  
+
+  
+    <div class="text-block">
+      <p>Describe the expected results of the paired <code>output()</code> block.
+The <code>expect()</code> mixin requires a content block,
+and should be nested inside the <code>assert()</code> mixin,
+along with a single <code>output()</code> block.
+Assertions are used inside the <code>test()</code> mixin
+to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
+<ul>
+<li>These three mixins together describe a single
+<code>assert-equal</code> comparison on output CSS.
+The compiled CSS-results of the <code>output()</code> mixin
+will be compared against the results of the <code>expect()</code> mixin.</li>
+<li>When using Mocha/Jest integration, the output comparison is automated –
+otherwise you will have to compare the output manually.
+Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
+</ul>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    
+  <div data-item-section="parameter">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Parameters</span>
+        
+      </h3>
+    
+
+    
+      
+        
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">$selector:</span>
+      
+      <span class="item-value">true</span>
+      <span class="value-type">(bool)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Optionally wrap the contents in a <code>.test-output</code> selector block,
+so you can test property-value output<span class="widont">&nbsp;</span>directly.</p>
+
+      </div>
+    
+  </div>
+
+
+      
+
+      
+  
+    
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">@content</span>
+      
+      
+      <span class="value-type">(code<span class="widont">&nbsp;</span>block)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Define the expected results of a sibling `output()`<span class="widont">&nbsp;</span>mixin</p>
+      </div>
+    
+  </div>
+
+  
+
+      
+  
+
+      
+  
+
+      
+  
+
+    
+  </div>
+
+  
+
+
+  
+  
+    
+
+    <div data-item-section="examples">
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Example</span>
+      </h3>
+
+      
+        
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  <div class="example">
+    <div class="example-code">
+      
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
+      width: 14em + 2;
+    }
+    @include true.expect {
+      width: 16em;
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">/* Test: Sass math compiles before output */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_OUTPUT   */
+/*   EXPECTED   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_EXPECTED   */
+/*   END_ASSERT   */
+/*  */</code></pre>
+    </div>
+  
+
+    </div>
+
+    
+  </div>
+
+      
+    </div>
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="mixin--contains">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type">@mixin</span>
+      
+
+      
+        <a href="#mixin--contains" class="item-name">contains()</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+  
+  
+  
+  
+
+  
+    <div class="text-block">
+      <p>Describe the expected results of the paired <code>output()</code> block.
+The <code>contains()</code> mixin requires a content block,
+and should be nested inside the <code>assert()</code> mixin,
+along with a single <code>output()</code> block.
+Assertions are used inside the <code>test()</code> mixin
+to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
+<ul>
+<li>These three mixins together describe a single
+comparison on output CSS.
+The compiled CSS-results of the <code>contains()</code> mixin
+will be compared against the results of the <code>output()</code> mixin
+to see if all of the <code>contains</code> CSS is within the <code>output</code> CSS.</li>
+<li>When using Mocha/Jest integration, the output comparison is automated –
+otherwise you will have to compare the output manually.
+Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
+</ul>
+
+      
+  
+
+      
+  
+
+      
+  
+
+    </div>
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    
+  <div data-item-section="parameter">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Parameters</span>
+        
+      </h3>
+    
+
+    
+      
+        
+  
+  
+
+  
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">$selector:</span>
+      
+      <span class="item-value">true</span>
+      <span class="value-type">(bool)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Optionally wrap the contents in a <code>.test-output</code> selector block,
+so you can test property-value output<span class="widont">&nbsp;</span>directly.</p>
+
+      </div>
+    
+  </div>
+
+
+      
+
+      
+  
+    
+  <div class="param-list">
+    <h4 class="param-title">
+      
+      
+        <span class="item-name">@content</span>
+      
+      
+      <span class="value-type">(code<span class="widont">&nbsp;</span>block)</span>
+      
+    </h4>
+
+    
+      
+      <div class="param-details text-block">
+        <p>Define the expected results of a sibling `output()`<span class="widont">&nbsp;</span>mixin</p>
+      </div>
+    
+  </div>
+
+  
+
+      
+  
+
+      
+  
+
+      
+  
+
+    
+  </div>
+
+  
+
+
+  
+  
+    
+
+    <div data-item-section="examples">
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">Example</span>
+      </h3>
+
+      
+        
+  
+  
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  <div class="example">
+    <div class="example-code">
+      
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Sass math compiles before output&#39;) {
+  @include true.assert {
+    @include true.output {
+      height: 100%;
+      width: 14em + 2;
+    }
+    @include true.contains {
+      width: 16em;
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">/* Test: Sass math compiles before output */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 100%;
+  width: 16em;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output {
+  width: 16em;
+}
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */</code></pre>
+    </div>
+  
+
+    </div>
+
+    
+  </div>
+
+      
+    </div>
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="assets/webpack/runtime.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/common.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/app.min.js"></script>
+  
+</body>
+</html>
