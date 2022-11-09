@@ -2,6 +2,8 @@
 
 ## UNRELEASED
 
+- FEATURE: `contains()` checks multiple block with matching selectors.
+  [#243](https://github.com/oddbird/true/pull/243)
 - 🏠 INTERNAL: Remove documentation from npm package
 
 ## 7.0.0-beta.0 (09/16/22)
@@ -12,8 +14,6 @@
     path (or string), 3) optional Sass options
 - BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
 - BREAKING: Drop support for node < 14.15.0
-- FEATURE: `contains()` checks multiple block with matching selectors.
-  [#243](https://github.com/oddbird/true/pull/243)
 - INTERNAL: Use both Jest and Mocha for internal testing
 - INTERNAL: Update dependencies
 

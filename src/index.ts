@@ -227,7 +227,10 @@ const contains = function (output: string, expected: string) {
       const expectedProperties = block.output
         .split(';')
         .map((propertyValuePair) => propertyValuePair.trim())
-        .filter((innerBlock) => innerBlock !== ' {' && innerBlock !== '}');
+        .filter(
+          (innerBlock) =>
+            innerBlock && innerBlock !== ' {' && innerBlock !== '}',
+        );
 
       // This is the assertion itself!
       return expectedProperties.every((property) =>
