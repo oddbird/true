@@ -133,8 +133,8 @@
 /// @return {bool} -
 @function is-truthy($assert) {
   $not: (not not $assert);
-  $list: ($assert != ());
-  $string: ($assert != '');
+  $list: ($assert != ()); // stylelint-disable-line annotation-no-unknown
+  $string: ($assert != ''); // stylelint-disable-line annotation-no-unknown
   $truthy: if(($not and $list and $string), true, false);
 
   @return $truthy;

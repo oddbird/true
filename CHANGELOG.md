@@ -1,20 +1,18 @@
 # True Changelog
 
-## UNRELEASED
+## 7.0.0 (12/14/22)
 
 - FEATURE: `contains()` checks multiple block with matching selectors.
   [#243](https://github.com/oddbird/true/pull/243)
-- 🏠 INTERNAL: Remove documentation from npm package
-
-## 7.0.0-beta.0 (09/16/22)
-
 - BREAKING: Upgrade to newer [Sass API](https://sass-lang.com/documentation/js-api)
   - Add True `sourceType` option (`path` [default] or `string`)
   - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
     path (or string), 3) optional Sass options
-- BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
+- BREAKING: Require `sass` (`>=1.45.0`) as a peer-dependency, removing True
+  `sass` option
 - BREAKING: Drop support for node < 14.15.0
 - INTERNAL: Use both Jest and Mocha for internal testing
+- INTERNAL: Remove documentation from npm package
 - INTERNAL: Update dependencies
 
 ### Migrating from v6
@@ -77,6 +75,17 @@ sassTrue.runSass(
   { style: 'compressed' },
 );
 ```
+
+## 7.0.0-beta.0 (09/16/22)
+
+- BREAKING: Upgrade to newer [Sass API](https://sass-lang.com/documentation/js-api)
+  - Add True `sourceType` option (`path` [default] or `string`)
+  - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
+    path (or string), 3) optional Sass options
+- BREAKING: Require `sass` as a peer-dependency, removing True `sass` option
+- BREAKING: Drop support for node < 14.15.0
+- INTERNAL: Use both Jest and Mocha for internal testing
+- INTERNAL: Update dependencies
 
 ## 6.1.0 (03/02/22)
 
