@@ -178,6 +178,11 @@
 <li>Add True <code>sourceType</code> option (<code>path</code> [default] or <code>string</code>)</li>
 <li>Reverse order of expected arguments to <code>runSass</code>: 1) True options, 2) source
 path (or string), 3) optional Sass<span class="widont">&nbsp;</span>options</li>
+<li><strong>Note that some of the Sass options have changed.</strong> For example,
+<code>includePaths</code> is now <code>loadPaths</code>, <code>outputStyle</code> is now <code>style</code>, <code>importer</code>
+is now <code>importers</code>, etc. See the <a href="https://sass-lang.com/documentation/js-api/interfaces/Options">Dart Sass
+documentation</a>
+for more<span class="widont">&nbsp;</span>details.</li>
 </ul>
 </li>
 <li>BREAKING: Require <code>sass</code> (<code>&gt;=1.45.0</code>) as a peer-dependency, removing True
@@ -199,7 +204,7 @@ const sassTrue = require('sass-true');
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   // Sass options [required]
-  { file: sassFile, outputStyle: 'compressed' },
+  { file: sassFile, outputStyle: 'compressed', includePaths: ['node_modules'] },
   // True options [required]
   { describe, it, sass },
 );
@@ -210,7 +215,11 @@ h1 {
 }`;
 sassTrue.runSass(
   // Sass options [required]
-  { data: sassString, outputStyle: 'compressed' },
+  {
+    data: sassString,
+    outputStyle: 'compressed',
+    includePaths: ['node_modules'],
+  },
   // True options [required]
   { describe, it, sass },
 );
@@ -226,7 +235,7 @@ sassTrue.runSass(
   // Sass source (path) [required]
   sassFile,
   // Sass options [optional]
-  { style: 'compressed' },
+  { style: 'compressed', loadPaths: ['node_modules'] },
 );
 
 const sassString = `
@@ -239,7 +248,7 @@ sassTrue.runSass(
   // Sass source (string) [required]
   sassString,
   // Sass options [optional]
-  { style: 'compressed' },
+  { style: 'compressed', loadPaths: ['node_modules'] },
 );
 </code></pre>
 <h2 id="7-0-0-beta-0-09-16-22-" tabindex="-1">7.0.0-beta.0 (09/16/22)</h2>
