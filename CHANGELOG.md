@@ -8,6 +8,11 @@
   - Add True `sourceType` option (`path` [default] or `string`)
   - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
     path (or string), 3) optional Sass options
+  - _Note that some of the Sass options have changed._ For example,
+    `includePaths` is now `loadPaths`, `outputStyle` is now `style`, `importer`
+    is now `importers`, etc. See the [Dart Sass
+    documentation](https://sass-lang.com/documentation/js-api/interfaces/Options)
+    for more details.
 - BREAKING: Require `sass` (`>=1.45.0`) as a peer-dependency, removing True
   `sass` option
 - BREAKING: Drop support for node < 14.15.0
@@ -29,7 +34,7 @@ const sassTrue = require('sass-true');
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   // Sass options [required]
-  { file: sassFile, outputStyle: 'compressed' },
+  { file: sassFile, outputStyle: 'compressed', includePaths: ['node_modules'] },
   // True options [required]
   { describe, it, sass },
 );
@@ -40,7 +45,11 @@ h1 {
 }`;
 sassTrue.runSass(
   // Sass options [required]
-  { data: sassString, outputStyle: 'compressed' },
+  {
+    data: sassString,
+    outputStyle: 'compressed',
+    includePaths: ['node_modules'],
+  },
   // True options [required]
   { describe, it, sass },
 );
@@ -59,7 +68,7 @@ sassTrue.runSass(
   // Sass source (path) [required]
   sassFile,
   // Sass options [optional]
-  { style: 'compressed' },
+  { style: 'compressed', loadPaths: ['node_modules'] },
 );
 
 const sassString = `
@@ -72,7 +81,7 @@ sassTrue.runSass(
   // Sass source (string) [required]
   sassString,
   // Sass options [optional]
-  { style: 'compressed' },
+  { style: 'compressed', loadPaths: ['node_modules'] },
 );
 ```
 
