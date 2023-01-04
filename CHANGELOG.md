@@ -8,7 +8,7 @@
   - Add True `sourceType` option (`path` [default] or `string`)
   - Reverse order of expected arguments to `runSass`: 1) True options, 2) source
     path (or string), 3) optional Sass options
-  - _Note that some of the Sass options have changed._ For example,
+  - **Note that some of the Sass options have changed.** For example,
     `includePaths` is now `loadPaths`, `outputStyle` is now `style`, `importer`
     is now `importers`, etc. See the [Dart Sass
     documentation](https://sass-lang.com/documentation/js-api/interfaces/Options)
