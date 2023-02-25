@@ -1,5 +1,9 @@
 # True Changelog
 
+## UNRELEASED
+
+- INTERNAL: Update dependencies
+
 ## 7.0.0 (12/14/22)
 
 - FEATURE: `contains()` checks multiple block with matching selectors.

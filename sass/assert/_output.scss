@@ -41,7 +41,9 @@
 ///   }
 @mixin assert($description: null) {
   @include utils.setup('output', $description);
+
   @include utils.content('assert', false, $description) { @content; }
+
   @include utils.strike('output-to-css', $output: true);
 }
 

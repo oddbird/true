@@ -37,20 +37,24 @@
   $total: $pass + $fail + $output;
   $tests: map.get($stats, 'tests');
   $comment: utils.report-message('linebreak', $results, $stats);
+
   @include config.message($comment, 'comments');
 
   @if $terminal {
     $debug: utils.report-message(not 'linebreak', $results, $stats);
+
     @include config.message($debug, 'debug');
   }
 
   @if ($run != $tests) or ($run != $total) {
     $error: 'The results don’t add up. Are all your tests properly structured?';
+
     @include config.error($error, 'report');
   }
 
   @if $fail-on-error and ($fail > 0) {
     $plural: if(($fail == 1), 'test', 'tests');
+
     @include config.error('#{$fail} #{$plural} failed', 'report');
   }
 }

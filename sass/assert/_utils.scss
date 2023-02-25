@@ -18,11 +18,7 @@
 ///   Optional description of the assertion being tested.
 ///
 /// @output - Content wrapped in appropriate comments & optional selector
-@mixin content(
-  $type,
-  $selector: true,
-  $description: null,
-) {
+@mixin content($type, $selector: true, $description: null) {
   @include data.output-context($type);
 
   $block: map.get(config.$output, $type);
@@ -31,7 +27,9 @@
     '#{$block}: #{$description}',
     $block
   );
+
   @include config.message('  #{$start}  ', 'comments');
+
   @if $selector {
     .test-output {
       @content;
@@ -39,6 +37,7 @@
   } @else {
     @content;
   }
+
   @include config.message('  END_#{$block}  ', 'comments');
 }
 
@@ -53,15 +52,10 @@
 ///   The type of content being output (eg `assert`/`expect`)
 /// @param {string} $description [null] -
 ///   Optional description of the assertion being tested.
-@mixin setup(
-  $name,
-  $description: null,
-) {
+@mixin setup($name, $description: null) {
   $description: $description or data.context('test');
-  @include data.context(
-    'assert',
-    '[#{$name}] #{$description}'
-  );
+
+  @include data.context('assert', '[#{$name}] #{$description}');
 }
 
 // Strike
@@ -77,13 +71,11 @@
 ///   The type of content being output (eg `assert`/`expect`)
 /// @param {string} $description [null] -
 ///   Optional description of the assertion being tested.
-@mixin strike(
-  $result,
-  $output: false
-) {
+@mixin strike($result, $output: false) {
   @include data.update-test($result);
   @include data.update-stats-count('assertions');
   @include data.context-pop;
+
   @if ($output) {
     @include data.output-context(null);
   }
@@ -133,8 +125,8 @@
 /// @return {bool} -
 @function is-truthy($assert) {
   $not: (not not $assert);
-  $list: ($assert != ()); // stylelint-disable-line annotation-no-unknown
-  $string: ($assert != ''); // stylelint-disable-line annotation-no-unknown
+  $list: ($assert != ());
+  $string: ($assert != '');
   $truthy: if(($not and $list and $string), true, false);
 
   @return $truthy;

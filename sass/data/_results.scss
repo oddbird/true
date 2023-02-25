@@ -95,11 +95,13 @@ $test-result: null;
   @if $linebreak {
     $message: ('#{$items}:', '- #{$passed}', '- #{$failed}');
     $message: if($compiled, list.append($message, '- #{$compiled}'), $message);
+
     @return $message;
   }
 
   // No Linebreaks
   $message: '#{$items}, #{$passed}, #{$failed}';
   $message: if($compiled, '#{$message}, #{$compiled}', $message);
+
   @return $message;
 }

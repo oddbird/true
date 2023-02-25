@@ -34,6 +34,7 @@
   @include utils.setup('assert-true', $description);
 
   $truthy: utils.is-truthy($assert);
+
   @include utils.result($truthy, true);
 }
 
@@ -66,6 +67,7 @@
   @include utils.setup('assert-false', $description);
 
   $falsey: not utils.is-truthy($assert);
+
   @include utils.result($falsey, true);
 }
 
@@ -102,10 +104,12 @@
 ///   }
 @mixin assert-equal($assert, $expected, $description: null, $inspect: false) {
   @include utils.setup('assert-equal', $description);
+
   @if $inspect {
     $assert: meta.inspect($assert);
     $expected: meta.inspect($expected);
   }
+
   @include utils.result($assert, $expected);
 }
 
@@ -141,10 +145,12 @@
 ///   }
 @mixin assert-unequal($assert, $expected, $description: null, $inspect: false) {
   @include utils.setup('assert-unequal', $description);
+
   @if $inspect {
     $assert: meta.inspect($assert);
     $expected: meta.inspect($expected);
   }
+
   @include utils.result($assert, $expected, 'unequal');
 }
 

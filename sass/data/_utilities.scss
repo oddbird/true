@@ -54,6 +54,7 @@
 
   @if ($length < 2) {
     $error: 'Must provide at least 2 lists';
+
     @return error($error, 'join-multiple');
   }
 

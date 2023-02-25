@@ -16,6 +16,7 @@
 ///   a passing-test comment with the name of the passing assertion
 @mixin pass-details {
   $assertion: data.context('assert');
+
   @include config.message('✔ #{$assertion}', 'comments', 2);
 }
 
@@ -35,17 +36,20 @@
   // Title Messages
   $assertion: data.context('assert');
   $title: 'FAILED: #{$assertion}';
+
   @include config.message('✖ #{$title}', $location, 2);
 
   // Details Message
   $out: variable-details($assert);
   $exp: variable-details($expected);
   $details: ('- Output: #{$out}', '- Expected: #{$exp}');
+
   @include config.message($details, $location, 4);
 
   // Edge Failure Notes
   @if string.index($assertion, 'assert-equal') {
     $notes: edgefail-notes($assert, $expected);
+
     @if $notes {
       @include config.message($notes, $location, 4);
     }
@@ -55,6 +59,7 @@
   $module: data.context('module');
   $test: data.context('test');
   $context: ('- Module: #{$module}', '- Test: #{$test}');
+
   @include config.message($context, $location, 4);
 
   // Terminal Warning

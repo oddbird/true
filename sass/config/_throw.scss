@@ -70,6 +70,7 @@ $catch-errors: false !default;
 @function error($message, $source: null, $catch: $catch-errors) {
   @if $catch {
     @if ($catch == 'warn') { @warn $message; }
+
     @return '#{_prefix($source)} #{$message}';
   }
 
@@ -131,6 +132,7 @@ $catch-errors: false !default;
 @mixin error($message, $source: null, $catch: $catch-errors) {
   @if $catch {
     @if ($catch == 'warn') { @warn $message; }
+
     @include messages.message(_prefix($source), 'comments');
     @include messages.message($message, 'comments', $comment-padding: 2);
   } @else {

@@ -3,9 +3,6 @@
 
 extends:
   - stylelint-config-standard-scss
-  - stylelint-prettier/recommended
-plugins:
-  - stylelint-prettier
 
 ignoreFiles:
   - '**/*.js'
@@ -17,7 +14,6 @@ rules:
   #   - https://github.com/stylelint-scss/stylelint-config-recommended-scss/blob/master/index.js
   #   - https://github.com/stylelint/stylelint-config-standard/blob/main/index.js
   #   - https://github.com/stylelint/stylelint-config-recommended/blob/main/index.js
-  #   - https://github.com/prettier/stylelint-config-prettier/blob/master/src/index.js
 
   # possible errors (these are all on by default)
   no-descending-specificity: null
@@ -42,19 +38,3 @@ rules:
   scss/dollar-variable-pattern:
     - '^([_|-]*[a-z][a-z0-9]*)(-[a-z0-9]+)*-*$'
     - message: 'Expected variable to be kebab-case'
-
-  # Disable for Prettier
-  scss/at-else-closing-brace-newline-after: null
-  scss/at-else-closing-brace-space-after: null
-  scss/at-else-empty-line-before: null
-  scss/at-else-if-parentheses-space-before: null
-  scss/at-function-parentheses-space-before: null
-  scss/at-if-closing-brace-newline-after: null
-  scss/at-if-closing-brace-space-after: null
-  scss/at-mixin-parentheses-space-before: null
-  scss/dollar-variable-colon-newline-after: null
-  scss/dollar-variable-colon-space-after: null
-  scss/dollar-variable-colon-space-before: null
-  scss/operator-no-newline-after: null
-  scss/operator-no-newline-before: null
-  scss/operator-no-unspaced: null

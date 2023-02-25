@@ -55,10 +55,12 @@ $stats: (
   // Linebreaks
   @if $linebreak {
     $message: ('Stats:', '- #{$modules}', '- #{$tests}', '- #{$assertions}');
+
     @return $message;
   }
 
   // No Linebreaks
   $message: '#{$modules}, #{$tests}, #{$assertions}';
+
   @return $message;
 }
