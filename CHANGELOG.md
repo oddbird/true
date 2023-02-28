@@ -2,6 +2,7 @@
 
 ## UNRELEASED
 
+- DOCUMENTATION: Add note about possible Jest error and workaround.
 - INTERNAL: Update dependencies
 
 ## 7.0.0 (12/14/22)

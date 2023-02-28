@@ -166,6 +166,16 @@ when upgrading from an older version of True.
 
 5. Run Mocha/Jest, and see your Sass tests reported in the command line.
 
+**Note:** Because of differences between Jest globals and Node globals, Dart
+Sass often errors when trying to compile in a Jest environment (e.g.
+`J.getInterceptor$ax(...).map$1$1 is not a function`). This can usually be fixed
+by installing
+[jest-environment-node-single-context](https://github.com/kayahr/jest-environment-node-single-context)
+and setting `testEnvironment: 'jest-environment-node-single-context'` in
+`jest.config.js`. See [possible](https://github.com/sass/dart-sass/issues/1692)
+[related](https://github.com/dart-lang/sdk/issues/47670)
+[issues](https://github.com/facebook/jest/issues/2549).
+
 **Note:** Jest does not watch for changes in Sass files by default. To use
 `jest --watch` with True, add "scss" to your
 [moduleFileExtensions](https://jestjs.io/docs/configuration#modulefileextensions-arraystring)
