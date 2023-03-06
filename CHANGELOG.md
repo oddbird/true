@@ -2,6 +2,7 @@
 
 ## UNRELEASED
 
+- DOCUMENTATION: Add note that `{ style: 'compressed' }` is not supported.
 - DOCUMENTATION: Add note about possible Jest error and workaround.
 - INTERNAL: Update dependencies
 
@@ -39,7 +40,7 @@ const sassTrue = require('sass-true');
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   // Sass options [required]
-  { file: sassFile, outputStyle: 'compressed', includePaths: ['node_modules'] },
+  { file: sassFile, includePaths: ['node_modules'] },
   // True options [required]
   { describe, it, sass },
 );
@@ -52,7 +53,6 @@ sassTrue.runSass(
   // Sass options [required]
   {
     data: sassString,
-    outputStyle: 'compressed',
     includePaths: ['node_modules'],
   },
   // True options [required]
@@ -73,7 +73,7 @@ sassTrue.runSass(
   // Sass source (path) [required]
   sassFile,
   // Sass options [optional]
-  { style: 'compressed', loadPaths: ['node_modules'] },
+  { loadPaths: ['node_modules'] },
 );
 
 const sassString = `
@@ -86,7 +86,7 @@ sassTrue.runSass(
   // Sass source (string) [required]
   sassString,
   // Sass options [optional]
-  { style: 'compressed', loadPaths: ['node_modules'] },
+  { loadPaths: ['node_modules'] },
 );
 ```
 

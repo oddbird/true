@@ -211,6 +211,11 @@ Sass' `compile` or `compileString` expect, and these are passed directly through
 to Sass. The only modification `runSass` makes is to add True's sass path to the
 `loadPaths` option, so `@use 'true';` works in your Sass test file.
 
+**Note:** True requires the
+[default Sass `'expanded'` output style](https://sass-lang.com/documentation/js-api/modules#OutputStyle),
+and will not work if `{ style: 'compressed' }` is used in the third argument to
+`runSass`.
+
 ### Custom Importers
 
 If you use Webpack's tilde notation, like `@use '~accoutrement/sass/tools'`,
