@@ -67,8 +67,7 @@
     "sass": ">=1.45.0"
   },
   "dependencies": {
-    "@types/css": "^0.0.33",
-    "css": "^3.0.0",
+    "@adobe/css-tools": "^4.3.0-rc.1",
     "jest-diff": "^29.4.3",
     "lodash": "^4.17.21"
   },

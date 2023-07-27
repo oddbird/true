@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-use-before-define */
 
+import {
+  CssAtRuleAST,
+  CssCommentAST,
+  CssRuleAST,
+  CssTypes,
+  parse as cssParse,
+  stringify as cssStringify,
+} from '@adobe/css-tools';
 import * as assert from 'assert';
-import * as css from 'css';
 import { diffStringsUnified } from 'jest-diff';
 import { find, forEach, last, startsWith } from 'lodash';
 import * as path from 'path';
@@ -55,7 +62,7 @@ export type Context = {
   currentExpectedRules?: Rule[];
 };
 
-export type Rule = css.Comment | css.Rule | css.AtRule;
+export type Rule = CssCommentAST | CssRuleAST | CssAtRuleAST;
 
 export type Parser = (rule: Rule, ctx: Context) => Parser;
 
@@ -253,7 +260,7 @@ export const parse = function (
   const lines = rawCss.split(/\r?\n/);
 
   const parseCss = function () {
-    const ast = css.parse(rawCss);
+    const ast = cssParse(rawCss);
     const ctx: Context = { modules: [] };
     let handler = parseModule;
 
@@ -459,7 +466,8 @@ export const parse = function (
       if (rule.comment?.trim() === constants.OUTPUT_END_TOKEN) {
         /* istanbul ignore else */
         if (ctx.currentAssertion) {
-          ctx.currentAssertion.output = css.stringify({
+          ctx.currentAssertion.output = cssStringify({
+            type: CssTypes.stylesheet,
             stylesheet: { rules: ctx.currentOutputRules || [] },
           });
         }
@@ -504,7 +512,8 @@ export const parse = function (
       if (rule.comment?.trim() === constants.EXPECTED_END_TOKEN) {
         /* istanbul ignore else */
         if (ctx.currentAssertion) {
-          ctx.currentAssertion.expected = css.stringify({
+          ctx.currentAssertion.expected = cssStringify({
+            type: CssTypes.stylesheet,
             stylesheet: { rules: ctx.currentExpectedRules || [] },
           });
           ctx.currentAssertion.passed =
@@ -546,7 +555,8 @@ export const parse = function (
       if (rule.comment?.trim() === constants.CONTAINED_END_TOKEN) {
         /* istanbul ignore else */
         if (ctx.currentAssertion) {
-          ctx.currentAssertion.expected = css.stringify({
+          ctx.currentAssertion.expected = cssStringify({
+            type: CssTypes.stylesheet,
             stylesheet: { rules: ctx.currentExpectedRules || [] },
           });
           ctx.currentAssertion.passed = contains(
