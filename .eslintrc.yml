@@ -9,25 +9,18 @@ env:
   es6: true
   node: true
 plugins:
-  - prettier
   - import
   - simple-import-sort
   - '@typescript-eslint'
 extends:
   - eslint:recommended
   - plugin:import/recommended
-  - plugin:prettier/recommended
+  - prettier
   - plugin:@typescript-eslint/recommended
 settings:
   import/resolver:
     typescript: {}
 rules:
-  # Prettier
-  prettier/prettier:
-    - 2
-    - singleQuote: true
-      trailingComma: all
-
   # TypeScript
   '@typescript-eslint/explicit-module-boundary-types': 0
   '@typescript-eslint/no-empty-function': 0
