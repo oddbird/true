@@ -1,8 +1,8 @@
-import { Comment, Node } from 'css';
+import { CssAllNodesAST, CssCommentAST } from '@adobe/css-tools';
 
 export const truthyValues = (item?: any) => Boolean(item);
 
-export const isCommentNode = (node: Node): node is Comment =>
+export const isCommentNode = (node: CssAllNodesAST): node is CssCommentAST =>
   node.type === 'comment';
 
 export const removeNewLines = (cssString: string) =>
