@@ -104,5 +104,6 @@
     "name": "true",
     "sassDir": "./sass/",
     "exports": false
-  }
+  },
+  "packageManager": "yarn@3.6.1"
 }

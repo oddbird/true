@@ -3,7 +3,6 @@
 .nyc_output/
 .vscode/
 .yarn/
-.yarnrc
 ENV/
 coverage/
 dist/

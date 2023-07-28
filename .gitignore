@@ -6,8 +6,6 @@
 .pages/
 .sass-cache/
 .vscode/
-.yarn
-.yarnrc
 Gemfile.lock
 coverage/
 docs/
@@ -16,3 +14,13 @@ node_modules/
 pkg/*
 test/.sass-cache/
 true-*.gem
+
+# Yarn
+yarn-error.log
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
