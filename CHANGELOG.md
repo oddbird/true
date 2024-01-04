@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 7.0.1 (01/04/24)
 
 - FEATURE: Validate `runSass` arguments and warn if using v6 API.
 - DOCUMENTATION: Add note that `{ style: 'compressed' }` is not supported.
