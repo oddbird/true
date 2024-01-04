@@ -80,6 +80,13 @@ export const runSass = function (
     sassOpts.loadPaths = [sassPath];
   }
 
+  // Warn if arguments match v6 API
+  if (typeof src !== 'string' || !trueOptions.describe || !trueOptions.it) {
+    throw new Error(
+      'The arguments provided to `runSass` do not match the new API introduced in True v7. Refer to the v7 release notes for migration documentation: https://github.com/oddbird/true/releases/tag/v7.0.0',
+    );
+  }
+
   const compiler = trueOpts.sourceType === 'string' ? compileString : compile;
   const parsedCss = compiler(src, sassOpts).css;
   const modules = parse(parsedCss, trueOpts.contextLines);

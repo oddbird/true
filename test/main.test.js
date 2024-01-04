@@ -33,6 +33,31 @@ describe('#fail', () => {
 });
 
 describe('#runSass', () => {
+  it('throws if arguments do not match newer API', () => {
+    const sass = [
+      '@use "true" as *;',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        height: 10px;',
+      '      }',
+      '      @include expect() {',
+      '        height: 10px;',
+      '      }',
+      '    }',
+      '  }',
+      '}',
+    ].join('\n');
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      sassTrue.runSass({ data: sass }, { describe: mock, it: mock });
+    };
+    expect(attempt).to.throw('do not match the new API');
+  });
+
   it('throws AssertionError on failure', () => {
     const sass = [
       '@use "true";',
