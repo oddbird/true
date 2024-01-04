@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">7.0.0</span>
+          <span class="project-version">7.0.1</span>
         
       </div>
     </header>
@@ -316,6 +316,15 @@ sassTrue.runSass({ describe, it }, sassFile);
 <p>Run Mocha/Jest, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
 </li>
 </ol>
+<p><strong>Note:</strong> Because of differences between Jest globals and Node globals, Dart
+Sass often errors when trying to compile in a Jest environment (e.g.
+<code>J.getInterceptor$ax(...).map$1$1 is not a function</code>). This can usually be fixed
+by installing
+<a href="https://github.com/kayahr/jest-environment-node-single-context">jest-environment-node-single-context</a>
+and setting <code>testEnvironment: 'jest-environment-node-single-context'</code> in
+<code>jest.config.js</code>. See <a href="https://github.com/sass/dart-sass/issues/1692">possible</a>
+<a href="https://github.com/dart-lang/sdk/issues/47670">related</a>
+<a href="https://github.com/facebook/jest/issues/2549">issues</a>.</p>
 <p><strong>Note:</strong> Jest does not watch for changes in Sass files by default. To use
 <code>jest --watch</code> with True, add “scss” to your
 <a href="https://jestjs.io/docs/configuration#modulefileextensions-arraystring">moduleFileExtensions</a><span class="widont">&nbsp;</span>setting.</p>
@@ -343,6 +352,10 @@ options</a> that
 Sass’ <code>compile</code> or <code>compileString</code> expect, and these are passed directly through
 to Sass. The only modification <code>runSass</code> makes is to add True’s sass path to the
 <code>loadPaths</code> option, so <code>@use 'true';</code> works in your Sass test<span class="widont">&nbsp;</span>file.</p>
+<p><strong>Note:</strong> True requires the
+<a href="https://sass-lang.com/documentation/js-api/modules#OutputStyle">default Sass <code>'expanded'</code> output style</a>,
+and will not work if <code>{ style: 'compressed' }</code> is used in the third argument to
+<code>runSass</code>.</p>
 <h3 id="custom-importers" tabindex="-1">Custom Importers</h3>
 <p>If you use Webpack’s tilde notation, like <code>@use '~accoutrement/sass/tools'</code>,
 you’ll need to tell <code>runSass</code> how to handle that. That will require writing a

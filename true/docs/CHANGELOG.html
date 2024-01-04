@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">7.0.0</span>
+          <span class="project-version">7.0.1</span>
         
       </div>
     </header>
@@ -169,6 +169,13 @@
           
   <div class="text-block">
     <h1 id="true-changelog" tabindex="-1">True Changelog</h1>
+<h2 id="7-0-1-01-04-24-" tabindex="-1">7.0.1 (01/04/24)</h2>
+<ul>
+<li>FEATURE: Validate <code>runSass</code> arguments and warn if using v6<span class="widont">&nbsp;</span>API.</li>
+<li>DOCUMENTATION: Add note that <code>{ style: 'compressed' }</code> is not<span class="widont">&nbsp;</span>supported.</li>
+<li>DOCUMENTATION: Add note about possible Jest error and<span class="widont">&nbsp;</span>workaround.</li>
+<li>INTERNAL: Update dependencies</li>
+</ul>
 <h2 id="7-0-0-12-14-22-" tabindex="-1">7.0.0 (12/14/22)</h2>
 <ul>
 <li>FEATURE: <code>contains()</code> checks multiple block with matching selectors.
@@ -204,7 +211,7 @@ const sassTrue = require('sass-true');
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass(
   // Sass options [required]
-  { file: sassFile, outputStyle: 'compressed', includePaths: ['node_modules'] },
+  { file: sassFile, includePaths: ['node_modules'] },
   // True options [required]
   { describe, it, sass },
 );
@@ -217,7 +224,6 @@ sassTrue.runSass(
   // Sass options [required]
   {
     data: sassString,
-    outputStyle: 'compressed',
     includePaths: ['node_modules'],
   },
   // True options [required]
@@ -235,7 +241,7 @@ sassTrue.runSass(
   // Sass source (path) [required]
   sassFile,
   // Sass options [optional]
-  { style: 'compressed', loadPaths: ['node_modules'] },
+  { loadPaths: ['node_modules'] },
 );
 
 const sassString = `
@@ -248,7 +254,7 @@ sassTrue.runSass(
   // Sass source (string) [required]
   sassString,
   // Sass options [optional]
-  { style: 'compressed', loadPaths: ['node_modules'] },
+  { loadPaths: ['node_modules'] },
 );
 </code></pre>
 <h2 id="7-0-0-beta-0-09-16-22-" tabindex="-1">7.0.0-beta.0 (09/16/22)</h2>
