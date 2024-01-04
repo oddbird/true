@@ -2,6 +2,7 @@
 
 ## UNRELEASED
 
+- FEATURE: Validate `runSass` arguments and warn if using v6 API.
 - DOCUMENTATION: Add note that `{ style: 'compressed' }` is not supported.
 - DOCUMENTATION: Add note about possible Jest error and workaround.
 - INTERNAL: Update dependencies
