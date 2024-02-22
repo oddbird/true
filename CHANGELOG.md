@@ -2,7 +2,10 @@
 
 ## 8.0.0-beta.0 (unreleased)
 
+- FEATURE: Add True `sass` option (`string` or Sass implementation instance,
+  defaults to `'sass'`) to allow using either `sass` or `embedded-sass`.
 - BREAKING: Drop support for node < 18
+- INTERNAL: Remove `sass` as a peer-dependency.
 - INTERNAL: Update dependencies
 
 ## 7.0.1 (01/04/24)

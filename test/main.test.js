@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
-const path = require('path');
+const path = require('node:path');
 
 const { expect } = require('chai');
 const { diffStringsUnified } = require('jest-diff');
@@ -113,6 +113,70 @@ describe('#runSass', () => {
       );
     };
     expect(attempt).not.to.throw();
+  });
+
+  it('can specify sass implementation to use [string]', () => {
+    const sass = [
+      '@use "true" as *;',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        -property: value;',
+      '      }',
+      '      @include expect() {',
+      '        -property: value;',
+      '      }',
+      '    }',
+      '  }',
+      '}',
+    ].join('\n');
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          describe: mock,
+          it: mock,
+          sourceType: 'string',
+          sass: 'sass-embedded',
+        },
+        sass,
+      );
+    };
+    expect(attempt).not.to.throw();
+  });
+
+  it('can specify sass implementation to use [object]', () => {
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          describe: mock,
+          it: mock,
+          sass: {
+            compile() {
+              throw new Error('Custom sass implementation called');
+            },
+          },
+        },
+        '',
+      );
+    };
+    expect(attempt).to.throw('Custom sass implementation called');
+  });
+
+  it('throws if sass implementation is not found', () => {
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      sassTrue.runSass({ describe: mock, it: mock, sass: 'foobar' }, '');
+    };
+    expect(attempt).to.throw('Cannot find Dart Sass (`foobar`) dependency.');
   });
 });
 
