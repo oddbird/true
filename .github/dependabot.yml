@@ -1,8 +1,25 @@
 version: 2
+
 updates:
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: weekly
+      interval: monthly
       time: '04:00'
       timezone: America/New_York
+
+  - package-ecosystem: npm
+    directory: '/'
+    versioning-strategy: increase
+    schedule:
+      interval: monthly
+      time: '04:00'
+      timezone: America/New_York
+    groups:
+      npm-major-upgrades:
+        update-types:
+          - 'major'
+      npm-minor-upgrades:
+        update-types:
+          - 'minor'
+          - 'patch'
