@@ -12,8 +12,6 @@
     "eyeglass-module"
   ],
   "homepage": "https://www.oddbird.net/true/",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
@@ -95,6 +93,13 @@
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "typescript": "^5.3.3"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "sass": "./_index.scss",
+    "default": "./lib/index.js"
   },
   "eyeglass": {
     "needs": "*",
