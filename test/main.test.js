@@ -33,6 +33,35 @@ describe('#fail', () => {
 });
 
 describe('#runSass', () => {
+  it('throws if `style: "compressed"` is used', () => {
+    const sass = [
+      '@use "true" as *;',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        height: 10px;',
+      '      }',
+      '      @include expect() {',
+      '        height: 10px;',
+      '      }',
+      '    }',
+      '  }',
+      '}',
+    ].join('\n');
+    const mock = function (name, cb) {
+      cb();
+    };
+    const attempt = function () {
+      sassTrue.runSass({ describe: mock, it: mock }, sass, {
+        style: 'compressed',
+      });
+    };
+    expect(attempt).to.throw(
+      'requires the default Sass `expanded` output style',
+    );
+  });
+
   it('throws if arguments do not match newer API', () => {
     const sass = [
       '@use "true" as *;',

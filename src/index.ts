@@ -80,13 +80,21 @@ export const runSass = function (
     sassOpts.loadPaths = [sassPath];
   }
 
-  // Warn if arguments match v6 API
+  // Error if arguments match v6 API
   if (typeof src !== 'string' || !trueOptions.describe || !trueOptions.it) {
     throw new Error(
       'The arguments provided to `runSass` do not match the new API ' +
         'introduced in True v7. Refer to the v7 release notes ' +
         'for migration documentation: ' +
         'https://github.com/oddbird/true/releases/tag/v7.0.0',
+    );
+  }
+
+  // Error if `style: "compressed"` is used
+  if (sassOpts.style === 'compressed') {
+    throw new Error(
+      'True requires the default Sass `expanded` output style, ' +
+        'but `style: "compressed"` was used.',
     );
   }
 
