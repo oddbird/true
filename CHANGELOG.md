@@ -1,5 +1,10 @@
 # True Changelog
 
+## 8.0.0-beta.0 (unreleased)
+
+- BREAKING: Drop support for node < 18
+- INTERNAL: Update dependencies
+
 ## 7.0.1 (01/04/24)
 
 - FEATURE: Validate `runSass` arguments and warn if using v6 API.
