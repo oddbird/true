@@ -40,7 +40,7 @@
     "README.md"
   ],
   "engines": {
-    "node": "^14.15.0 || ^16.10.0 || >=18.0.0"
+    "node": ">=18"
   },
   "scripts": {
     "test:src": "jest",
@@ -104,5 +104,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@3.7.0"
+  "packageManager": "yarn@4.1.0"
 }
