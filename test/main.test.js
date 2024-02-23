@@ -192,12 +192,13 @@ describe('#runSass', () => {
         {
           ...trueOpts,
           sass: {
-            NodePackageImporter: class {},
-            compile(src, opts) {
-              if (opts.importers[0] instanceof this.NodePackageImporter) {
+            NodePackageImporter: class {
+              constructor() {
                 throw new Error('NodePackageImporter added');
               }
-              throw new Error('failed');
+            },
+            compile() {
+              throw new Error('not added');
             },
           },
         },
@@ -213,12 +214,13 @@ describe('#runSass', () => {
         {
           ...trueOpts,
           sass: {
-            NodePackageImporter: class {},
-            compile(src, opts) {
-              if (opts.importers[0] instanceof this.NodePackageImporter) {
+            NodePackageImporter: class {
+              constructor() {
                 throw new Error('NodePackageImporter added');
               }
-              throw new Error('failed');
+            },
+            compile() {
+              throw new Error('not added');
             },
           },
         },
@@ -226,7 +228,7 @@ describe('#runSass', () => {
         { importers: [] },
       );
     };
-    expect(attempt).to.throw('failed');
+    expect(attempt).to.throw('not added');
   });
 });
 

@@ -114,12 +114,8 @@ export const runSass = function (
   }
 
   // Add the Sass Node.js package importer, if available
-  if (!sassOpts.importers) {
-    try {
-      sassOpts.importers = [new compiler.NodePackageImporter()];
-    } catch (err) {
-      // skip if `NodePackageImporter` isn't available
-    }
+  if (!sassOpts.importers && compiler.NodePackageImporter) {
+    sassOpts.importers = [new compiler.NodePackageImporter()];
   }
 
   const compilerFn =
