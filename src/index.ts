@@ -73,6 +73,8 @@ export const runSass = function (
 ) {
   const trueOpts = Object.assign({}, trueOptions);
   const sassOpts = Object.assign({}, sassOptions);
+
+  // Add True's sass to `loadPaths`
   const sassPath = path.join(__dirname, '..', 'sass');
   if (sassOpts.loadPaths) {
     sassOpts.loadPaths.push(sassPath);
@@ -108,6 +110,15 @@ export const runSass = function (
       compiler = require(sassPkg);
     } catch (err) {
       throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
+    }
+  }
+
+  // Add the Sass Node.js package importer, if available
+  if (!sassOpts.importers) {
+    try {
+      sassOpts.importers = [new compiler.NodePackageImporter()];
+    } catch (err) {
+      // skip if `NodePackageImporter` isn't available
     }
   }
 

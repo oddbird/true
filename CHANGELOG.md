@@ -4,6 +4,11 @@
 
 - FEATURE: Add True `sass` option (`string` or Sass implementation instance,
   defaults to `'sass'`) to allow using either `sass` or `embedded-sass`.
+- FEATURE: Add the
+  [Node.js package importer](https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/)
+  to the Sass `importers` option by default, if Dart Sass v1.71 or later is
+  available. Users can opt out by providing their own `importers` option, e.g.
+  `{ importers: [] }`.
 - BREAKING: Drop support for node < 18
 - INTERNAL: Remove `sass` as a peer-dependency.
 - INTERNAL: Update dependencies

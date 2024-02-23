@@ -223,9 +223,16 @@ To pass in a source string (and use `sass.compileString`), add `sourceType:
 
 The third (optional) argument to `runSass` accepts the [same
 options](https://sass-lang.com/documentation/js-api/interfaces/Options) that
-Sass' `compile` or `compileString` expect, and these are passed directly through
-to Sass. The only modification `runSass` makes is to add True's sass path to the
-`loadPaths` option, so `@use 'true';` works in your Sass test file.
+Sass' `compile` or `compileString` expect (e.g. `importers`, `loadPaths`, or
+`style`), and these are passed directly through to Sass.
+
+By default, True makes two modifications to these options. First, True's sass
+path is added to the `loadPaths` option, so `@use 'true';` works in your Sass
+test file. Second, if Dart Sass v1.71 or greater is installed, `importers` is
+set to an array containing the [Node.js package importer][pkg-importer], which
+supports `pkg:` imports to resolve `@use` and `@import` for external modules
+installed via npm or Yarn. If `importers` is set (even as an empty array
+`importers: []`), it will override this default importer.
 
 **Note:** True requires the
 [default Sass `'expanded'` output style](https://sass-lang.com/documentation/js-api/modules#OutputStyle),
@@ -233,22 +240,6 @@ and will not work if `{ style: 'compressed' }` is used in the third argument to
 `runSass`.
 
 ### Custom Importers
-
-If you use the Dart Sass [Node.js package importer][pkg-importer] (e.g. `@use
-'pkg:accoutrement'`), you'll need to include `NodePackageImporter` in the
-options passed to `runSass`:
-
-```js
-const path = require('node:path');
-const { pathToFileURL } = require('node:url');
-const { NodePackageImporter } = require('sass');
-const sassTrue = require('sass-true');
-
-const sassFile = path.join(__dirname, 'test.scss');
-sassTrue.runSass({ describe, it }, sassFile, {
-  importers: [new NodePackageImporter()],
-});
-```
 
 If you use tilde notation (e.g. `@use '~accoutrement/sass/tools'`) or another
 method for importing Sass files from `node_modules`, you'll need to tell

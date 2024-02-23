@@ -14,6 +14,11 @@ if (process.env.USE_BUILT) {
   sassTrue = require('../src');
 }
 
+const mock = function (name, cb) {
+  cb();
+};
+const trueOpts = { describe: mock, it: mock };
+
 describe('#fail', () => {
   it('formats failure message', () => {
     const msg = sassTrue.formatFailureMessage({
@@ -49,11 +54,8 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass({ describe: mock, it: mock }, sass, {
+      sassTrue.runSass(trueOpts, sass, {
         style: 'compressed',
       });
     };
@@ -78,11 +80,8 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass({ data: sass }, { describe: mock, it: mock });
+      sassTrue.runSass({ data: sass }, trueOpts);
     };
     expect(attempt).to.throw('do not match the new API');
   });
@@ -96,14 +95,8 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass(
-        { describe: mock, it: mock, sourceType: 'string' },
-        sass,
-      );
+      sassTrue.runSass({ ...trueOpts, sourceType: 'string' }, sass);
     };
     expect(attempt).to.throw('This test is meant to fail. [type: assert-true]');
   });
@@ -125,14 +118,10 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
       sassTrue.runSass(
         {
-          describe: mock,
-          it: mock,
+          ...trueOpts,
           sourceType: 'string',
         },
         sass,
@@ -160,14 +149,10 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
       sassTrue.runSass(
         {
-          describe: mock,
-          it: mock,
+          ...trueOpts,
           sourceType: 'string',
           sass: 'sass-embedded',
         },
@@ -178,14 +163,10 @@ describe('#runSass', () => {
   });
 
   it('can specify sass implementation to use [object]', () => {
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
       sassTrue.runSass(
         {
-          describe: mock,
-          it: mock,
+          ...trueOpts,
           sass: {
             compile() {
               throw new Error('Custom sass implementation called');
@@ -199,13 +180,53 @@ describe('#runSass', () => {
   });
 
   it('throws if sass implementation is not found', () => {
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass({ describe: mock, it: mock, sass: 'foobar' }, '');
+      sassTrue.runSass({ ...trueOpts, sass: 'foobar' }, '');
     };
     expect(attempt).to.throw('Cannot find Dart Sass (`foobar`) dependency.');
+  });
+
+  it('adds NodePackageImporter by default', () => {
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sass: {
+            NodePackageImporter: class {},
+            compile(src, opts) {
+              if (opts.importers[0] instanceof this.NodePackageImporter) {
+                throw new Error('NodePackageImporter added');
+              }
+              throw new Error('failed');
+            },
+          },
+        },
+        '',
+      );
+    };
+    expect(attempt).to.throw('NodePackageImporter added');
+  });
+
+  it('skips NodePackageImporter if `importers` option is provided', () => {
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sass: {
+            NodePackageImporter: class {},
+            compile(src, opts) {
+              if (opts.importers[0] instanceof this.NodePackageImporter) {
+                throw new Error('NodePackageImporter added');
+              }
+              throw new Error('failed');
+            },
+          },
+        },
+        '',
+        { importers: [] },
+      );
+    };
+    expect(attempt).to.throw('failed');
   });
 });
 
