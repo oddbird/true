@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
-const path = require('path');
+const path = require('node:path');
 
 const sassFile = path.join(__dirname, 'scss', 'test.scss');
 let runSass;

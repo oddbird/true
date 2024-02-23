@@ -35,16 +35,25 @@ Import in your test directory,
 like any other Sass file:
 
 ```scss
-@use 'true' as *;
+@use 'pkg:sass-true' as *;
 ```
 
-Depending on your setup,
-you may need to include the full path name:
+If you are not using the Sass [Node.js package importer][pkg-importer], you may
+need to include the full path name:
 
 ```scss
 // This is only an example, your path may be different
 @use '../node_modules/sass-true' as *;
 ```
+
+Or if you are using the [JavaScript test runner integration][js-runner]:
+
+```scss
+@use 'true' as *;
+```
+
+[pkg-importer]: https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+[js-runner]: #using-mocha-jest-or-other-js-test-runners
 
 ## One Setting
 
@@ -146,7 +155,8 @@ when upgrading from an older version of True.
    npm install --save-dev sass-true
    ```
 
-2. [Optional] Install `sass` (Dart Sass), if not already installed.
+2. [Optional] Install Dart Sass (`sass` or `sass-embedded`), if not already
+   installed.
 
    ```bash
    npm install --save-dev sass
@@ -157,7 +167,7 @@ when upgrading from an older version of True.
 4. Write a shim JS test file in `test/sass.test.js`:
 
    ```js
-   const path = require('path');
+   const path = require('node:path');
    const sassTrue = require('sass-true');
 
    const sassFile = path.join(__dirname, 'test.scss');
@@ -185,11 +195,16 @@ You can call `runSass` more than once, if you have multiple Sass test files you
 want to run separately.
 
 The first argument is an object with required `describe` and `it` options, and
-optional `contextLines` and `sourceType` options.
+optional `sass`, `contextLines` and `sourceType` options.
 
 Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
 should be usable in the same way: just pass your test runner's `describe` and
 `it` equivalents in the first argument to `runSass`.
+
+The `sass` option is an optional string name of a Dart Sass implementation
+installed in the current environment (e.g. `'embedded-sass'` or `'sass'`), or a
+Dart Sass implementation instance itself. If none is provided, this defaults to
+`'sass'`.
 
 If True can't parse the CSS output, it'll give you some context lines of CSS as
 part of the error message. This context will likely be helpful in understanding
@@ -202,14 +217,22 @@ file (passed through to Sass'
 [`compile`](https://sass-lang.com/documentation/js-api/modules#compile)
 function), or a string of source Sass (passed through to Sass'
 [`compileString`](https://sass-lang.com/documentation/js-api/modules#compileString)
-function). By default it is expected to be a path, and `sass.compile` is used --
-to pass in a source string (and use `sass.compileString`), add `sourceType: 'string'` to your options passed in as the first argument to `runSass`.
+function). By default it is expected to be a path, and `sass.compile` is used.
+To pass in a source string (and use `sass.compileString`), add `sourceType:
+'string'` to your options passed in as the first argument to `runSass`.
 
 The third (optional) argument to `runSass` accepts the [same
 options](https://sass-lang.com/documentation/js-api/interfaces/Options) that
-Sass' `compile` or `compileString` expect, and these are passed directly through
-to Sass. The only modification `runSass` makes is to add True's sass path to the
-`loadPaths` option, so `@use 'true';` works in your Sass test file.
+Sass' `compile` or `compileString` expect (e.g. `importers`, `loadPaths`, or
+`style`), and these are passed directly through to Sass.
+
+By default, True makes two modifications to these options. First, True's sass
+path is added to the `loadPaths` option, so `@use 'true';` works in your Sass
+test file. Second, if Dart Sass v1.71 or greater is installed, `importers` is
+set to an array containing the [Node.js package importer][pkg-importer], which
+supports `pkg:` imports to resolve `@use` and `@import` for external modules
+installed via npm or Yarn. If `importers` is set (even as an empty array
+`importers: []`), it will override this default importer.
 
 **Note:** True requires the
 [default Sass `'expanded'` output style](https://sass-lang.com/documentation/js-api/modules#OutputStyle),
@@ -218,15 +241,15 @@ and will not work if `{ style: 'compressed' }` is used in the third argument to
 
 ### Custom Importers
 
-If you use Webpack's tilde notation, like `@use '~accoutrement/sass/tools'`,
-you'll need to tell `runSass` how to handle that. That will require writing a
-[custom importer](https://sass-lang.com/documentation/js-api/interfaces/FileImporter)
+If you use tilde notation (e.g. `@use '~accoutrement/sass/tools'`) or another
+method for importing Sass files from `node_modules`, you'll need to tell
+`runSass` how to handle that. That will require writing a [custom
+importer](https://sass-lang.com/documentation/js-api/interfaces/FileImporter)
 and passing it into the configuration for `runSass`:
 
 ```js
-const path = require('path');
-const { pathToFileURL } = require('url');
-
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 const sassTrue = require('sass-true');
 
 const importers = [

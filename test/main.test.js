@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
-const path = require('path');
+const path = require('node:path');
 
 const { expect } = require('chai');
 const { diffStringsUnified } = require('jest-diff');
@@ -13,6 +13,11 @@ if (process.env.USE_BUILT) {
 } else {
   sassTrue = require('../src');
 }
+
+const mock = function (name, cb) {
+  cb();
+};
+const trueOpts = { describe: mock, it: mock };
 
 describe('#fail', () => {
   it('formats failure message', () => {
@@ -33,6 +38,32 @@ describe('#fail', () => {
 });
 
 describe('#runSass', () => {
+  it('throws if `style: "compressed"` is used', () => {
+    const sass = [
+      '@use "true" as *;',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        height: 10px;',
+      '      }',
+      '      @include expect() {',
+      '        height: 10px;',
+      '      }',
+      '    }',
+      '  }',
+      '}',
+    ].join('\n');
+    const attempt = function () {
+      sassTrue.runSass(trueOpts, sass, {
+        style: 'compressed',
+      });
+    };
+    expect(attempt).to.throw(
+      'requires the default Sass `expanded` output style',
+    );
+  });
+
   it('throws if arguments do not match newer API', () => {
     const sass = [
       '@use "true" as *;',
@@ -49,11 +80,8 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass({ data: sass }, { describe: mock, it: mock });
+      sassTrue.runSass({ data: sass }, trueOpts);
     };
     expect(attempt).to.throw('do not match the new API');
   });
@@ -67,14 +95,8 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
-      sassTrue.runSass(
-        { describe: mock, it: mock, sourceType: 'string' },
-        sass,
-      );
+      sassTrue.runSass({ ...trueOpts, sourceType: 'string' }, sass);
     };
     expect(attempt).to.throw('This test is meant to fail. [type: assert-true]');
   });
@@ -96,14 +118,10 @@ describe('#runSass', () => {
       '  }',
       '}',
     ].join('\n');
-    const mock = function (name, cb) {
-      cb();
-    };
     const attempt = function () {
       sassTrue.runSass(
         {
-          describe: mock,
-          it: mock,
+          ...trueOpts,
           sourceType: 'string',
         },
         sass,
@@ -113,6 +131,104 @@ describe('#runSass', () => {
       );
     };
     expect(attempt).not.to.throw();
+  });
+
+  it('can specify sass implementation to use [string]', () => {
+    const sass = [
+      '@use "true" as *;',
+      '@include test-module("Module") {',
+      '  @include test("Test") {',
+      '    @include assert("Assertion") {',
+      '      @include output() {',
+      '        -property: value;',
+      '      }',
+      '      @include expect() {',
+      '        -property: value;',
+      '      }',
+      '    }',
+      '  }',
+      '}',
+    ].join('\n');
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sourceType: 'string',
+          sass: 'sass-embedded',
+        },
+        sass,
+      );
+    };
+    expect(attempt).not.to.throw();
+  });
+
+  it('can specify sass implementation to use [object]', () => {
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sass: {
+            compile() {
+              throw new Error('Custom sass implementation called');
+            },
+          },
+        },
+        '',
+      );
+    };
+    expect(attempt).to.throw('Custom sass implementation called');
+  });
+
+  it('throws if sass implementation is not found', () => {
+    const attempt = function () {
+      sassTrue.runSass({ ...trueOpts, sass: 'foobar' }, '');
+    };
+    expect(attempt).to.throw('Cannot find Dart Sass (`foobar`) dependency.');
+  });
+
+  it('adds NodePackageImporter by default', () => {
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sass: {
+            NodePackageImporter: class {
+              constructor() {
+                throw new Error('NodePackageImporter added');
+              }
+            },
+            compile() {
+              throw new Error('not added');
+            },
+          },
+        },
+        '',
+      );
+    };
+    expect(attempt).to.throw('NodePackageImporter added');
+  });
+
+  it('skips NodePackageImporter if `importers` option is provided', () => {
+    const attempt = function () {
+      sassTrue.runSass(
+        {
+          ...trueOpts,
+          sass: {
+            NodePackageImporter: class {
+              constructor() {
+                throw new Error('NodePackageImporter added');
+              }
+            },
+            compile() {
+              throw new Error('not added');
+            },
+          },
+        },
+        '',
+        { importers: [] },
+      );
+    };
+    expect(attempt).to.throw('not added');
   });
 });
 

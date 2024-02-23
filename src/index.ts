@@ -1,5 +1,8 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
+import assert from 'node:assert';
+import path from 'node:path';
 
 import {
   CssAtRuleAST,
@@ -9,12 +12,8 @@ import {
   parse as cssParse,
   stringify as cssStringify,
 } from '@adobe/css-tools';
-import * as assert from 'assert';
 import { diffStringsUnified } from 'jest-diff';
 import { find, forEach, last, startsWith } from 'lodash';
-import * as path from 'path';
-import type { Options, StringOptions } from 'sass';
-import { compile, compileString } from 'sass';
 
 import * as constants from './constants';
 import {
@@ -28,6 +27,7 @@ import {
 export interface TrueOptions {
   describe: (description: string, fn: () => void) => void;
   it: (description: string, fn: () => void) => void;
+  sass?: any;
   sourceType?: 'path' | 'string';
   contextLines?: number;
 }
@@ -69,10 +69,12 @@ export type Parser = (rule: Rule, ctx: Context) => Parser;
 export const runSass = function (
   trueOptions: TrueOptions,
   src: string,
-  sassOptions?: Options<'sync'> | StringOptions<'sync'>,
+  sassOptions?: any,
 ) {
   const trueOpts = Object.assign({}, trueOptions);
   const sassOpts = Object.assign({}, sassOptions);
+
+  // Add True's sass to `loadPaths`
   const sassPath = path.join(__dirname, '..', 'sass');
   if (sassOpts.loadPaths) {
     sassOpts.loadPaths.push(sassPath);
@@ -80,15 +82,45 @@ export const runSass = function (
     sassOpts.loadPaths = [sassPath];
   }
 
-  // Warn if arguments match v6 API
+  // Error if arguments match v6 API
   if (typeof src !== 'string' || !trueOptions.describe || !trueOptions.it) {
     throw new Error(
-      'The arguments provided to `runSass` do not match the new API introduced in True v7. Refer to the v7 release notes for migration documentation: https://github.com/oddbird/true/releases/tag/v7.0.0',
+      'The arguments provided to `runSass` do not match the new API ' +
+        'introduced in True v7. Refer to the v7 release notes ' +
+        'for migration documentation: ' +
+        'https://github.com/oddbird/true/releases/tag/v7.0.0',
     );
   }
 
-  const compiler = trueOpts.sourceType === 'string' ? compileString : compile;
-  const parsedCss = compiler(src, sassOpts).css;
+  // Error if `style: "compressed"` is used
+  if (sassOpts.style === 'compressed') {
+    throw new Error(
+      'True requires the default Sass `expanded` output style, ' +
+        'but `style: "compressed"` was used.',
+    );
+  }
+
+  let compiler;
+  if (trueOpts.sass && typeof trueOpts.sass !== 'string') {
+    compiler = trueOpts.sass;
+  } else {
+    const sassPkg = trueOpts.sass ?? 'sass';
+    try {
+      // eslint-disable-next-line global-require
+      compiler = require(sassPkg);
+    } catch (err) {
+      throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
+    }
+  }
+
+  // Add the Sass Node.js package importer, if available
+  if (!sassOpts.importers && compiler.NodePackageImporter) {
+    sassOpts.importers = [new compiler.NodePackageImporter()];
+  }
+
+  const compilerFn =
+    trueOpts.sourceType === 'string' ? 'compileString' : 'compile';
+  const parsedCss = compiler[compilerFn](src, sassOpts).css;
   const modules = parse(parsedCss, trueOpts.contextLines);
 
   forEach(modules, (module) => {

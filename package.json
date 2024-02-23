@@ -12,8 +12,6 @@
     "eyeglass-module"
   ],
   "homepage": "https://www.oddbird.net/true/",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
@@ -63,9 +61,6 @@
     "release": "run-s commit docs",
     "prepack": "yarn run release"
   },
-  "peerDependencies": {
-    "sass": ">=1.45.0"
-  },
   "dependencies": {
     "@adobe/css-tools": "^4.3.3",
     "jest-diff": "^29.7.0",
@@ -92,11 +87,19 @@
     "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "sass": "^1.71.1",
+    "sass-embedded": "^1.71.1",
     "sassdoc": "^2.7.4",
     "sassdoc-theme-herman": "^5.0.1",
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "typescript": "^5.3.3"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "sass": "./_index.scss",
+    "default": "./lib/index.js"
   },
   "eyeglass": {
     "needs": "*",
