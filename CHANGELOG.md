@@ -1,6 +1,6 @@
 # True Changelog
 
-## 8.0.0-beta.0 (unreleased)
+## 8.0.0 (02/23/24)
 
 - FEATURE: Add True `sass` option (`string` or Sass implementation instance,
   defaults to `'sass'`) to allow using either `sass` or `embedded-sass`.
