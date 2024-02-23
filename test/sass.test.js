@@ -11,4 +11,4 @@ if (process.env.USE_BUILT) {
 } else {
   runSass = require('../src').runSass;
 }
-runSass({ describe, it }, sassFile);
+runSass({ describe, it, sass: 'sass-embedded' }, sassFile);
