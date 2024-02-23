@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">7.0.1</span>
+          <span class="project-version">8.0.0</span>
         
       </div>
     </header>
@@ -209,12 +209,15 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 </code></pre>
 <p>Import in your test directory,
 like any other Sass<span class="widont">&nbsp;</span>file:</p>
-<pre><code class="lang-scss">@use 'true' as *;
+<pre><code class="lang-scss">@use 'pkg:sass-true' as *;
 </code></pre>
-<p>Depending on your setup,
-you may need to include the full path<span class="widont">&nbsp;</span>name:</p>
+<p>If you are not using the Sass <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a>, you may
+need to include the full path<span class="widont">&nbsp;</span>name:</p>
 <pre><code class="lang-scss">// This is only an example, your path may be different
 @use '../node_modules/sass-true' as *;
+</code></pre>
+<p>Or if you are using the <a href="#using-mocha-jest-or-other-js-test-runners">JavaScript test runner integration</a>:</p>
+<pre><code class="lang-scss">@use 'true' as *;
 </code></pre>
 <h2 id="one-setting" tabindex="-1">One Setting</h2>
 <p><code>$terminal-output</code> (boolean),
@@ -296,7 +299,7 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 </code></pre>
 </li>
 <li>
-<p>[Optional] Install <code>sass</code> (Dart Sass), if not already<span class="widont">&nbsp;</span>installed.</p>
+<p>[Optional] Install Dart Sass (<code>sass</code> or <code>sass-embedded</code>), if not already<span class="widont">&nbsp;</span>installed.</p>
 <pre><code class="lang-bash">npm install --save-dev sass
 </code></pre>
 </li>
@@ -305,7 +308,7 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 </li>
 <li>
 <p>Write a shim JS test file in <code>test/sass.test.js</code>:</p>
-<pre><code class="lang-js">const path = require('path');
+<pre><code class="lang-js">const path = require('node:path');
 const sassTrue = require('sass-true');
 
 const sassFile = path.join(__dirname, 'test.scss');
@@ -331,10 +334,14 @@ and setting <code>testEnvironment: 'jest-environment-node-single-context'</code>
 <p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
 want to run<span class="widont">&nbsp;</span>separately.</p>
 <p>The first argument is an object with required <code>describe</code> and <code>it</code> options, and
-optional <code>contextLines</code> and <code>sourceType</code> options.</p>
+optional <code>sass</code>, <code>contextLines</code> and <code>sourceType</code> options.</p>
 <p>Any JS test runner with equivalents to Mocha’s or Jest’s <code>describe</code> and <code>it</code>
 should be usable in the same way: just pass your test runner’s <code>describe</code> and
 <code>it</code> equivalents in the first argument to <code>runSass</code>.</p>
+<p>The <code>sass</code> option is an optional string name of a Dart Sass implementation
+installed in the current environment (e.g. <code>'embedded-sass'</code> or <code>'sass'</code>), or a
+Dart Sass implementation instance itself. If none is provided, this defaults to
+<code>'sass'</code>.</p>
 <p>If True can’t parse the CSS output, it’ll give you some context lines of CSS as
 part of the error message. This context will likely be helpful in understanding
 the parse failure. By default it provides up to 10 lines of context; if you need
@@ -345,25 +352,31 @@ file (passed through to Sass’
 <a href="https://sass-lang.com/documentation/js-api/modules#compile"><code>compile</code></a>
 function), or a string of source Sass (passed through to Sass’
 <a href="https://sass-lang.com/documentation/js-api/modules#compileString"><code>compileString</code></a>
-function). By default it is expected to be a path, and <code>sass.compile</code> is used –
-to pass in a source string (and use <code>sass.compileString</code>), add <code>sourceType: 'string'</code> to your options passed in as the first argument to <code>runSass</code>.</p>
+function). By default it is expected to be a path, and <code>sass.compile</code> is used.
+To pass in a source string (and use <code>sass.compileString</code>), add <code>sourceType: 'string'</code> to your options passed in as the first argument to <code>runSass</code>.</p>
 <p>The third (optional) argument to <code>runSass</code> accepts the <a href="https://sass-lang.com/documentation/js-api/interfaces/Options">same
 options</a> that
-Sass’ <code>compile</code> or <code>compileString</code> expect, and these are passed directly through
-to Sass. The only modification <code>runSass</code> makes is to add True’s sass path to the
-<code>loadPaths</code> option, so <code>@use 'true';</code> works in your Sass test<span class="widont">&nbsp;</span>file.</p>
+Sass’ <code>compile</code> or <code>compileString</code> expect (e.g. <code>importers</code>, <code>loadPaths</code>, or
+<code>style</code>), and these are passed directly through to<span class="widont">&nbsp;</span>Sass.</p>
+<p>By default, True makes two modifications to these options. First, True’s sass
+path is added to the <code>loadPaths</code> option, so <code>@use 'true';</code> works in your Sass
+test file. Second, if Dart Sass v1.71 or greater is installed, <code>importers</code> is
+set to an array containing the <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a>, which
+supports <code>pkg:</code> imports to resolve <code>@use</code> and <code>@import</code> for external modules
+installed via npm or Yarn. If <code>importers</code> is set (even as an empty array
+<code>importers: []</code>), it will override this default<span class="widont">&nbsp;</span>importer.</p>
 <p><strong>Note:</strong> True requires the
 <a href="https://sass-lang.com/documentation/js-api/modules#OutputStyle">default Sass <code>'expanded'</code> output style</a>,
 and will not work if <code>{ style: 'compressed' }</code> is used in the third argument to
 <code>runSass</code>.</p>
 <h3 id="custom-importers" tabindex="-1">Custom Importers</h3>
-<p>If you use Webpack’s tilde notation, like <code>@use '~accoutrement/sass/tools'</code>,
-you’ll need to tell <code>runSass</code> how to handle that. That will require writing a
-<a href="https://sass-lang.com/documentation/js-api/interfaces/FileImporter">custom importer</a>
+<p>If you use tilde notation (e.g. <code>@use '~accoutrement/sass/tools'</code>) or another
+method for importing Sass files from <code>node_modules</code>, you’ll need to tell
+<code>runSass</code> how to handle that. That will require writing a <a href="https://sass-lang.com/documentation/js-api/interfaces/FileImporter">custom
+importer</a>
 and passing it into the configuration for <code>runSass</code>:</p>
-<pre><code class="lang-js">const path = require('path');
-const { pathToFileURL } = require('url');
-
+<pre><code class="lang-js">const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 const sassTrue = require('sass-true');
 
 const importers = [

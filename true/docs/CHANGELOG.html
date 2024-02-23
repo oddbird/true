@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">7.0.1</span>
+          <span class="project-version">8.0.0</span>
         
       </div>
     </header>
@@ -169,6 +169,19 @@
           
   <div class="text-block">
     <h1 id="true-changelog" tabindex="-1">True Changelog</h1>
+<h2 id="8-0-0-02-23-24-" tabindex="-1">8.0.0 (02/23/24)</h2>
+<ul>
+<li>FEATURE: Add True <code>sass</code> option (<code>string</code> or Sass implementation instance,
+defaults to <code>'sass'</code>) to allow using either <code>sass</code> or <code>embedded-sass</code>.</li>
+<li>FEATURE: Add the
+<a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a>
+to the Sass <code>importers</code> option by default, if Dart Sass v1.71 or later is
+available. Users can opt out by providing their own <code>importers</code> option, e.g.
+<code>{ importers: [] }</code>.</li>
+<li>BREAKING: Drop support for node &lt;<span class="widont">&nbsp;</span>18</li>
+<li>INTERNAL: Remove <code>sass</code> as a<span class="widont">&nbsp;</span>peer-dependency.</li>
+<li>INTERNAL: Update dependencies</li>
+</ul>
 <h2 id="7-0-1-01-04-24-" tabindex="-1">7.0.1 (01/04/24)</h2>
 <ul>
 <li>FEATURE: Validate <code>runSass</code> arguments and warn if using v6<span class="widont">&nbsp;</span>API.</li>
