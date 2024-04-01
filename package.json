@@ -89,7 +89,7 @@
     "sass": "^1.72.0",
     "sass-embedded": "^1.72.0",
     "sassdoc": "^2.7.4",
-    "sassdoc-theme-herman": "^5.0.1",
+    "sassdoc-theme-herman": "^6.0.0",
     "stylelint": "^16.3.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "typescript": "^5.4.3"
