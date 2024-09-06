@@ -5,9 +5,9 @@ import assert from 'node:assert';
 import path from 'node:path';
 
 import {
-  CssAtRuleAST,
-  CssCommentAST,
-  CssRuleAST,
+  type CssAtRuleAST,
+  type CssCommentAST,
+  type CssRuleAST,
   CssTypes,
   parse as cssParse,
   stringify as cssStringify,
@@ -108,6 +108,7 @@ export const runSass = function (
     try {
       // eslint-disable-next-line global-require
       compiler = require(sassPkg);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
     }

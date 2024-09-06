@@ -22,9 +22,13 @@ settings:
     typescript: {}
 rules:
   # TypeScript
+  '@typescript-eslint/consistent-type-imports':
+    - 1
+    - fixStyle: inline-type-imports
   '@typescript-eslint/explicit-module-boundary-types': 0
   '@typescript-eslint/no-empty-function': 0
   '@typescript-eslint/no-explicit-any': 0
+  '@typescript-eslint/no-require-imports': 0
   '@typescript-eslint/no-use-before-define': 2
 
   # Import
