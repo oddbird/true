@@ -1,4 +1,4 @@
-import { CssAllNodesAST, CssCommentAST } from '@adobe/css-tools';
+import type { CssAllNodesAST, CssCommentAST } from '@adobe/css-tools';
 
 export const truthyValues = (item?: any) => Boolean(item);
 
