@@ -59,7 +59,7 @@
 
   @include it('Rounded colors with $inspect') {
     $origin: #246;
-    $expected: #356a9f;
+    $expected: rgb(53.125, 106.25, 159.375);
 
     @include assert-equal(
       color.adjust($origin, $lightness: 15%),

@@ -196,9 +196,6 @@
 /* Test: Number Rounding */
 /*   ✔ [assert-equal] Number Rounding */
 /*  */
-/* Test: Color rounding */
-/*   ✔ [assert-equal] Color rounding */
-/*  */
 /* Test: List Separators */
 /*   ✔ [assert-equal] List Separators */
 /*  */
@@ -835,14 +832,14 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 102 Tests: */
-/* - 84 Passed */
+/* 101 Tests: */
+/* - 83 Passed */
 /* - 0 Failed */
 /* - 18 Output to CSS */
 /* Stats: */
 /* - 39 Modules */
-/* - 102 Tests */
-/* - 130 Assertions */
+/* - 101 Tests */
+/* - 129 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
