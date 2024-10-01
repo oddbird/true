@@ -66,6 +66,16 @@ export type Rule = CssCommentAST | CssRuleAST | CssAtRuleAST;
 
 export type Parser = (rule: Rule, ctx: Context) => Parser;
 
+const loadSass = function (sassPkg: string) {
+  try {
+    // eslint-disable-next-line global-require
+    return require(sassPkg);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err) {
+    throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
+  }
+};
+
 export const runSass = function (
   trueOptions: TrueOptions,
   src: string,
@@ -103,14 +113,23 @@ export const runSass = function (
   let compiler;
   if (trueOpts.sass && typeof trueOpts.sass !== 'string') {
     compiler = trueOpts.sass;
+  } else if (typeof trueOpts.sass === 'string') {
+    compiler = loadSass(trueOpts.sass);
   } else {
-    const sassPkg = trueOpts.sass ?? 'sass';
     try {
-      // eslint-disable-next-line global-require
-      compiler = require(sassPkg);
+      // try sass-embedded before sass
+      compiler = loadSass('sass-embedded');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
+    } catch (e1) {
+      /* istanbul ignore next */
+      try {
+        compiler = loadSass('sass');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (e2) {
+        throw new Error(
+          'Cannot find Dart Sass (`sass-embedded` or `sass`) dependency.',
+        );
+      }
     }
   }
 
