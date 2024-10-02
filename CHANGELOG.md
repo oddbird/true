@@ -1,6 +1,6 @@
 # True Changelog
 
-## Unreleased
+## 8.1.0 (10/02/24)
 
 - FEATURE: If True `sass` option is not specified, True will automatically
   attempt to use `embedded-sass`, then `sass`.

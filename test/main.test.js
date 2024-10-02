@@ -154,7 +154,7 @@ describe('#runSass', () => {
         {
           ...trueOpts,
           sourceType: 'string',
-          sass: 'sass-embedded',
+          sass: 'sass',
         },
         sass,
       );
