@@ -10,7 +10,7 @@
   <title>True Documentation</title>
 
   <link href="assets/img/favicon.ico" rel="shortcut icon">
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+3:400,400i,700,700i" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/webpack/app_styles.min.css" />
 
@@ -21,10 +21,10 @@
 <body data-herman="body">
   <svg xmlns="http://www.w3.org/2000/svg" hidden>
   <symbol id="icon-logo" viewBox="0 0 16 16">
-    <path d="M.2 8 0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8zM13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7L13 10z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6v-.7z"/>
+    <path d="M.2 8 0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8M13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6z"/>
   </symbol>
   <symbol id="icon-menu" viewBox="0 0 24 28">
-    <path d="M24 21v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1V5c0-.547.453-1 1-1h22c.547 0 1 .453 1 1z"/>
+    <path d="M24 21v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1m0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1m0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1V5c0-.547.453-1 1-1h22c.547 0 1 .453 1 1"/>
   </symbol>
 </svg>
 
@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">8.0.0</span>
+          <span class="project-version">8.1.0</span>
         
       </div>
     </header>
@@ -207,6 +207,9 @@ for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
 <p>In command line:</p>
 <pre><code class="lang-bash">npm install --save-dev sass-true
 </code></pre>
+<p>True requires Dart Sass v1.45.0 or higher, so install it if you haven’t<span class="widont">&nbsp;</span>already:</p>
+<pre><code class="lang-bash">npm install --save-dev sass-embedded # or `sass`
+</code></pre>
 <p>Import in your test directory,
 like any other Sass<span class="widont">&nbsp;</span>file:</p>
 <pre><code class="lang-scss">@use 'pkg:sass-true' as *;
@@ -299,8 +302,8 @@ when upgrading from an older version of<span class="widont">&nbsp;</span>True.</
 </code></pre>
 </li>
 <li>
-<p>[Optional] Install Dart Sass (<code>sass</code> or <code>sass-embedded</code>), if not already<span class="widont">&nbsp;</span>installed.</p>
-<pre><code class="lang-bash">npm install --save-dev sass
+<p>[Optional] Install Dart Sass (<code>sass-embedded</code> or <code>sass</code>), if not already<span class="widont">&nbsp;</span>installed.</p>
+<pre><code class="lang-bash">npm install --save-dev sass-embedded # or `sass`
 </code></pre>
 </li>
 <li>
@@ -340,8 +343,8 @@ should be usable in the same way: just pass your test runner’s <code>describe<
 <code>it</code> equivalents in the first argument to <code>runSass</code>.</p>
 <p>The <code>sass</code> option is an optional string name of a Dart Sass implementation
 installed in the current environment (e.g. <code>'embedded-sass'</code> or <code>'sass'</code>), or a
-Dart Sass implementation instance itself. If none is provided, this defaults to
-<code>'sass'</code>.</p>
+Dart Sass implementation instance itself. If none is provided, True will attempt
+to detect which implementation is available, starting with <code>sass-embedded</code>.</p>
 <p>If True can’t parse the CSS output, it’ll give you some context lines of CSS as
 part of the error message. This context will likely be helpful in understanding
 the parse failure. By default it provides up to 10 lines of context; if you need
@@ -395,6 +398,15 @@ const importers = [
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass({ describe, it }, sassFile, { importers });
 </code></pre>
+<hr>
+<h3 id="sponsor-oddbird-s-oss-work" tabindex="-1">Sponsor OddBird’s OSS<span class="widont">&nbsp;</span>Work</h3>
+<p>At OddBird, we love contributing to the languages &amp; tools developers rely on.
+We’re currently working on polyfills for new Popover &amp; Anchor Positioning
+functionality, as well as CSS specifications for functions, mixins, and
+responsive typography. Help us keep this work sustainable and centered on your
+needs as a developer! We display sponsor logos and avatars on our
+<a href="https://www.oddbird.net/true/#open-source-sponsors">website</a>.</p>
+<p><a href="https://opencollective.com/oddbird-open-source">Sponsor OddBird’s OSS<span class="widont">&nbsp;</span>Work</a></p>
 
     </div>
   
