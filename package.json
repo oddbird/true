@@ -66,6 +66,18 @@
     "jest-diff": "^29.7.0",
     "lodash": "^4.17.21"
   },
+  "peerDependencies": {
+    "sass": ">=1.45.0",
+    "sass-embedded": ">=1.45.0"
+  },
+  "peerDependenciesMeta": {
+    "sass": {
+      "optional": true
+    },
+    "sass-embedded": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",

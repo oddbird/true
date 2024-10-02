@@ -31,6 +31,12 @@ In command line:
 npm install --save-dev sass-true
 ```
 
+True requires Dart Sass v1.45.0 or higher, so install it if you haven't already:
+
+```bash
+npm install --save-dev sass-embedded # or `sass`
+```
+
 Import in your test directory,
 like any other Sass file:
 
@@ -155,11 +161,11 @@ when upgrading from an older version of True.
    npm install --save-dev sass-true
    ```
 
-2. [Optional] Install Dart Sass (`sass` or `sass-embedded`), if not already
+2. [Optional] Install Dart Sass (`sass-embedded` or `sass`), if not already
    installed.
 
    ```bash
-   npm install --save-dev sass
+   npm install --save-dev sass-embedded # or `sass`
    ```
 
 3. Write some Sass tests in `test/test.scss` (see above).
@@ -203,8 +209,8 @@ should be usable in the same way: just pass your test runner's `describe` and
 
 The `sass` option is an optional string name of a Dart Sass implementation
 installed in the current environment (e.g. `'embedded-sass'` or `'sass'`), or a
-Dart Sass implementation instance itself. If none is provided, this defaults to
-`'sass'`.
+Dart Sass implementation instance itself. If none is provided, True will attempt
+to detect which implementation is available, starting with `sass-embedded`.
 
 If True can't parse the CSS output, it'll give you some context lines of CSS as
 part of the error message. This context will likely be helpful in understanding

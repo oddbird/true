@@ -1,5 +1,13 @@
 # True Changelog
 
+## Unreleased
+
+- FEATURE: If True `sass` option is not specified, True will automatically
+  attempt to use `embedded-sass`, then `sass`.
+  [#290](https://github.com/oddbird/true/issues/290)
+- INTERNAL: Add `sass` and `sass-embedded` as optional peer-dependencies.
+- INTERNAL: Update dependencies
+
 ## 8.0.0 (02/23/24)
 
 - FEATURE: Add True `sass` option (`string` or Sass implementation instance,
