@@ -31,6 +31,12 @@ In command line:
 npm install --save-dev sass-true
 ```
 
+True requires Dart Sass v1.45.0 or higher, so install it if you haven't already:
+
+```bash
+npm install --save-dev sass-embedded # or `sass`
+```
+
 Import in your test directory,
 like any other Sass file:
 
