@@ -9158,7 +9158,7 @@ __metadata:
     sassdoc: "npm:^2.7.4"
     sassdoc-theme-herman: "npm:^6.0.1"
     stylelint: "npm:^16.10.0"
-    stylelint-config-standard-scss: "npm:^13.1.0"
+    stylelint-config-standard-scss: "npm:^14.0.0"
     typescript: "npm:^5.6.3"
   peerDependencies:
     sass: ">=1.45.0"
@@ -9789,7 +9789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-recommended-scss@npm:^14.0.0":
+"stylelint-config-recommended-scss@npm:^14.1.0":
   version: 14.1.0
   resolution: "stylelint-config-recommended-scss@npm:14.1.0"
   dependencies:
@@ -9815,23 +9815,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard-scss@npm:^13.1.0":
-  version: 13.1.0
-  resolution: "stylelint-config-standard-scss@npm:13.1.0"
+"stylelint-config-standard-scss@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "stylelint-config-standard-scss@npm:14.0.0"
   dependencies:
-    stylelint-config-recommended-scss: "npm:^14.0.0"
-    stylelint-config-standard: "npm:^36.0.0"
+    stylelint-config-recommended-scss: "npm:^14.1.0"
+    stylelint-config-standard: "npm:^36.0.1"
   peerDependencies:
     postcss: ^8.3.3
-    stylelint: ^16.3.1
+    stylelint: ^16.11.0
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: 10/c5105e3b3390c9d0aa95e252abdf1850fa50d82e1a25a1fcc11a88b111038e00c8033a4b34905405f2203c84c0fa26ce1d40248df2172c83c76cc3baa552db07
+  checksum: 10/5193b61f78f40d88828eb7565adc7b67af65e3e2f6ec52d4482214778269276495b5b5ac7ad7b0a9185ebe42a281f674e190b2ddb9673bd72b1eac5c767006a4
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^36.0.0":
+"stylelint-config-standard@npm:^36.0.1":
   version: 36.0.1
   resolution: "stylelint-config-standard@npm:36.0.1"
   dependencies:
