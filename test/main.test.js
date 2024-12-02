@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const path = require('node:path');
 
+// eslint-disable-next-line no-redeclare
 const { expect } = require('chai');
 const { diffStringsUnified } = require('jest-diff');
 
 let sassTrue;
-// eslint-disable-next-line no-process-env
+
 if (process.env.USE_BUILT) {
   sassTrue = require('../lib');
 } else {

@@ -27,6 +27,3 @@ updates:
       - dependency-name: 'chai'
         update-types:
           - 'version-update:semver-major'
-      - dependency-name: 'eslint'
-        update-types:
-          - 'version-update:semver-major'

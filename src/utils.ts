@@ -1,5 +1,6 @@
 import type { CssAllNodesAST, CssCommentAST } from '@adobe/css-tools';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const truthyValues = (item?: any) => Boolean(item);
 
 export const isCommentNode = (node: CssAllNodesAST): node is CssCommentAST =>

@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import assert from 'node:assert';
 import path from 'node:path';
 
@@ -27,6 +24,7 @@ import {
 export interface TrueOptions {
   describe: (description: string, fn: () => void) => void;
   it: (description: string, fn: () => void) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sass?: any;
   sourceType?: 'path' | 'string';
   contextLines?: number;
@@ -68,7 +66,7 @@ export type Parser = (rule: Rule, ctx: Context) => Parser;
 
 const loadSass = function (sassPkg: string) {
   try {
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     return require(sassPkg);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
@@ -79,6 +77,7 @@ const loadSass = function (sassPkg: string) {
 export const runSass = function (
   trueOptions: TrueOptions,
   src: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sassOptions?: any,
 ) {
   const trueOpts = Object.assign({}, trueOptions);
@@ -244,7 +243,6 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
     // This is necessary to avoid infinite loops with zero-width matches
     /* istanbul ignore if */
     if (matches.index === matchCSSWithinMediaQueryBlock.lastIndex) {
-      // eslint-disable-next-line no-plusplus
       matchCSSWithinMediaQueryBlock.lastIndex++;
     }
 
@@ -255,7 +253,6 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
       cssRules.map(mediaqueryRule),
     );
 
-    // eslint-disable-next-line no-plusplus
     i++;
     matches = matchCSSWithinMediaQueryBlock.exec(rawCSS);
   }
