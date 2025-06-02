@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ['18', 'lts/*']
+        node: ['20', 'lts/*']
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable
