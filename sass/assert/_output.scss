@@ -166,3 +166,39 @@
 @mixin contains($selector: true) {
   @include utils.content('contains', $selector) { @content; }
 }
+
+
+// Contains String
+// ---------------
+/// Describe a case-sensitive substring expected to be found within the paired `output()` block.
+/// The `contains-string()` mixin requires a string argument,
+/// and should be nested inside the `assert()` mixin
+/// along with a single `output()` block.
+/// Assertions are used inside the `test()` mixin
+/// to define the expected results of the test.
+/// - These mixins together describe a comparison on output CSS,
+///   checking if the compiled CSS-results of the `output()` mixin
+///   contain the specified `$string-to-find`.
+/// - When using Mocha/Jest integration, the output comparison is automated –
+///   otherwise you will have to compare the output manually.
+///   Using `git diff` is a great way to watch for changes in output.
+///
+/// @group api-assert-output
+///
+/// @param {string} $string-to-find -
+///   The substring to search for within the compiled CSS output.
+///
+/// @example scss -
+///   @include true.test('Can find partial strings') {
+///     @include true.assert {
+///       @include true.output {
+///         font-size: 1em;
+///         line-height: 1.5;
+///       }
+///       @include true.contains-string('font-size');
+///       @include true.contains-string('line');
+///     }
+///   }
+@mixin contains-string($string-to-find) {
+  @include utils.content-string('contains-string', $string-to-find);
+}
