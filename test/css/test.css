@@ -435,6 +435,49 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
+/* # Module: Output Contains-string */
+/* -------------------------------- */
+/* Test: Contains sub-strings */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 10px;
+  width: 20px;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* height */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Contains properties */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  --my-custom-property: 3rem;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* --my-custom-property */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Contains values */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  font-family: Helvetica;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* Helvetica */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */
+/*  */
 /* # Module: Output Contains */
 /* ------------------------- */
 /* Test: Contains sub-string */
@@ -832,14 +875,14 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 101 Tests: */
+/* 104 Tests: */
 /* - 83 Passed */
 /* - 0 Failed */
-/* - 18 Output to CSS */
+/* - 21 Output to CSS */
 /* Stats: */
-/* - 39 Modules */
-/* - 101 Tests */
-/* - 129 Assertions */
+/* - 40 Modules */
+/* - 104 Tests */
+/* - 132 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
