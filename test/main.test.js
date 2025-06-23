@@ -1174,4 +1174,87 @@ describe('#parse', () => {
       expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
   });
+  describe('#contains-string', () => {
+    it('parses a passing output test', () => {
+      const css = [
+        '/* # Module: Contains-string */',
+        '/* Test: CSS output contains-string */',
+        '/*   ASSERT: Output selector pattern contains-string input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '/* */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains-string',
+          tests: [
+            {
+              test: 'CSS output contains-string',
+              assertions: [
+                {
+                  description:
+                    'Output selector pattern contains-string input pattern',
+                  assertionType: 'contains-string',
+                  passed: true,
+                  output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                  expected: 'height',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses a failing output test', () => {
+      const css = [
+        '/* # Module: Contains-string */',
+        '/* Test: CSS output contains-string */',
+        '/*   ASSERT: Output selector pattern contains-string input pattern   */',
+        '/* */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '/*   END_OUTPUT   */',
+        '/* */',
+        '/*   CONTAINS_STRING   */',
+        '/* background-color */',
+        '/*   END_CONTAINS_STRING   */',
+        '/* */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains-string',
+          tests: [
+            {
+              test: 'CSS output contains-string',
+              assertions: [
+                {
+                  description:
+                    'Output selector pattern contains-string input pattern',
+                  assertionType: 'contains-string',
+                  passed: false,
+                  output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                  expected: 'background-color',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+  });
 });

@@ -49,6 +49,37 @@
   }
 }
 
+@include describe('Output Contains-string') {
+  @include it('Contains sub-strings') {
+    @include assert {
+      @include output {
+        height: 10px;
+        width: 20px;
+      }
+
+      @include contains-string('height');
+    }
+  }
+  @include it('Contains properties') {
+    @include assert {
+      @include output {
+        --my-custom-property: 3rem;
+      }
+
+      @include contains-string('--my-custom-property');
+    }
+  }
+  @include it('Contains values') {
+    @include assert {
+      @include output {
+        font-family: Helvetica;
+      }
+
+      @include contains-string('Helvetica');
+    }
+  }
+}
+
 @include describe('Output Contains') {
   @include it('Contains sub-string') {
     @include assert {
