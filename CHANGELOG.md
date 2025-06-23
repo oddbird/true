@@ -1,7 +1,9 @@
 # True Changelog
 
-## UNRELEASED
+## 9.0.0 (06/23/25)
 
+- FEATURE: `contains-string()` supports substring matching.
+  [#311](https://github.com/oddbird/true/pull/311)
 - BREAKING: Drop support for node < 20
 - INTERNAL: Update dependencies
 

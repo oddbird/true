@@ -550,7 +550,7 @@ export const parse = function (
         ctx.currentExpectedRules = [];
         return parseAssertionContained;
       }
-      if(text === constants.CONTAINS_STRING_START_TOKEN){
+      if (text === constants.CONTAINS_STRING_START_TOKEN) {
         ctx.currentExpectedRules = [];
         return parseAssertionContainsString;
       }
@@ -611,46 +611,55 @@ export const parse = function (
   };
 
   const parseAssertionContained: Parser = function (rule, ctx) {
-    if (isCommentNode(rule)) {
-      if (rule.comment?.trim() === constants.CONTAINED_END_TOKEN) {
-        /* istanbul ignore else */
-        if (ctx.currentAssertion) {
-          ctx.currentAssertion.expected = cssStringify({
-            type: CssTypes.stylesheet,
-            stylesheet: { rules: ctx.currentExpectedRules || [] },
-          });
-          ctx.currentAssertion.passed = contains(
-            ctx.currentAssertion.output || '',
-            ctx.currentAssertion.expected,
-          );
-          ctx.currentAssertion.assertionType = 'contains';
-        }
-        delete ctx.currentExpectedRules;
-        return parseEndAssertion;
+    if (
+      isCommentNode(rule) &&
+      rule.comment?.trim() === constants.CONTAINED_END_TOKEN
+    ) {
+      /* istanbul ignore else */
+      if (ctx.currentAssertion) {
+        ctx.currentAssertion.expected = cssStringify({
+          type: CssTypes.stylesheet,
+          stylesheet: { rules: ctx.currentExpectedRules || [] },
+        });
+        ctx.currentAssertion.passed = contains(
+          ctx.currentAssertion.output || '',
+          ctx.currentAssertion.expected,
+        );
+        ctx.currentAssertion.assertionType = 'contains';
       }
+      delete ctx.currentExpectedRules;
+      return parseEndAssertion;
     }
     ctx.currentExpectedRules?.push(rule);
     return parseAssertionContained;
   };
 
   const parseAssertionContainsString: Parser = function (rule, ctx) {
-    if (isCommentNode(rule)) {
-      if (rule.comment?.trim() === constants.CONTAINS_STRING_END_TOKEN) {
-        /* istanbul ignore else */
-        if (ctx.currentAssertion) {
-          // The string to find is wrapped in a Sass comment because it might not always be a complete, valid CSS block on its own.
-          // These replace calls are necessary to strip the leading `/*` and trailing `*/` characters that enclose the string,
-          // so we're left with just the raw string to find for accurate comparison.
-          ctx.currentAssertion.expected = cssStringify({
-            type: CssTypes.stylesheet,
-            stylesheet: { rules: ctx.currentExpectedRules || [] },
-          }).replace(new RegExp('^/\\*'), '').replace(new RegExp('\\*/$'), '').trim();
-          ctx.currentAssertion.passed = ctx.currentAssertion.output?.includes(ctx.currentAssertion.expected);
-          ctx.currentAssertion.assertionType = 'contains-string';
-        }
-        delete ctx.currentExpectedRules;
-        return parseEndAssertion;
+    if (
+      isCommentNode(rule) &&
+      rule.comment?.trim() === constants.CONTAINS_STRING_END_TOKEN
+    ) {
+      /* istanbul ignore else */
+      if (ctx.currentAssertion) {
+        // The string to find is wrapped in a Sass comment because it might not
+        // always be a complete, valid CSS block on its own. These replace calls
+        // are necessary to strip the leading `/*` and trailing `*/` characters
+        // that enclose the string, so we're left with just the raw string to
+        // find for accurate comparison.
+        ctx.currentAssertion.expected = cssStringify({
+          type: CssTypes.stylesheet,
+          stylesheet: { rules: ctx.currentExpectedRules || [] },
+        })
+          .replace(new RegExp('^/\\*'), '')
+          .replace(new RegExp('\\*/$'), '')
+          .trim();
+        ctx.currentAssertion.passed = ctx.currentAssertion.output?.includes(
+          ctx.currentAssertion.expected,
+        );
+        ctx.currentAssertion.assertionType = 'contains-string';
       }
+      delete ctx.currentExpectedRules;
+      return parseEndAssertion;
     }
     ctx.currentExpectedRules?.push(rule);
     return parseAssertionContainsString;

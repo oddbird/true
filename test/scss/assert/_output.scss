@@ -60,6 +60,7 @@
       @include contains-string('height');
     }
   }
+
   @include it('Contains properties') {
     @include assert {
       @include output {
@@ -69,6 +70,7 @@
       @include contains-string('--my-custom-property');
     }
   }
+
   @include it('Contains values') {
     @include assert {
       @include output {

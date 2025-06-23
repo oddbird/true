@@ -127,7 +127,7 @@
 }
 
 // Contains
-// ------
+// --------
 /// Describe the expected results of the paired `output()` block.
 /// The `contains()` mixin requires a content block,
 /// and should be nested inside the `assert()` mixin,
@@ -170,7 +170,8 @@
 
 // Contains String
 // ---------------
-/// Describe a case-sensitive substring expected to be found within the paired `output()` block.
+/// Describe a case-sensitive substring
+/// expected to be found within the paired `output()` block.
 /// The `contains-string()` mixin requires a string argument,
 /// and should be nested inside the `assert()` mixin
 /// along with a single `output()` block.

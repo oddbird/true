@@ -1174,6 +1174,7 @@ describe('#parse', () => {
       expect(sassTrue.parse(css)).to.deep.equal(expected);
     });
   });
+
   describe('#contains-string', () => {
     it('parses a passing output test', () => {
       const css = [
