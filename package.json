@@ -1,7 +1,7 @@
 {
   "name": "sass-true",
   "title": "True",
-  "version": "8.1.0",
+  "version": "9.0.0",
   "description": "Unit testing for Sass.",
   "keywords": [
     "unit-test",
