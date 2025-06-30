@@ -274,6 +274,34 @@ describe('#parse', () => {
     expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
+  it('ignores invalid CSS', () => {
+    const css = [
+      '@hello "foo";',
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */',
+    ].join('\n');
+    const expected = [
+      {
+        module: 'Utilities',
+        tests: [
+          {
+            test: 'Map Add [function]',
+            assertions: [
+              {
+                description: 'Returns the sum of two numeric maps',
+                passed: true,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a passing non-output test sans description', () => {
     const css = [
       '/* # Module: Utilities */',
