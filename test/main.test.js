@@ -511,9 +511,9 @@ describe('#parse', () => {
                 assertionType: 'equal',
                 passed: true,
                 output:
-                  '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}',
+                  '/* Some loud comment */\n.test-output {\n  -property: value;\n}',
                 expected:
-                  '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}',
+                  '/* Some loud comment */\n.test-output {\n  -property: value;\n}',
               },
             ],
           },
@@ -1027,9 +1027,9 @@ describe('#parse', () => {
                   assertionType: 'contains',
                   passed: true,
                   output:
-                    '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                    '/* Some loud comment */\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
                   expected:
-                    '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n}',
+                    '/* Some loud comment */\n.test-output {\n  height: 10px;\n}',
                 },
               ],
             },
