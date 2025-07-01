@@ -237,10 +237,10 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
   let matches = matchCSSWithinMediaQueryBlock.exec(rawCSS);
   let i = 0;
   let mediaQueryBasedSelectors: string[] = [];
-  /* c8 ignore start */
   const mediaqueryRule = (rule: string) => (mediaqueries?.[i] || '') + rule;
   while (matches !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
+    /* c8 ignore next 3 */
     if (matches.index === matchCSSWithinMediaQueryBlock.lastIndex) {
       matchCSSWithinMediaQueryBlock.lastIndex++;
     }
@@ -255,7 +255,6 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
     i++;
     matches = matchCSSWithinMediaQueryBlock.exec(rawCSS);
   }
-  /* c8 ignore end */
 
   return {
     mediaQueryBasedSelectors,
