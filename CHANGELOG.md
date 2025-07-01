@@ -1,5 +1,11 @@
 # True Changelog
 
+## 9.1.0-alpha.0 (07/01/25)
+
+- FEATURE: Do not fail on non-standard at-rules (switch to postcss for css
+  parsing). [#314](https://github.com/oddbird/true/pull/314)
+- INTERNAL: Update dependencies
+
 ## 9.0.0 (06/23/25)
 
 - FEATURE: `contains-string()` supports substring matching.
