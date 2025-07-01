@@ -1,20 +1,19 @@
 import assert from 'node:assert';
 import path from 'node:path';
 
-import {
-  type CssAtRuleAST,
-  type CssCommentAST,
-  type CssRuleAST,
-  CssTypes,
-  parse as cssParse,
-  stringify as cssStringify,
-} from '@adobe/css-tools';
 import { diffStringsUnified } from 'jest-diff';
-import { find, forEach, last, startsWith } from 'lodash';
+import {
+  type AtRule as CssAtRule,
+  type Comment as CssComment,
+  parse as cssParse,
+  type Position as NodePosition,
+  type Rule as CssRule,
+} from 'postcss';
 
 import * as constants from './constants';
 import {
   cssStringToArrayOfRules,
+  generateCss,
   isCommentNode,
   removeNewLines,
   splitSelectorAndProperties,
@@ -60,7 +59,7 @@ export type Context = {
   currentExpectedRules?: Rule[];
 };
 
-export type Rule = CssCommentAST | CssRuleAST | CssAtRuleAST;
+export type Rule = CssComment | CssRule | CssAtRule;
 
 export type Parser = (rule: Rule, ctx: Context) => Parser;
 
@@ -118,9 +117,9 @@ export const runSass = function (
     try {
       // try sass-embedded before sass
       compiler = loadSass('sass-embedded');
+      /* c8 ignore next 11 */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e1) {
-      /* istanbul ignore next */
       try {
         compiler = loadSass('sass');
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -142,7 +141,7 @@ export const runSass = function (
   const parsedCss = compiler[compilerFn](src, sassOpts).css;
   const modules = parse(parsedCss, trueOpts.contextLines);
 
-  forEach(modules, (module) => {
+  modules.forEach((module) => {
     describeModule(module, trueOpts.describe, trueOpts.it);
   });
 };
@@ -166,12 +165,12 @@ const describeModule = function (
   it: TrueOptions['it'],
 ) {
   describe(module.module, () => {
-    forEach(module.modules, (submodule) => {
+    module.modules?.forEach((submodule) => {
       describeModule(submodule, describe, it);
     });
-    forEach(module.tests, (test) => {
+    module.tests?.forEach((test) => {
       it(test.test, () => {
-        forEach(test.assertions, (assertion) => {
+        test.assertions?.forEach((assertion) => {
           if (!assertion.passed) {
             assert.fail(formatFailureMessage(assertion));
           }
@@ -187,7 +186,7 @@ const finishCurrentModule = function (ctx: Context) {
     const paths = ctx.currentModule.module.split(
       constants.MODULE_NESTING_TOKEN,
     );
-    ctx.currentModule.module = last(paths) || '';
+    ctx.currentModule.module = paths[paths.length - 1] || '';
     insertModule(paths, ctx.currentModule, ctx);
     delete ctx.currentModule;
   }
@@ -214,7 +213,7 @@ const insertModule = function (paths: string[], module: Module, ctx: Context) {
   }
 
   if (paths.length > 1) {
-    let newCtx = find(ctx.modules, { module: paths[0] });
+    let newCtx = ctx.modules.find((submod) => submod.module === paths[0]);
     if (!newCtx) {
       newCtx = { module: paths[0] };
       ctx.modules.push(newCtx);
@@ -241,7 +240,7 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
   const mediaqueryRule = (rule: string) => (mediaqueries?.[i] || '') + rule;
   while (matches !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
-    /* istanbul ignore if */
+    /* c8 ignore next 3 */
     if (matches.index === matchCSSWithinMediaQueryBlock.lastIndex) {
       matchCSSWithinMediaQueryBlock.lastIndex++;
     }
@@ -316,12 +315,12 @@ export const parse = function (
   const lines = rawCss.split(/\r?\n/);
 
   const parseCss = function () {
-    const ast = cssParse(rawCss);
     const ctx: Context = { modules: [] };
     let handler = parseModule;
-
-    forEach(ast.stylesheet?.rules || [], (rule) => {
-      handler = handler(rule, ctx);
+    cssParse(rawCss).each((node) => {
+      if (['comment', 'rule', 'atrule'].includes(node.type)) {
+        handler = handler(node as Rule, ctx);
+      }
     });
 
     finishCurrentModule(ctx);
@@ -332,31 +331,30 @@ export const parse = function (
   const parseError = function (
     msg: string,
     seeking: string,
-    pos: Rule['position'],
+    start?: NodePosition | undefined,
   ) {
     const unknown = '<unknown>';
     let errorMsg =
-      `Line ${pos?.start?.line ?? unknown}, ` +
-      `column ${pos?.start?.column ?? unknown}: ${msg}; ` +
+      `Line ${start?.line ?? unknown}, ` +
+      `column ${start?.column ?? unknown}: ${msg}; ` +
       `looking for ${seeking || unknown}.`;
-    /* istanbul ignore else */
-    if (pos?.start?.line && pos?.start?.column) {
+    if (start?.line && start?.column) {
       errorMsg =
         `${errorMsg}\n` +
         `-- Context --\n${lines
-          .slice(Math.max(0, pos.start.line - contextLines), pos.start.line)
-          .join('\n')}\n${' '.repeat(pos.start.column - 1)}^\n`;
+          .slice(Math.max(0, start.line - contextLines), start.line)
+          .join('\n')}\n${' '.repeat(start.column - 1)}^\n`;
     }
     return new Error(errorMsg);
   };
 
   const parseModule: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim();
+      const text = rule.text.trim();
       if (!text) {
         return parseModule;
       }
-      if (startsWith(text, constants.MODULE_TOKEN)) {
+      if (text.startsWith(constants.MODULE_TOKEN)) {
         finishCurrentModule(ctx);
         ctx.currentModule = {
           module: text.substring(constants.MODULE_TOKEN.length),
@@ -364,7 +362,7 @@ export const parse = function (
         };
         return parseTest;
       }
-      if (startsWith(text, constants.SUMMARY_TOKEN)) {
+      if (text.startsWith(constants.SUMMARY_TOKEN)) {
         return ignoreUntilEndSummary;
       }
       // ignore un-recognized comments, keep looking for module header.
@@ -377,8 +375,8 @@ export const parse = function (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const ignoreUntilEndSummary: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim() || '';
-      if (startsWith(text, constants.END_SUMMARY_TOKEN)) {
+      const text = rule.text.trim();
+      if (text.startsWith(constants.END_SUMMARY_TOKEN)) {
         return parseModule;
       }
       return ignoreUntilEndSummary;
@@ -386,20 +384,20 @@ export const parse = function (
     throw parseError(
       `Unexpected rule type "${rule.type}"`,
       'end summary',
-      rule.position,
+      rule.source?.start,
     );
   };
 
   const parseTest: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim();
+      const text = rule.text.trim();
       if (!text) {
         return parseTest;
       }
       if (text.match(/^-+$/)) {
         return parseTest;
       }
-      if (startsWith(text, constants.TEST_TOKEN)) {
+      if (text.startsWith(constants.TEST_TOKEN)) {
         finishCurrentTest(ctx);
         ctx.currentTest = {
           test: text.substring(constants.TEST_TOKEN.length),
@@ -415,11 +413,11 @@ export const parse = function (
 
   const parseAssertion: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trimStart();
+      const text = rule.text.trim();
       if (!text) {
         return parseAssertion;
       }
-      if (startsWith(text, constants.PASS_TOKEN)) {
+      if (text.startsWith(constants.PASS_TOKEN)) {
         finishCurrentAssertion(ctx);
         ctx.currentAssertion = {
           description:
@@ -428,7 +426,7 @@ export const parse = function (
           passed: true,
         };
         return parseAssertion;
-      } else if (startsWith(text, constants.FAIL_TOKEN)) {
+      } else if (text.startsWith(constants.FAIL_TOKEN)) {
         finishCurrentAssertion(ctx);
         const endAssertionType = text.indexOf(constants.END_FAIL_TOKEN);
         ctx.currentAssertion = {
@@ -439,7 +437,7 @@ export const parse = function (
             .trim(),
         };
         return parseFailureDetail;
-      } else if (startsWith(text, constants.ASSERT_TOKEN)) {
+      } else if (text.startsWith(constants.ASSERT_TOKEN)) {
         finishCurrentAssertion(ctx);
         ctx.currentAssertion = {
           description: text.substring(constants.ASSERT_TOKEN.length).trim(),
@@ -455,11 +453,11 @@ export const parse = function (
 
   const parseFailureDetail: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim() || '';
-      if (startsWith(text, constants.FAILURE_DETAIL_TOKEN)) {
+      const text = rule.text.trim();
+      if (text.startsWith(constants.FAILURE_DETAIL_TOKEN)) {
         const detail = text.substring(constants.FAILURE_DETAIL_TOKEN.length);
-        const isOutput = startsWith(detail, constants.OUTPUT_TOKEN);
-        const isExpected = startsWith(detail, constants.EXPECTED_TOKEN);
+        const isOutput = detail.startsWith(constants.OUTPUT_TOKEN);
+        const isExpected = detail.startsWith(constants.EXPECTED_TOKEN);
         let outputOrExpected: 'output' | 'expected' | undefined;
         if (isOutput) {
           outputOrExpected = 'output';
@@ -467,7 +465,6 @@ export const parse = function (
           outputOrExpected = 'expected';
         }
         if (outputOrExpected) {
-          /* istanbul ignore else */
           if (ctx.currentAssertion) {
             const startType = text.indexOf(constants.FAILURE_TYPE_START_TOKEN);
             const endType = text.indexOf(constants.FAILURE_TYPE_END_TOKEN);
@@ -479,7 +476,6 @@ export const parse = function (
         }
         const splitAt = detail.indexOf(constants.DETAILS_SEPARATOR_TOKEN);
         if (splitAt !== -1) {
-          /* istanbul ignore else */
           if (ctx.currentAssertion) {
             const key = detail.substring(0, splitAt);
             ctx.currentAssertion[key.toLowerCase()] = detail.substring(
@@ -494,13 +490,13 @@ export const parse = function (
     throw parseError(
       `Unexpected rule type "${rule.type}"`,
       'output/expected',
-      rule.position,
+      rule.source?.start,
     );
   };
 
   const parseAssertionOutputStart: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim();
+      const text = rule.text.trim();
       if (!text) {
         return parseAssertionOutputStart;
       }
@@ -508,24 +504,26 @@ export const parse = function (
         ctx.currentOutputRules = [];
         return parseAssertionOutput;
       }
-      throw parseError(`Unexpected comment "${text}"`, 'OUTPUT', rule.position);
+      throw parseError(
+        `Unexpected comment "${text}"`,
+        'OUTPUT',
+        rule.source?.start,
+      );
     }
     throw parseError(
       `Unexpected rule type "${rule.type}"`,
       'OUTPUT',
-      rule.position,
+      rule.source?.start,
     );
   };
 
   const parseAssertionOutput: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      if (rule.comment?.trim() === constants.OUTPUT_END_TOKEN) {
-        /* istanbul ignore else */
+      if (rule.text.trim() === constants.OUTPUT_END_TOKEN) {
         if (ctx.currentAssertion) {
-          ctx.currentAssertion.output = cssStringify({
-            type: CssTypes.stylesheet,
-            stylesheet: { rules: ctx.currentOutputRules || [] },
-          });
+          ctx.currentAssertion.output = generateCss(
+            ctx.currentOutputRules || [],
+          );
         }
         delete ctx.currentOutputRules;
         return parseAssertionExpectedStart;
@@ -537,7 +535,7 @@ export const parse = function (
 
   const parseAssertionExpectedStart: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim();
+      const text = rule.text.trim();
       if (!text) {
         return parseAssertionExpectedStart;
       }
@@ -557,25 +555,23 @@ export const parse = function (
       throw parseError(
         `Unexpected comment "${text}"`,
         'EXPECTED',
-        rule.position,
+        rule.source?.start,
       );
     }
     throw parseError(
       `Unexpected rule type "${rule.type}"`,
       'EXPECTED',
-      rule.position,
+      rule.source?.start,
     );
   };
 
   const parseAssertionExpected: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      if (rule.comment?.trim() === constants.EXPECTED_END_TOKEN) {
-        /* istanbul ignore else */
+      if (rule.text.trim() === constants.EXPECTED_END_TOKEN) {
         if (ctx.currentAssertion) {
-          ctx.currentAssertion.expected = cssStringify({
-            type: CssTypes.stylesheet,
-            stylesheet: { rules: ctx.currentExpectedRules || [] },
-          });
+          ctx.currentAssertion.expected = generateCss(
+            ctx.currentExpectedRules || [],
+          );
           ctx.currentAssertion.passed =
             ctx.currentAssertion.output === ctx.currentAssertion.expected;
         }
@@ -589,7 +585,7 @@ export const parse = function (
 
   const parseEndAssertion: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
-      const text = rule.comment?.trim();
+      const text = rule.text.trim();
       if (!text) {
         return parseEndAssertion;
       }
@@ -600,27 +596,25 @@ export const parse = function (
       throw parseError(
         `Unexpected comment "${text}"`,
         'END_ASSERT',
-        rule.position,
+        rule.source?.start,
       );
     }
     throw parseError(
       `Unexpected rule type "${rule.type}"`,
       'END_ASSERT',
-      rule.position,
+      rule.source?.start,
     );
   };
 
   const parseAssertionContained: Parser = function (rule, ctx) {
     if (
       isCommentNode(rule) &&
-      rule.comment?.trim() === constants.CONTAINED_END_TOKEN
+      rule.text.trim() === constants.CONTAINED_END_TOKEN
     ) {
-      /* istanbul ignore else */
       if (ctx.currentAssertion) {
-        ctx.currentAssertion.expected = cssStringify({
-          type: CssTypes.stylesheet,
-          stylesheet: { rules: ctx.currentExpectedRules || [] },
-        });
+        ctx.currentAssertion.expected = generateCss(
+          ctx.currentExpectedRules || [],
+        );
         ctx.currentAssertion.passed = contains(
           ctx.currentAssertion.output || '',
           ctx.currentAssertion.expected,
@@ -637,19 +631,17 @@ export const parse = function (
   const parseAssertionContainsString: Parser = function (rule, ctx) {
     if (
       isCommentNode(rule) &&
-      rule.comment?.trim() === constants.CONTAINS_STRING_END_TOKEN
+      rule.text.trim() === constants.CONTAINS_STRING_END_TOKEN
     ) {
-      /* istanbul ignore else */
       if (ctx.currentAssertion) {
         // The string to find is wrapped in a Sass comment because it might not
         // always be a complete, valid CSS block on its own. These replace calls
         // are necessary to strip the leading `/*` and trailing `*/` characters
         // that enclose the string, so we're left with just the raw string to
         // find for accurate comparison.
-        ctx.currentAssertion.expected = cssStringify({
-          type: CssTypes.stylesheet,
-          stylesheet: { rules: ctx.currentExpectedRules || [] },
-        })
+        ctx.currentAssertion.expected = generateCss(
+          ctx.currentExpectedRules || [],
+        )
           .replace(new RegExp('^/\\*'), '')
           .replace(new RegExp('\\*/$'), '')
           .trim();

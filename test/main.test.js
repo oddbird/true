@@ -274,6 +274,34 @@ describe('#parse', () => {
     expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
+  it('ignores invalid At Rule', () => {
+    const css = [
+      '@hello "foo";',
+      '/* # Module: Utilities */',
+      '/* ------------------- */',
+      '/* Test: Map Add [function] */',
+      '/*   ✔ Returns the sum of two numeric maps */',
+    ].join('\n');
+    const expected = [
+      {
+        module: 'Utilities',
+        tests: [
+          {
+            test: 'Map Add [function]',
+            assertions: [
+              {
+                description: 'Returns the sum of two numeric maps',
+                passed: true,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    expect(sassTrue.parse(css)).to.deep.equal(expected);
+  });
+
   it('parses a passing non-output test sans description', () => {
     const css = [
       '/* # Module: Utilities */',
@@ -511,9 +539,9 @@ describe('#parse', () => {
                 assertionType: 'equal',
                 passed: true,
                 output:
-                  '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}',
+                  '/* Some loud comment */\n.test-output {\n  -property: value;\n}',
                 expected:
-                  '/* Some loud comment */\n\n.test-output {\n  -property: value;\n}',
+                  '/* Some loud comment */\n.test-output {\n  -property: value;\n}',
               },
             ],
           },
@@ -1027,9 +1055,9 @@ describe('#parse', () => {
                   assertionType: 'contains',
                   passed: true,
                   output:
-                    '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                    '/* Some loud comment */\n.test-output {\n  height: 10px;\n  width: 20px;\n}',
                   expected:
-                    '/* Some loud comment */\n\n.test-output {\n  height: 10px;\n}',
+                    '/* Some loud comment */\n.test-output {\n  height: 10px;\n}',
                 },
               ],
             },
