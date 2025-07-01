@@ -27,6 +27,6 @@ export const cssStringToArrayOfRules = (cssString: string) =>
     .filter(truthyValues);
 
 export const generateCss = (rules: Rule[]) =>
-  format(rules.map((rule) => rule.toString()).join(''), {
+  format(rules.map((rule) => rule.toString()).join('\n'), {
     parser: 'css',
   }).trim();

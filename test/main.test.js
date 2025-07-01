@@ -274,7 +274,7 @@ describe('#parse', () => {
     expect(sassTrue.parse(css)).to.deep.equal(expected);
   });
 
-  it('ignores invalid CSS', () => {
+  it('ignores invalid At Rule', () => {
     const css = [
       '@hello "foo";',
       '/* # Module: Utilities */',
