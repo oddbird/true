@@ -103,7 +103,7 @@
     "sassdoc": "^2.7.4",
     "sassdoc-theme-herman": "^6.0.2",
     "stylelint": "^16.23.1",
-    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.42.0"
   },
