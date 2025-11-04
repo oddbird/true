@@ -106,8 +106,8 @@
   @include utils.setup('assert-equal', $description);
 
   @if $inspect {
-    $assert: meta.inspect($assert);
-    $expected: meta.inspect($expected);
+    $assert: '#{$assert}';
+    $expected: '#{$expected}';
   }
 
   @include utils.result($assert, $expected);
@@ -147,8 +147,8 @@
   @include utils.setup('assert-unequal', $description);
 
   @if $inspect {
-    $assert: meta.inspect($assert);
-    $expected: meta.inspect($expected);
+    $assert: '#{$assert}';
+    $expected: '#{$expected}';
   }
 
   @include utils.result($assert, $expected, 'unequal');

@@ -79,10 +79,9 @@
 ///   Pass in asserted and expected values individually
 ///   to retrieve comparable details for both
 @function variable-details($var) {
-  $inspect: meta.inspect($var);
   $type: meta.type-of($var);
 
-  @return '[#{$type}] #{$inspect}';
+  @return '[#{$type}] #{$var}';
 }
 
 // EdgeFail Notes
@@ -124,7 +123,7 @@
   $one: if(($one-type == 'string'), string.unquote($one), $one);
   $two: if(($two-type == 'string'), string.unquote($two), $two);
 
-  @if (meta.inspect($one) == meta.inspect($two)) {
+  @if ('#{$one}' == '#{$two}') {
     // Type
     @if ($one-type != $two-type) {
       $message: 'variable types do not match';

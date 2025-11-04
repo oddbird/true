@@ -83,7 +83,7 @@
     @include assert-equal(details.edgefail-notes(1em, '1em'), $message);
 
     $list: ('one', 'two');
-    $string: meta.inspect($list);
+    $string: '#{$list}';
 
     @include assert-equal(details.edgefail-notes($list, $string), $message);
   }
