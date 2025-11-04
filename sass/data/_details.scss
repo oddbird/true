@@ -83,7 +83,7 @@
   $type: meta.type-of($var);
 
   // still need meta.inspect to render any value
-  @return '[#{$type}] ' + utilities.inspect($var);
+  @return '[#{$type}] ' + utilities.true-inspect($var);
 }
 
 // EdgeFail Notes
@@ -125,7 +125,7 @@
   $one: if(($one-type == 'string'), string.unquote($one), $one);
   $two: if(($two-type == 'string'), string.unquote($two), $two);
 
-  @if (utilities.inspect($one) == utilities.inspect($two)) {
+  @if (utilities.true-inspect($one) == utilities.true-inspect($two)) {
     // Type
     @if ($one-type != $two-type) {
       $message: 'variable types do not match';

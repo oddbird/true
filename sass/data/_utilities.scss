@@ -8,14 +8,14 @@
   $inspected: '';
 
   @each $item, $value in $map {
-    $inspect-pair: '' + inspect($item) + ': ' + inspect($value);
+    $inspect-pair: '' + true-inspect($item) + ': ' + true-inspect($value);
     $inspected: $inspected + if($inspected == '', '', ', ') + $inspect-pair;
   }
 
   @return '(' + $inspected + ')';
 }
 
-@function inspect($value) {
+@function true-inspect($value) {
   @return if(
     meta.type-of($value) == map,
     inspect-map($value),

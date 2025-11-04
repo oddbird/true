@@ -107,8 +107,8 @@
   @include utils.setup('assert-equal', $description);
 
   @if $inspect {
-    $assert: utilities.inspect($assert);
-    $expected: utilities.inspect($expected);
+    $assert: utilities.true-inspect($assert);
+    $expected: utilities.true-inspect($expected);
   }
 
   @include utils.result($assert, $expected);
@@ -148,8 +148,8 @@
   @include utils.setup('assert-unequal', $description);
 
   @if $inspect {
-    $assert: utilities.inspect($assert);
-    $expected: utilities.inspect($expected);
+    $assert: utilities.true-inspect($assert);
+    $expected: utilities.true-inspect($expected);
   }
 
   @include utils.result($assert, $expected, 'unequal');
