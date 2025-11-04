@@ -1,4 +1,5 @@
 @use 'sass:meta';
+@use './data/utilities';
 @use 'utils';
 
 /// # Testing Return Values
@@ -106,8 +107,8 @@
   @include utils.setup('assert-equal', $description);
 
   @if $inspect {
-    $assert: '#{$assert}';
-    $expected: '#{$expected}';
+    $assert: utilities.inspect($assert);
+    $expected: utilities.inspect($expected);
   }
 
   @include utils.result($assert, $expected);
@@ -147,8 +148,8 @@
   @include utils.setup('assert-unequal', $description);
 
   @if $inspect {
-    $assert: '#{$assert}';
-    $expected: '#{$expected}';
+    $assert: utilities.inspect($assert);
+    $expected: utilities.inspect($expected);
   }
 
   @include utils.result($assert, $expected, 'unequal');

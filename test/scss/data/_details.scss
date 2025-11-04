@@ -1,6 +1,7 @@
 @use '../../../index' as *;
 @use '../../../sass/data/context';
 @use '../../../sass/data/details';
+@use '../../../sass/data/utilities';
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:meta';
@@ -28,7 +29,11 @@
     @include assert {
       @include output(false) {
         @include context.context('assert', '[assert-equal] Test Assertion');
-        @include details.fail-details(math.div(1, 3), 0.3333333333, not 'terminal');
+        @include details.fail-details(
+          0.3333333333333333333333,
+          0.333333333333333333,
+          not 'terminal'
+        );
         @include context.context-pop;
       }
 
@@ -61,7 +66,7 @@
 
     @include assert-equal(
       details.variable-details($map),
-      '[map] ("key": "value")'
+      '[map] (key: value)'
     );
   }
 
@@ -83,7 +88,7 @@
     @include assert-equal(details.edgefail-notes(1em, '1em'), $message);
 
     $list: ('one', 'two');
-    $string: '#{$list}';
+    $string: '' + $list;
 
     @include assert-equal(details.edgefail-notes($list, $string), $message);
   }

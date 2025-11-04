@@ -1,5 +1,27 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:meta';
+
+// Inspect-map
+// -----------
+@function inspect-map($map) {
+  $inspected: '';
+
+  @each $item, $value in $map {
+    $inspect-pair: '' + inspect($item) + ': ' + inspect($value);
+    $inspected: $inspected + if($inspected == '', '', ', ') + $inspect-pair;
+  }
+
+  @return '(' + $inspected + ')';
+}
+
+@function inspect($value) {
+  @return if(
+    meta.type-of($value) == map,
+    inspect-map($value),
+    '' + $value
+  );
+}
 
 // Map Increment
 // -------------
