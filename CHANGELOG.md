@@ -1,5 +1,10 @@
 # True Changelog
 
+## 9.1.0 UNRELEASED
+
+- BREAKING: Remove the `$inspect` option from assertions,
+  since Sass has improved comparisons and changed inspection.
+
 ## 9.1.0-alpha.0 (07/01/25)
 
 - FEATURE: Do not fail on non-standard at-rules (switch to postcss for css

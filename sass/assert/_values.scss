@@ -91,9 +91,6 @@
 /// @param {string} $description [null] -
 ///   Description of the assertion being tested
 ///   (a `null` of `false` value generates a default description)
-/// @param {bool} $inspect [false] -
-///   Optionally compare inspected values
-///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
 ///   @use 'sass:math';
@@ -102,20 +99,14 @@
 ///       math.div(8, 2), 4,
 ///       'You can optionally describe the assertion...');
 ///   }
-@mixin assert-equal($assert, $expected, $description: null, $inspect: false) {
+@mixin assert-equal($assert, $expected, $description: null) {
   @include utils.setup('assert-equal', $description);
-
-  @if $inspect {
-    $assert: meta.inspect($assert);
-    $expected: meta.inspect($expected);
-  }
-
   @include utils.result($assert, $expected);
 }
 
 /// @alias assert-equal
-@mixin is-equal($assert, $expected, $description: null, $inspect: false) {
-  @include assert-equal($assert, $expected, $description, $inspect);
+@mixin is-equal($assert, $expected, $description: null) {
+  @include assert-equal($assert, $expected, $description);
 }
 
 // Assert UnEqual
@@ -133,9 +124,6 @@
 /// @param {string} $description [null] -
 ///   Description of the assertion being tested.
 ///   A `null` of `false` value generates a default description.
-/// @param {bool} $inspect [false] -
-///   Optionally compare inspected values
-///   (useful for comparing CSS output rather than Sass values)
 ///
 /// @example scss -
 ///   @include true.test('Strings and numbers are not the same') {
@@ -143,18 +131,12 @@
 ///       1em,
 ///       '1em');
 ///   }
-@mixin assert-unequal($assert, $expected, $description: null, $inspect: false) {
+@mixin assert-unequal($assert, $expected, $description: null) {
   @include utils.setup('assert-unequal', $description);
-
-  @if $inspect {
-    $assert: meta.inspect($assert);
-    $expected: meta.inspect($expected);
-  }
-
   @include utils.result($assert, $expected, 'unequal');
 }
 
 /// @alias assert-unequal
-@mixin not-equal($assert, $expected, $description: null, $inspect: false) {
-  @include assert-unequal($assert, $expected, $description, $inspect);
+@mixin not-equal($assert, $expected, $description: null) {
+  @include assert-unequal($assert, $expected, $description);
 }

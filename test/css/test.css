@@ -155,17 +155,17 @@
 /*   ASSERT:    */
 /*   OUTPUT   */
 /*   ✖ FAILED: [assert-equal] Test Assertion */
-/*     - Output: [number] 0.3333333333 */
-/*     - Expected: [number] 0.3333333333 */
-/*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+/*     - Output: [number] 0.3333333333333333 */
+/*     - Expected: [number] 0.333 */
+/*     - Details: numbers may need to be rounded before comparison */
 /*     - Module: Fail Details */
 /*     - Test: Compiles full failure details */
 /*   END_OUTPUT   */
 /*   EXPECTED   */
 /*   ✖ FAILED: [assert-equal] Test Assertion */
-/*     - Output: [number] 0.3333333333 */
-/*     - Expected: [number] 0.3333333333 */
-/*     - Details: numbers may need to be rounded before comparison (set `$inspect: true` to compare output values) */
+/*     - Output: [number] 0.3333333333333333 */
+/*     - Expected: [number] 0.333 */
+/*     - Details: numbers may need to be rounded before comparison */
 /*     - Module: Fail Details */
 /*     - Test: Compiles full failure details */
 /*   END_EXPECTED   */
@@ -353,15 +353,11 @@
 /* Test: Adding floats */
 /*   ✔ [assert-equal] Adding floats */
 /*  */
-/* Test: Rounded numbers with $inspect */
-/*   ✔ [assert-equal] Rounded numbers with $inspect */
+/* Test: Rounded numbers */
+/*   ✔ [assert-equal] Rounded numbers */
 /*  */
-/* Test: Rounded colors with $inspect */
-/*   ✔ [assert-equal] Rounded colors with $inspect */
-/*  */
-/* Test: Mismatched types with $inspect */
-/*   ✔ [assert-unequal] normally unequal */
-/*   ✔ [assert-equal] Mismatched types with $inspect */
+/* Test: Rounded colors */
+/*   ✔ [assert-equal] Rounded colors */
 /*  */
 /* Test: Supports is-equal alias */
 /*   ✔ [assert-equal] Supports is-equal alias */
@@ -375,8 +371,8 @@
 /* Test: Mismatched types */
 /*   ✔ [assert-unequal] Mismatched types */
 /*  */
-/* Test: Mismatched units no longer needs $inspect */
-/*   ✔ [assert-unequal] Mismatched units no longer needs $inspect */
+/* Test: Mismatched units */
+/*   ✔ [assert-unequal] Mismatched units */
 /*  */
 /* Test: Supports not-equal alias */
 /*   ✔ [assert-unequal] Supports not-equal alias */
@@ -875,14 +871,14 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 104 Tests: */
-/* - 83 Passed */
+/* 103 Tests: */
+/* - 82 Passed */
 /* - 0 Failed */
 /* - 21 Output to CSS */
 /* Stats: */
 /* - 40 Modules */
-/* - 104 Tests */
-/* - 132 Assertions */
+/* - 103 Tests */
+/* - 130 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
