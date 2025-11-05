@@ -67,19 +67,6 @@
     );
   }
 
-  @include it('Mismatched types with $inspect') {
-    @include assert-unequal(
-      string.unquote('1rem'),
-      1rem,
-      'normally unequal'
-    );
-    @include assert-equal(
-      string.unquote('1rem'),
-      1rem,
-      $inspect: true
-    );
-  }
-
   @include it('Supports is-equal alias') {
     @include is-equal(5, math.div(10, 2));
   }
@@ -96,7 +83,7 @@
     @include assert-unequal(string.unquote('1rem'), 1rem);
   }
 
-  @include it('Mismatched units no longer needs $inspect') {
+  @include it('Mismatched units') {
     @include assert-unequal(1, 1rem);
   }
 

@@ -103,49 +103,37 @@
   $two-type: meta.type-of($two);
   $note: null;
   $pre: '- Details: ';
-  $inspect: '(set `$inspect: true` to compare output values)';
+
+  // Type
+  @if ($one-type != $two-type) {
+    $message: 'variable types do not match';
+
+    @return $pre + $message;
+  }
 
   // List Separators
-  @if ($one-type == 'list') and ($two-type == 'list') {
+  @if $one-type == 'list' {
     @if (list.join((), $one, comma) == list.join((), $two, comma)) {
       $message: 'list-separators do not match';
-      $note: $pre + $message;
+
+      @return $pre + $message;
     }
   }
 
   // String Quotes
-  @if ($one-type == 'string') and ($two-type == 'string') {
+  @if $one-type == 'string' {
     @if (string.unquote($one) == string.unquote($two)) {
       $message: 'string quotations do not match';
-      $note: $pre + $message;
+
+      @return $pre + $message;
     }
   }
 
-  $one: if(($one-type == 'string'), string.unquote($one), $one);
-  $two: if(($two-type == 'string'), string.unquote($two), $two);
+  @if list.index(('number', 'color'), $one-type) {
+    $message: '#{$one-type}s may need to be rounded before comparison';
 
-  @if (meta.inspect($one) == meta.inspect($two)) {
-    // Type
-    @if ($one-type != $two-type) {
-      $message: 'variable types do not match';
-      $note: $pre + $message + ' ' + $inspect;
-    }
-
-    // Rounding
-    $number: ($one-type == 'number') and ($two-type == 'number');
-    $color: ($one-type == 'color') and ($two-type == 'color');
-
-    @if ($number or $color) {
-      $type: if($number, 'numbers', 'colors');
-      $message: '#{$type} may need to be rounded before comparison';
-      $note: $pre + $message + ' ' + $inspect;
-    }
-
-    // Catch-All (I think this may not be currently possible)
-    @if (not $note) {
-      $note: $pre + $inspect;
-    }
+    @return $pre + $message;
   }
 
-  @return $note;
+  @return $pre;
 }
