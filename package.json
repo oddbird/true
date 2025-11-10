@@ -1,7 +1,7 @@
 {
   "name": "sass-true",
   "title": "True",
-  "version": "9.1.0-alpha.0",
+  "version": "10.0.0-alpha.0",
   "description": "Unit testing for Sass.",
   "keywords": [
     "unit-test",
@@ -91,7 +91,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jest": "^29.0.1",
+    "eslint-plugin-jest": "^29.1.0",
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.5.0",
@@ -105,7 +105,7 @@
     "stylelint": "^16.25.0",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "^8.46.4"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -120,5 +120,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.11.0"
 }

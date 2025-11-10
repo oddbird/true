@@ -1,9 +1,11 @@
 # True Changelog
 
-## 9.1.0 UNRELEASED
+## 10.0.0-alpha.0 (11/10/25)
 
 - BREAKING: Remove the `$inspect` option from assertions,
   since Sass has improved comparisons and changed inspection.
+  [#332](https://github.com/oddbird/true/pull/332)
+- INTERNAL: Update dependencies
 
 ## 9.1.0-alpha.0 (07/01/25)
 
