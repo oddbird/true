@@ -864,21 +864,15 @@
   break: please-no;
 }
 
-/* # Module: Imported $terminal-output setting */
-/* ------------------------------------------- */
-/* Test: Is prefixed as $true-terminal-output */
-/*   ✔ [assert-true] Is prefixed as $true-terminal-output */
-/*  */
-/*  */
 /* # SUMMARY ---------- */
-/* 103 Tests: */
-/* - 82 Passed */
+/* 102 Tests: */
+/* - 81 Passed */
 /* - 0 Failed */
 /* - 21 Output to CSS */
 /* Stats: */
-/* - 40 Modules */
-/* - 103 Tests */
-/* - 130 Assertions */
+/* - 39 Modules */
+/* - 102 Tests */
+/* - 129 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */

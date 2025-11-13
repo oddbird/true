@@ -7,6 +7,23 @@
   [#332](https://github.com/oddbird/true/pull/332)
 - INTERNAL: Update dependencies
 
+**Migration**:
+It seems that most tests can be updated
+by simply removing the `$inspect` argument entirely,
+with no other changes.
+In some cases, you may still need one of the following:
+
+- Numeric tests with long decimals should use
+  `math.round()` to explicitly compare values
+  at the desired level of precision,
+  rather than relying on the unreliable precision
+  of the `meta.inspect()` function.
+- Tests that rely on map output might throw an error.
+  Since CSS does allow map syntax,
+  this [seems like a bug](https://github.com/sass/sass/issues/4154).
+  For now, though, you can wrap your own
+  actual and expected values with `meta.inspect()` if necessary.
+
 ## 9.1.0-alpha.0 (07/01/25)
 
 - FEATURE: Do not fail on non-standard at-rules (switch to postcss for css
