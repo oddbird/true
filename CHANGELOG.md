@@ -300,7 +300,7 @@ sassTrue.runSass(
 - Add `assert()`, `input`, and `expect` mixins for testing CSS output.
 - Support for LibSass.
 - Add Mocha JS integration.
-  — Create NPM package.
+  - Create NPM package.
 - Simplify output options down to single `$true-terminal-output` setting.
 - Add eyeglass support.
 
