@@ -9,7 +9,7 @@
 /// While JS test-runners will always report to the terminal,
 /// this setting allows you to get terminal reports
 /// even when compiling True manually in Sass.
-/// @since v6.0 – Renamed from `$true-terminal-output`
+/// @since v6.0 – Renamed from `$true-terminal-output`
 /// @group api-settings
 /// @type bool
 $terminal-output: true !default;
