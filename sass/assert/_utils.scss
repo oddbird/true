@@ -1,6 +1,7 @@
 @use '../config';
 @use '../data';
 @use 'sass:map';
+@use 'sass:string';
 
 // Content
 // -------
@@ -38,38 +39,6 @@
     @content;
   }
 
-  @include config.message('  END_#{$block}  ', 'comments');
-}
-
-// Content String
-// --------------
-/// Prepares and formats the output for string-based assertions,
-/// wrapping the target string with appropriate CSS comments.
-/// This mixin is used internally by assertion mixins like `contains-string`.
-///
-/// @access private
-/// @group assert-utils
-///
-/// @param {string} $type -
-///   The type of content being output (e.g., `contains-string`).
-/// @param {string} $string-to-find -
-///   The string that will be searched for in the compiled CSS output.
-/// @param {string} $description [null] -
-///   An optional description for the assertion being tested.
-///
-/// @output - The `$string-to-find` wrapped in relevant CSS comments.
-@mixin content-string($type, $string-to-find, $description: null) {
-  @include data.output-context($type);
-
-  $block: map.get(config.$output, $type);
-  $start: if(
-    $description or ($block == 'ASSERT'),
-    '#{$block}: #{$description}',
-    $block
-  );
-
-  @include config.message('  #{$start}  ', 'comments');
-  @include config.message('#{$string-to-find}', 'comments');
   @include config.message('  END_#{$block}  ', 'comments');
 }
 

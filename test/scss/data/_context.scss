@@ -81,11 +81,16 @@
   }
 
   @include it('duplicate output/expect') {
-    context.$output-context: 'assert' 'output';
+    context.$output-context: 'assert' 'output' 'expect';
 
     @include assert-equal(
       context.validate-output-context('output'),
-      'ERROR [output-context]: The `output()` mixin must only be used once per `assert()`'
+      'ERROR [output-context]: `output()` cannot be used multiple times in the same assertion'
+    );
+
+    @include assert-equal(
+      context.validate-output-context('expect'),
+      'ERROR [output-context]: `expect()` cannot be used multiple times in the same assertion'
     );
 
     context.$output-context: ();
@@ -94,7 +99,12 @@
   @include it('missing assert') {
     @include assert-equal(
       context.validate-output-context('output'),
-      'ERROR [output-context]: The `assert()` wrapper is required'
+      'ERROR [output-context]: `output()` is only allowed inside `assert()`'
+    );
+
+    @include assert-equal(
+      context.validate-output-context('expect'),
+      'ERROR [output-context]: `expect()` is only allowed inside `assert()`'
     );
   }
 
@@ -103,18 +113,18 @@
 
     @include assert-equal(
       context.validate-output-context(null),
-      'ERROR [output-context]: Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
+      'ERROR [output-context]: Unexpected assertion stack: assert wtf output expect contains'
     );
 
     context.$output-context: ();
   }
 
-  @include it('missing context') {
-    context.$output-context: 'assert' 'wtf' 'output' 'contains';
+  @include it('allows multiple contains-string') {
+    context.$output-context: 'assert' 'output' 'contains-string';
 
     @include assert-equal(
-      context.validate-output-context(null),
-      'ERROR [output-context]: Each `assert()` must contain one `output()`, and one `expect()` or `contains()`'
+      context.validate-output-context('contains-string'),
+      context.$output-context
     );
 
     context.$output-context: ();

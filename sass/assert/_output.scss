@@ -1,3 +1,4 @@
+@use '../config';
 @use 'utils';
 
 /// # Testing CSS Output
@@ -201,5 +202,7 @@
 ///     }
 ///   }
 @mixin contains-string($string-to-find) {
-  @include utils.content-string('contains-string', $string-to-find);
+  @include utils.content('contains-string', $selector: false) {
+    @include config.message('#{$string-to-find}', 'comments');
+  }
 }
