@@ -189,28 +189,16 @@
     @include it('Can contain multiple/overlapping assertions') {
       @include assert {
         @include output {
-          .example {
-            width: 12em;
-            height: 1lh;
-            border: thin solid;
-          }
+          width: 12em;
+          height: 1lh;
+          border: thin solid;
         }
 
+        @include contains { width: 12em; }
+        @include contains { height: 1lh; }
         @include contains {
-          .example {
-            width: 12em;
-          }
-        }
-        @include contains {
-          .example {
-            height: 1lh;
-          }
-        }
-        @include contains {
-          .example {
-            height: 1lh;
-            border: thin solid;
-          }
+          height: 1lh;
+          border: thin solid;
         }
       }
     }

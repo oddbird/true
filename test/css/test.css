@@ -599,7 +599,7 @@
 /* Test: Can contain multiple/overlapping assertions */
 /*   ASSERT:    */
 /*   OUTPUT   */
-.test-output .example {
+.test-output {
   width: 12em;
   height: 1lh;
   border: thin solid;
@@ -607,19 +607,19 @@
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
-.test-output .example {
+.test-output {
   width: 12em;
 }
 
 /*   END_CONTAINED   */
 /*   CONTAINED   */
-.test-output .example {
+.test-output {
   height: 1lh;
 }
 
 /*   END_CONTAINED   */
 /*   CONTAINED   */
-.test-output .example {
+.test-output {
   height: 1lh;
   border: thin solid;
 }
