@@ -80,6 +80,21 @@
       @include contains-string('Helvetica');
     }
   }
+
+  @include it('Can assert multiple and overlapping strings') {
+    @include assert {
+      @include output {
+        height: 10px;
+        width: 20px;
+        border: thin solid currentColor;
+      }
+
+      @include contains-string('height');
+      @include contains-string('solid');
+      @include contains-string('20px');
+      @include contains-string('thin solid currentColor');
+    }
+  }
 }
 
 @include describe('Output Contains') {
