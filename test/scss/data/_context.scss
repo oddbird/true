@@ -129,6 +129,17 @@
 
     context.$output-context: ();
   }
+
+  @include it('allows multiple contains') {
+    context.$output-context: 'assert' 'output' 'contains';
+
+    @include assert-equal(
+      context.validate-output-context('contains'),
+      context.$output-context
+    );
+
+    context.$output-context: ();
+  }
 }
 
 // Inspecting context

@@ -84,7 +84,7 @@ $output-context: ();
 /// @throw When context is missing before a reset
 @function validate-output-context($new, $context: $output-context) {
   $valid: map.keys(terms.$output);
-  $solo-types: ('expect', 'contains', 'output');
+  $solo-types: ('expect', 'output');
   $expect-types: ('expect', 'contains', 'contains-string');
   $sub-types: list.append($expect-types, 'output');
 

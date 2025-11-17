@@ -196,11 +196,21 @@
           }
         }
 
-        @include contains { width: 12em; }
-        @include contains { height: 1lh; }
         @include contains {
-          height: 1lh;
-          border: thin solid;
+          .example {
+            width: 12em;
+          }
+        }
+        @include contains {
+          .example {
+            height: 1lh;
+          }
+        }
+        @include contains {
+          .example {
+            height: 1lh;
+            border: thin solid;
+          }
         }
       }
     }

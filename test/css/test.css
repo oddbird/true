@@ -110,6 +110,9 @@
 /* Test: allows multiple contains-string */
 /*   ✔ [assert-equal] allows multiple contains-string */
 /*  */
+/* Test: allows multiple contains */
+/*   ✔ [assert-equal] allows multiple contains */
+/*  */
 /*  */
 /* # Module: Context [function] & Context All */
 /* ------------------------------------------ */
@@ -593,6 +596,37 @@
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
+/* Test: Can contain multiple/overlapping assertions */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .example {
+  width: 12em;
+  height: 1lh;
+  border: thin solid;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .example {
+  width: 12em;
+}
+
+/*   END_CONTAINED   */
+/*   CONTAINED   */
+.test-output .example {
+  height: 1lh;
+}
+
+/*   END_CONTAINED   */
+/*   CONTAINED   */
+.test-output .example {
+  height: 1lh;
+  border: thin solid;
+}
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
 /*  */
 /* Test: Can be used with @at-root */
 /*   ASSERT:    */
@@ -897,14 +931,16 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 104 Tests: */
-/* - 82 Passed */
+/* 106 Tests: */
+/* - 83 Passed */
 /* - 0 Failed */
 /* - 22 Output to CSS */
 /* Stats: */
 /* - 40 Modules */
-/* - 104 Tests */
-/* - 133 Assertions */
+/* - 106 Tests */
+/* - 135 Assertions */
 /* -------------------- */
+/* ERROR [report]: */
+/*   The results don’t add up. Are all your tests properly structured? */
 
 /*# sourceMappingURL=test.css.map */

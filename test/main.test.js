@@ -54,6 +54,26 @@ describe('#fail', () => {
     expect(msg).to.include('✓ "20px"');
     expect(msg).to.include('Actual output:');
   });
+
+  it('formats failure message for multiple contains', () => {
+    const msg = sassTrue.formatFailureMessage({
+      description: 'Multiple CSS blocks not found.',
+      assertionType: 'contains',
+      expected:
+        '.test-output {\n  height: 10px;\n}\n---\n.test-output {\n  background-color: red;\n}\n---\n.test-output {\n  width: 20px;\n}',
+      output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+    });
+
+    expect(msg).to.include('Multiple CSS blocks not found.');
+    expect(msg).to.include('[type: contains]');
+    expect(msg).to.include(
+      'Expected output to contain all of the following CSS blocks:',
+    );
+    expect(msg).to.include('✓ Block 1:');
+    expect(msg).to.include('✗ Block 2:');
+    expect(msg).to.include('✓ Block 3:');
+    expect(msg).to.include('Actual output:');
+  });
 });
 
 describe('#runSass', () => {
@@ -1219,6 +1239,158 @@ describe('#parse', () => {
       ];
 
       expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses multiple contains assertions (passing)', () => {
+      const css = [
+        '/* # Module: Contains */',
+        '/* Test: Multiple contains blocks */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px;',
+        '  border: thin solid currentColor;',
+        '}',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 10px;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  width: 20px;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  border: thin solid currentColor;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains',
+          tests: [
+            {
+              test: 'Multiple contains blocks',
+              assertions: [
+                {
+                  description: '',
+                  assertionType: 'contains',
+                  passed: true,
+                  output:
+                    '.test-output {\n  height: 10px;\n  width: 20px;\n  border: thin solid currentColor;\n}',
+                  expected:
+                    '.test-output {\n  height: 10px;\n}\n---\n.test-output {\n  width: 20px;\n}\n---\n.test-output {\n  border: thin solid currentColor;\n}',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses multiple contains assertions (failing)', () => {
+      const css = [
+        '/* # Module: Contains */',
+        '/* Test: Multiple contains blocks with failure */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px;',
+        '}',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 10px;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  background-color: red;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  width: 20px;',
+        '}',
+        '/*   END_CONTAINED   */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains',
+          tests: [
+            {
+              test: 'Multiple contains blocks with failure',
+              assertions: [
+                {
+                  description: '',
+                  assertionType: 'contains',
+                  passed: false,
+                  output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                  expected:
+                    '.test-output {\n  height: 10px;\n}\n---\n.test-output {\n  background-color: red;\n}\n---\n.test-output {\n  width: 20px;\n}',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('throws error on unexpected comment after CONTAINED', () => {
+      const css = [
+        '/* # Module: M */',
+        '/* Test: T */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_CONTAINED   */',
+        '/* unexpected comment */',
+      ].join('\n');
+      const attempt = function () {
+        sassTrue.parse(css);
+      };
+
+      expect(attempt).to.throw(
+        'Unexpected comment "unexpected comment"; looking for CONTAINED or END_ASSERT',
+      );
+    });
+
+    it('throws error on unexpected rule type after CONTAINED', () => {
+      const css = [
+        '/* # Module: M */',
+        '/* Test: T */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINED   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_CONTAINED   */',
+        '.foo { -prop: val; }',
+      ].join('\n');
+      const attempt = function () {
+        sassTrue.parse(css);
+      };
+
+      expect(attempt).to.throw(
+        'Unexpected rule type "rule"; looking for CONTAINED or END_ASSERT',
+      );
     });
   });
 
