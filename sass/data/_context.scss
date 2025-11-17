@@ -142,6 +142,7 @@ $output-context: ();
   }
 
   $has-expect: false;
+
   @each $expect in $expect-types {
     $has-expect: $has-expect or list.index($context, $expect);
   }
