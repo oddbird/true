@@ -35,6 +35,25 @@ describe('#fail', () => {
 
     expect(msg).to.equal(expected);
   });
+
+  it('formats failure message for multiple contains-string', () => {
+    const msg = sassTrue.formatFailureMessage({
+      description: 'Multiple strings not found.',
+      assertionType: 'contains-string',
+      expected: 'height\nbackground-color\n20px',
+      output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+    });
+
+    expect(msg).to.include('Multiple strings not found.');
+    expect(msg).to.include('[type: contains-string]');
+    expect(msg).to.include(
+      'Expected output to contain all of the following strings:',
+    );
+    expect(msg).to.include('✓ "height"');
+    expect(msg).to.include('✗ "background-color"');
+    expect(msg).to.include('✓ "20px"');
+    expect(msg).to.include('Actual output:');
+  });
 });
 
 describe('#runSass', () => {
@@ -1204,6 +1223,42 @@ describe('#parse', () => {
   });
 
   describe('#contains-string', () => {
+    it('parses a single passing output test (backward compatibility)', () => {
+      const css = [
+        '/* # Module: Contains-string */',
+        '/* Test: Single string */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains-string',
+          tests: [
+            {
+              test: 'Single string',
+              assertions: [
+                {
+                  description: '',
+                  assertionType: 'contains-string',
+                  passed: true,
+                  output: '.test-output {\n  height: 10px;\n}',
+                  expected: 'height',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
     it('parses a passing output test', () => {
       const css = [
         '/* # Module: Contains-string */',
@@ -1284,6 +1339,144 @@ describe('#parse', () => {
         },
       ];
       expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses multiple contains-string assertions (passing)', () => {
+      const css = [
+        '/* # Module: Contains-string */',
+        '/* Test: Multiple strings */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px;',
+        '  border: thin solid currentColor;',
+        '}',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   CONTAINS_STRING   */',
+        '/* solid */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   CONTAINS_STRING   */',
+        '/* 20px */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   CONTAINS_STRING   */',
+        '/* thin solid currentColor */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains-string',
+          tests: [
+            {
+              test: 'Multiple strings',
+              assertions: [
+                {
+                  description: '',
+                  assertionType: 'contains-string',
+                  passed: true,
+                  output:
+                    '.test-output {\n  height: 10px;\n  width: 20px;\n  border: thin solid currentColor;\n}',
+                  expected: 'height\nsolid\n20px\nthin solid currentColor',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('parses multiple contains-string assertions (failing)', () => {
+      const css = [
+        '/* # Module: Contains-string */',
+        '/* Test: Multiple strings with failure */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px;',
+        '  width: 20px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   CONTAINS_STRING   */',
+        '/* background-color */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   CONTAINS_STRING   */',
+        '/* 20px */',
+        '/*   END_CONTAINS_STRING   */',
+        '/*   END_ASSERT   */',
+      ].join('\n');
+      const expected = [
+        {
+          module: 'Contains-string',
+          tests: [
+            {
+              test: 'Multiple strings with failure',
+              assertions: [
+                {
+                  description: '',
+                  assertionType: 'contains-string',
+                  passed: false,
+                  output: '.test-output {\n  height: 10px;\n  width: 20px;\n}',
+                  expected: 'height\nbackground-color\n20px',
+                },
+              ],
+            },
+          ],
+        },
+      ];
+      expect(sassTrue.parse(css)).to.deep.equal(expected);
+    });
+
+    it('throws error on unexpected comment after CONTAINS_STRING', () => {
+      const css = [
+        '/* # Module: M */',
+        '/* Test: T */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '/* unexpected comment */',
+      ].join('\n');
+      const attempt = function () {
+        sassTrue.parse(css);
+      };
+
+      expect(attempt).to.throw(
+        'Unexpected comment "unexpected comment"; looking for CONTAINS_STRING or END_ASSERT',
+      );
+    });
+
+    it('throws error on unexpected rule type after CONTAINS_STRING', () => {
+      const css = [
+        '/* # Module: M */',
+        '/* Test: T */',
+        '/*   ASSERT:    */',
+        '/*   OUTPUT   */',
+        '.test-output {',
+        '  height: 10px; }',
+        '/*   END_OUTPUT   */',
+        '/*   CONTAINS_STRING   */',
+        '/* height */',
+        '/*   END_CONTAINS_STRING   */',
+        '.foo { -prop: val; }',
+      ].join('\n');
+      const attempt = function () {
+        sassTrue.parse(css);
+      };
+
+      expect(attempt).to.throw(
+        'Unexpected rule type "rule"; looking for CONTAINS_STRING or END_ASSERT',
+      );
     });
   });
 });

@@ -98,15 +98,17 @@
 /*  */
 /* Test: duplicate output/expect */
 /*   ✔ [assert-equal] duplicate output/expect */
+/*   ✔ [assert-equal] duplicate output/expect */
 /*  */
 /* Test: missing assert */
+/*   ✔ [assert-equal] missing assert */
 /*   ✔ [assert-equal] missing assert */
 /*  */
 /* Test: wrong length */
 /*   ✔ [assert-equal] wrong length */
 /*  */
-/* Test: missing context */
-/*   ✔ [assert-equal] missing context */
+/* Test: allows multiple contains-string */
+/*   ✔ [assert-equal] allows multiple contains-string */
 /*  */
 /*  */
 /* # Module: Context [function] & Context All */
@@ -470,6 +472,30 @@
 /*   END_OUTPUT   */
 /*   CONTAINS_STRING   */
 /* Helvetica */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can assert multiple and overlapping strings */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 10px;
+  width: 20px;
+  border: thin solid currentColor;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* height */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* solid */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* 20px */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* thin solid currentColor */
 /*   END_CONTAINS_STRING   */
 /*   END_ASSERT   */
 /*  */
@@ -871,14 +897,14 @@
 /*  */
 /*  */
 /* # SUMMARY ---------- */
-/* 103 Tests: */
+/* 104 Tests: */
 /* - 82 Passed */
 /* - 0 Failed */
-/* - 21 Output to CSS */
+/* - 22 Output to CSS */
 /* Stats: */
 /* - 40 Modules */
-/* - 103 Tests */
-/* - 130 Assertions */
+/* - 104 Tests */
+/* - 133 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
