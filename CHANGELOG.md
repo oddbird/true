@@ -1,16 +1,15 @@
 # True Changelog
 
-## 10.0.0-alpha.1 (11/18/25)
-
-- NEW: Multiple `contains()` and `contains-string()` expectations
-  can be used in a single assertion.
-  [#333](https://github.com/oddbird/true/pull/333)
-
-## 10.0.0-alpha.0 (11/10/25)
+## 10.0.0 (11/18/25)
 
 - BREAKING: Remove the `$inspect` option from assertions,
   since Sass has improved comparisons and changed inspection.
   [#332](https://github.com/oddbird/true/pull/332)
+- FEATURE: Multiple `contains()` and `contains-string()` expectations
+  can be used in a single assertion.
+  [#333](https://github.com/oddbird/true/pull/333)
+- FEATURE: Do not fail on non-standard at-rules (switch to postcss for css
+  parsing). [#314](https://github.com/oddbird/true/pull/314)
 - INTERNAL: Update dependencies
 
 **Migration**:
@@ -28,6 +27,19 @@ In some cases, you may still need one of the following:
   since 'maps' are not a defined CSS syntax.
   In this case you can use `meta.inspect()`
   to compare the string representations of maps.
+
+## 10.0.0-alpha.1 (11/18/25)
+
+- FEATURE: Multiple `contains()` and `contains-string()` expectations
+  can be used in a single assertion.
+  [#333](https://github.com/oddbird/true/pull/333)
+
+## 10.0.0-alpha.0 (11/10/25)
+
+- BREAKING: Remove the `$inspect` option from assertions,
+  since Sass has improved comparisons and changed inspection.
+  [#332](https://github.com/oddbird/true/pull/332)
+- INTERNAL: Update dependencies
 
 ## 9.1.0-alpha.0 (07/01/25)
 
