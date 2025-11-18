@@ -596,10 +596,11 @@
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
+/*  */
 /* Test: Can contain multiple/overlapping assertions */
 /*   ASSERT:    */
 /*   OUTPUT   */
-.test-output {
+.test-output .example {
   width: 12em;
   height: 1lh;
   border: thin solid;
@@ -607,26 +608,25 @@
 
 /*   END_OUTPUT   */
 /*   CONTAINED   */
-.test-output {
+.test-output .example {
   width: 12em;
 }
 
 /*   END_CONTAINED   */
 /*   CONTAINED   */
-.test-output {
+.test-output .example {
   height: 1lh;
 }
 
 /*   END_CONTAINED   */
 /*   CONTAINED   */
-.test-output {
+.test-output .example {
   height: 1lh;
   border: thin solid;
 }
 
 /*   END_CONTAINED   */
 /*   END_ASSERT   */
-/*  */
 /*  */
 /* Test: Can be used with @at-root */
 /*   ASSERT:    */
@@ -934,13 +934,11 @@
 /* 106 Tests: */
 /* - 83 Passed */
 /* - 0 Failed */
-/* - 22 Output to CSS */
+/* - 23 Output to CSS */
 /* Stats: */
 /* - 40 Modules */
 /* - 106 Tests */
 /* - 135 Assertions */
 /* -------------------- */
-/* ERROR [report]: */
-/*   The results don’t add up. Are all your tests properly structured? */
 
 /*# sourceMappingURL=test.css.map */
