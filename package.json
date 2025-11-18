@@ -45,7 +45,7 @@
     "test:lib": "USE_BUILT=true mocha",
     "test": "run-s build test:src test:lib",
     "prettier:js": "prettier --write '**/*.js'",
-    "prettier:other": "prettier --write '**/*.{json,md,yml}'",
+    "prettier:other": "prettier --write '**/*.{json,md,yml,scss}'",
     "eslint": "yarn eslint:ci --fix",
     "eslint:ci": "eslint src test",
     "lint": "run-p lint:js lint:sass prettier:other",

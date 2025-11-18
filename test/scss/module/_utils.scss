@@ -4,10 +4,7 @@
 
 @include describe('Module Title') {
   @include it('Returns the current module name, prefixed') {
-    @include assert-equal(
-      utils.module-title(),
-      '# Module: Module Title'
-    )
+    @include assert-equal(utils.module-title(), '# Module: Module Title');
   }
 
   @include describe('Module Title [Nested]') {
@@ -15,7 +12,7 @@
       @include assert-equal(
         utils.module-title(),
         '# Module: Module Title :: Module Title [Nested]'
-      )
+      );
     }
   }
 }
@@ -32,10 +29,7 @@
 
     $under-cite: utils.underline($cite);
 
-    @include assert-equal(
-      string.length($cite),
-      string.length($under-cite)
-    );
+    @include assert-equal(string.length($cite), string.length($under-cite));
 
     @for $i from 1 through string.length($under-cite) {
       @include assert-equal('-', string.slice($under-cite, $i, $i));

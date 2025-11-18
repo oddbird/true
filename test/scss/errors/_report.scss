@@ -12,7 +12,12 @@
   @include it('Fail on Error') {
     @include assert {
       @include output {
-        @include report.report(false, 'fail on error', $fake-results, $fake-stats);
+        @include report.report(
+          false,
+          'fail on error',
+          $fake-results,
+          $fake-stats
+        );
       }
       @include expect {
         @include config.message($multi, 'comments');

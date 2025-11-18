@@ -105,7 +105,7 @@
   }
 
   @include describe('Context All [Nested]') {
-      @include it('Returns the current stack of module names') {
+    @include it('Returns the current stack of module names') {
       @include assert-equal(
         context.context-all('module'),
         'Context [function] & Context All' 'Context All [Nested]'

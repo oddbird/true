@@ -61,17 +61,13 @@
     $origin: #246;
     $expected: rgb(53.125, 106.25, 159.375);
 
-    @include assert-equal(
-      color.adjust($origin, $lightness: 15%),
-      $expected,
-    );
+    @include assert-equal(color.adjust($origin, $lightness: 15%), $expected);
   }
 
   @include it('Supports is-equal alias') {
     @include is-equal(5, math.div(10, 2));
   }
 }
-
 
 // Assert UnEqual
 @include describe('Assert UnEqual') {

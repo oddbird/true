@@ -131,7 +131,9 @@ $output-context: ();
     }
   }
 
-  @if $new { @return list.append($context, $new); }
+  @if $new {
+    @return list.append($context, $new);
+  }
 
   // checking and re-setting the context
   @if not list.index($context, 'output') {

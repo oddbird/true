@@ -66,7 +66,7 @@
   }
 
   @include it('Bracketed List') {
-    $list: ['one' 'two'];
+    $list: [ 'one' 'two'];
 
     @include assert-equal(
       details.variable-details($list),
@@ -117,9 +117,6 @@
     $space: list.join((), 'one', space);
     $comma: list.join((), 'one', comma);
 
-    @include assert-equal(
-      details.edgefail-notes($space, $comma),
-      $message
-    );
+    @include assert-equal(details.edgefail-notes($space, $comma), $message);
   }
 }

@@ -4,6 +4,7 @@
 
 - NEW: Multiple `contains()` and `contains-string()` expectations
   can be used in a single assertion.
+  [#333](https://github.com/oddbird/true/pull/333)
 
 ## 10.0.0-alpha.0 (11/10/25)
 

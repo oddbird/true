@@ -46,9 +46,7 @@
 /// @group private-test
 /// @param {string} $string
 /// @return {string} - Underline dashes of the same length as string param
-@function underline(
-  $string
-) {
+@function underline($string) {
   $underline: '';
   $string: if(meta.type-of($string) == 'string', $string, '#{$string}');
 

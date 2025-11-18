@@ -1,6 +1,6 @@
 @use '../../sass/config' as init with (
   $catch-errors: true,
-  $terminal-output: false,
+  $terminal-output: false
 );
 @use '../../sass/true';
 @use 'sass:meta';

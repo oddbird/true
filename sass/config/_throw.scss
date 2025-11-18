@@ -23,9 +23,7 @@
 $catch-errors: false !default;
 
 // Format an error prefix, with source if available
-@function _prefix(
-  $source
-) {
+@function _prefix($source) {
   @return if($source, 'ERROR [#{$source}]:', 'ERROR:');
 }
 
@@ -69,7 +67,9 @@ $catch-errors: false !default;
 ///   .demo { width: add(3em, 'hello'); }
 @function error($message, $source: null, $catch: $catch-errors) {
   @if $catch {
-    @if ($catch == 'warn') { @warn $message; }
+    @if ($catch == 'warn') {
+      @warn $message;
+    }
 
     @return '#{_prefix($source)} #{$message}';
   }
@@ -131,7 +131,9 @@ $catch-errors: false !default;
 ///   }
 @mixin error($message, $source: null, $catch: $catch-errors) {
   @if $catch {
-    @if ($catch == 'warn') { @warn $message; }
+    @if ($catch == 'warn') {
+      @warn $message;
+    }
 
     @include messages.message(_prefix($source), 'comments');
     @include messages.message($message, 'comments', $comment-padding: 2);

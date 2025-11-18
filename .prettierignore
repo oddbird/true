@@ -13,4 +13,3 @@ jscache/
 lib/
 node_modules/
 venv/
-**/*.scss

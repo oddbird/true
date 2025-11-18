@@ -15,15 +15,11 @@
   @include it('Allow errors to output without blocking compilation') {
     @include assert {
       @include output {
-        @include throw.error(
-          'This is a test error message',
-          'error test'
-        );
+        @include throw.error('This is a test error message', 'error test');
       }
       @include expect {
         @include messages.message(
-          'ERROR [error test]:'
-          '  This is a test error message',
+          'ERROR [error test]:' '  This is a test error message',
           'comments'
         );
       }
