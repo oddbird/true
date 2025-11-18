@@ -24,33 +24,6 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: True Error [function] */
-/* ------------------------------- */
-/* Test: Allow errors to return without blocking compilation */
-/*   ✔ [assert-equal] Allow errors to return without blocking compilation */
-/*  */
-/*  */
-/* # Module: True Error [mixin] */
-/* ---------------------------- */
-/* Test: Allow errors to output without blocking compilation */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* ERROR [error test]: */
-  /*   This is a test error message */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* ERROR [error test]: */
-  /*   This is a test error message */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/*  */
 /* # Module: Map Increment */
 /* ----------------------- */
 /* Test: Returns a map with the sum-values of two numeric maps */
@@ -90,23 +63,6 @@
 /*  */
 /* # Module: Validate Output Context */
 /* --------------------------------- */
-/* Test: unknown context name */
-/*   ✔ [assert-equal] unknown context name */
-/*  */
-/* Test: duplicate assert */
-/*   ✔ [assert-equal] duplicate assert */
-/*  */
-/* Test: duplicate output/expect */
-/*   ✔ [assert-equal] duplicate output/expect */
-/*   ✔ [assert-equal] duplicate output/expect */
-/*  */
-/* Test: missing assert */
-/*   ✔ [assert-equal] missing assert */
-/*   ✔ [assert-equal] missing assert */
-/*  */
-/* Test: wrong length */
-/*   ✔ [assert-equal] wrong length */
-/*  */
 /* Test: allows multiple contains-string */
 /*   ✔ [assert-equal] allows multiple contains-string */
 /*  */
@@ -838,78 +794,6 @@
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
-/* Test: Fail on Error */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 5 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   1 test failed */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 5 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   1 test failed */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/* Test: Bad results */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 4 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   The results don’t add up. Are all your tests properly structured? */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 4 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   The results don’t add up. Are all your tests properly structured? */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
 /*  */
 /* # Module: Report Message */
 /* ------------------------ */
@@ -924,21 +808,15 @@
   break: please-no;
 }
 
-/* # Module: Imported $terminal-output setting */
-/* ------------------------------------------- */
-/* Test: Is prefixed as $true-terminal-output */
-/*   ✔ [assert-true] Is prefixed as $true-terminal-output */
-/*  */
-/*  */
 /* # SUMMARY ---------- */
-/* 106 Tests: */
-/* - 83 Passed */
+/* 96 Tests: */
+/* - 76 Passed */
 /* - 0 Failed */
-/* - 23 Output to CSS */
+/* - 20 Output to CSS */
 /* Stats: */
-/* - 40 Modules */
-/* - 106 Tests */
-/* - 135 Assertions */
+/* - 37 Modules */
+/* - 96 Tests */
+/* - 123 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */
