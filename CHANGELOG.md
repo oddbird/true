@@ -1,12 +1,15 @@
 # True Changelog
 
+## 10.0.0-alpha.1 (11/18/25)
+
+- NEW: Multiple `contains()` and `contains-string()` expectations
+  can be used in a single assertion.
+
 ## 10.0.0-alpha.0 (11/10/25)
 
 - BREAKING: Remove the `$inspect` option from assertions,
   since Sass has improved comparisons and changed inspection.
   [#332](https://github.com/oddbird/true/pull/332)
-- NEW: Multiple `contains()` and `contains-string()` expectations
-  can be used in a single assertion.
 - INTERNAL: Update dependencies
 
 **Migration**:

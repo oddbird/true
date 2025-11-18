@@ -1,7 +1,7 @@
 {
   "name": "sass-true",
   "title": "True",
-  "version": "10.0.0-alpha.0",
+  "version": "10.0.0-alpha.1",
   "description": "Unit testing for Sass.",
   "keywords": [
     "unit-test",
@@ -99,14 +99,14 @@
     "jest": "^30.2.0",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.94.0",
+    "sass": "^1.94.1",
     "sass-embedded": "^1.93.3",
     "sassdoc": "^2.7.4",
     "sassdoc-theme-herman": "^6.0.2",
     "stylelint": "^16.25.0",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.47.0"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
