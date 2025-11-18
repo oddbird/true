@@ -58,7 +58,7 @@
     "build:sass:errors": "sass test/scss/test-errors.scss test/css/test-errors.css --load-path ./sass/ --silence-deprecation=import",
     "build:js": "tsc",
     "build": "run-p build:js build:sass build:sass:errors",
-    "commit": "run-s lint test build:sass build:sass:errors",
+    "commit": "run-s lint test",
     "release": "run-s commit docs",
     "prepack": "yarn run release"
   },
