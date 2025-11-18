@@ -57,6 +57,8 @@ export type Context = {
   currentAssertion?: Assertion;
   currentOutputRules?: Rule[];
   currentExpectedRules?: Rule[];
+  currentExpectedStrings?: string[];
+  currentExpectedContained?: string[];
 };
 
 export type Rule = CssComment | CssRule | CssAtRule;
@@ -152,6 +154,49 @@ export const formatFailureMessage = function (assertion: Assertion) {
   if (assertion.details) {
     msg = `${msg} -- ${assertion.details}`;
   }
+
+  // For contains-string assertions with multiple strings, show which ones are missing
+  if (assertion.assertionType === 'contains-string' && assertion.expected) {
+    const expectedStrings = assertion.expected.split('\n');
+    if (expectedStrings.length > 1) {
+      const output = assertion.output || '';
+      const missing = expectedStrings.filter((str) => !output.includes(str));
+      if (missing.length > 0) {
+        msg = `${msg}\n\nExpected output to contain all of the following strings:\n`;
+        expectedStrings.forEach((str) => {
+          const found = output.includes(str);
+          msg = `${msg}  ${found ? '✓' : '✗'} "${str}"\n`;
+        });
+        msg = `${msg}\nActual output:\n${output}\n`;
+        return msg;
+      }
+    }
+  }
+
+  // For contains assertions with multiple blocks, show which ones are missing
+  if (assertion.assertionType === 'contains' && assertion.expected) {
+    const expectedBlocks = assertion.expected.split('\n---\n');
+    if (expectedBlocks.length > 1) {
+      const output = assertion.output || '';
+      const missing = expectedBlocks.filter(
+        (block) => !contains(output, block),
+      );
+      if (missing.length > 0) {
+        msg = `${msg}\n\nExpected output to contain all of the following CSS blocks:\n`;
+        expectedBlocks.forEach((block, index) => {
+          const found = contains(output, block);
+          msg = `${msg}  ${found ? '✓' : '✗'} Block ${index + 1}:\n`;
+          msg = `${msg}${block
+            .split('\n')
+            .map((line) => `    ${line}`)
+            .join('\n')}\n`;
+        });
+        msg = `${msg}\nActual output:\n${output}\n`;
+        return msg;
+      }
+    }
+  }
+
   msg = `${msg}\n\n${diffStringsUnified(
     assertion.expected || '',
     assertion.output || '',
@@ -546,10 +591,18 @@ export const parse = function (
 
       if (text === constants.CONTAINED_START_TOKEN) {
         ctx.currentExpectedRules = [];
+        // Initialize array for multiple contains assertions
+        if (!ctx.currentExpectedContained) {
+          ctx.currentExpectedContained = [];
+        }
         return parseAssertionContained;
       }
       if (text === constants.CONTAINS_STRING_START_TOKEN) {
         ctx.currentExpectedRules = [];
+        // Initialize array for multiple contains-string assertions
+        if (!ctx.currentExpectedStrings) {
+          ctx.currentExpectedStrings = [];
+        }
         return parseAssertionContainsString;
       }
       throw parseError(
@@ -611,21 +664,57 @@ export const parse = function (
       isCommentNode(rule) &&
       rule.text.trim() === constants.CONTAINED_END_TOKEN
     ) {
-      if (ctx.currentAssertion) {
-        ctx.currentAssertion.expected = generateCss(
-          ctx.currentExpectedRules || [],
-        );
-        ctx.currentAssertion.passed = contains(
-          ctx.currentAssertion.output || '',
-          ctx.currentAssertion.expected,
-        );
-        ctx.currentAssertion.assertionType = 'contains';
-      }
+      const expectedCss = generateCss(ctx.currentExpectedRules || []);
+
+      // Add this expected CSS block to the array
+      ctx.currentExpectedContained?.push(expectedCss);
+
       delete ctx.currentExpectedRules;
-      return parseEndAssertion;
+      return parseAssertionContainedEnd;
     }
     ctx.currentExpectedRules?.push(rule);
     return parseAssertionContained;
+  };
+
+  const parseAssertionContainedEnd: Parser = function (rule, ctx) {
+    if (isCommentNode(rule)) {
+      const text = rule.text.trim();
+      if (!text) {
+        return parseAssertionContainedEnd;
+      }
+      // Check for another CONTAINED block
+      if (text === constants.CONTAINED_START_TOKEN) {
+        ctx.currentExpectedRules = [];
+        return parseAssertionContained;
+      }
+      // Check for END_ASSERT - finalize the assertion
+      if (text === constants.ASSERT_END_TOKEN) {
+        if (ctx.currentAssertion && ctx.currentExpectedContained) {
+          // Check if all expected CSS blocks are found in the output
+          const allFound = ctx.currentExpectedContained.every((expectedCss) =>
+            contains(ctx.currentAssertion?.output || '', expectedCss),
+          );
+          ctx.currentAssertion.passed = allFound;
+          ctx.currentAssertion.assertionType = 'contains';
+          // Store all expected CSS blocks joined with newlines for display
+          ctx.currentAssertion.expected =
+            ctx.currentExpectedContained.join('\n---\n');
+        }
+        delete ctx.currentExpectedContained;
+        finishCurrentAssertion(ctx);
+        return parseAssertion;
+      }
+      throw parseError(
+        `Unexpected comment "${text}"`,
+        'CONTAINED or END_ASSERT',
+        rule.source?.start,
+      );
+    }
+    throw parseError(
+      `Unexpected rule type "${rule.type}"`,
+      'CONTAINED or END_ASSERT',
+      rule.source?.start,
+    );
   };
 
   const parseAssertionContainsString: Parser = function (rule, ctx) {
@@ -633,28 +722,64 @@ export const parse = function (
       isCommentNode(rule) &&
       rule.text.trim() === constants.CONTAINS_STRING_END_TOKEN
     ) {
-      if (ctx.currentAssertion) {
-        // The string to find is wrapped in a Sass comment because it might not
-        // always be a complete, valid CSS block on its own. These replace calls
-        // are necessary to strip the leading `/*` and trailing `*/` characters
-        // that enclose the string, so we're left with just the raw string to
-        // find for accurate comparison.
-        ctx.currentAssertion.expected = generateCss(
-          ctx.currentExpectedRules || [],
-        )
-          .replace(new RegExp('^/\\*'), '')
-          .replace(new RegExp('\\*/$'), '')
-          .trim();
-        ctx.currentAssertion.passed = ctx.currentAssertion.output?.includes(
-          ctx.currentAssertion.expected,
-        );
-        ctx.currentAssertion.assertionType = 'contains-string';
-      }
+      // The string to find is wrapped in a Sass comment because it might not
+      // always be a complete, valid CSS block on its own. These replace calls
+      // are necessary to strip the leading `/*` and trailing `*/` characters
+      // that enclose the string, so we're left with just the raw string to
+      // find for accurate comparison.
+      const expectedString = generateCss(ctx.currentExpectedRules || [])
+        .replace(new RegExp('^/\\*'), '')
+        .replace(new RegExp('\\*/$'), '')
+        .trim();
+
+      // Add this string to the array of expected strings
+      ctx.currentExpectedStrings?.push(expectedString);
+
       delete ctx.currentExpectedRules;
-      return parseEndAssertion;
+      return parseAssertionContainsStringEnd;
     }
     ctx.currentExpectedRules?.push(rule);
     return parseAssertionContainsString;
+  };
+
+  const parseAssertionContainsStringEnd: Parser = function (rule, ctx) {
+    if (isCommentNode(rule)) {
+      const text = rule.text.trim();
+      if (!text) {
+        return parseAssertionContainsStringEnd;
+      }
+      // Check for another CONTAINS_STRING block
+      if (text === constants.CONTAINS_STRING_START_TOKEN) {
+        ctx.currentExpectedRules = [];
+        return parseAssertionContainsString;
+      }
+      // Check for END_ASSERT - finalize the assertion
+      if (text === constants.ASSERT_END_TOKEN) {
+        if (ctx.currentAssertion && ctx.currentExpectedStrings) {
+          // Check if all expected strings are found in the output
+          const allFound = ctx.currentExpectedStrings.every((str) =>
+            ctx.currentAssertion?.output?.includes(str),
+          );
+          ctx.currentAssertion.passed = allFound;
+          ctx.currentAssertion.assertionType = 'contains-string';
+          // Store all expected strings joined with newlines for display
+          ctx.currentAssertion.expected = ctx.currentExpectedStrings.join('\n');
+        }
+        delete ctx.currentExpectedStrings;
+        finishCurrentAssertion(ctx);
+        return parseAssertion;
+      }
+      throw parseError(
+        `Unexpected comment "${text}"`,
+        'CONTAINS_STRING or END_ASSERT',
+        rule.source?.start,
+      );
+    }
+    throw parseError(
+      `Unexpected rule type "${rule.type}"`,
+      'CONTAINS_STRING or END_ASSERT',
+      rule.source?.start,
+    );
   };
 
   return parseCss();

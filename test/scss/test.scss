@@ -1,9 +1,7 @@
 @use '../../sass/config' as init with (
-  $catch-errors: true,
   $terminal-output: false,
 );
 @use '../../sass/true';
-@use 'sass:meta';
 
 @use 'config';
 @use 'data';
@@ -15,18 +13,6 @@
 // Ignore Non-Test Output
 .not-a-test {
   break: please-no;
-}
-
-// Sass import legacy test
-
-@import '../../sass/true';
-
-@include true.describe('Imported $terminal-output setting') {
-  @include true.it('Is prefixed as $true-terminal-output') {
-    @include true.assert-true(
-      meta.global-variable-exists('true-terminal-output')
-    );
-  }
 }
 
 // report

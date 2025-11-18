@@ -1,0 +1,64 @@
+@use '../../../index' as *;
+@use '../../../sass/config/terms';
+@use '../../../sass/data/context';
+@use 'sass:map';
+
+@include describe('Validate Output Context') {
+  $valid: map.keys(terms.$output);
+
+  @include it('unknown context name') {
+    @include assert-equal(
+      context.validate-output-context('wtf'),
+      'ERROR [output-context]: #{'wtf'} is not a valid context for output tests: #{$valid}');
+  }
+
+  @include it('duplicate assert') {
+    context.$output-context: 'assert' 'output';
+
+    @include assert-equal(
+      context.validate-output-context('assert'),
+      'ERROR [output-context]: The `assert()` mixin can not contain another `assert()`'
+    );
+
+    context.$output-context: ();
+  }
+
+  @include it('duplicate output/expect') {
+    context.$output-context: 'assert' 'output' 'expect';
+
+    @include assert-equal(
+      context.validate-output-context('output'),
+      'ERROR [output-context]: `output()` cannot be used multiple times in the same assertion'
+    );
+
+    @include assert-equal(
+      context.validate-output-context('expect'),
+      'ERROR [output-context]: `expect()` cannot be used multiple times in the same assertion'
+    );
+
+    context.$output-context: ();
+  }
+
+  @include it('missing assert') {
+    @include assert-equal(
+      context.validate-output-context('output'),
+      'ERROR [output-context]: `output()` is only allowed inside `assert()`'
+    );
+
+    @include assert-equal(
+      context.validate-output-context('expect'),
+      'ERROR [output-context]: `expect()` is only allowed inside `assert()`'
+    );
+  }
+
+  @include it('wrong length') {
+    context.$output-context: 'assert' 'wtf' 'output' 'expect' 'contains';
+
+    @include assert-equal(
+      context.validate-output-context(null),
+      'ERROR [output-context]: Unexpected assertion stack: assert wtf output expect contains'
+    );
+
+    context.$output-context: ();
+  }
+}

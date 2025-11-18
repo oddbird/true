@@ -8,7 +8,7 @@
 /// @group private-utils
 /// @param {map} $base -
 ///   Initial map to add values to
-/// @param {map} $add -
+/// @param {map} $add -
 ///   Map of values to be added
 /// @return {map} Map of values after incrementing
 @function map-increment($base, $add) {

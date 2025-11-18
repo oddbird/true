@@ -24,33 +24,6 @@
 /*   END_ASSERT   */
 /*  */
 /*  */
-/* # Module: True Error [function] */
-/* ------------------------------- */
-/* Test: Allow errors to return without blocking compilation */
-/*   ✔ [assert-equal] Allow errors to return without blocking compilation */
-/*  */
-/*  */
-/* # Module: True Error [mixin] */
-/* ---------------------------- */
-/* Test: Allow errors to output without blocking compilation */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* ERROR [error test]: */
-  /*   This is a test error message */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* ERROR [error test]: */
-  /*   This is a test error message */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/*  */
 /* # Module: Map Increment */
 /* ----------------------- */
 /* Test: Returns a map with the sum-values of two numeric maps */
@@ -90,23 +63,11 @@
 /*  */
 /* # Module: Validate Output Context */
 /* --------------------------------- */
-/* Test: unknown context name */
-/*   ✔ [assert-equal] unknown context name */
+/* Test: allows multiple contains-string */
+/*   ✔ [assert-equal] allows multiple contains-string */
 /*  */
-/* Test: duplicate assert */
-/*   ✔ [assert-equal] duplicate assert */
-/*  */
-/* Test: duplicate output/expect */
-/*   ✔ [assert-equal] duplicate output/expect */
-/*  */
-/* Test: missing assert */
-/*   ✔ [assert-equal] missing assert */
-/*  */
-/* Test: wrong length */
-/*   ✔ [assert-equal] wrong length */
-/*  */
-/* Test: missing context */
-/*   ✔ [assert-equal] missing context */
+/* Test: allows multiple contains */
+/*   ✔ [assert-equal] allows multiple contains */
 /*  */
 /*  */
 /* # Module: Context [function] & Context All */
@@ -473,6 +434,30 @@
 /*   END_CONTAINS_STRING   */
 /*   END_ASSERT   */
 /*  */
+/* Test: Can assert multiple and overlapping strings */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  height: 10px;
+  width: 20px;
+  border: thin solid currentColor;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* height */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* solid */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* 20px */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* thin solid currentColor */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */
 /*  */
 /* # Module: Output Contains */
 /* ------------------------- */
@@ -563,6 +548,37 @@
   .test-output .selector2 {
     height: 10px;
   }
+}
+
+/*   END_CONTAINED   */
+/*   END_ASSERT   */
+/*  */
+/* Test: Can contain multiple/overlapping assertions */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output .example {
+  width: 12em;
+  height: 1lh;
+  border: thin solid;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINED   */
+.test-output .example {
+  width: 12em;
+}
+
+/*   END_CONTAINED   */
+/*   CONTAINED   */
+.test-output .example {
+  height: 1lh;
+}
+
+/*   END_CONTAINED   */
+/*   CONTAINED   */
+.test-output .example {
+  height: 1lh;
+  border: thin solid;
 }
 
 /*   END_CONTAINED   */
@@ -778,78 +794,6 @@
 /*   END_EXPECTED   */
 /*   END_ASSERT   */
 /*  */
-/* Test: Fail on Error */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 5 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   1 test failed */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 5 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   1 test failed */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
-/* Test: Bad results */
-/*   ASSERT:    */
-/*   OUTPUT   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 4 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   The results don’t add up. Are all your tests properly structured? */
-}
-
-/*   END_OUTPUT   */
-/*   EXPECTED   */
-.test-output {
-  /* # SUMMARY ---------- */
-  /* 6 Tests: */
-  /* - 4 Passed */
-  /* - 1 Failed */
-  /* Stats: */
-  /* - 4 Modules */
-  /* - 6 Tests */
-  /* - 25 Assertions */
-  /* -------------------- */
-  /* ERROR [report]: */
-  /*   The results don’t add up. Are all your tests properly structured? */
-}
-
-/*   END_EXPECTED   */
-/*   END_ASSERT   */
-/*  */
 /*  */
 /* # Module: Report Message */
 /* ------------------------ */
@@ -864,21 +808,15 @@
   break: please-no;
 }
 
-/* # Module: Imported $terminal-output setting */
-/* ------------------------------------------- */
-/* Test: Is prefixed as $true-terminal-output */
-/*   ✔ [assert-true] Is prefixed as $true-terminal-output */
-/*  */
-/*  */
 /* # SUMMARY ---------- */
-/* 103 Tests: */
-/* - 82 Passed */
+/* 96 Tests: */
+/* - 76 Passed */
 /* - 0 Failed */
-/* - 21 Output to CSS */
+/* - 20 Output to CSS */
 /* Stats: */
-/* - 40 Modules */
-/* - 103 Tests */
-/* - 130 Assertions */
+/* - 37 Modules */
+/* - 96 Tests */
+/* - 123 Assertions */
 /* -------------------- */
 
 /*# sourceMappingURL=test.css.map */

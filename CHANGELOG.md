@@ -5,7 +5,25 @@
 - BREAKING: Remove the `$inspect` option from assertions,
   since Sass has improved comparisons and changed inspection.
   [#332](https://github.com/oddbird/true/pull/332)
+- NEW: Multiple `contains()` and `contains-string()` expectations
+  can be used in a single assertion.
 - INTERNAL: Update dependencies
+
+**Migration**:
+It seems that most tests can be updated
+by simply removing the `$inspect` argument entirely,
+with no other changes.
+In some cases, you may still need one of the following:
+
+- Numeric tests with long decimals should use
+  `math.round()` to explicitly compare values
+  at the desired level of precision,
+  rather than relying on the unreliable precision
+  of the `meta.inspect()` function.
+- Tests that rely on map output might throw an error
+  since 'maps' are not a defined CSS syntax.
+  In this case you can use `meta.inspect()`
+  to compare the string representations of maps.
 
 ## 9.1.0-alpha.0 (07/01/25)
 
@@ -283,7 +301,7 @@ sassTrue.runSass(
 - Add `assert()`, `input`, and `expect` mixins for testing CSS output.
 - Support for LibSass.
 - Add Mocha JS integration.
-  — Create NPM package.
+  - Create NPM package.
 - Simplify output options down to single `$true-terminal-output` setting.
 - Add eyeglass support.
 
