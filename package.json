@@ -43,7 +43,7 @@
   "scripts": {
     "test:src": "jest",
     "test:lib": "USE_BUILT=true mocha",
-    "test": "run-s build:js test:src test:lib",
+    "test": "run-s build test:src test:lib",
     "prettier:js": "prettier --write '**/*.js'",
     "prettier:other": "prettier --write '**/*.{json,md,yml}'",
     "eslint": "yarn eslint:ci --fix",
