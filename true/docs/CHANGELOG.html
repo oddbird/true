@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">9.0.0</span>
+          <span class="project-version">10.0.0</span>
         
       </div>
     </header>
@@ -169,6 +169,53 @@
           
   <div class="text-block">
     <h1 id="true-changelog" tabindex="-1">True Changelog</h1>
+<h2 id="10-0-0-11-18-25-" tabindex="-1">10.0.0 (11/18/25)</h2>
+<ul>
+<li>BREAKING: Remove the <code>$inspect</code> option from assertions,
+since Sass has improved comparisons and changed inspection.
+<a href="https://github.com/oddbird/true/pull/332">#332</a></li>
+<li>FEATURE: Multiple <code>contains()</code> and <code>contains-string()</code> expectations
+can be used in a single assertion.
+<a href="https://github.com/oddbird/true/pull/333">#333</a></li>
+<li>FEATURE: Do not fail on non-standard at-rules (switch to postcss for css
+parsing). <a href="https://github.com/oddbird/true/pull/314">#314</a></li>
+<li>INTERNAL: Update dependencies</li>
+</ul>
+<p><strong>Migration</strong>:
+It seems that most tests can be updated
+by simply removing the <code>$inspect</code> argument entirely,
+with no other changes.
+In some cases, you may still need one of the<span class="widont">&nbsp;</span>following:</p>
+<ul>
+<li>Numeric tests with long decimals should use
+<code>math.round()</code> to explicitly compare values
+at the desired level of precision,
+rather than relying on the unreliable precision
+of the <code>meta.inspect()</code> function.</li>
+<li>Tests that rely on map output might throw an error
+since ‘maps’ are not a defined CSS syntax.
+In this case you can use <code>meta.inspect()</code>
+to compare the string representations of<span class="widont">&nbsp;</span>maps.</li>
+</ul>
+<h2 id="10-0-0-alpha-1-11-18-25-" tabindex="-1">10.0.0-alpha.1 (11/18/25)</h2>
+<ul>
+<li>FEATURE: Multiple <code>contains()</code> and <code>contains-string()</code> expectations
+can be used in a single assertion.
+<a href="https://github.com/oddbird/true/pull/333">#333</a></li>
+</ul>
+<h2 id="10-0-0-alpha-0-11-10-25-" tabindex="-1">10.0.0-alpha.0 (11/10/25)</h2>
+<ul>
+<li>BREAKING: Remove the <code>$inspect</code> option from assertions,
+since Sass has improved comparisons and changed inspection.
+<a href="https://github.com/oddbird/true/pull/332">#332</a></li>
+<li>INTERNAL: Update dependencies</li>
+</ul>
+<h2 id="9-1-0-alpha-0-07-01-25-" tabindex="-1">9.1.0-alpha.0 (07/01/25)</h2>
+<ul>
+<li>FEATURE: Do not fail on non-standard at-rules (switch to postcss for css
+parsing). <a href="https://github.com/oddbird/true/pull/314">#314</a></li>
+<li>INTERNAL: Update dependencies</li>
+</ul>
 <h2 id="9-0-0-06-23-25-" tabindex="-1">9.0.0 (06/23/25)</h2>
 <ul>
 <li>FEATURE: <code>contains-string()</code> supports substring matching.
@@ -445,7 +492,10 @@ on broken<span class="widont">&nbsp;</span>tests.</li>
 <li>Add <code>assert()</code>, <code>input</code>, and <code>expect</code> mixins for testing CSS<span class="widont">&nbsp;</span>output.</li>
 <li>Support for LibSass.</li>
 <li>Add Mocha JS integration.
-— Create NPM<span class="widont">&nbsp;</span>package.</li>
+<ul>
+<li>Create NPM package.</li>
+</ul>
+</li>
 <li>Simplify output options down to single <code>$true-terminal-output</code> setting.</li>
 <li>Add eyeglass support.</li>
 </ul>

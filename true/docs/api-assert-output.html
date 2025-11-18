@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">9.0.0</span>
+          <span class="project-version">10.0.0</span>
         
       </div>
     </header>
@@ -1538,11 +1538,11 @@ Assertions are used inside the <code>test()</code> mixin
 to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
 <ul>
 <li>These mixins together describe a comparison on output CSS,
-   checking if the compiled CSS-results of the <code>output()</code> mixin
-   contain the specified <code>$string-to-find</code>.</li>
+checking if the compiled CSS-results of the <code>output()</code> mixin
+contain the specified <code>$string-to-find</code>.</li>
 <li>When using Mocha/Jest integration, the output comparison is automated –
-   otherwise you will have to compare the output manually.
-   Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
+otherwise you will have to compare the output manually.
+Using <code>git diff</code> is a great way to watch for changes in<span class="widont">&nbsp;</span>output.</li>
 </ul>
 
       
@@ -1668,16 +1668,54 @@ to define the expected results of the<span class="widont">&nbsp;</span>test.</p>
 
       
       
-      <pre class="hljs-pre"><code class="lang-scss">   @include true.test(&#39;Can find partial strings&#39;) {
-     @include true.assert {
-       @include true.output {
-         font-size: 1em;
-         line-height: 1.5;
-       }
-       @include true.contains-string(&#39;font-size&#39;);
-       @include true.contains-string(&#39;line&#39;);
-     }
-   }</code></pre>
+      <pre class="hljs-pre"><code class="lang-scss">@include true.test(&#39;Can find partial strings&#39;) {
+  @include true.assert {
+    @include true.output {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+    @include true.contains-string(&#39;font-size&#39;);
+    @include true.contains-string(&#39;line&#39;);
+  }
+}</code></pre>
+    </div>
+  
+
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            css
+          </span>
+
+          
+            <span class='code-description'>
+              compiled
+            </span>
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-css">/* Test: Can find partial strings */
+/*   ASSERT:    */
+/*   OUTPUT   */
+.test-output {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/*   END_OUTPUT   */
+/*   CONTAINS_STRING   */
+/* font-size */
+/*   END_CONTAINS_STRING   */
+/*   CONTAINS_STRING   */
+/* line */
+/*   END_CONTAINS_STRING   */
+/*   END_ASSERT   */
+/*  */</code></pre>
     </div>
   
 
