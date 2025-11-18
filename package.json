@@ -54,7 +54,7 @@
     "lint:sass:ci": "stylelint '**/*.scss'",
     "lint:ci": "run-p eslint:ci lint:sass:ci",
     "docs": "sassdoc sass/",
-    "build:sass": "sass test/scss/test.scss test/css/test.css --load-path ./sass/",
+    "build:sass": "sass test/scss/test.scss test/css/test.css --load-path ./sass/ --silence-deprecation=import",
     "build:js": "tsc",
     "build": "run-p build:js build:sass",
     "commit": "run-s lint test build:sass",

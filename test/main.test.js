@@ -127,7 +127,9 @@ describe('#runSass', () => {
 
   it('throws AssertionError on failure', () => {
     const sass = [
-      '@use "true";',
+      '@use "true" with (',
+      '  $terminal-output: false,',
+      ');',
       '@include true.test-module("Throw an error") {',
       '  @include true.test("assertionError") {',
       '    @include true.assert-true(false, "This test is meant to fail.");',
