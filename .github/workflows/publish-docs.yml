@@ -21,10 +21,10 @@ jobs:
     steps:
       - name: Check out from release
         if: github.event_name == 'release'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Check out from manual input
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
       - run: corepack enable
@@ -35,7 +35,7 @@ jobs:
       - run: yarn install
       - run: yarn docs
       - name: Clone docs branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: docs-branch
           ref: oddleventy-docs
