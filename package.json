@@ -66,7 +66,7 @@
     "@prettier/sync": "^0.6.1",
     "jest-diff": "^30.2.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2"
+    "prettier": "^3.7.3"
   },
   "peerDependencies": {
     "sass": ">=1.45.0",
@@ -92,21 +92,21 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jest": "^29.1.0",
+    "eslint-plugin-jest": "^29.2.1",
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.5.0",
     "jest": "^30.2.0",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.94.1",
+    "sass": "^1.94.2",
     "sass-embedded": "^1.93.3",
     "sassdoc": "^2.7.4",
-    "sassdoc-theme-herman": "^6.0.2",
-    "stylelint": "^16.25.0",
+    "sassdoc-theme-herman": "^7.0.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.47.0"
+    "typescript-eslint": "^8.48.0"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -121,5 +121,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@4.11.0"
+  "packageManager": "yarn@4.12.0"
 }
