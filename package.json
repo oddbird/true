@@ -41,7 +41,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:src": "jest",
+    "test:src": "run-s build:js && USE_BUILT=true vitest run",
     "test:lib": "USE_BUILT=true mocha",
     "test": "run-s build test:src test:lib",
     "prettier:js": "prettier --write '**/*.js'",
@@ -66,7 +66,7 @@
     "@prettier/sync": "^0.6.1",
     "jest-diff": "^30.2.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.7.3"
+    "prettier": "^3.7.4"
   },
   "peerDependencies": {
     "sass": ">=1.45.0",
@@ -86,17 +86,15 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@eslint/js": "^9.39.1",
-    "babel-jest": "^30.2.0",
+    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/eslint-plugin": "^1.5.1",
     "chai": "^4.5.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jest": "^29.2.1",
-    "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.5.0",
-    "jest": "^30.2.0",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
     "sass": "^1.94.2",
@@ -106,7 +104,8 @@
     "stylelint": "^16.26.1",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0"
+    "typescript-eslint": "^8.48.1",
+    "vitest": "^4.0.15"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

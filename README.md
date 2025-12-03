@@ -2,101 +2,86 @@
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-1. To make true; shape, adjust, place, etc., exactly or accurately:
+> **true** (_verb_): To make even, accurate, or precise.
+> _"True the wheels of a bicycle. True up the sides of a door. True your Sass
+> code before you deploy."_
 
-   _True the wheels of a bicycle after striking a pothole._
+**True is a unit-testing tool for [Sass](https://sass-lang.com/) code.**
 
-2. To make even, symmetrical, level, etc. (often followed by _up_):
+- Write tests in plain Sass
+- Compile with Dart Sass
+- Optional [JavaScript test runner integration][js-runner] (e.g.
+  [Mocha](https://mochajs.org/), [Jest](https://jestjs.io/), or
+  [Vitest](https://vitest.dev/))
 
-   _True up the sides of a door._
+## Installation
 
-3. To test your Sass code; debug, perfect, etc. (often using _True_):
-
-   _True your sweet plugin before you deploy._
-
-True is a unit-testing tool
-for [Sass](https://sass-lang.com/) code.
-All of the tests are written in plain Sass,
-and can be compiled using Dart Sass –
-but we also provide integration with
-JavaScript test runners
-(e.g. [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/)),
-for extra features and improved reporting.
-
-## Install
-
-In command line:
+### 1. Install via npm
 
 ```bash
 npm install --save-dev sass-true
 ```
 
-True requires Dart Sass v1.45.0 or higher, so install it if you haven't already:
+### 2. Install Dart Sass (if needed)
+
+True requires **Dart Sass v1.45.0 or higher**:
 
 ```bash
 npm install --save-dev sass-embedded # or `sass`
 ```
 
-Import in your test directory,
-like any other Sass file:
+### 3. Import in your Sass tests
+
+**With [Node.js package importer][pkg-importer]**:
 
 ```scss
 @use 'pkg:sass-true' as *;
 ```
 
-If you are not using the Sass [Node.js package importer][pkg-importer], you may
-need to include the full path name:
-
-```scss
-// This is only an example, your path may be different
-@use '../node_modules/sass-true' as *;
-```
-
-Or if you are using the [JavaScript test runner integration][js-runner]:
+**With [JavaScript test runner][js-runner]:**
 
 ```scss
 @use 'true' as *;
 ```
 
-[pkg-importer]: https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
-[js-runner]: #using-mocha-jest-or-other-js-test-runners
-
-## One Setting
-
-`$terminal-output` (boolean),
-defaults to `true`
-
-- `true` will show detailed information in the terminal
-  for debugging failed assertions or reporting final results.
-  This is the default, and best for compiling without a JavaScript test runner.
-- `false` will turn off all terminal output from Sass,
-  though Mocha/Jest will continue to use the terminal for reporting.
-
-If you are still using `@import` rather than `@use`,
-there is an import path available -
-which retains the legacy prefixed `$true-terminal-output` variable name:
+**Without package importer:**
 
 ```scss
-// Your path may be different
+// Path may vary based on your project structure
+@use '../node_modules/sass-true' as *;
+```
+
+[pkg-importer]: https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+[js-runner]: #javascript-test-runner-integration
+
+## Configuration
+
+True has one configuration variable: **`$terminal-output`** (boolean, defaults
+to `true`)
+
+| Value            | Behavior                                                                                                        |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| `true` (default) | Shows detailed terminal output for debugging and results. Best for standalone Sass compilation.                 |
+| `false`          | Disables Sass terminal output. Use with [JavaScript test runners][js-runner] (they handle their own reporting). |
+
+### Legacy `@import` Support
+
+If you're still using `@import` instead of `@use`, use the legacy import path
+with the prefixed variable name:
+
+```scss
+// Path may vary
 @import '../node_modules/sass-true/sass/true';
+// Variable is named $true-terminal-output
 ```
 
 ## Usage
 
-True is based on common JS-testing patterns,
-allowing both a `test-module`/`test` syntax,
-and the newer `describe`/`it` for defining the structure:
+True uses familiar testing syntax inspired by JavaScript test frameworks:
 
-```scss
-@include test-module('Zip [function]') {
-  @include test('Zips multiple lists into a single multi-dimensional list') {
-    // Assert the expected results
-    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
-  }
-}
-```
+### Testing Values (Functions & Variables)
 
-This is the same as…
+True can compare Sass values during compilation:
 
 ```scss
 @include describe('Zip [function]') {
@@ -107,22 +92,22 @@ This is the same as…
 }
 ```
 
-Sass is able to compare values internally,
-meaning function-output and variable values
-can easily be compared and reported during Sass compilation.
+**Alternative syntax** using `test-module` and `test`:
 
-CSS output tests, on the other hand,
-have to be compared after compilation is complete.
-You can do that by hand if you want
-(`git diff` is helpful for noticing changes),
-or you can use a test runner
-such as [Mocha](https://mochajs.org/) or [Jest](https://jestjs.io/).
+```scss
+@include test-module('Zip [function]') {
+  @include test('Zips multiple lists into a single multi-dimensional list') {
+    // Assert the expected results
+    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
+  }
+}
+```
 
-Output tests fit the same structure,
-but assertions take a slightly different form,
-with an outer `assert` mixin,
-and a matching pair of `output` and `expect`
-to contain the output-values.
+### Testing CSS Output (Mixins)
+
+CSS output tests require a different assertion structure, with an outer `assert`
+mixin, and a matching pair of `output` and `expect` to contain the
+output-values:
 
 ```scss
 // Test CSS output from mixins
@@ -140,123 +125,160 @@ to contain the output-values.
 }
 ```
 
-You can optionally show a summary report
-in CSS and/or the command line,
-after the tests have completed:
+> **Note:** CSS output is compared after compilation. You can review changes
+> manually with `git diff` or use a [JavaScript test runner][js-runner] for
+> automated comparison.
+
+### Optional Summary Report
+
+Display a test summary in CSS output and/or terminal:
 
 ```scss
 @include report;
 ```
 
-See the [full documentation online](https://www.oddbird.net/true/docs/)
-for more details.
-See [CHANGELOG.md](https://github.com/oddbird/true/blob/main/CHANGELOG.md)
-when upgrading from an older version of True.
+### Documentation & Changelog
 
-## Using Mocha, Jest, or other JS test runners
+- **[Full Documentation](https://www.oddbird.net/true/docs/)** – Complete API
+  reference and guides
+- **[CHANGELOG.md](https://github.com/oddbird/true/blob/main/CHANGELOG.md)** –
+  Migration notes for upgrading
 
-1. Install `true` via npm:
+## JavaScript Test Runner Integration
 
-   ```bash
-   npm install --save-dev sass-true
-   ```
+Integrate True with your existing JS test runner for enhanced reporting and
+automated CSS output comparison.
 
-2. [Optional] Install Dart Sass (`sass-embedded` or `sass`), if not already
-   installed.
+### Quick Start
 
-   ```bash
-   npm install --save-dev sass-embedded # or `sass`
-   ```
+#### 1. Install dependencies
 
-3. Write some Sass tests in `test/test.scss` (see above).
+```bash
+npm install --save-dev sass-true
+npm install --save-dev sass-embedded # or `sass` (if not already installed)
+```
 
-4. Write a shim JS test file in `test/sass.test.js`:
+#### 2. Write Sass tests
 
-   ```js
-   const path = require('node:path');
-   const sassTrue = require('sass-true');
+Create your Sass test file (e.g., `test/test.scss`) using True's syntax (see
+[Usage](#usage)).
 
-   const sassFile = path.join(__dirname, 'test.scss');
-   sassTrue.runSass({ describe, it }, sassFile);
-   ```
+#### 3. Create JS test file
 
-5. Run Mocha/Jest, and see your Sass tests reported in the command line.
-
-**Note:** Because of differences between Jest globals and Node globals, Dart
-Sass often errors when trying to compile in a Jest environment (e.g.
-`J.getInterceptor$ax(...).map$1$1 is not a function`). This can usually be fixed
-by installing
-[jest-environment-node-single-context](https://github.com/kayahr/jest-environment-node-single-context)
-and setting `testEnvironment: 'jest-environment-node-single-context'` in
-`jest.config.js`. See [possible](https://github.com/sass/dart-sass/issues/1692)
-[related](https://github.com/dart-lang/sdk/issues/47670)
-[issues](https://github.com/facebook/jest/issues/2549).
-
-**Note:** Jest does not watch for changes in Sass files by default. To use
-`jest --watch` with True, add "scss" to your
-[moduleFileExtensions](https://jestjs.io/docs/configuration#modulefileextensions-arraystring)
-setting.
-
-You can call `runSass` more than once, if you have multiple Sass test files you
-want to run separately.
-
-The first argument is an object with required `describe` and `it` options, and
-optional `sass`, `contextLines` and `sourceType` options.
-
-Any JS test runner with equivalents to Mocha's or Jest's `describe` and `it`
-should be usable in the same way: just pass your test runner's `describe` and
-`it` equivalents in the first argument to `runSass`.
-
-The `sass` option is an optional string name of a Dart Sass implementation
-installed in the current environment (e.g. `'embedded-sass'` or `'sass'`), or a
-Dart Sass implementation instance itself. If none is provided, True will attempt
-to detect which implementation is available, starting with `sass-embedded`.
-
-If True can't parse the CSS output, it'll give you some context lines of CSS as
-part of the error message. This context will likely be helpful in understanding
-the parse failure. By default it provides up to 10 lines of context; if you need
-more, you can provide a numeric `contextLines` option: the maximum number of
-context lines to provide.
-
-The second argument is a string representing either the path to a source Sass
-file (passed through to Sass'
-[`compile`](https://sass-lang.com/documentation/js-api/modules#compile)
-function), or a string of source Sass (passed through to Sass'
-[`compileString`](https://sass-lang.com/documentation/js-api/modules#compileString)
-function). By default it is expected to be a path, and `sass.compile` is used.
-To pass in a source string (and use `sass.compileString`), add `sourceType:
-'string'` to your options passed in as the first argument to `runSass`.
-
-The third (optional) argument to `runSass` accepts the [same
-options](https://sass-lang.com/documentation/js-api/interfaces/Options) that
-Sass' `compile` or `compileString` expect (e.g. `importers`, `loadPaths`, or
-`style`), and these are passed directly through to Sass.
-
-By default, True makes two modifications to these options. First, True's sass
-path is added to the `loadPaths` option, so `@use 'true';` works in your Sass
-test file. Second, if Dart Sass v1.71 or greater is installed, `importers` is
-set to an array containing the [Node.js package importer][pkg-importer], which
-supports `pkg:` imports to resolve `@use` and `@import` for external modules
-installed via npm or Yarn. If `importers` is set (even as an empty array
-`importers: []`), it will override this default importer.
-
-**Note:** True requires the
-[default Sass `'expanded'` output style](https://sass-lang.com/documentation/js-api/modules#OutputStyle),
-and will not work if `{ style: 'compressed' }` is used in the third argument to
-`runSass`.
-
-### Custom Importers
-
-If you use tilde notation (e.g. `@use '~accoutrement/sass/tools'`) or another
-method for importing Sass files from `node_modules`, you'll need to tell
-`runSass` how to handle that. That will require writing a [custom
-importer](https://sass-lang.com/documentation/js-api/interfaces/FileImporter)
-and passing it into the configuration for `runSass`:
+Create a JavaScript shim to run your Sass tests (e.g., `test/sass.test.js`):
 
 ```js
-const path = require('node:path');
-const { pathToFileURL } = require('node:url');
-const sassTrue = require('sass-true');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import sassTrue from 'sass-true';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const sassFile = path.join(__dirname, 'test.scss');
+sassTrue.runSass({ describe, it }, sassFile);
+```
+
+#### 4. Run your tests
+
+Run Mocha, Jest, Vitest, or your test runner. Sass tests will appear in the
+terminal output.
+
+### Enable Watch Mode for Sass Files
+
+By default, `vitest --watch` and `jest --watch` don't detect Sass file changes.
+
+**Vitest solution:** Add Sass files to `forceRerunTriggers`:
+
+```js
+// vitest.config.js
+module.exports = defineConfig({
+  test: {
+    forceRerunTriggers: ['**/*.scss'],
+  },
+});
+```
+
+See [Vitest documentation](https://vitest.dev/config/forcereruntriggers.html#forcereruntriggers) for details.
+
+**Jest solution:** Add `"scss"` to `moduleFileExtensions`:
+
+```js
+// jest.config.js
+module.exports = {
+  moduleFileExtensions: ['js', 'json', 'scss'],
+};
+```
+
+See [Jest documentation](https://jestjs.io/docs/configuration#modulefileextensions-arraystring) for details.
+
+### Advanced Configuration
+
+#### `runSass()` API
+
+```js
+sassTrue.runSass(testRunnerConfig, sassPathOrSource, sassOptions);
+```
+
+**Arguments:**
+
+1. **`testRunnerConfig`** (object, required)
+
+   | Option         | Type                   | Required | Description                                                                                          |
+   | -------------- | ---------------------- | -------- | ---------------------------------------------------------------------------------------------------- |
+   | `describe`     | function               | Yes      | Your test runner's `describe` function                                                               |
+   | `it`           | function               | Yes      | Your test runner's `it` function                                                                     |
+   | `sass`         | string or object       | No       | Sass implementation name (`'sass'` or `'sass-embedded'`) or instance. Auto-detected if not provided. |
+   | `sourceType`   | `'string'` or `'path'` | No       | Set to `'string'` to compile inline Sass source instead of file path (default: `'path'`)             |
+   | `contextLines` | number                 | No       | Number of CSS context lines to show in parse errors (default: `10`)                                  |
+
+2. **`sassPathOrSource`** (`'string'` or `'path'`, required)
+   - File path to Sass test file, or
+   - Inline Sass source code (if `sourceType: 'string'`)
+
+3. **`sassOptions`** (object, optional)
+   - Standard [Sass compile options](https://sass-lang.com/documentation/js-api/interfaces/Options)
+     (`importers`, `loadPaths`, `style`, etc.)
+   - **Default modifications by True:**
+     - `loadPaths`: True's sass directory is automatically added (allowing `@use 'true';`)
+     - `importers`: [Node.js package importer][pkg-importer] added (Dart Sass ≥ v1.71)
+   - ⚠️ **Warning:** Must use `style: 'expanded'` (default).
+     `style: 'compressed'` is not supported.
+
+#### Multiple Test Files
+
+Call `runSass()` multiple times to run separate test files:
+
+```js
+sassTrue.runSass({ describe, it }, path.join(__dirname, 'functions.test.scss'));
+sassTrue.runSass({ describe, it }, path.join(__dirname, 'mixins.test.scss'));
+```
+
+#### Other Test Runners
+
+Any test runner with `describe`/`it` functions (or equivalents) works with True:
+
+```js
+// Example with custom test runner
+import { suite, test } from 'my-test-runner';
+
+sassTrue.runSass(
+  { describe: suite, it: test },
+  path.join(__dirname, 'test.scss'),
+);
+```
+
+#### Custom Importers
+
+If you use custom import syntax (e.g., tilde notation
+`@use '~accoutrement/sass/tools'`), you'll need to provide a
+[custom importer](https://sass-lang.com/documentation/js-api/interfaces/FileImporter):
+
+```js
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import sassTrue from 'sass-true';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const importers = [
   {
@@ -277,13 +299,16 @@ sassTrue.runSass({ describe, it }, sassFile, { importers });
 
 ---
 
-### Sponsor OddBird's OSS Work
+## Sponsor OddBird's Open Source Work
 
-At OddBird, we love contributing to the languages & tools developers rely on.
-We're currently working on polyfills for new Popover & Anchor Positioning
-functionality, as well as CSS specifications for functions, mixins, and
-responsive typography. Help us keep this work sustainable and centered on your
-needs as a developer! We display sponsor logos and avatars on our
-[website](https://www.oddbird.net/true/#open-source-sponsors).
+At OddBird, we love contributing to the languages and tools developers rely on.
+We're currently working on:
 
-[Sponsor OddBird's OSS Work](https://opencollective.com/oddbird-open-source)
+- Polyfills for new Popover & Anchor Positioning functionality
+- CSS specifications for functions, mixins, and responsive typography
+- Sass testing tools like True
+
+**Help us keep this work sustainable!** Sponsor logos and avatars are featured
+on our [website](https://www.oddbird.net/true/#open-source-sponsors).
+
+**[→ Sponsor OddBird on Open Collective](https://opencollective.com/oddbird-open-source)**

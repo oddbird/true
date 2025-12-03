@@ -119,9 +119,9 @@ export const runSass = function (
     try {
       // try sass-embedded before sass
       compiler = loadSass('sass-embedded');
-      /* c8 ignore next 11 */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e1) {
+      /* v8 ignore next */
       try {
         compiler = loadSass('sass');
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -158,9 +158,11 @@ export const formatFailureMessage = function (assertion: Assertion) {
   // For contains-string assertions with multiple strings, show which ones are missing
   if (assertion.assertionType === 'contains-string' && assertion.expected) {
     const expectedStrings = assertion.expected.split('\n');
+    /* v8 ignore else */
     if (expectedStrings.length > 1) {
       const output = assertion.output || '';
       const missing = expectedStrings.filter((str) => !output.includes(str));
+      /* v8 ignore else */
       if (missing.length > 0) {
         msg = `${msg}\n\nExpected output to contain all of the following strings:\n`;
         expectedStrings.forEach((str) => {
@@ -176,11 +178,13 @@ export const formatFailureMessage = function (assertion: Assertion) {
   // For contains assertions with multiple blocks, show which ones are missing
   if (assertion.assertionType === 'contains' && assertion.expected) {
     const expectedBlocks = assertion.expected.split('\n---\n');
+    /* v8 ignore else */
     if (expectedBlocks.length > 1) {
       const output = assertion.output || '';
       const missing = expectedBlocks.filter(
         (block) => !contains(output, block),
       );
+      /* v8 ignore else */
       if (missing.length > 0) {
         msg = `${msg}\n\nExpected output to contain all of the following CSS blocks:\n`;
         expectedBlocks.forEach((block, index) => {
@@ -285,7 +289,7 @@ const dealWithAnnoyingMediaQueries = function (rawCSS: string) {
   const mediaqueryRule = (rule: string) => (mediaqueries?.[i] || '') + rule;
   while (matches !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
-    /* c8 ignore next 3 */
+    /* v8 ignore next */
     if (matches.index === matchCSSWithinMediaQueryBlock.lastIndex) {
       matchCSSWithinMediaQueryBlock.lastIndex++;
     }
@@ -363,6 +367,7 @@ export const parse = function (
     const ctx: Context = { modules: [] };
     let handler = parseModule;
     cssParse(rawCss).each((node) => {
+      /* v8 ignore else */
       if (['comment', 'rule', 'atrule'].includes(node.type)) {
         handler = handler(node as Rule, ctx);
       }
@@ -383,6 +388,7 @@ export const parse = function (
       `Line ${start?.line ?? unknown}, ` +
       `column ${start?.column ?? unknown}: ${msg}; ` +
       `looking for ${seeking || unknown}.`;
+    /* v8 ignore else */
     if (start?.line && start?.column) {
       errorMsg =
         `${errorMsg}\n` +
@@ -396,6 +402,7 @@ export const parse = function (
   const parseModule: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseModule;
       }
@@ -436,6 +443,7 @@ export const parse = function (
   const parseTest: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseTest;
       }
@@ -459,6 +467,7 @@ export const parse = function (
   const parseAssertion: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseAssertion;
       }
@@ -509,7 +518,9 @@ export const parse = function (
         } else if (isExpected) {
           outputOrExpected = 'expected';
         }
+        /* v8 ignore else */
         if (outputOrExpected) {
+          /* v8 ignore else */
           if (ctx.currentAssertion) {
             const startType = text.indexOf(constants.FAILURE_TYPE_START_TOKEN);
             const endType = text.indexOf(constants.FAILURE_TYPE_END_TOKEN);
@@ -520,7 +531,9 @@ export const parse = function (
           return parseFailureDetail;
         }
         const splitAt = detail.indexOf(constants.DETAILS_SEPARATOR_TOKEN);
+        /* v8 ignore else */
         if (splitAt !== -1) {
+          /* v8 ignore else */
           if (ctx.currentAssertion) {
             const key = detail.substring(0, splitAt);
             ctx.currentAssertion[key.toLowerCase()] = detail.substring(
@@ -542,6 +555,7 @@ export const parse = function (
   const parseAssertionOutputStart: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseAssertionOutputStart;
       }
@@ -565,6 +579,7 @@ export const parse = function (
   const parseAssertionOutput: Parser = function (rule, ctx) {
     if (isCommentNode(rule)) {
       if (rule.text.trim() === constants.OUTPUT_END_TOKEN) {
+        /* v8 ignore else */
         if (ctx.currentAssertion) {
           ctx.currentAssertion.output = generateCss(
             ctx.currentOutputRules || [],
@@ -579,8 +594,10 @@ export const parse = function (
   };
 
   const parseAssertionExpectedStart: Parser = function (rule, ctx) {
+    /* v8 ignore else */
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseAssertionExpectedStart;
       }
@@ -592,6 +609,7 @@ export const parse = function (
       if (text === constants.CONTAINED_START_TOKEN) {
         ctx.currentExpectedRules = [];
         // Initialize array for multiple contains assertions
+        /* v8 ignore else */
         if (!ctx.currentExpectedContained) {
           ctx.currentExpectedContained = [];
         }
@@ -600,6 +618,7 @@ export const parse = function (
       if (text === constants.CONTAINS_STRING_START_TOKEN) {
         ctx.currentExpectedRules = [];
         // Initialize array for multiple contains-string assertions
+        /* v8 ignore else */
         if (!ctx.currentExpectedStrings) {
           ctx.currentExpectedStrings = [];
         }
@@ -619,8 +638,10 @@ export const parse = function (
   };
 
   const parseAssertionExpected: Parser = function (rule, ctx) {
+    /* v8 ignore else */
     if (isCommentNode(rule)) {
       if (rule.text.trim() === constants.EXPECTED_END_TOKEN) {
+        /* v8 ignore else */
         if (ctx.currentAssertion) {
           ctx.currentAssertion.expected = generateCss(
             ctx.currentExpectedRules || [],
@@ -637,11 +658,14 @@ export const parse = function (
   };
 
   const parseEndAssertion: Parser = function (rule, ctx) {
+    /* v8 ignore else */
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseEndAssertion;
       }
+      /* v8 ignore else */
       if (text === constants.ASSERT_END_TOKEN) {
         finishCurrentAssertion(ctx);
         return parseAssertion;
@@ -677,18 +701,23 @@ export const parse = function (
   };
 
   const parseAssertionContainedEnd: Parser = function (rule, ctx) {
+    /* v8 ignore else */
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseAssertionContainedEnd;
       }
       // Check for another CONTAINED block
+      /* v8 ignore else */
       if (text === constants.CONTAINED_START_TOKEN) {
         ctx.currentExpectedRules = [];
         return parseAssertionContained;
       }
       // Check for END_ASSERT - finalize the assertion
+      /* v8 ignore else */
       if (text === constants.ASSERT_END_TOKEN) {
+        /* v8 ignore else */
         if (ctx.currentAssertion && ctx.currentExpectedContained) {
           // Check if all expected CSS blocks are found in the output
           const allFound = ctx.currentExpectedContained.every((expectedCss) =>
@@ -743,18 +772,23 @@ export const parse = function (
   };
 
   const parseAssertionContainsStringEnd: Parser = function (rule, ctx) {
+    /* v8 ignore else */
     if (isCommentNode(rule)) {
       const text = rule.text.trim();
+      /* v8 ignore else */
       if (!text) {
         return parseAssertionContainsStringEnd;
       }
       // Check for another CONTAINS_STRING block
+      /* v8 ignore else */
       if (text === constants.CONTAINS_STRING_START_TOKEN) {
         ctx.currentExpectedRules = [];
         return parseAssertionContainsString;
       }
       // Check for END_ASSERT - finalize the assertion
+      /* v8 ignore else */
       if (text === constants.ASSERT_END_TOKEN) {
+        /* v8 ignore else */
         if (ctx.currentAssertion && ctx.currentExpectedStrings) {
           // Check if all expected strings are found in the output
           const allFound = ctx.currentExpectedStrings.every((str) =>

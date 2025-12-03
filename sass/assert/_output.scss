@@ -2,6 +2,24 @@
 @use 'utils';
 
 /// # Testing CSS Output
+///
+/// **Important:** CSS output tests require comparison after Sass compilation.
+/// You have two options for verifying output:
+///
+/// 1. **Manual comparison** – Use `git diff` or similar tools to review changes
+///    in the compiled CSS output. True generates structured CSS comments
+///    containing the test results, which you can inspect manually.
+///
+/// 2. **JavaScript test runner** – Integrate with Mocha, Jest, Vitest, or
+///    similar test runners to automate the comparison. The JS integration
+///    parses the CSS output and reports differences automatically. See:
+///    https://www.oddbird.net/true/docs/#javascript-test-runner-integration
+///
+/// Unlike value assertions (which are evaluated during Sass compilation), CSS
+/// output assertions generate compiled CSS that must be compared to verify
+/// correctness. The `assert()`, `output()`, and `expect()` mixins work together
+/// to create this testable output.
+///
 /// @group api-assert-output
 
 // Assert [output]

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 const babelParser = require('@babel/eslint-parser');
-const js = require('@eslint/js');
+const eslint = require('@eslint/js');
+const vitest = require('@vitest/eslint-plugin');
+const { defineConfig } = require('eslint/config');
 const prettier = require('eslint-config-prettier');
 const importPlugin = require('eslint-plugin-import');
-const jest = require('eslint-plugin-jest');
-const jestDOM = require('eslint-plugin-jest-dom');
 const simpleImportSort = require('eslint-plugin-simple-import-sort');
 const globals = require('globals');
 const tseslint = require('typescript-eslint');
 
-module.exports = tseslint.config(
+module.exports = defineConfig(
   {
     ignores: [
       '.git/*',
@@ -24,8 +24,8 @@ module.exports = tseslint.config(
       'node_modules/*',
     ],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
   importPlugin.flatConfigs.recommended,
   prettier,
   {
@@ -85,7 +85,7 @@ module.exports = tseslint.config(
     languageOptions: {
       parser: babelParser,
       globals: {
-        ...jest.environments.globals.globals,
+        ...vitest.environments.env.globals,
         ...globals.mocha,
         ...globals.es2022,
       },
@@ -94,9 +94,11 @@ module.exports = tseslint.config(
       },
     },
     plugins: {
-      jest,
-      'jest-dom': jestDOM,
+      vitest,
       'simple-import-sort': simpleImportSort,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
     },
   },
 );
