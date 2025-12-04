@@ -1,6 +1,6 @@
 # True Changelog
 
-## UNRELEASED
+## 10.0.1 (12/04/25)
 
 - DOCUMENTATION: Rewrite README documentation
 - INTERNAL: Update dependencies
