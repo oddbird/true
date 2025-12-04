@@ -3,6 +3,11 @@
 
 /// # Testing CSS Output
 ///
+/// Unlike value assertions (which are evaluated during Sass compilation), CSS
+/// output assertions generate compiled CSS that must be compared to verify
+/// correctness. The `assert()`, `output()`, and `expect()` mixins work together
+/// to create this testable output.
+///
 /// **Important:** CSS output tests require comparison after Sass compilation.
 /// You have two options for verifying output:
 ///
@@ -14,11 +19,6 @@
 ///    similar test runners to automate the comparison. The JS integration
 ///    parses the CSS output and reports differences automatically. See:
 ///    https://www.oddbird.net/true/docs/#javascript-test-runner-integration
-///
-/// Unlike value assertions (which are evaluated during Sass compilation), CSS
-/// output assertions generate compiled CSS that must be compared to verify
-/// correctness. The `assert()`, `output()`, and `expect()` mixins work together
-/// to create this testable output.
 ///
 /// @group api-assert-output
 
