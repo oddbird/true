@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">10.0.0</span>
+          <span class="project-version">10.0.1</span>
         
       </div>
     </header>
@@ -191,6 +191,25 @@
   
     <div data-item-section="prose" class="text-block">
       <h1 id="testing-css-output" tabindex="-1">Testing CSS Output</h1>
+<p>Unlike value assertions (which are evaluated during Sass compilation), CSS
+output assertions generate compiled CSS that must be compared to verify
+correctness. The <code>assert()</code>, <code>output()</code>, and <code>expect()</code> mixins work together
+to create this testable<span class="widont">&nbsp;</span>output.</p>
+<p><strong>Important:</strong> CSS output tests require comparison after Sass compilation.
+You have two options for verifying<span class="widont">&nbsp;</span>output:</p>
+<ol>
+<li>
+<p><strong>Manual comparison</strong> – Use <code>git diff</code> or similar tools to review changes
+in the compiled CSS output. True generates structured CSS comments
+containing the test results, which you can inspect<span class="widont">&nbsp;</span>manually.</p>
+</li>
+<li>
+<p><strong>JavaScript test runner</strong> – Integrate with Mocha, Jest, Vitest, or
+similar test runners to automate the comparison. The JS integration
+parses the CSS output and reports differences automatically. See:
+<a href="https://www.oddbird.net/true/docs/#javascript-test-runner-integration">https://www.oddbird.net/true/docs/#javascript-test-runner-integration</a></p>
+</li>
+</ol>
 
       
   

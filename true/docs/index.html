@@ -42,7 +42,7 @@
       <div class="project-title">
         <a href="index.html" rel="home" class="project-name">True</a>
         
-          <span class="project-version">10.0.0</span>
+          <span class="project-version">10.0.1</span>
         
       </div>
     </header>
@@ -181,75 +181,70 @@
     <div class="text-block">
       <h1 id="true" tabindex="-1">True</h1>
 <p><a href="https://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License"></a></p>
-<ol>
-<li>
-<p>To make true; shape, adjust, place, etc., exactly or<span class="widont">&nbsp;</span>accurately:</p>
-<p><em>True the wheels of a bicycle after striking a<span class="widont">&nbsp;</span>pothole.</em></p>
-</li>
-<li>
-<p>To make even, symmetrical, level, etc. (often followed by <em>up</em>):</p>
-<p><em>True up the sides of a<span class="widont">&nbsp;</span>door.</em></p>
-</li>
-<li>
-<p>To test your Sass code; debug, perfect, etc. (often using <em>True</em>):</p>
-<p><em>True your sweet plugin before you<span class="widont">&nbsp;</span>deploy.</em></p>
-</li>
-</ol>
-<p>True is a unit-testing tool
-for <a href="https://sass-lang.com/">Sass</a> code.
-All of the tests are written in plain Sass,
-and can be compiled using Dart Sass –
-but we also provide integration with
-JavaScript test runners
-(e.g. <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>),
-for extra features and improved<span class="widont">&nbsp;</span>reporting.</p>
-<h2 id="install" tabindex="-1">Install</h2>
-<p>In command line:</p>
+<blockquote>
+<p><strong>true</strong> (<em>verb</em>): To make even, accurate, or precise.
+<em>“True the wheels of a bicycle. True up the sides of a door. True your Sass
+code before you<span class="widont">&nbsp;</span>deploy.”</em></p>
+</blockquote>
+<p><strong>True is a unit-testing tool for <a href="https://sass-lang.com/">Sass</a><span class="widont">&nbsp;</span>code.</strong></p>
+<ul>
+<li>Write tests in plain<span class="widont">&nbsp;</span>Sass</li>
+<li>Compile with Dart<span class="widont">&nbsp;</span>Sass</li>
+<li>Optional <a href="#javascript-test-runner-integration">JavaScript test runner integration</a> (e.g.
+<a href="https://mochajs.org/">Mocha</a>, <a href="https://jestjs.io/">Jest</a>, or
+<a href="https://vitest.dev/">Vitest</a>)</li>
+</ul>
+<h2 id="installation" tabindex="-1">Installation</h2>
+<h3 id="1-install-via-npm" tabindex="-1">1. Install via<span class="widont">&nbsp;</span>npm</h3>
 <pre><code class="lang-bash">npm install --save-dev sass-true
 </code></pre>
-<p>True requires Dart Sass v1.45.0 or higher, so install it if you haven’t<span class="widont">&nbsp;</span>already:</p>
+<h3 id="2-install-dart-sass-if-needed-" tabindex="-1">2. Install Dart Sass (if<span class="widont">&nbsp;</span>needed)</h3>
+<p>True requires <strong>Dart Sass v1.45.0 or higher</strong>:</p>
 <pre><code class="lang-bash">npm install --save-dev sass-embedded # or `sass`
 </code></pre>
-<p>Import in your test directory,
-like any other Sass<span class="widont">&nbsp;</span>file:</p>
+<h3 id="3-import-in-your-sass-tests" tabindex="-1">3. Import in your Sass<span class="widont">&nbsp;</span>tests</h3>
+<p><strong>With <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a></strong>:</p>
 <pre><code class="lang-scss">@use 'pkg:sass-true' as *;
 </code></pre>
-<p>If you are not using the Sass <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a>, you may
-need to include the full path<span class="widont">&nbsp;</span>name:</p>
-<pre><code class="lang-scss">// This is only an example, your path may be different
-@use '../node_modules/sass-true' as *;
-</code></pre>
-<p>Or if you are using the <a href="#using-mocha-jest-or-other-js-test-runners">JavaScript test runner integration</a>:</p>
+<p><strong>With <a href="#javascript-test-runner-integration">JavaScript test runner</a>:</strong></p>
 <pre><code class="lang-scss">@use 'true' as *;
 </code></pre>
-<h2 id="one-setting" tabindex="-1">One Setting</h2>
-<p><code>$terminal-output</code> (boolean),
-defaults to <code>true</code></p>
-<ul>
-<li><code>true</code> will show detailed information in the terminal
-for debugging failed assertions or reporting final results.
-This is the default, and best for compiling without a JavaScript test<span class="widont">&nbsp;</span>runner.</li>
-<li><code>false</code> will turn off all terminal output from Sass,
-though Mocha/Jest will continue to use the terminal for<span class="widont">&nbsp;</span>reporting.</li>
-</ul>
-<p>If you are still using <code>@import</code> rather than <code>@use</code>,
-there is an import path available -
-which retains the legacy prefixed <code>$true-terminal-output</code> variable name:</p>
-<pre><code class="lang-scss">// Your path may be different
+<p><strong>Without package importer:</strong></p>
+<pre><code class="lang-scss">// Path may vary based on your project structure
+@use '../node_modules/sass-true' as *;
+</code></pre>
+<h2 id="configuration" tabindex="-1">Configuration</h2>
+<p>True has one configuration variable: <strong><code>$terminal-output</code></strong> (boolean, defaults
+to <code>true</code>)</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>true</code> (default)</td>
+<td>Shows detailed terminal output for debugging and results. Best for standalone Sass compilation.</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td>Disables Sass terminal output. Use with <a href="#javascript-test-runner-integration">JavaScript test runners</a> (they handle their own reporting).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="legacy-import-support" tabindex="-1">Legacy <code>@import</code> Support</h3>
+<p>If you’re still using <code>@import</code> instead of <code>@use</code>, use the legacy import path
+with the prefixed variable<span class="widont">&nbsp;</span>name:</p>
+<pre><code class="lang-scss">// Path may vary
 @import '../node_modules/sass-true/sass/true';
+// Variable is named $true-terminal-output
 </code></pre>
 <h2 id="usage" tabindex="-1">Usage</h2>
-<p>True is based on common JS-testing patterns,
-allowing both a <code>test-module</code>/<code>test</code> syntax,
-and the newer <code>describe</code>/<code>it</code> for defining the<span class="widont">&nbsp;</span>structure:</p>
-<pre><code class="lang-scss">@include test-module('Zip [function]') {
-  @include test('Zips multiple lists into a single multi-dimensional list') {
-    // Assert the expected results
-    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
-  }
-}
-</code></pre>
-<p>This is the same<span class="widont">&nbsp;</span>as…</p>
+<p>True uses familiar testing syntax inspired by JavaScript test<span class="widont">&nbsp;</span>frameworks:</p>
+<h3 id="testing-values-functions-variables-" tabindex="-1">Testing Values (Functions &amp;<span class="widont">&nbsp;</span>Variables)</h3>
+<p>True can compare Sass values during<span class="widont">&nbsp;</span>compilation:</p>
 <pre><code class="lang-scss">@include describe('Zip [function]') {
   @include it('Zips multiple lists into a single multi-dimensional list') {
     // Assert the expected results
@@ -257,20 +252,17 @@ and the newer <code>describe</code>/<code>it</code> for defining the<span class=
   }
 }
 </code></pre>
-<p>Sass is able to compare values internally,
-meaning function-output and variable values
-can easily be compared and reported during Sass<span class="widont">&nbsp;</span>compilation.</p>
-<p>CSS output tests, on the other hand,
-have to be compared after compilation is complete.
-You can do that by hand if you want
-(<code>git diff</code> is helpful for noticing changes),
-or you can use a test runner
-such as <a href="https://mochajs.org/">Mocha</a> or <a href="https://jestjs.io/">Jest</a>.</p>
-<p>Output tests fit the same structure,
-but assertions take a slightly different form,
-with an outer <code>assert</code> mixin,
-and a matching pair of <code>output</code> and <code>expect</code>
-to contain the<span class="widont">&nbsp;</span>output-values.</p>
+<p><strong>Alternative syntax</strong> using <code>test-module</code> and <code>test</code>:</p>
+<pre><code class="lang-scss">@include test-module('Zip [function]') {
+  @include test('Zips multiple lists into a single multi-dimensional list') {
+    // Assert the expected results
+    @include assert-equal(zip(a b c, 1 2 3), (a 1, b 2, c 3));
+  }
+}
+</code></pre>
+<h3 id="testing-css-output-mixins-" tabindex="-1">Testing CSS Output<span class="widont">&nbsp;</span>(Mixins)</h3>
+<p>CSS output tests require a different assertion structure, with an outer <code>assert</code>
+mixin, and a matching pair of <code>output</code> and <code>expect</code> to contain the<span class="widont">&nbsp;</span>output-values:</p>
 <pre><code class="lang-scss">// Test CSS output from mixins
 @include it('Outputs a font size and line height based on keyword') {
   @include assert {
@@ -285,102 +277,164 @@ to contain the<span class="widont">&nbsp;</span>output-values.</p>
   }
 }
 </code></pre>
-<p>You can optionally show a summary report
-in CSS and/or the command line,
-after the tests have<span class="widont">&nbsp;</span>completed:</p>
+<blockquote>
+<p><strong>Note:</strong> CSS output is compared after compilation. You can review changes
+manually with <code>git diff</code> or use a <a href="#javascript-test-runner-integration">JavaScript test runner</a> for
+automated<span class="widont">&nbsp;</span>comparison.</p>
+</blockquote>
+<h3 id="optional-summary-report" tabindex="-1">Optional Summary Report</h3>
+<p>Display a test summary in CSS output and/or<span class="widont">&nbsp;</span>terminal:</p>
 <pre><code class="lang-scss">@include report;
 </code></pre>
-<p>See the <a href="https://www.oddbird.net/true/docs/">full documentation online</a>
-for more details.
-See <a href="https://github.com/oddbird/true/blob/main/CHANGELOG.md">CHANGELOG.md</a>
-when upgrading from an older version of<span class="widont">&nbsp;</span>True.</p>
-<h2 id="using-mocha-jest-or-other-js-test-runners" tabindex="-1">Using Mocha, Jest, or other JS test<span class="widont">&nbsp;</span>runners</h2>
-<ol>
-<li>
-<p>Install <code>true</code> via npm:</p>
+<h3 id="documentation-changelog" tabindex="-1">Documentation &amp; Changelog</h3>
+<ul>
+<li><strong><a href="https://www.oddbird.net/true/docs/">Full Documentation</a></strong> – Complete API
+reference and<span class="widont">&nbsp;</span>guides</li>
+<li><strong><a href="https://github.com/oddbird/true/blob/main/CHANGELOG.md">CHANGELOG.md</a></strong> –
+Migration notes for<span class="widont">&nbsp;</span>upgrading</li>
+</ul>
+<h2 id="javascript-test-runner-integration" tabindex="-1">JavaScript Test Runner<span class="widont">&nbsp;</span>Integration</h2>
+<p>Integrate True with your existing JS test runner for enhanced reporting and
+automated CSS output<span class="widont">&nbsp;</span>comparison.</p>
+<h3 id="quick-start" tabindex="-1">Quick Start</h3>
+<h4 id="1-install-dependencies" tabindex="-1">1. Install dependencies</h4>
 <pre><code class="lang-bash">npm install --save-dev sass-true
+npm install --save-dev sass-embedded # or `sass` (if not already installed)
 </code></pre>
-</li>
-<li>
-<p>[Optional] Install Dart Sass (<code>sass-embedded</code> or <code>sass</code>), if not already<span class="widont">&nbsp;</span>installed.</p>
-<pre><code class="lang-bash">npm install --save-dev sass-embedded # or `sass`
-</code></pre>
-</li>
-<li>
-<p>Write some Sass tests in <code>test/test.scss</code> (see above).</p>
-</li>
-<li>
-<p>Write a shim JS test file in <code>test/sass.test.js</code>:</p>
-<pre><code class="lang-js">const path = require('node:path');
-const sassTrue = require('sass-true');
+<h4 id="2-write-sass-tests" tabindex="-1">2. Write Sass<span class="widont">&nbsp;</span>tests</h4>
+<p>Create your Sass test file (e.g., <code>test/test.scss</code>) using True’s syntax (see
+<a href="#usage">Usage</a>).</p>
+<h4 id="3-create-js-test-file" tabindex="-1">3. Create JS test<span class="widont">&nbsp;</span>file</h4>
+<p>Create a JavaScript shim to run your Sass tests (e.g., <code>test/sass.test.js</code>):</p>
+<pre><code class="lang-js">import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import sassTrue from 'sass-true';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass({ describe, it }, sassFile);
 </code></pre>
+<h4 id="4-run-your-tests" tabindex="-1">4. Run your<span class="widont">&nbsp;</span>tests</h4>
+<p>Run Mocha, Jest, Vitest, or your test runner. Sass tests will appear in the
+terminal<span class="widont">&nbsp;</span>output.</p>
+<h3 id="enable-watch-mode-for-sass-files" tabindex="-1">Enable Watch Mode for Sass<span class="widont">&nbsp;</span>Files</h3>
+<p>By default, <code>vitest --watch</code> and <code>jest --watch</code> don’t detect Sass file<span class="widont">&nbsp;</span>changes.</p>
+<p><strong>Vitest solution:</strong> Add Sass files to <code>forceRerunTriggers</code>:</p>
+<pre><code class="lang-js">// vitest.config.js
+module.exports = defineConfig({
+  test: {
+    forceRerunTriggers: ['**/*.scss'],
+  },
+});
+</code></pre>
+<p>See <a href="https://vitest.dev/config/forcereruntriggers.html#forcereruntriggers">Vitest documentation</a> for<span class="widont">&nbsp;</span>details.</p>
+<p><strong>Jest solution:</strong> Add <code>&quot;scss&quot;</code> to <code>moduleFileExtensions</code>:</p>
+<pre><code class="lang-js">// jest.config.js
+module.exports = {
+  moduleFileExtensions: ['js', 'json', 'scss'],
+};
+</code></pre>
+<p>See <a href="https://jestjs.io/docs/configuration#modulefileextensions-arraystring">Jest documentation</a> for<span class="widont">&nbsp;</span>details.</p>
+<h3 id="advanced-configuration" tabindex="-1">Advanced Configuration</h3>
+<h4 id="runsass-api" tabindex="-1"><code>runSass()</code> API</h4>
+<pre><code class="lang-js">sassTrue.runSass(testRunnerConfig, sassPathOrSource, sassOptions);
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ol>
+<li>
+<p><strong><code>testRunnerConfig</code></strong> (object, required)</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>describe</code></td>
+<td>function</td>
+<td>Yes</td>
+<td>Your test runner’s <code>describe</code> function</td>
+</tr>
+<tr>
+<td><code>it</code></td>
+<td>function</td>
+<td>Yes</td>
+<td>Your test runner’s <code>it</code> function</td>
+</tr>
+<tr>
+<td><code>sass</code></td>
+<td>string or object</td>
+<td>No</td>
+<td>Sass implementation name (<code>'sass'</code> or <code>'sass-embedded'</code>) or instance. Auto-detected if not provided.</td>
+</tr>
+<tr>
+<td><code>sourceType</code></td>
+<td><code>'string'</code> or <code>'path'</code></td>
+<td>No</td>
+<td>Set to <code>'string'</code> to compile inline Sass source instead of file path (default: <code>'path'</code>)</td>
+</tr>
+<tr>
+<td><code>contextLines</code></td>
+<td>number</td>
+<td>No</td>
+<td>Number of CSS context lines to show in parse errors (default: <code>10</code>)</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li>
-<p>Run Mocha/Jest, and see your Sass tests reported in the command<span class="widont">&nbsp;</span>line.</p>
+<p><strong><code>sassPathOrSource</code></strong> (<code>'string'</code> or <code>'path'</code>, required)</p>
+<ul>
+<li>File path to Sass test file,<span class="widont">&nbsp;</span>or</li>
+<li>Inline Sass source code (if <code>sourceType: 'string'</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong><code>sassOptions</code></strong> (object, optional)</p>
+<ul>
+<li>Standard <a href="https://sass-lang.com/documentation/js-api/interfaces/Options">Sass compile options</a>
+(<code>importers</code>, <code>loadPaths</code>, <code>style</code>, etc.)</li>
+<li><strong>Default modifications by True:</strong>
+<ul>
+<li><code>loadPaths</code>: True’s sass directory is automatically added (allowing <code>@use 'true';</code>)</li>
+<li><code>importers</code>: <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a> added if
+<code>importers</code> is not defined and Dart Sass ≥ v1.71 (allowing <code>@use 'pkg:sass-true' as *;</code>)</li>
+</ul>
+</li>
+<li>⚠️ <strong>Warning:</strong> Must use <code>style: 'expanded'</code> (default).
+<code>style: 'compressed'</code> is not<span class="widont">&nbsp;</span>supported.</li>
+</ul>
 </li>
 </ol>
-<p><strong>Note:</strong> Because of differences between Jest globals and Node globals, Dart
-Sass often errors when trying to compile in a Jest environment (e.g.
-<code>J.getInterceptor$ax(...).map$1$1 is not a function</code>). This can usually be fixed
-by installing
-<a href="https://github.com/kayahr/jest-environment-node-single-context">jest-environment-node-single-context</a>
-and setting <code>testEnvironment: 'jest-environment-node-single-context'</code> in
-<code>jest.config.js</code>. See <a href="https://github.com/sass/dart-sass/issues/1692">possible</a>
-<a href="https://github.com/dart-lang/sdk/issues/47670">related</a>
-<a href="https://github.com/facebook/jest/issues/2549">issues</a>.</p>
-<p><strong>Note:</strong> Jest does not watch for changes in Sass files by default. To use
-<code>jest --watch</code> with True, add “scss” to your
-<a href="https://jestjs.io/docs/configuration#modulefileextensions-arraystring">moduleFileExtensions</a><span class="widont">&nbsp;</span>setting.</p>
-<p>You can call <code>runSass</code> more than once, if you have multiple Sass test files you
-want to run<span class="widont">&nbsp;</span>separately.</p>
-<p>The first argument is an object with required <code>describe</code> and <code>it</code> options, and
-optional <code>sass</code>, <code>contextLines</code> and <code>sourceType</code> options.</p>
-<p>Any JS test runner with equivalents to Mocha’s or Jest’s <code>describe</code> and <code>it</code>
-should be usable in the same way: just pass your test runner’s <code>describe</code> and
-<code>it</code> equivalents in the first argument to <code>runSass</code>.</p>
-<p>The <code>sass</code> option is an optional string name of a Dart Sass implementation
-installed in the current environment (e.g. <code>'embedded-sass'</code> or <code>'sass'</code>), or a
-Dart Sass implementation instance itself. If none is provided, True will attempt
-to detect which implementation is available, starting with <code>sass-embedded</code>.</p>
-<p>If True can’t parse the CSS output, it’ll give you some context lines of CSS as
-part of the error message. This context will likely be helpful in understanding
-the parse failure. By default it provides up to 10 lines of context; if you need
-more, you can provide a numeric <code>contextLines</code> option: the maximum number of
-context lines to<span class="widont">&nbsp;</span>provide.</p>
-<p>The second argument is a string representing either the path to a source Sass
-file (passed through to Sass’
-<a href="https://sass-lang.com/documentation/js-api/modules#compile"><code>compile</code></a>
-function), or a string of source Sass (passed through to Sass’
-<a href="https://sass-lang.com/documentation/js-api/modules#compileString"><code>compileString</code></a>
-function). By default it is expected to be a path, and <code>sass.compile</code> is used.
-To pass in a source string (and use <code>sass.compileString</code>), add <code>sourceType: 'string'</code> to your options passed in as the first argument to <code>runSass</code>.</p>
-<p>The third (optional) argument to <code>runSass</code> accepts the <a href="https://sass-lang.com/documentation/js-api/interfaces/Options">same
-options</a> that
-Sass’ <code>compile</code> or <code>compileString</code> expect (e.g. <code>importers</code>, <code>loadPaths</code>, or
-<code>style</code>), and these are passed directly through to<span class="widont">&nbsp;</span>Sass.</p>
-<p>By default, True makes two modifications to these options. First, True’s sass
-path is added to the <code>loadPaths</code> option, so <code>@use 'true';</code> works in your Sass
-test file. Second, if Dart Sass v1.71 or greater is installed, <code>importers</code> is
-set to an array containing the <a href="https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/">Node.js package importer</a>, which
-supports <code>pkg:</code> imports to resolve <code>@use</code> and <code>@import</code> for external modules
-installed via npm or Yarn. If <code>importers</code> is set (even as an empty array
-<code>importers: []</code>), it will override this default<span class="widont">&nbsp;</span>importer.</p>
-<p><strong>Note:</strong> True requires the
-<a href="https://sass-lang.com/documentation/js-api/modules#OutputStyle">default Sass <code>'expanded'</code> output style</a>,
-and will not work if <code>{ style: 'compressed' }</code> is used in the third argument to
-<code>runSass</code>.</p>
-<h3 id="custom-importers" tabindex="-1">Custom Importers</h3>
-<p>If you use tilde notation (e.g. <code>@use '~accoutrement/sass/tools'</code>) or another
-method for importing Sass files from <code>node_modules</code>, you’ll need to tell
-<code>runSass</code> how to handle that. That will require writing a <a href="https://sass-lang.com/documentation/js-api/interfaces/FileImporter">custom
-importer</a>
-and passing it into the configuration for <code>runSass</code>:</p>
-<pre><code class="lang-js">const path = require('node:path');
-const { pathToFileURL } = require('node:url');
-const sassTrue = require('sass-true');
+<h4 id="multiple-test-files" tabindex="-1">Multiple Test Files</h4>
+<p>Call <code>runSass()</code> multiple times to run separate test<span class="widont">&nbsp;</span>files:</p>
+<pre><code class="lang-js">sassTrue.runSass({ describe, it }, path.join(__dirname, 'functions.test.scss'));
+sassTrue.runSass({ describe, it }, path.join(__dirname, 'mixins.test.scss'));
+</code></pre>
+<h4 id="other-test-runners" tabindex="-1">Other Test Runners</h4>
+<p>Any test runner with <code>describe</code>/<code>it</code> functions (or equivalents) works with<span class="widont">&nbsp;</span>True:</p>
+<pre><code class="lang-js">// Example with custom test runner
+import { suite, test } from 'my-test-runner';
+
+sassTrue.runSass(
+  { describe: suite, it: test },
+  path.join(__dirname, 'test.scss'),
+);
+</code></pre>
+<h4 id="custom-importers" tabindex="-1">Custom Importers</h4>
+<p>If you use custom import syntax (e.g., tilde notation
+<code>@use '~accoutrement/sass/tools'</code>), you’ll need to provide a
+<a href="https://sass-lang.com/documentation/js-api/interfaces/FileImporter">custom importer</a>:</p>
+<pre><code class="lang-js">import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import sassTrue from 'sass-true';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const importers = [
   {
@@ -399,14 +453,17 @@ const sassFile = path.join(__dirname, 'test.scss');
 sassTrue.runSass({ describe, it }, sassFile, { importers });
 </code></pre>
 <hr>
-<h3 id="sponsor-oddbird-s-oss-work" tabindex="-1">Sponsor OddBird’s OSS<span class="widont">&nbsp;</span>Work</h3>
-<p>At OddBird, we love contributing to the languages &amp; tools developers rely on.
-We’re currently working on polyfills for new Popover &amp; Anchor Positioning
-functionality, as well as CSS specifications for functions, mixins, and
-responsive typography. Help us keep this work sustainable and centered on your
-needs as a developer! We display sponsor logos and avatars on our
-<a href="https://www.oddbird.net/true/#open-source-sponsors">website</a>.</p>
-<p><a href="https://opencollective.com/oddbird-open-source">Sponsor OddBird’s OSS<span class="widont">&nbsp;</span>Work</a></p>
+<h2 id="sponsor-oddbird-s-open-source-work" tabindex="-1">Sponsor OddBird’s Open Source<span class="widont">&nbsp;</span>Work</h2>
+<p>At OddBird, we love contributing to the languages and tools developers rely on.
+We’re currently working<span class="widont">&nbsp;</span>on:</p>
+<ul>
+<li>Polyfills for new Popover &amp; Anchor Positioning<span class="widont">&nbsp;</span>functionality</li>
+<li>CSS specifications for functions, mixins, and responsive<span class="widont">&nbsp;</span>typography</li>
+<li>Sass testing tools like<span class="widont">&nbsp;</span>True</li>
+</ul>
+<p><strong>Help us keep this work sustainable!</strong> Sponsor logos and avatars are featured
+on our <a href="https://www.oddbird.net/true/#open-source-sponsors">website</a>.</p>
+<p><strong><a href="https://opencollective.com/oddbird-open-source">→ Sponsor OddBird on Open<span class="widont">&nbsp;</span>Collective</a></strong></p>
 
     </div>
   
