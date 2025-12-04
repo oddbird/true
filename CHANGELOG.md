@@ -1,5 +1,10 @@
 # True Changelog
 
+## UNRELEASED
+
+- DOCUMENTATION: Rewrite README documentation
+- INTERNAL: Update dependencies
+
 ## 10.0.0 (11/18/25)
 
 - BREAKING: Remove the `$inspect` option from assertions,
