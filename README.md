@@ -240,7 +240,8 @@ sassTrue.runSass(testRunnerConfig, sassPathOrSource, sassOptions);
      (`importers`, `loadPaths`, `style`, etc.)
    - **Default modifications by True:**
      - `loadPaths`: True's sass directory is automatically added (allowing `@use 'true';`)
-     - `importers`: [Node.js package importer][pkg-importer] added (Dart Sass ≥ v1.71)
+     - `importers`: [Node.js package importer][pkg-importer] added if
+       `importers` is not defined and Dart Sass ≥ v1.71 (allowing `@use 'pkg:sass-true' as *;`)
    - ⚠️ **Warning:** Must use `style: 'expanded'` (default).
      `style: 'compressed'` is not supported.
 
