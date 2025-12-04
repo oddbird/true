@@ -1,4 +1,4 @@
-Copyright (c) 2015–2022, Miriam Suzanne.
+Copyright (c) 2015–2026, OddBird LLC.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
