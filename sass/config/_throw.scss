@@ -5,7 +5,6 @@
 /// but we provide a workaround that works for many use-cases
 /// (especially unit-testing error states).
 /// @group api-errors
-/// @since v6.0
 
 /// By default, the `error()` function and mixin
 /// will simply pass details along to the built-in Sass `@error` declaration.
