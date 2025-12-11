@@ -23,7 +23,11 @@ $catch-errors: false !default;
 
 // Format an error prefix, with source if available
 @function _prefix($source) {
-  @return if($source, 'ERROR [#{$source}]:', 'ERROR:');
+  @if $source {
+    @return 'ERROR [#{$source}]:';
+  } @else {
+    @return 'ERROR:';
+  }
 }
 
 /// Use in place of `@error` statements inside functions.
