@@ -25,9 +25,9 @@ $catch-errors: false !default;
 @function _prefix($source) {
   @if $source {
     @return 'ERROR [#{$source}]:';
-  } @else {
-    @return 'ERROR:';
   }
+
+  @return 'ERROR:';
 }
 
 /// Use in place of `@error` statements inside functions.

@@ -31,7 +31,7 @@
 /// @param {bool} $terminal [$terminal-output] -
 ///   whether to use the terminal as an output stream
 @mixin fail-details($assert, $expected, $terminal: config.$terminal-output) {
-  $location: 'comments' !default;
+  $location: 'comments';
 
   @if $terminal {
     $location: ('comments', 'debug');

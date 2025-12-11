@@ -22,7 +22,7 @@
   @include data.output-context($type);
 
   $block: map.get(config.$output, $type);
-  $start: $block !default;
+  $start: $block;
 
   @if ($description or ($block == 'ASSERT')) {
     $start: '#{$block}: #{$description}';
@@ -130,7 +130,7 @@
 
   @if ($not and $list and $string) {
     @return true;
-  } @else {
-    @return false;
   }
+
+  @return false;
 }

@@ -13,14 +13,10 @@
 ///   Set to `true` if the comparison is expected to fail
 /// @return {'pass' | 'fail'} The result of a test
 @function get-result($assert, $expected, $unequal: false) {
-  @if $unequal {
-    @if ($assert == $expected) {
-      @return 'fail';
-    }
-  } @else {
-    @if ($assert != $expected) {
-      @return 'fail';
-    }
+  $is-equal: $assert == $expected;
+
+  @if ($unequal == $is-equal) {
+    @return 'fail';
   }
 
   @return 'pass';
@@ -89,7 +85,7 @@ $test-result: null;
 ///   Single or multi-line message for reporting
 @function results-message($linebreak: false, $results: $results) {
   $run: map.get($results, 'run');
-  $items-label: 'Tests' !default;
+  $items-label: 'Tests';
 
   @if ($run == 1) {
     $items-label: 'Test';
@@ -101,7 +97,7 @@ $test-result: null;
   $items: '#{$run} #{$items-label}';
   $passed: '#{$pass} Passed';
   $failed: '#{$fail} Failed';
-  $compiled: null !default;
+  $compiled: null;
 
   @if ($output-to-css > 0) {
     $compiled: '#{$output-to-css} Output to CSS';

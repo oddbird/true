@@ -43,19 +43,19 @@ $stats: (
   $assertions: map.get($stats, 'assertions');
 
   // Pluralize Labels
-  $modules-label: 'Modules' !default;
+  $modules-label: 'Modules';
 
   @if ($modules == 1) {
     $modules-label: 'Module';
   }
 
-  $tests-label: 'Tests' !default;
+  $tests-label: 'Tests';
 
   @if ($tests == 1) {
     $tests-label: 'Test';
   }
 
-  $assertions-label: 'Assertions' !default;
+  $assertions-label: 'Assertions';
 
   @if ($assertions == 1) {
     $assertions-label: 'Assertion';
