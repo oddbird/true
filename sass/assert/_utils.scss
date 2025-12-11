@@ -127,7 +127,6 @@
   $not: (not not $assert);
   $list: ($assert != ());
   $string: ($assert != '');
-  $truthy: false;
 
   @if ($not and $list and $string) {
     @return true;
