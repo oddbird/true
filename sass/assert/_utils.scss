@@ -22,11 +22,11 @@
   @include data.output-context($type);
 
   $block: map.get(config.$output, $type);
-  $start: if(
-    $description or ($block == 'ASSERT'),
-    '#{$block}: #{$description}',
-    $block
-  );
+  $start: $block;
+
+  @if ($description or ($block == 'ASSERT')) {
+    $start: '#{$block}: #{$description}';
+  }
 
   @include config.message('  #{$start}  ', 'comments');
 
@@ -127,7 +127,11 @@
   $not: (not not $assert);
   $list: ($assert != ());
   $string: ($assert != '');
-  $truthy: if(($not and $list and $string), true, false);
+  $truthy: false;
 
-  @return $truthy;
+  @if ($not and $list and $string) {
+    @return true;
+  } @else {
+    @return false;
+  }
 }
