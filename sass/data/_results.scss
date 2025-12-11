@@ -13,10 +13,17 @@
 ///   Set to `true` if the comparison is expected to fail
 /// @return {'pass' | 'fail'} The result of a test
 @function get-result($assert, $expected, $unequal: false) {
-  $equal: $assert == $expected;
-  $pass: if($unequal, not $equal, $equal);
+  @if $unequal {
+    @if ($assert == $expected) {
+      @return 'fail';
+    }
+  } @else {
+    @if ($assert != $expected) {
+      @return 'fail';
+    }
+  }
 
-  @return if($pass, 'pass', 'fail');
+  @return 'pass';
 }
 
 // Results
@@ -82,26 +89,41 @@ $test-result: null;
 ///   Single or multi-line message for reporting
 @function results-message($linebreak: false, $results: $results) {
   $run: map.get($results, 'run');
+  $items-label: 'Tests' !default;
+
+  @if ($run == 1) {
+    $items-label: 'Test';
+  }
+
   $pass: map.get($results, 'pass');
   $fail: map.get($results, 'fail');
   $output-to-css: map.get($results, 'output-to-css');
-  $items: if($run == 1, 'Test', 'Tests');
-  $items: '#{$run} #{$items}';
+  $items: '#{$run} #{$items-label}';
   $passed: '#{$pass} Passed';
   $failed: '#{$fail} Failed';
-  $compiled: if($output-to-css > 0, '#{$output-to-css} Output to CSS', null);
+  $compiled: null !default;
+
+  @if ($output-to-css > 0) {
+    $compiled: '#{$output-to-css} Output to CSS';
+  }
 
   // Linebreaks
   @if $linebreak {
     $message: ('#{$items}:', '- #{$passed}', '- #{$failed}');
-    $message: if($compiled, list.append($message, '- #{$compiled}'), $message);
+
+    @if $compiled {
+      $message: list.append($message, '- #{$compiled}');
+    }
 
     @return $message;
   }
 
   // No Linebreaks
   $message: '#{$items}, #{$passed}, #{$failed}';
-  $message: if($compiled, '#{$message}, #{$compiled}', $message);
+
+  @if $compiled {
+    $message: '#{$message}, #{$compiled}';
+  }
 
   @return $message;
 }
