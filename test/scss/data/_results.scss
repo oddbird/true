@@ -12,14 +12,11 @@
   }
 
   @include it('Unequal pass') {
-    @include assert-equal(results.get-result(true, 'hello', 'unequal'), 'pass');
+    @include assert-equal(results.get-result(true, 'hello', true), 'pass');
   }
 
   @include it('Unequal fail') {
-    @include assert-equal(
-      results.get-result('hello', 'hello', 'unequal'),
-      'fail'
-    );
+    @include assert-equal(results.get-result('hello', 'hello', true), 'fail');
   }
 }
 
