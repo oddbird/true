@@ -22,7 +22,7 @@
   @include data.output-context($type);
 
   $block: map.get(config.$output, $type);
-  $start: $block;
+  $start: $block !default;
 
   @if ($description or ($block == 'ASSERT')) {
     $start: '#{$block}: #{$description}';
