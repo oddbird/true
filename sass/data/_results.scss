@@ -14,8 +14,9 @@
 /// @return {'pass' | 'fail'} The result of a test
 @function get-result($assert, $expected, $unequal: false) {
   $is-equal: $assert == $expected;
+  $assert-equal: not $unequal;
 
-  @if ($unequal == $is-equal) {
+  @if ($assert-equal != $is-equal) {
     @return 'fail';
   }
 
