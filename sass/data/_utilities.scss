@@ -16,12 +16,11 @@
     $value: map.get($add, $key);
 
     @if $value {
-      $base-value: map.get($base, $key);
-      $new-value: if($base-value, $base-value + $value, $value);
+      $base-value: map.get($base, $key) or 0;
       $base: map.merge(
         $base,
         (
-          $key: $new-value,
+          $key: $base-value + $value,
         )
       );
     }

@@ -53,7 +53,11 @@
   }
 
   @if $fail-on-error and ($fail > 0) {
-    $plural: if(($fail == 1), 'test', 'tests');
+    $plural: 'tests';
+
+    @if ($fail == 1) {
+      $plural: 'test';
+    }
 
     @include config.error('#{$fail} #{$plural} failed', 'report');
   }
