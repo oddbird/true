@@ -17,7 +17,7 @@
 
   @include it('Unequal fail') {
     @include assert-equal(
-      results.get-result('hello', 'hello', 'unequal'), 
+      results.get-result('hello', 'hello', 'unequal'),
       'fail'
     );
   }
