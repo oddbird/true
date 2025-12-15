@@ -48,7 +48,10 @@
 /// @return {string} - Underline dashes of the same length as string param
 @function underline($string) {
   $underline: '';
-  $string: if(meta.type-of($string) == 'string', $string, '#{$string}');
+
+  @if (meta.type_of($string) != 'string') {
+    $string: '#{$string}';
+  }
 
   @for $i from 1 through string.length($string) {
     $underline: '#{$underline}-';
