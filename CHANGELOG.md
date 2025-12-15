@@ -1,5 +1,11 @@
 # True Changelog
 
+## 10.1.0 (12/15/25)
+
+- Replace uses of [deprecated](https://sass-lang.com/documentation/breaking-changes/if-function/) Sass `if()` function
+  [340](https://github.com/oddbird/true/pull/340)
+- INTERNAL: Update dependencies
+
 ## 10.0.1 (12/04/25)
 
 - DOCUMENTATION: Rewrite README documentation
