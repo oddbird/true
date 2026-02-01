@@ -66,7 +66,7 @@
     "@prettier/sync": "^0.6.1",
     "jest-diff": "^30.2.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.7.4"
+    "prettier": "^3.8.1"
   },
   "peerDependencies": {
     "sass": ">=1.45.0",
@@ -81,13 +81,13 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/eslint-parser": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@babel/core": "^7.29.0",
+    "@babel/eslint-parser": "^7.28.6",
+    "@babel/preset-env": "^7.29.0",
     "@babel/preset-typescript": "^7.28.5",
     "@eslint/js": "^9.39.2",
-    "@vitest/coverage-v8": "^4.0.16",
-    "@vitest/eslint-plugin": "^1.6.5",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/eslint-plugin": "^1.6.6",
     "chai": "^4.5.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -97,15 +97,15 @@
     "globals": "^16.5.0",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.97.1",
-    "sass-embedded": "^1.97.1",
+    "sass": "^1.97.3",
+    "sass-embedded": "^1.97.3",
     "sassdoc": "^2.7.4",
-    "sassdoc-theme-herman": "^7.0.0",
+    "sassdoc-theme-herman": "^7.0.1",
     "stylelint": "^16.26.1",
     "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.52.0",
-    "vitest": "^4.0.16"
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
