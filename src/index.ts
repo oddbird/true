@@ -71,6 +71,7 @@ const loadSass = function (sassPkg: string) {
     return require(sassPkg);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
+    // eslint-disable-next-line preserve-caught-error
     throw new Error(`Cannot find Dart Sass (\`${sassPkg}\`) dependency.`);
   }
 };
@@ -126,6 +127,7 @@ export const runSass = function (
         compiler = loadSass('sass');
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e2) {
+        // eslint-disable-next-line preserve-caught-error
         throw new Error(
           'Cannot find Dart Sass (`sass-embedded` or `sass`) dependency.',
         );
