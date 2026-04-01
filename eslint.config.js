@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-const babelParser = require('@babel/eslint-parser');
 const eslint = require('@eslint/js');
 const vitest = require('@vitest/eslint-plugin');
 const { defineConfig } = require('eslint/config');
 const prettier = require('eslint-config-prettier');
-const importPlugin = require('eslint-plugin-import');
+const { importX } = require('eslint-plugin-import-x');
 const simpleImportSort = require('eslint-plugin-simple-import-sort');
 const globals = require('globals');
 const tseslint = require('typescript-eslint');
@@ -26,12 +25,12 @@ module.exports = defineConfig(
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  importPlugin.flatConfigs.recommended,
+  importX.flatConfigs.recommended,
   prettier,
   {
     files: ['**/*.{js,mjs,cjs,ts,cts,mts}'],
     languageOptions: {
-      parser: babelParser,
+      parser: tseslint.parser,
       globals: {
         ...globals.node,
         ...globals.es2022,
@@ -41,22 +40,22 @@ module.exports = defineConfig(
       },
     },
     settings: {
-      'import/resolver': {
+      'import-x/resolver': {
         typescript: {},
       },
-      'import/external-module-folders': ['node_modules'],
+      'import-x/external-module-folders': ['node_modules'],
     },
     rules: {
       'no-console': 1,
       'no-warning-comments': ['warn', { terms: ['todo', 'fixme', '@@@'] }],
-      'import/first': 'warn',
-      'import/newline-after-import': 'warn',
-      'import/no-duplicates': ['error', { 'prefer-inline': true }],
-      'import/order': [
+      'import-x/first': 'warn',
+      'import-x/newline-after-import': 'warn',
+      'import-x/no-duplicates': ['error', { 'prefer-inline': true }],
+      'import-x/order': [
         'warn',
         { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
       ],
-      'import/named': 'warn',
+      'import-x/named': 'warn',
     },
   },
   {
@@ -77,13 +76,13 @@ module.exports = defineConfig(
     rules: {
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
-      'import/order': 'off',
+      'import-x/order': 'off',
     },
   },
   {
     files: ['test/**/*.{js,ts}'],
     languageOptions: {
-      parser: babelParser,
+      parser: tseslint.parser,
       globals: {
         ...vitest.environments.env.globals,
         ...globals.mocha,
