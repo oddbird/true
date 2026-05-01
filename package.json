@@ -85,11 +85,11 @@
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/eslint-plugin": "^1.6.16",
     "chai": "^4.5.0",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.2",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.5.0",
     "mocha": "^11.7.5",
     "npm-run-all": "^4.1.5",
@@ -116,5 +116,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.14.1"
 }
