@@ -116,5 +116,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@4.14.1"
+  "packageManager": "yarn@4.16.0"
 }
