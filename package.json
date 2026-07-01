@@ -65,8 +65,8 @@
   "dependencies": {
     "@prettier/sync": "^0.6.1",
     "jest-diff": "^30.4.1",
-    "postcss": "^8.5.15",
-    "prettier": "^3.8.3"
+    "postcss": "^8.5.16",
+    "prettier": "^3.9.4"
   },
   "peerDependencies": {
     "sass": ">=1.45.0",
@@ -82,26 +82,26 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@vitest/coverage-v8": "^4.1.8",
-    "@vitest/eslint-plugin": "^1.6.19",
+    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/eslint-plugin": "^1.6.20",
     "chai": "^4.5.0",
-    "eslint": "^10.4.1",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
-    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-simple-import-sort": "^13.0.0",
-    "globals": "^17.6.0",
+    "globals": "^17.7.0",
     "mocha": "^11.7.6",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.100.0",
+    "sass": "^1.101.0",
     "sass-embedded": "^1.100.0",
     "sassdoc": "^2.7.4",
     "sassdoc-theme-herman": "^7.0.1",
-    "stylelint": "^17.12.0",
+    "stylelint": "^17.14.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.1",
-    "vitest": "^4.1.8"
+    "typescript-eslint": "^8.62.1",
+    "vitest": "^4.1.9"
   },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
