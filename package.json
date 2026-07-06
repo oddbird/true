@@ -83,7 +83,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@vitest/coverage-v8": "^4.1.9",
-    "@vitest/eslint-plugin": "^1.6.20",
+    "@vitest/eslint-plugin": "^1.6.21",
     "chai": "^4.5.0",
     "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
@@ -116,5 +116,5 @@
     "sassDir": "./sass/",
     "exports": false
   },
-  "packageManager": "yarn@4.16.0"
+  "packageManager": "yarn@4.17.0"
 }
