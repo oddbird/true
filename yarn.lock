@@ -6021,14 +6021,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.15, postcss@npm:^8.5.16":
-  version: 8.5.16
-  resolution: "postcss@npm:8.5.16"
+"postcss@npm:^8.5.15, postcss@npm:^8.5.16, postcss@npm:^8.5.18":
+  version: 8.5.18
+  resolution: "postcss@npm:8.5.18"
   dependencies:
     nanoid: "npm:^3.3.12"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10/b39408900aa394bce6f567d539b7361e71c07f361313e5b01e40481c5120309a570e7a54c6a0c6ea5f0c0c06ff8c12b560beeebcc29ea173ad42ec74bae86069
+  checksum: 10/b43f2d2493d82dc43fa50d21cf184bf3b66229e7f53fa1dedc7b8a7c4cecd7ac8ee18fad099f47570da7f78bbf46997a4c6e6c87d8d8ece683dc1f32cda6db3b
   languageName: node
   linkType: hard
 
@@ -6882,7 +6882,7 @@ __metadata:
     jest-diff: "npm:^30.4.1"
     mocha: "npm:^11.7.6"
     npm-run-all: "npm:^4.1.5"
-    postcss: "npm:^8.5.16"
+    postcss: "npm:^8.5.18"
     prettier: "npm:^3.9.4"
     sass: "npm:^1.101.0"
     sass-embedded: "npm:^1.100.0"
