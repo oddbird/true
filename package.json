@@ -99,7 +99,7 @@
     "sassdoc-theme-herman": "^7.0.1",
     "stylelint": "^17.14.1",
     "stylelint-config-standard-scss": "^17.0.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "typescript-eslint": "^8.65.0",
     "vitest": "^4.1.10"
   },
