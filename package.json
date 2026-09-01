@@ -91,7 +91,7 @@
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "globals": "^17.11.0",
-    "mocha": "^11.8.0",
+    "mocha": "^12.0.0",
     "npm-run-all": "^4.1.5",
     "sass": "^1.103.1",
     "sass-embedded": "^1.103.1",
